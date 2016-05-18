@@ -3,7 +3,7 @@
 [[:chapter {:title "Introduction"}]]
 
 "
-[hara.data](https://github.com/zcaudate/hara/blob/master/src/hara/data.clj) are a set of functions that act on clojure hash-maps and map-like representations of data. The level of complexity needed for working with data increases as it becomes nested and then relational. The functions of `hara.data` get increasingly sophisticated, with the `hara.data.complex` namespace built specifically for working with datomic datastructures."
+[hara.data](https://github.com/zcaudate/hara/blob/master/src/hara/data.clj) are a set of functions that act on clojure hash-maps and map-like representations of data. The level of complexity needed for working with data increases as it becomes nested and then relational. The functions of `hara.data` get increasingly sophisticated, with the `hara.data.complex` namespace built specifically for working with datomic data structures."
 
 [[:section {:title "Installation"}]]
 
@@ -26,25 +26,25 @@ Individual namespaces can be added seperately:
 
 [[:chapter {:title "API - map"}]]
 
-"[hara.data.map](https://github.com/zcaudate/hara/blob/master/src/hara/data/map.clj) contain functions for updating hashmaps."
+"[hara.data.map](https://github.com/zcaudate/hara/blob/master/src/hara/data/map.clj) contains functions for updating hashmaps."
 
 [[:api {:namespace "hara.data.map"}]]
 
 [[:chapter {:title "API - nested"}]]
 
-"[hara.data.nested](https://github.com/zcaudate/hara/blob/master/src/hara/data/nested.clj) contain functions for updating nested hashmaps."
+"[hara.data.nested](https://github.com/zcaudate/hara/blob/master/src/hara/data/nested.clj) contains functions for updating nested hashmaps."
 
 [[:api {:namespace "hara.data.nested"}]]
 
 [[:chapter {:title "API - diff"}]]
 
-"[hara.data.diff](https://github.com/zcaudate/hara/blob/master/src/hara/data/diff.clj) contain functions for comparing maps as well as functions to patch changes."
+"[hara.data.diff](https://github.com/zcaudate/hara/blob/master/src/hara/data/diff.clj) contains functions for comparing maps, as well as functions to patch changes."
 
 [[:api {:namespace "hara.data.diff"}]]
 
 [[:chapter {:title "API - combine"}]]
 
-"[hara.data.combine](https://github.com/zcaudate/hara/blob/master/src/hara/data/combine.clj) contain functions for working with sets of data."
+"[hara.data.combine](https://github.com/zcaudate/hara/blob/master/src/hara/data/combine.clj) contains functions for working with sets of data."
 
 [[:api {:namespace "hara.data.combine"}]]
 
@@ -56,7 +56,7 @@ Individual namespaces can be added seperately:
 
 [[:chapter {:title "API - record"}]]
 
-"[hara.data.record](https://github.com/zcaudate/hara/blob/master/src/hara/data/record.clj) contain functions for working with clojure records"
+"[hara.data.record](https://github.com/zcaudate/hara/blob/master/src/hara/data/record.clj) contains functions for working with clojure records"
 
 [[:api {:namespace "hara.data.record"}]]
 
