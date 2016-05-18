@@ -10,7 +10,7 @@
 - a global eventing system for decoupilng of side-effecting
 - a conditional restart framework that hooks into the eventing system.
 
-`hara.event` was originally developed as a [seperate library](https://github.com/zcaudate/ribol) but has been included as part of the larger [hara](https://github.com/zcaudate/hara) codebase. The main addition to the original library has been the inclusion of the eventing system as it was felt that there should be an integrated way of dealing with side-effecting calls such as logging, indexing, emails and many other tasks within both normal and abnormal program flows.
+`hara.event` was originally developed as a [separate library](https://github.com/zcaudate/ribol) but has been included as part of the larger [hara](https://github.com/zcaudate/hara) codebase. The main addition to the original library has been the inclusion of the eventing system as it was felt that there should be an integrated way of dealing with side-effecting calls such as logging, indexing, emails and many other tasks within both normal and abnormal program flows.
 "
 
 [[:section {:title "Installation"}]]
