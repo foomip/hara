@@ -15,10 +15,10 @@
 
 (defmacro error
   "Throws an exception when called.
- 
+
    (error \"This is an error\")
    => (throws Exception \"This is an error\")
- 
+
    (error (Exception. \"This is an error\")
           \"This is a chained error\")
    => (throws Exception \"This is a chained error\")"
@@ -30,11 +30,11 @@
 
 (defmacro suppress
   "Suppresses any errors thrown in the body.
- 
+
    (suppress (error \"Error\")) => nil
- 
+
    (suppress (error \"Error\") :error) => :error
- 
+
    (suppress (error \"Error\")
              (fn [e]
                (.getMessage e))) => \"Error\""

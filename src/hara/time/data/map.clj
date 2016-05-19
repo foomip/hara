@@ -14,12 +14,12 @@
    => {:type java.lang.Long, :timezone \"GMT\", :long 0
        :year 1970, :month 1, :day 1,
        :hour 0, :minute 0 :second 0 :millisecond 0}
- 
+
    (to-map (Date. 0) {:timezone \"EST\"}
            [:year :day :month])
    => {:type java.util.Date, :timezone \"EST\", :long 0
        :year 1969, :day 31, :month 12}
- 
+
    (to-map {:type java.lang.Long, :timezone \"GMT\", :long 0
             :year 1970, :month 1, :day 1,
             :hour 0, :minute 0 :second 0 :millisecond 0}
@@ -54,7 +54,7 @@
              {:timezone \"Asia/Kolkata\"}
              {})
    => 0
-   
+
    (-> (from-map {:type java.util.Calendar
                   :year 1970, :month 1, :day 1,
                   :hour 0, :minute 0 :second 0 :millisecond 0
@@ -65,7 +65,7 @@
    => {:type java.util.GregorianCalendar, :timezone \"Asia/Kolkata\", :long 0
        :year 1970, :month 1, :day 1,
        :hour 5, :minute 30 :second 0 :millisecond 0}
- 
+
    (to-map (common/calendar (Date. 0)
                             (TimeZone/getTimeZone \"EST\"))
            {:timezone \"GMT\"} [:month :day :year])
@@ -82,7 +82,7 @@
                      (-> (assoc m :type proxy)
                          (from-map {} {})
                          (via))
-                     
+
                      :else
                      ((:fn tmeta) m))]
     (if-let [tz (:timezone opts)]
@@ -94,7 +94,7 @@
         m
 
         long
-        (time/-from-long long {:type PersistentArrayMap 
+        (time/-from-long long {:type PersistentArrayMap
                                :timezone tz})
 
         :else
@@ -119,7 +119,7 @@
   (-has-timezone? [m] (not (nil? (:timezone m))))
   (-get-timezone  [m] (:timezone m))
   (-with-timezone [m tz]
-    (assoc (with-timezone m tz) :type PersistentArrayMap)) 
+    (assoc (with-timezone m tz) :type PersistentArrayMap))
 
   time/IRepresentation
   (-millisecond  [t _] (:millisecond t))
@@ -131,7 +131,7 @@
   (-month        [t _] (:month t))
   (-year         [t _] (:year t)))
 
-(defmethod time/-from-long PersistentArrayMap 
+(defmethod time/-from-long PersistentArrayMap
   [long opts]
   (-> (to-map long opts common/+default-keys+)
       (assoc :type PersistentArrayMap)))
@@ -154,7 +154,7 @@
   [_]
   hashmap-meta)
 
-(defmethod time/-from-long PersistentHashMap 
+(defmethod time/-from-long PersistentHashMap
   [long opts]
   (-> (to-map long opts common/+default-keys+)
       (assoc :type PersistentHashMap)))
@@ -165,8 +165,8 @@
     (from-map m {:type Long} {}))
   (-has-timezone? [m] (not (nil? (:timezone m))))
   (-get-timezone  [m] (:timezone m))
-  (-with-timezone [m tz] (assoc (with-timezone m tz) :type PersistentHashMap)) 
-  
+  (-with-timezone [m tz] (assoc (with-timezone m tz) :type PersistentHashMap))
+
   time/IRepresentation
   (-millisecond  [t _] (:millisecond t))
   (-second       [t _] (:second t))

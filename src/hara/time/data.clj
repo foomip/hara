@@ -16,7 +16,7 @@
  {:java   {:major 1 :minor 8}}
           (:require [hara.time.data.zone
                      java-time-zoneid]
-                    
+
                     [hara.time.data.instant
                      java-time-instant
                      java-time-clock

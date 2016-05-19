@@ -51,23 +51,23 @@
     (coerce-instant 0 {:type Long
                        :timezone "GMT"})
     => 0
-    
+
     (-> (coerce-instant 0 {:type ZonedDateTime
                            :timezone "GMT"})
         (map/to-map {} common/+default-keys+))
     => {:type ZonedDateTime
-        :timezone "GMT", :long 0, 
+        :timezone "GMT", :long 0,
         :year 1970, :month 1, :day 1, :hour 0,
         :minute 0, :second 0 :millisecond 0}
 
-    
+
     (-> (time/-from-long 0 {:type ZonedDateTime
                             :timezone "GMT"})
         (coerce-instant {:type Clock
                          :timezone "Asia/Kolkata"})
         (map/to-map {} common/+default-keys+))
     => {:type java.time.Clock$FixedClock,
-        :timezone "Asia/Kolkata", :long 0, 
+        :timezone "Asia/Kolkata", :long 0,
         :year 1970, :month 1, :day 1, :hour 5,
         :minute 30, :second 0 :millisecond 0}
 
@@ -77,6 +77,6 @@
                          :timezone "Asia/Kolkata"})
         (map/to-map {} common/+default-keys+))
     => {:type java.util.GregorianCalendar
-        :timezone "Asia/Kolkata", :long 0, 
+        :timezone "Asia/Kolkata", :long 0,
         :year 1970, :month 1, :day 1, :hour 5,
         :minute 30, :second 0 :millisecond 0}))

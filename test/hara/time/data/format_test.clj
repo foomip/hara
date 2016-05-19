@@ -14,7 +14,7 @@
 (fact "converts a date into a string"
   (f/format (Date. 0) "HH MM dd Z" {:timezone "GMT" :cached true})
   => "00 01 01 +0000"
-  
+
   (f/format (common/calendar (Date. 0)
                              (TimeZone/getTimeZone "GMT"))
             "HH MM dd Z"
@@ -34,14 +34,14 @@
   (-> (f/parse "00 00 01 01 01 1989 -0800" "ss mm HH dd MM yyyy Z"
                {:type Calendar})
       (map/to-map {:timezone "GMT"} common/+default-keys+))
-  {:type java.util.GregorianCalendar, :timezone "GMT", :long 599648400000, 
+  {:type java.util.GregorianCalendar, :timezone "GMT", :long 599648400000,
    :year 1989, :month 1, :day 1, :hour 9, :minute 0, :second 0, :millisecond 0}
- 
+
 
   (-> (f/parse "00 00 01 01 01 1989 +0000" "ss mm HH dd MM yyyy Z"
                {:type Timestamp})
       (map/to-map {:timezone "Asia/Kolkata"} common/+default-keys+))
-  => {:type java.sql.Timestamp, :timezone "Asia/Kolkata", :long 599619600000, 
+  => {:type java.sql.Timestamp, :timezone "Asia/Kolkata", :long 599619600000,
       :year 1989, :month 1, :day 1, :hour 6,
       :minute 30, :second 0, :millisecond 0})
 
@@ -67,7 +67,7 @@
         :long 599619600000,
         :year 1989, :month 1, :day 1,
         :hour 1, :minute 0, :second 0, :millisecond 0}
-    
+
     (-> (f/parse "00 00 01 01 01 1989 -1000" "ss mm HH dd MM yyyy Z"
                  {:type Clock})
         (map/to-map {} common/+default-keys+))

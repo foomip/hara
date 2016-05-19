@@ -11,7 +11,7 @@
    (-> (coerce-zone \"Asia/Kolkata\" {:type TimeZone})
        (string/-to-string))
    => \"Asia/Kolkata\"
- 
+
    (-> (coerce-zone nil {:type TimeZone})
        (string/-to-string))
    => (-> (TimeZone/getDefault)
@@ -21,13 +21,13 @@
   (cond (nil? value)
         (string/-from-string (common/default-timezone)
                              type)
-        
+
         (instance? type value)
         value
-        
+
         (string? value)
         (string/-from-string value type)
-        
+
         :else
         (->  value
              (string/-to-string)
@@ -43,7 +43,7 @@
   [value {:keys [type] :as opts}]
   (cond (instance? type value)
         value
-    
+
         (or (= type Long) (nil? type))
         (time/-to-long value)
 
@@ -52,7 +52,7 @@
 
         (instance? clojure.lang.APersistentMap value)
         (map/from-map value opts)
-        
+
         :else
         (-> value
             (time/-to-long)

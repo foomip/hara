@@ -19,7 +19,7 @@
   [_]
   long-meta)
 
-(extend-type Long  
+(extend-type Long
   time/IInstant
   (-to-long       [t] t)
   (-has-timezone? [t] false)

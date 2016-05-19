@@ -35,7 +35,7 @@
             {:timezone "Asia/Kolkata"}
             {})
   => 0
-  
+
   (-> (from-map {:type java.util.Calendar
                  :year 1970, :month 1, :day 1,
                  :hour 0, :minute 0 :second 0 :millisecond 0
@@ -77,7 +77,7 @@
     (to-map (time/-from-long 0 {:type ZonedDateTime})
             {:timezone "PST"}
             [:month :day :year])
-    => {:type java.time.ZonedDateTime, :long 0, 
+    => {:type java.time.ZonedDateTime, :long 0,
         :timezone "America/Los_Angeles",
         :year 1969, :month 12, :day 31}
 

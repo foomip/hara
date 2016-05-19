@@ -71,7 +71,7 @@
 
 (defn list
   "Lists watch functions through the IWatch protocol
- 
+
    (let [subject   (atom nil)
         observer  (atom nil)]
      (watch/add subject :a (fn [_ _ _ n]))
@@ -83,7 +83,7 @@
 
 (defn remove
   "Removes watch function through the IWatch protocol
- 
+
    (let [subject   (atom nil)
          observer  (atom nil)]
      (watch/add subject :a (fn [_ _ _ n]))
@@ -97,7 +97,7 @@
 
 (defn clear
   "Clears all watches form the object
- 
+
    (let [subject   (atom nil)
          observer  (atom nil)]
      (watch/add subject :a (fn [_ _ _ n]))
@@ -113,7 +113,7 @@
 
 (defn set
   "Sets a watch in the form of a map
- 
+
    (let [obj   (atom nil)]
     (watch/set obj {:a (fn [_ _ _ n])
                      :b (fn [_ _ _ n])})
@@ -127,7 +127,7 @@
 
 (defn copy
   "Copies watches from one object to another
- 
+
    (let [obj-a   (atom nil)
         obj-b   (atom nil)]
      (watch/set obj-a {:a (fn [_ _ _ n])

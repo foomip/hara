@@ -312,7 +312,7 @@ It can be seen that we can simulate the actual speed of outputs by keeping the s
 
 (comment
   (def sch2 (scheduler {}))
-  
+
   (start! sch2)
 
   ;; ... nothing should happen ...
@@ -334,7 +334,7 @@ It can be seen that we can simulate the actual speed of outputs by keeping the s
   ;;  ... wait 2 seconds ...
 
   ;;> {:data "foo"}
-  
+
   ;;  ... continue outputting {:data "foo"} every 2 seconds
   )
 
@@ -345,13 +345,13 @@ It can be seen that we can simulate the actual speed of outputs by keeping the s
 (comment
 
   (reschedule-task sch2 :hello "/5 * * * * * *")
-  
+
   ;;> {:data "foo"}
 
   ;;  ... wait 5 seconds ...
 
   ;;> {:data "foo"}
-  
+
   ;;  ... continue outputting {:data "foo"} every 5 seconds
   )
 
@@ -362,13 +362,13 @@ It can be seen that we can simulate the actual speed of outputs by keeping the s
 (comment
 
   (reparametise-task sch2 :hello {:data "bar"})
-  
+
   ;;> {:data "bar"}
 
   ;;  ... wait 5 seconds ...
 
   ;;> {:data "bar"}
-  
+
   ;;  ... continue outputting {:data "bar"} every 5 seconds
   )
 
@@ -390,13 +390,13 @@ It can be seen that we can simulate the actual speed of outputs by keeping the s
 (comment
 
   (enable-task sch2 :hello)
-  
+
   ;;> {:data "bar"}
 
   ;;  ... wait 5 seconds ...
 
   ;;> {:data "bar"}
-  
+
   ;;  ... continue outputting {:data "bar"} every 5 seconds
   )
 
@@ -406,7 +406,7 @@ It can be seen that we can simulate the actual speed of outputs by keeping the s
 
 (comment
   (delete-task sch2 :hello)
-  
+
   ;; ... output stops ...
   )
 
@@ -450,11 +450,11 @@ It can be seen that we can simulate the actual speed of outputs by keeping the s
   ;;> #<Instant 2016-03-05T03:24:06Z>
 
   ;;  ... wait 2 seconds ...
-  
+
   ;;> #<Instant 2016-03-05T03:24:08Z>
 
   ;;  ... printing out instances of java.time.Instant every 2 seconds ...
-  
+
   (stop! sch2))
 
 [[:section {:title "Date as data"}]]
@@ -468,19 +468,19 @@ It can be seen that we can simulate the actual speed of outputs by keeping the s
                        {}
                        {:clock {:type "clojure.lang.PersistentArrayMap"
                                 :timezone "GMT"}}))
-  
+
   (start! sch2)
 
   ;;> {:day 6, :hour 20, :timezone GMT, :second 38, :month 3,
   ;;   :type clojure.lang.PersistentHashMap, :year 2016, :millisecond 0, :minute 30}
 
   ;;  ... wait 2 seconds ...
-  
+
   ;;> {:day 6, :hour 20, :timezone GMT, :second 40, :month 3,
   ;;   :type clojure.lang.PersistentHashMap, :year 2016, :millisecond 0, :minute 30}
-  
+
   ;;  ... printing out instances of java.time.Instant every 2 seconds ...
-  
+
   (stop! sch2))
 
 [[:section {:title "Timezone"}]]
@@ -494,11 +494,11 @@ It can be seen that we can simulate the actual speed of outputs by keeping the s
                        {}
                        {:clock {:type "java.util.Calendar"
                                 :timezone "EST"}}))
-  
+
   (start! sch2)
 
   ;;> #inst "2016-03-06T15:37:38.000-05:00"
-  
+
   ;;  ... wait 2 seconds ...
 
   ;;> #inst "2016-03-06T15:37:40.000-05:00"
@@ -670,7 +670,7 @@ It can be seen that we can simulate the actual speed of outputs by keeping the s
 (comment
 
   (start! sch2)
-  
+
   ... and again we wait ...
 
   (count (list-instances sch2))
@@ -690,7 +690,7 @@ It can be seen that we can simulate the actual speed of outputs by keeping the s
 (comment
 
   (start! sch2)
-  
+
   ... and again we wait ...
 
   (count (list-instances sch2))
@@ -722,7 +722,7 @@ It can be seen that we can simulate the actual speed of outputs by keeping the s
 `hara.io.scheduler` allows the user to select from a few different time implementations and so while new projects can start with the new `java.time.Instant` entry, or even the clojure map representation of time. However, many projects will still be working with [joda-time](http://www.joda.org/joda-time/) and this has been supported through another project - [hara.time.joda](https://github.com/zcaudate/hara.time.joda), which provides joda-time extensions to `hara.time`."
 
 "To upgrade to `cronj` to `hara.io.scheduler`, all that needs to be done is to add to `project.clj` dependencies:
- 
+
     [im.chit/hara.io.scheduler \"{{PROJECT.version}}\"]
     [im.chit/hara.time.joda    \"{{PROJECT.version}}\"]
 
@@ -745,7 +745,7 @@ Apart from the initial call to include the scheduler, require the `hara.time.jod
                        :schedule "* * * * * * *"
                        :enabled  true
                        :opts     {:home "/home/cronj"}}
-                      
+
                       {:id       :t2
                        :handler  (fn [dt opts] (println dt) (Thread/sleep 5000))
                        :schedule "* * * * * * *"
@@ -781,7 +781,7 @@ Apart from the initial call to include the scheduler, require the `hara.time.jod
                      :interval 2}}))
   (sch/start! sch)
 
-  
+
   ;;>#<DateTime 2016-03-07T07:47:04.000+05:30>
   ;;>#<DateTime 2016-03-07T07:47:04.000+05:30>
 
@@ -791,7 +791,7 @@ Apart from the initial call to include the scheduler, require the `hara.time.jod
 
   ;;>#<DateTime 2016-03-07T07:47:06.000+05:30>
   ;;>#<DateTime 2016-03-07T07:47:06.000+05:30>
-  
+
   (sch/stop! sch))
 
 "The upgrade is complete."

@@ -22,7 +22,7 @@
      (defn inc2 [x] (+ 1 x))
      (-> 1 inc1 inc2)])
   => 3
-  
+
   "All created vars will be destroyed after evaluation."
 
   (resolve 'inc1) => nil)

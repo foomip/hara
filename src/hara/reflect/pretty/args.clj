@@ -18,7 +18,7 @@
 
 (defn args-classify
   "classifies inputs into `.?` and `.*` macros through matching argument parameters to different inputs
- 
+
    (map (fn [[i x]] [i (args-classify x)])
         {0  :by-name     ;; sort - :by-params, :by-modifiers, :by-type
          1  :tag         ;; display - :name, :params, :modifiers, :type, :attributes,
@@ -64,9 +64,9 @@
 
 (defn args-convert
   "converts any symbol in `args` to its primitive class
- 
+
    (args-convert ['byte]) => [Byte/TYPE]
- 
+
    (args-convert ['byte Class]) => [Byte/TYPE Class]"
   {:added "2.1"}
   [args]
@@ -86,13 +86,13 @@
 
 (defn args-group
   "group inputs together into their respective categories
- 
+
    (args-group [\"toString\" :public :tag #{String}])
    => {:name [\"toString\"]
        :modifiers [:public]
        :select-terms [:tag]
        :origins [#{java.lang.String}]}
- 
+
    (args-group ['int 3 :#])
    {:type [int], :num-params [3], :merge [:#]}"
   {:added "2.1"}

@@ -13,7 +13,7 @@
 
 ^{:refer hara.object.enum/enum-values :added "2.2"}
 (fact "Returns all values of an enum type"
-  
+
   (->> (enum-values ElementType)
        (map str))
   => (contains "TYPE" "FIELD" "METHOD" "PARAMETER" "CONSTRUCTOR"

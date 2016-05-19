@@ -6,9 +6,9 @@
 
 (defn get
   "Like deref but is extensible through the IStateGet protocol
- 
+
    (state/get (atom 1)) => 1
- 
+
    (state/get (ref 1)) => 1"
   {:added "2.1"}
   ([obj] (get obj nil))
@@ -17,7 +17,7 @@
 
 (defn set
   "Like reset! but is extensible through the IStateSet protocol
- 
+
    (let [a (atom nil)]
      (state/set a 1)
      @a) => 1"
@@ -38,11 +38,11 @@
 
 (defn update
   "Like swap! but is extensible through the IStateSet protocol
- 
+
    (let [a (atom 0)]
      (state/update a + 1)
      @a) => 1
- 
+
    "
   {:added "2.1"}
   ([obj f]
@@ -60,7 +60,7 @@
 
 (defn dispatch
   "Updates the value contained within a container using another thread.
- 
+
    (let [res (state/dispatch (atom 0)
                 (fn [x]  (inc x)))]
      res   => future?
@@ -102,7 +102,7 @@
   IStateSet
   (-empty-state [obj _]
     (-set-state obj nil nil))
-  
+
   (-set-state [obj _ v]
     (send obj (fn [_] v)))
 

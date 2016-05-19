@@ -10,10 +10,10 @@
 
 (defn expand-data
   "expands shorthand data into a map
-   
+
    (expand-data :hello)
    => {:hello true}
- 
+
    (expand-data [:hello {:world \"foo\"}])
    => {:world \"foo\", :hello true}"
   {:added "2.2"}
@@ -25,16 +25,16 @@
 
 (defn check-data
   "checks to see if the data corresponds to a template
- 
+
    (check-data {:hello true} :hello)
    => true
- 
+
    (check-data {:hello true} {:hello true?})
    => true
- 
+
    (check-data {:hello true} '_)
    => true
- 
+
    (check-data {:hello true} #{:hello})
    => true"
   {:added "2.2"}
@@ -52,12 +52,12 @@
 
         (or (fn? chk) (keyword? chk))
         (chk data)
-        
+
         (set? chk)
         (some #(check-data data %) chk)
-        
+
         (= '_ chk) true
-        
+
         :else
         (throw (Exception. (str chk " is not a valid checker")))))
 

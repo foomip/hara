@@ -21,7 +21,7 @@
 
 (comment
 
-  
+
   (deflistener print-log :log
     ev
     (println ev))
@@ -51,11 +51,11 @@
                                          :state  {:a 1 :b 2}
                                          :limit 10
                                          :wait  100}
-                                 
+
                                  }
                                 [:id :params :instance]))
   (def res (two-procedure 200 {:a 1} {:mode :async :cached false}))
-  
+
   @res
   {:mode :sync}
 

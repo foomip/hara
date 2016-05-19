@@ -4,7 +4,7 @@
             [hara.namespace.import :as ns]))
 
 (ns/import
- hara.reflect.common              [context-class]              
+ hara.reflect.common              [context-class]
  hara.reflect.core.apply          [apply-element]
  hara.reflect.core.class          [class-info class-hierarchy]
  hara.reflect.core.delegate       [delegate]

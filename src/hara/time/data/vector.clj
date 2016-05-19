@@ -9,16 +9,16 @@
   "converts an instant to an array representation
    (to-vector 0 {:timezone \"GMT\"} :all)
    => [1970 1 1 0 0 0 0]
- 
+
    (to-vector (Date. 0) {:timezone \"GMT\"} :day)
    => [1970 1 1]
- 
+
    (to-vector (common/calendar (Date. 0)
                                (TimeZone/getTimeZone \"EST\"))
               {}
               [:month :day :year])
    => [12 31 1969]
- 
+
    (to-vector (common/calendar (Date. 0)
                                (TimeZone/getTimeZone \"EST\"))
               {:timezone \"GMT\"}
@@ -32,7 +32,7 @@
           (mapv t ks)
           (-> (map/from-map t (assoc opts :type java.util.Calendar))
               (to-vector opts ks)))
-        
+
         :else
         (let [tmeta (time/-time-meta (class t))
               [p pmeta] (if-let [{:keys [proxy via]} (-> tmeta :map :to)]
@@ -45,7 +45,7 @@
 
                          (= :all ks)
                          (reverse common/+default-keys+)
-                         
+
                          (keyword? ks)
                          (->> common/+default-keys+
                               (drop-while #(not= % ks))

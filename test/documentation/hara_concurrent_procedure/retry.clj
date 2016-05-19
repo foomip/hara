@@ -31,7 +31,7 @@ When a function throws an exception, we wish to then be able to adjust and calml
   ;; Started Function
   ;; <1000 ms pause>
   ;; Started Function
-  ;; Exception Hello 
+  ;; Exception Hello
   )
 
 "Notice that the function starts, errors and then retries 3 times, pausing 1000ms before each retry. Once it reaches the limit of 3, the function gives up and throws the error."
@@ -62,7 +62,7 @@ When a function throws an exception, we wish to then be able to adjust and calml
   ;; Started Function
   ;; STATE: nil WAITING 2000 ms
   ;; Started Function
-  ;; Exception Hello 
+  ;; Exception Hello
   )
 
 [[:section {:title "Arguments"}]]
@@ -150,7 +150,7 @@ When a function throws an exception, we wish to then be able to adjust and calml
 "Lets talk a little about `state`. In many failure scenarios, there are particular strategies that one needs to apply in order to mitigate a particular situation. `:apply` is a way to manipulate the state based upon the previous state and the exception that occurred. Using a combination of `:apply` and `:wait` will allow most retry strategies to be expressed."
 
 "Some more sample `:handlers` can be seen below. The parameters outside of the `:handlers` vector are default values."
-  
+
 {:retry {:handlers [{:on #{Exception}
                      :apply   (fn [state e])
                      :limit   (fn [state count])
