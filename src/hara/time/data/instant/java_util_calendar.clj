@@ -27,7 +27,7 @@
   (cond (= (time/-get-timezone t)
              (string/-to-string tz))
         t
-        
+
         :else
         (common/calendar (.getTime t)
                          (coerce/coerce-zone tz {:type TimeZone}))))
@@ -42,7 +42,7 @@
   (-has-timezone? [t] true)
   (-get-timezone  [t] (string/-to-string (.getTimeZone t)))
   (-with-timezone [t tz] (with-timezone t tz))
- 
+
   time/IRepresentation
   (-millisecond  [t _] (.get t Calendar/MILLISECOND))
   (-second       [t _] (.get t Calendar/SECOND))
@@ -64,7 +64,7 @@
   (-get-timezone  [t] (string/-to-string (.getTimeZone t)))
   (-with-timezone [t tz] (with-timezone t tz))
 
-  
+
   time/IRepresentation
   (-millisecond  [t _] (.get t Calendar/MILLISECOND))
   (-second       [t _] (.get t Calendar/SECOND))

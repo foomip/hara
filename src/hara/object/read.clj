@@ -6,7 +6,7 @@
 
 (defn meta-read
   "accesses the read-attributes of an object
- 
+
    (read/meta-read Pet)
    => (contains {:class test.Pet
                  :methods (contains {:name fn? :species fn?})})"
@@ -60,7 +60,7 @@
   "creates the object from a string or map
    (read/to-data \"hello\")
    => \"hello\"
- 
+
    (read/to-data (write/from-map {:name \"hello\" :species \"dog\"} Pet))
    => {:name \"hello\", :species \"dog\"}"
   {:added "2.3"}

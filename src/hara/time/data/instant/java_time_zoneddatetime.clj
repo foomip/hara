@@ -31,7 +31,7 @@
   (-with-timezone [t tz] (.withZoneSameInstant
                           t
                           ^ZoneId (coerce/coerce-zone tz {:type ZoneId})))
-  
+
   time/IRepresentation
   (-millisecond  [t _] (/ (.getNano t) 1000000))
   (-second       [t _] (.getSecond t))

@@ -10,8 +10,8 @@
   (resolve-ns 'clojure.core/some) => 'clojure.core
 
   (resolve-ns 'clojure.hello) => nil)
-  
+
 ^{:refer hara.namespace.resolve/ns-vars :added "2.1"}
 (fact "lists the vars in a particular namespace"
-  
+
   (ns-vars 'hara.namespace.resolve) => '[ns-vars resolve-ns])

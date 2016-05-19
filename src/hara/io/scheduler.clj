@@ -74,7 +74,7 @@
 
 (defn simulate
   "simulates the scheduler running for a certain interval:
- 
+
    (simulate
    (scheduler {:print-task {:handler (fn [t params instance]
                                         (str t params))

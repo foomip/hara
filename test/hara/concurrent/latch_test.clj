@@ -25,7 +25,7 @@
   (swap! master inc)
   @master => 2
   @slave => 2
-  
+
   (unlatch master slave)
   (swap! master inc)
   @master => 3

@@ -22,7 +22,7 @@
 
 (defn list-items
   "returns a list of keys to items in the group
- 
+
    (list-items people)
    => [:andy :bob]"
   {:added "2.2"}
@@ -74,13 +74,13 @@
                                (assoc out (key item) (constructor item)))
                              items
                              data)
-                                    
+
                      (map? data)
                      (reduce-kv (fn [out k item]
                                   (assoc out k (constructor (assoc item key k))))
                                 items
                                 data)
-                     
+
                      :else items))))
 
 (defn install-items

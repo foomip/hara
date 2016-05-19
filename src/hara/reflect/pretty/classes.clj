@@ -7,7 +7,7 @@
 
 (defn type->raw
   "converts to the raw representation
- 
+
    (type->raw Class) => \"java.lang.Class\"
    (type->raw 'byte) => \"B\""
   {:added "2.1"}
@@ -20,7 +20,7 @@
 
 (defn raw-array->string
   "converts the raw representation to a more readable form
- 
+
    (raw-array->string \"[[B\") => \"byte[][]\"
    (raw-array->string \"[Ljava.lang.Class;\") => \"java.lang.Class[]\""
   {:added "2.1"}
@@ -31,7 +31,7 @@
 
 (defn raw->string
   "converts the raw array representation to a human readable form
- 
+
    (raw->string \"[[V\") => \"void[][]\"
    (raw->string \"[Ljava.lang.String;\") => \"java.lang.String[]\""
   {:added "2.1"}
@@ -43,7 +43,7 @@
 
 (defn string-array->raw
   "converts the human readable form to a raw string
- 
+
    (string-array->raw \"java.lang.String[]\")[Ljava.lang.String;"
   {:added "2.1"}
   ([s] (string-array->raw s false))
@@ -58,9 +58,9 @@
 
 (defn string->raw
   "converts any string to it's raw representation
- 
+
    (string->raw \"java.lang.String[]\") => \"[Ljava.lang.String;\"
- 
+
    (string->raw \"int[][][]\") => \"[[[I\""
   {:added "2.1"}
   [v]
@@ -69,22 +69,22 @@
 
 (defmulti class-convert-impl
   "converts a string to its representation. Implementation function
- 
+
    (class-convert-impl Class  :string) => \"java.lang.Class\"
- 
+
    (class-convert-impl \"byte\" :class) => Byte/TYPE
- 
+
    (class-convert-impl \"byte\" :container) => Byte"
   {:added "2.1"}
   (fn [v to] (type v)))
 
 (defn class-convert
   "Converts a class to its representation.
- 
+
    (class-convert \"byte\") => Byte/TYPE
- 
+
    (class-convert 'byte :string) => \"byte\"
- 
+
    (class-convert (Class/forName \"[[B\") :string) => \"byte[][]\""
   {:added "2.1"}
   ([v] (class-convert v :class))

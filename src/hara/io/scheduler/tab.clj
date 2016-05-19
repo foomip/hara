@@ -29,10 +29,10 @@
 (defn *-
   "takes a string and returns something
    (*-) => :*
- 
+
    (map (*- 2) (range 60))
    => (map even? (range 60))
- 
+
    "
   {:added "2.2"}
   ([]      :*)
@@ -61,16 +61,16 @@
 
 (defn parse-tab
   "takes a string and creates matches
- 
+
    (parse-tab \"* * * * * * *\")
    => '[(:*) (:*) (:*) (:*) (:*) (:*) (:*)]
- 
+
    (parse-tab \"* * * * * *\")
    => '[(0) (:*) (:*) (:*) (:*) (:*) (:*)]
- 
+
    (parse-tab \"* * * * *\")
    => (throws Exception)
- 
+
    "
   {:added "2.2"}
   [s]
@@ -89,10 +89,10 @@
 ;; dt-arr methods
 (defn to-time-array
   "takes a time element and returns an array representation
-   
+
    (to-time-array #inst \"1970-01-01T00:00:00.000-00:00\" \"UTC\")
    => [0 0 0 4 1 1 1970]
- 
+
    (to-time-array #inst \"1970-01-01T00:00:00.000-00:00\" \"GMT-10\")
    => [0 0 14 3 31 12 1969]"
   {:added "2.2"}
@@ -102,13 +102,13 @@
 
 (defn match-element?
   "takes an element of the array and compares with a single matcher
- 
+
    (match-element? 1 :*)
    => true
-   
+
    (match-element? 1 [2 3 4])
    => false
- 
+
    "
   {:added "2.2"}
   [dt-e tab-e]
@@ -120,11 +120,11 @@
 
 (defn match-array?
   "takes an array representation for match comparison
- 
+
    (match-array? [30 14 0 4 26 7 2012]
                  [(*- 0 60 5) (*-) (*-) (*-) (*-) (*-) (*-)])
    => true
- 
+
    (match-array? [31 14 0 4 26 7 2012]
                  [(*- 0 60 5) (*-) (*-) (*-) (*-) (*-) (*-)])
    => false"

@@ -5,7 +5,7 @@
 
 (defn class-info
   "Lists class information
- 
+
    (class-info String)
    => (contains {:name \"java.lang.String\"
                  :hash anything
@@ -17,7 +17,7 @@
 
 (defn class-hierarchy
   "Lists the class and interface hierarchy for the class
- 
+
    (class-hierarchy String)
    => [java.lang.String
        [java.lang.Object

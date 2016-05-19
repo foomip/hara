@@ -36,7 +36,7 @@
 
   (time/-from-long 0 {:type Date :timezone "Asia/Kolkata"})
   => #inst "1970-01-01T00:00:00.000-00:00"
-  
+
   (time/-from-long 0 {:type Long})
   => 0
 
@@ -46,7 +46,7 @@
   (-> ^Calendar (time/-from-long 0 {:type Calendar :timezone "Asia/Kolkata"})
       (.getTimeZone)
       (string/-to-string))
-  => "Asia/Kolkata" 
+  => "Asia/Kolkata"
 
   (time/-from-long 0 {:type Timestamp})
   #inst "1970-01-01T00:00:00.000000000-00:00"
@@ -54,7 +54,7 @@
   (time/-from-long 0 {:type clojure.lang.PersistentArrayMap :timezone "GMT"})
   => {:type clojure.lang.PersistentArrayMap, :timezone "GMT", :long 0,
       :year 1970, :month 1, :day 1, :hour 0, :minute 0, :second 0, :millisecond 0}
-  
+
   (time/-from-long 0 {:type clojure.lang.PersistentArrayMap :timezone "Asia/Kolkata"})
   => {:type clojure.lang.PersistentArrayMap, :timezone "Asia/Kolkata", :long 0,
       :year 1970, :month 1, :day 1, :hour 5, :minute 30, :second 0, :millisecond 0})
@@ -99,7 +99,7 @@
   (fact "time/-now for java.time datastructures"
     (time/-now {:type Instant})
     => #(instance? Instant %)
-    
+
     (time/-now {:type Clock})
     => #(instance? Clock %)
 
@@ -116,32 +116,32 @@
     (-> (time/-from-long 0 {:type Instant})
         (map/to-map {:timezone "GMT"} common/+default-keys+))
     => {:type java.time.Instant
-        :timezone "GMT", :long 0, 
+        :timezone "GMT", :long 0,
         :year 1970, :month 1, :day 1, :hour 0,
         :minute 0, :second 0 :millisecond 0}
 
     (-> (time/-from-long 0 {:type Clock :timezone "GMT"})
         (map/to-map {:timezone "Asia/Kolkata"} common/+default-keys+))
-    
+
     => {:type java.time.Clock$FixedClock
-        :timezone "Asia/Kolkata", :long 0, 
+        :timezone "Asia/Kolkata", :long 0,
         :year 1970, :month 1, :day 1, :hour 5,
         :minute 30, :second 0 :millisecond 0}
-    
+
     (-> (time/-from-long 0 {:type Clock :timezone "Asia/Kolkata"})
         (time/-get-timezone))
     => "Asia/Kolkata"
-    
+
     (-> (time/-from-long 0 {:type Clock :timezone "Asia/Kolkata"})
         (map/to-map {} common/+default-keys+))
     => {:type java.time.Clock$FixedClock,
-        :timezone "Asia/Kolkata", :long 0, 
+        :timezone "Asia/Kolkata", :long 0,
         :year 1970, :month 1, :day 1, :hour 5,
         :minute 30, :second 0 :millisecond 0}
-    
+
     (-> (time/-from-long 0 {:type ZonedDateTime :timezone "Asia/Kolkata"})
         (map/to-map {} common/+default-keys+))
     => {:type java.time.ZonedDateTime
-        :timezone "Asia/Kolkata", :long 0, 
+        :timezone "Asia/Kolkata", :long 0,
         :year 1970, :month 1, :day 1, :hour 5,
         :minute 30, :second 0 :millisecond 0}))

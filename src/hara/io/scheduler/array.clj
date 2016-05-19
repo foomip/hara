@@ -19,7 +19,7 @@
   (let [procmap (cond (fn? props)
                       {:name   name
                        :handler props}
-                      
+
                       (map? props)
                       (assoc props :name name))
         procmap (merge procmap (get config name))
@@ -52,5 +52,5 @@
   ;; update registry
   (dosync (ova/map! handlers assoc-in [:registry] registry)
           (ova/map! handlers assoc-in [:cache] cache))
-  
+
   arr)

@@ -44,7 +44,7 @@ Clojure libraries for time are:
 
 - [clj-time](https://github.com/clj-time/clj-time) wraps joda and is the standard for dealing with time in clojure
 - [clojure.joda-time](https://github.com/dm3/clojure.joda-time) is another wrapper around joda time
-- [clojure.java-time](https://github.com/dm3/clojure.java-time) is a wrapper around the jdk1.8 `java.time` package. 
+- [clojure.java-time](https://github.com/dm3/clojure.java-time) is a wrapper around the jdk1.8 `java.time` package.
 - [duckling](https://github.com/wit-ai/duckling) is a super amazing library for temporal expressions
 
 Ignoring [duckling](https://github.com/wit-ai/duckling), which is about ten years ahead of it's time, the other three implementations faithfully wrap the underlying time library. While there are advantages in such an apprach, design decisions at the object level may impact the usability at the wrapper level.
@@ -89,7 +89,7 @@ An example of extensiblity can be seen with [hara.time.joda](https://github.com/
 
 "The default type can be changed by passing in another parameter, currently `hara.time` supports the following options:
 
-- `java.lang.Long`    
+- `java.lang.Long`
 - `java.util.Date`
 - `java.util.Calendar`
 - `java.sql.Timestamp`
@@ -154,7 +154,7 @@ An example of extensiblity can be seen with [hara.time.joda](https://github.com/
 
 "accesses the year representated by the instant"
 
-(fact 
+(fact
   (t/year 0 {:timezone "GMT"}) => 1970
 
   (t/year (Date. 0) {:timezone "EST"}) => 1969)
@@ -163,7 +163,7 @@ An example of extensiblity can be seen with [hara.time.joda](https://github.com/
 
 "accesses the month representated by the instant"
 
-(fact 
+(fact
   (t/month 0 {:timezone "GMT"}) => 1
   ^:hidden
   (t/month (Date. 0) {:timezone "EST"}) => 12)
@@ -172,7 +172,7 @@ An example of extensiblity can be seen with [hara.time.joda](https://github.com/
 
 "accesses the day representated by the instant"
 
-(fact 
+(fact
   (t/day 0 {:timezone "GMT"}) => 1
 
   (t/day (Date. 0) {:timezone "EST"}) => 31)
@@ -181,7 +181,7 @@ An example of extensiblity can be seen with [hara.time.joda](https://github.com/
 
 "accesses the day of week representated by the instant"
 
-(fact 
+(fact
   (t/day-of-week 0 {:timezone "GMT"}) => 4
 
   (t/day-of-week (Date. 0) {:timezone "EST"}) => 3)
@@ -190,7 +190,7 @@ An example of extensiblity can be seen with [hara.time.joda](https://github.com/
 
 "accesses the hour representated by the instant"
 
-(fact 
+(fact
   (t/hour 0 {:timezone "GMT"}) => 0
 
   (t/hour (Date. 0) {:timezone "Asia/Kolkata"}) => 5)
@@ -199,7 +199,7 @@ An example of extensiblity can be seen with [hara.time.joda](https://github.com/
 
 "accesses the minute representated by the instant"
 
-(fact 
+(fact
   (t/minute 0 {:timezone "GMT"}) => 0
 
   (t/minute (Date. 0) {:timezone "Asia/Kolkata"}) => 30)
@@ -208,14 +208,14 @@ An example of extensiblity can be seen with [hara.time.joda](https://github.com/
 
 "accesses the second representated by the instant"
 
-(fact 
+(fact
   (t/second 1000 {:timezone "GMT"}) => 1)
 
 [[:subsection {:title "millisecond"}]]
 
 "accesses the millisecond representated by the instant"
 
-(fact 
+(fact
   (t/millisecond 1010 {:timezone "GMT"}) => 10)
 
 
@@ -227,7 +227,7 @@ An example of extensiblity can be seen with [hara.time.joda](https://github.com/
   (t/to-map 0 {:timezone "GMT"})
   => {:type java.lang.Long,
       :timezone "GMT", :long 0
-      :year 1970, :month 1, :day 1, 
+      :year 1970, :month 1, :day 1,
       :hour 0, :minute 0, :second 0, :millisecond 0})
 
 "`from-map`, `to-map`, `from-long` and `to-long` can be used to convert datetime to the representation of data and back"
@@ -243,7 +243,7 @@ An example of extensiblity can be seen with [hara.time.joda](https://github.com/
 "Here are a couple more examples of the flexibilty of these methods:"
 
 (fact
-  (t/from-map {:timezone "GMT", 
+  (t/from-map {:timezone "GMT",
                :year 1970, :month 1, :day 1, :day-of-week 4,
                :hour 0, :minute 0, :second 0, :millisecond 0}
               {:type java.util.Date})
@@ -318,14 +318,14 @@ An example of extensiblity can be seen with [hara.time.joda](https://github.com/
 
 (fact
   (-> (t/from-map {:type java.time.ZonedDateTime
-                   :timezone "GMT", 
-                   :year 1970, :month 1, :day 1, 
+                   :timezone "GMT",
+                   :year 1970, :month 1, :day 1,
                    :hour 0, :minute 0, :second 0, :millisecond 0})
       (t/minus    {:years 10 :months 1 :weeks 4 :days 2})
       (t/to-map {:timezone "GMT"}))
   => {:type java.time.ZonedDateTime, :timezone "GMT",
       :long -320803200000
-      :year 1959, :month 11, :day 2, 
+      :year 1959, :month 11, :day 2,
       :hour 0, :minute 0, :second 0, :millisecond 0})
 
 
@@ -337,7 +337,7 @@ An example of extensiblity can be seen with [hara.time.joda](https://github.com/
 
 "checks if the instance contains a timezone"
 
-(fact 
+(fact
   (t/has-timezone? 0) => false
 
   (t/has-timezone? (common/calendar (Date. 0)
@@ -348,7 +348,7 @@ An example of extensiblity can be seen with [hara.time.joda](https://github.com/
 
 "returns the contained timezone if exists"
 
-(fact 
+(fact
   (t/get-timezone 0) => nil
 
   (t/get-timezone (common/calendar (Date. 0)
@@ -359,9 +359,9 @@ An example of extensiblity can be seen with [hara.time.joda](https://github.com/
 
 "returns the same instance in a different timezone"
 
-(fact 
+(fact
   (t/with-timezone 0 "EST") => 0
-  
+
   (t/to-map (t/with-timezone (common/calendar (Date. 0)
                                               (TimeZone/getTimeZone "GMT"))
               "EST"))
@@ -377,7 +377,7 @@ An example of extensiblity can be seen with [hara.time.joda](https://github.com/
 
 "compares dates, retruns true if all inputs are the same"
 
-(fact 
+(fact
   (t/equal 1 (Date. 1) (common/calendar (Date. 1) (TimeZone/getTimeZone "GMT")))
   => true)
 
@@ -385,7 +385,7 @@ An example of extensiblity can be seen with [hara.time.joda](https://github.com/
 
 "compare dates, returns true if t1 is before t2, etc"
 
-(fact 
+(fact
   (t/before 0 (Date. 1) (common/calendar (Date. 2) (TimeZone/getTimeZone "GMT")))
   => true)
 
@@ -393,7 +393,7 @@ An example of extensiblity can be seen with [hara.time.joda](https://github.com/
 
 "compare dates, returns true if t1 is after t2, etc"
 
-(fact 
+(fact
   (t/after 2 (Date. 1) (common/calendar (Date. 0) (TimeZone/getTimeZone "GMT")))
   => true)
 
@@ -402,7 +402,7 @@ An example of extensiblity can be seen with [hara.time.joda](https://github.com/
 
 "returns the latest date out of a range of inputs"
 
-(fact 
+(fact
   (t/latest (Date. 0) (Date. 1000) (Date. 20000))
   => #inst "1970-01-01T00:00:20.000-00:00")
 
@@ -410,7 +410,7 @@ An example of extensiblity can be seen with [hara.time.joda](https://github.com/
 
 "returns the earliest date out of a range of inputs"
 
-(fact 
+(fact
   (t/earliest (Date. 0) (Date. 1000) (Date. 20000))
   => #inst "1970-01-01T00:00:00.000-00:00")
 
@@ -419,10 +419,10 @@ An example of extensiblity can be seen with [hara.time.joda](https://github.com/
 
 "Any of the dates can be coerced to and from each other:"
 
-(fact 
+(fact
   (t/coerce 0 {:type Date})
   => #inst "1970-01-01T00:00:00.000-00:00"
-  
+
   (t/coerce {:type clojure.lang.PersistentHashMap,
              :timezone "PST", :long 915148800000,
              :year 1999, :month 1, :day 1, :hour 0, :minute 0 :second 0, :millisecond 0}
@@ -436,11 +436,11 @@ An example of extensiblity can be seen with [hara.time.joda](https://github.com/
 
 "truncates the time to a particular field"
 
-(fact 
+(fact
   (t/truncate #inst "1989-12-28T12:34:00.000-00:00"
               :hour {:timezone "GMT"})
   => #inst "1989-12-28T12:00:00.000-00:00"
-  
+
   (t/truncate #inst "1989-12-28T12:34:00.000-00:00"
               :year {:timezone "GMT"})
   => #inst "1989-01-01T00:00:00.000-00:00"
@@ -455,12 +455,12 @@ An example of extensiblity can be seen with [hara.time.joda](https://github.com/
 
 "adjust fields of a particular time"
 
-(fact 
+(fact
   (t/adjust (Date. 0) {:year 2000 :second 10} {:timezone "GMT"})
   => #inst "2000-01-01T00:00:10.000-00:00"
   ^:hidden
-  (t/adjust {:year 1970, :month 1 :day 1, :day-of-week 4, 
-             :hour 0 :minute 0 :second 0 :millisecond 0, 
+  (t/adjust {:year 1970, :month 1 :day 1, :day-of-week 4,
+             :hour 0 :minute 0 :second 0 :millisecond 0,
              :timezone "GMT"}
             {:year 1999})
   => {:type clojure.lang.PersistentHashMap,

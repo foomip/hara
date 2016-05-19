@@ -41,7 +41,7 @@
 (defn wait-on
   "Waits for a long running multithreaded function to update the
    ref. Used for testing purposes
- 
+
   (let [atm (atom 0)
          f (fn [obj] (dispatch obj #(do (Thread/sleep 300)
                                        (inc %))))]

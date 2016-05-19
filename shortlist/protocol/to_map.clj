@@ -18,7 +18,7 @@
   clojure.lang.Keyword
   (to-string [x]
     [(subs (str x) 1) {:tag :keyword}])
-    
+
   Class
   (to-string [x]
     [(subs (str x) 1) {:tag :class}]))

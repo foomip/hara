@@ -4,8 +4,8 @@
             [hara.common.hash]
             [hara.common.error]
             [hara.common.primitives]))
-            
-(ns/import 
+
+(ns/import
   hara.common.checks      :all
   hara.common.error       :all
   hara.common.hash        :all

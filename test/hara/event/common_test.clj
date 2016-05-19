@@ -4,7 +4,7 @@
 
 ^{:refer hara.event.common/expand-data :added "2.2"}
 (fact "expands shorthand data into a map"
-  
+
   (expand-data :hello)
   => {:hello true}
 

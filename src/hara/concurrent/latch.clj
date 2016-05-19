@@ -12,13 +12,13 @@
 (defn latch
   "Followes two irefs together so that when `master`
    changes, the `slave` will also be updated.
- 
+
    (def master (atom 1))
    (def slave (atom nil))
- 
+
    (latch master slave #(* 10 %))
    (swap! master inc)
- 
+
    @master => 2
    @slave => 20"
   {:added "2.1"}
@@ -32,15 +32,15 @@
 
 (defn unlatch
   "Removes the latch so that updates will not be propagated
- 
+
    (def master (atom 1))
    (def slave (atom nil))
- 
+
    (latch master slave)
    (swap! master inc)
    @master => 2
    @slave => 2
-   
+
    (unlatch master slave)
    (swap! master inc)
    @master => 3

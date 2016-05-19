@@ -20,7 +20,7 @@
 
 ^{:refer hara.io.scheduler.tab/to-time-array :added "2.2"}
 (fact "takes a time element and returns an array representation"
-  
+
   (to-time-array #inst "1970-01-01T00:00:00.000-00:00" "UTC")
   => [0 0 0 4 1 1 1970]
 
@@ -49,13 +49,13 @@
 
   (match-element? 1 :*)
   => true
-  
+
   (match-element? 1 [2 3 4])
   => false
 
   ^:hidden
   (match-element? 1 [:*]) => true
-  
+
   (match-element? 1 [2 3 4 :*]) => true)
 
 ^{:refer hara.io.scheduler.tab/match-array? :added "2.2"}
