@@ -9,7 +9,7 @@
 
 (defn meta-write
   "accesses the write-attributes of an object
- 
+
    (write/meta-write DogBuilder)
    => (contains {:class test.DogBuilder
                  :empty fn?,
@@ -40,7 +40,7 @@
   "write fields of an object through setter methods
    (write/write-setters Dog)
    => {}
- 
+
    (keys (write/write-setters DogBuilder))
    => [:name]"
   {:added "2.3"}
@@ -127,8 +127,11 @@
              (into-array cls)))
 
       :else
-      (let [{:keys [from-string from-vector] :as mobj} (meta-write cls)]
+      (let [{:keys [from-clojure from-string from-vector] :as mobj} (meta-write cls)]
         (cond
+
+          from-clojure (from-clojure arg)
+
           ;; If input is a string and there is a from-string method
           (and (string? arg) from-string)
           (from-string arg)
@@ -136,7 +139,7 @@
           ;; If input is a string and there is a from-string method
           (and (vector? arg) from-vector)
           (from-vector arg)
-          
+
           ;; If the input is a map
           (map? arg)
           (from-map arg cls)

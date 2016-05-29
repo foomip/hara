@@ -6,7 +6,7 @@
 
 (defn meta-read
   "accesses the read-attributes of an object
- 
+
    (read/meta-read Pet)
    => (contains {:class test.Pet
                  :methods (contains {:name fn? :species fn?})})"
@@ -60,17 +60,19 @@
   "creates the object from a string or map
    (read/to-data \"hello\")
    => \"hello\"
- 
+
    (read/to-data (write/from-map {:name \"hello\" :species \"dog\"} Pet))
    => {:name \"hello\", :species \"dog\"}"
   {:added "2.3"}
   [obj]
   (let [cls (type obj)
-        {:keys [to-string to-map to-vector methods]} (meta-read cls)]
+        {:keys [to-clojure to-string to-map to-vector methods]} (meta-read cls)]
     (cond (nil? obj) nil
 
           (instance? java.util.Map obj)
           obj
+
+          to-clojure (to-clojure obj)
 
           to-string (to-string obj)
 
