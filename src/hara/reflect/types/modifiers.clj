@@ -39,13 +39,13 @@
 
 (defn int-to-modifiers
   "converts the modifier integer into human readable represenation
- 
+
    (int-to-modifiers 2r001100)
    => #{:protected :static}
- 
+
    (int-to-modifiers 128 :field)
    => #{:transient}
- 
+
    (int-to-modifiers 128 :method)
    => #{:varargs}"
   {:added "2.1"}
@@ -59,10 +59,10 @@
 
 (defn modifiers-to-int
   "converts the human readable represenation of modifiers into an int
- 
+
    (modifiers-to-int #{:protected :static})
    => 12
- 
+
    (modifiers-to-int #{:transient :field})
    => 128"
   {:added "2.1"}

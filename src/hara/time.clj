@@ -23,7 +23,7 @@
 (defn representation?
   "checks if an object implements the representation protocol
    (t/representation? 0) => false
- 
+
    (t/representation? (common/calendar (Date. 0) (TimeZone/getTimeZone \"GMT\")))
    => true"
   {:added "2.2"}
@@ -33,7 +33,7 @@
 (defn duration?
   "checks if an object implements the duration protocol
    (t/duration? 0) => true
- 
+
    (t/duration? {:weeks 1})
    => true"
   {:added "2.2"}
@@ -43,7 +43,7 @@
 (defn instant?
   "checks if an object implements the instant protocol
    (t/instant? 0) => true
- 
+
    (t/instant? (Date.)) => true"
   {:added "2.2"}
   [obj]
@@ -52,7 +52,7 @@
 (defn has-timezone?
   "checks if the instance contains a timezone
    (t/has-timezone? 0) => false
- 
+
    (t/has-timezone? (common/calendar (Date. 0)
                                      (TimeZone/getDefault)))
    => true"
@@ -63,7 +63,7 @@
 (defn get-timezone
   "returns the contained timezone if exists
    (t/get-timezone 0) => nil
- 
+
    (t/get-timezone (common/calendar (Date. 0)
                                     (TimeZone/getTimeZone \"EST\")))
    => \"EST\""
@@ -101,7 +101,7 @@
    (-> (t/from-long 0 {:timezone \"Asia/Kolkata\"
                        :type Calendar})
        (t/to-map))
-   
+
    => {:type java.util.GregorianCalendar,
        :timezone \"Asia/Kolkata\", :long 0
        :year 1970, :month 1, :day 1,
@@ -117,7 +117,7 @@
    (-> (t/from-long 0 {:timezone \"Asia/Kolkata\"
                        :type Date})
        (t/to-map {:timezone \"GMT\"} [:year :month :day]))
-   => {:type java.util.Date, :timezone \"GMT\", :long 0, 
+   => {:type java.util.Date, :timezone \"GMT\", :long 0,
        :year 1970, :month 1, :day 1}"
   {:added "2.2"}
   ([t] (to-map t {}))
@@ -127,7 +127,7 @@
          (if timezone
            (time/-with-timezone t timezone)
            t)
-         
+
          :else
          (map/to-map t opts ks))))
 
@@ -137,7 +137,7 @@
                 :timezone \"Asia/Kolkata\", :long 0
                 :year 1970, :month 1, :day 1,
                 :hour 5, :minute 30 :second 0, :millisecond 0}
-               
+
                {:timezone \"Asia/Kolkata\"
                 :type Date})
    => #inst \"1970-01-01T00:00:00.000-00:00\"
@@ -148,7 +148,7 @@
   ([t {:keys [type timezone] :as opts} fill]
    (cond (#{PersistentArrayMap PersistentHashMap} type)
          (time/-with-timezone t timezone)
-         
+
          :else
          (map/from-map t opts fill))))
 
@@ -176,7 +176,7 @@
 (defn year
   "accesses the year representated by the instant
    (t/year 0 {:timezone \"GMT\"}) => 1970
- 
+
    (t/year (Date. 0) {:timezone \"EST\"}) => 1969"
   {:added "2.2"}
   ([t] (year t {}))
@@ -195,7 +195,7 @@
 (defn day
   "accesses the day representated by the instant
    (t/day 0 {:timezone \"GMT\"}) => 1
- 
+
    (t/day (Date. 0) {:timezone \"EST\"}) => 31"
   {:added "2.2"}
   ([t] (day t {}))
@@ -205,7 +205,7 @@
 (defn day-of-week
   "accesses the day of week representated by the instant
    (t/day-of-week 0 {:timezone \"GMT\"}) => 4
- 
+
    (t/day-of-week (Date. 0) {:timezone \"EST\"}) => 3"
   {:added "2.2"}
   ([t] (day-of-week t {}))
@@ -215,7 +215,7 @@
 (defn hour
   "accesses the hour representated by the instant
    (t/hour 0 {:timezone \"GMT\"}) => 0
- 
+
    (t/hour (Date. 0) {:timezone \"Asia/Kolkata\"}) => 5"
   {:added "2.2"}
   ([t] (hour t {}))
@@ -225,7 +225,7 @@
 (defn minute
   "accesses the minute representated by the instant
    (t/minute 0 {:timezone \"GMT\"}) => 0
- 
+
    (t/minute (Date. 0) {:timezone \"Asia/Kolkata\"}) => 30"
   {:added "2.2"}
   ([t] (minute t {}))
@@ -302,7 +302,7 @@
   "adds a duration to the time
    (t/plus (Date. 0) {:weeks 2})
    => #inst \"1970-01-15T00:00:00.000-00:00\"
- 
+
    (t/plus (Date. 0) 1000)
    => #inst \"1970-01-01T00:00:01.000-00:00\""
   {:added "2.2"}
@@ -349,7 +349,7 @@
    (t/truncate #inst \"1989-12-28T12:34:00.000-00:00\"
                :hour {:timezone \"GMT\"})
    => #inst \"1989-12-28T12:00:00.000-00:00\"
-   
+
    (t/truncate #inst \"1989-12-28T12:34:00.000-00:00\"
                :year {:timezone \"GMT\"})
    => #inst \"1989-01-01T00:00:00.000-00:00\"
@@ -370,7 +370,7 @@
   "adjust fields of a particular time
    (t/coerce 0 {:type Date})
    => #inst \"1970-01-01T00:00:00.000-00:00\"
-   
+
    (t/coerce {:type clojure.lang.PersistentHashMap,
               :timezone \"PST\", :long 915148800000,
               :year 1999, :month 1, :day 1, :hour 0, :minute 0 :second 0, :millisecond 0}

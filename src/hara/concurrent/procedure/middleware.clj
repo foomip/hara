@@ -29,7 +29,7 @@
   (fn [{:keys [timeout mode] :as instance} args]
     (cond (nil? timeout)
           (f instance args)
-          
+
           (and timeout (= :mode :sync))
           (throw (Exception. "Cannot perform timeout on synchronous mode"))
 

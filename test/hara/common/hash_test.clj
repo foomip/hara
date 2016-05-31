@@ -3,7 +3,7 @@
   (:require [hara.common.hash :refer :all]))
 
 ^{:refer hara.common.hash/hash-label :added "2.0"}
-(fact "Returns a keyword repesentation of the hash-code. For use in 
+(fact "Returns a keyword repesentation of the hash-code. For use in
    generating internally unique keys"
 
    (hash-label 1) => "__1__"

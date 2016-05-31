@@ -17,7 +17,7 @@
     (cond (nil? target)
           (throw (Exception. (str "RAISE_CHOOSE: the label " label
                                   " has not been implemented")))
-          
+
           (= target (:id issue))
           (try
             (apply (-> issue :options label) args)

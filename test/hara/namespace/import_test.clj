@@ -10,7 +10,7 @@
   (import-var 'ifl #'clojure.core/if-let)
   => anything ; #'hara.namespace.import-test/ifl
   (eval '(ifl [a 1] (inc a))) => 2
-  
+
   ^:hidden
   (ns-unmap *ns* 'ifl))
 
@@ -20,7 +20,7 @@
   (import-namespace 'hara.common.checks '[bytes? long?])
   (eval '(long? 1))  => true
   (eval '(bytes? 1)) => false
-  
+
   ^:hidden
   (ns-unmap *ns* 'long?)
   (ns-unmap *ns* 'bytes?))

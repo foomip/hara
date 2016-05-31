@@ -5,42 +5,42 @@
 
 (defn diff-changes
   "Finds changes in nested maps, does not consider new elements
-   
+
    (diff-changes {:a 2} {:a 1})
    => {[:a] 2}
- 
+
    (diff-changes {:a {:b 1 :c 2}} {:a {:b 1 :c 3}})
    => {[:a :c] 2}
- 
+
    "
   {:added "2.1"}
   ([m1 m2]
    (diff-changes m1 m2 []))
   ([m1 m2 arr]
    (reduce-kv (fn [out k1 v1]
-                (if-let [v2 (and (contains? m2 k1)
-                                 (get m2 k1))]
-                  (cond (and (hash-map? v1) (hash-map? v2))
-                        (merge out (diff-changes v1 v2 (conj arr k1)))
+                (if (contains? m2 k1)
+                  (let [v2 (get m2 k1)]
+                    (cond (and (hash-map? v1) (hash-map? v2))
+                          (merge out (diff-changes v1 v2 (conj arr k1)))
 
-                        (= v1 v2)
-                        out
+                          (= v1 v2)
+                          out
 
-                        :else
-                        (assoc out (conj arr k1) v1))
+                          :else
+                          (assoc out (conj arr k1) v1)))
                   out))
               {}
               m1)))
 
 (defn diff-new
   "Finds new elements in nested maps, does not consider changes
-   
+
    (diff-new {:a 2} {:a 1})
    => {}
- 
+
    (diff-new {:a {:b 1}} {:a {:c 2}})
    => {[:a :b] 1}
- 
+
    "
   {:added "2.1"}
   ([m1 m2]
@@ -60,10 +60,10 @@
 
 (defn diff
   "Finds the difference between two maps
-   
+
    (diff {:a 2} {:a 1})
    => {:+ {} :- {} :> {[:a] 2}}
- 
+
    (diff {:a {:b 1 :d 3}} {:a {:c 2 :d 4}} true)
    => {:+ {[:a :b] 1}
        :- {[:a :c] 2}
@@ -87,9 +87,9 @@
         :else v))
 
 (defn patch
-  "Use the diff to convert one map to another in the forward 
+  "Use the diff to convert one map to another in the forward
    direction based upon changes between the two.
-   
+
    (let [m1  {:a {:b 1 :d 3}}
          m2  {:a {:c 2 :d 4}}
         df  (diff m2 m1)]
@@ -108,9 +108,9 @@
                     (keys (:- diff))))))
 
 (defn unpatch
-  "Use the diff to convert one map to another in the reverse 
+  "Use the diff to convert one map to another in the reverse
    direction based upon changes between the two.
-   
+
    (let [m1  {:a {:b 1 :d 3}}
          m2  {:a {:c 2 :d 4}}
         df  (diff m2 m1 true)]

@@ -24,7 +24,7 @@
 
 (defn query-class
   "queries the java view of the class declaration
- 
+
    (query-class String  [#\"^c\" :name])
    => [\"charAt\" \"checkBounds\" \"codePointAt\" \"codePointBefore\"
        \"codePointCount\" \"compareTo\" \"compareToIgnoreCase\"
@@ -43,10 +43,10 @@
 
 (defn query-instance
   "lists what methods could be applied to a particular instance
- 
+
    (query-instance \"abc\" [:name #\"^to\"])
    => [\"toCharArray\" \"toLowerCase\" \"toString\" \"toUpperCase\"]
- 
+
    (query-instance String [:name #\"^to\"])
    => (contains [\"toString\"])"
   {:added "2.1"}

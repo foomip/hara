@@ -6,11 +6,11 @@
 
 (defn retry-wait
   "waits in milliseconds depending upon the handler
- 
+
    (retry-wait {}) => 0
- 
+
    (retry-wait {:wait 100}) => 100
- 
+
    (retry-wait {:wait (fn [state count]
                         (if (> (:expiry state) count)
                           1000
@@ -19,11 +19,11 @@
                 :count 5})
    => 0"
   {:added "2.2"}
-  [{:keys [wait state count] :as handler}] 
+  [{:keys [wait state count] :as handler}]
   (let [wait (cond (nil? wait) 0
 
                    (number? wait) wait
-                   
+
                    (fn? wait)
                    (wait state count))]
     (if (pos? wait)
@@ -34,10 +34,10 @@
   "chooses the exception handler based upon the exception
    (retry-pick {:on #{Exception}} (Exception.))
    => true
- 
+
    (retry-pick {:on Exception} (Exception.))
    => true
- 
+
    (retry-pick {:on {:a #(= :error %)}} (ex-info \"error\" {:a :error}))
    => true"
   {:added "2.2"}
@@ -66,7 +66,7 @@
   (map (fn [arg type]
          (cond (= type :retry)
                retry
-               
+
                (= type :instance)
                instance
 
@@ -76,10 +76,10 @@
 
 (defn retry-check
   "checks to see if a retry is needed
- 
+
    (retry-check {:limit 2 :count 3})
    => false
- 
+
    (retry-check {:limit (fn [state count]
                           (> (/ (inc count) (:restarted state))
                              2))
@@ -90,7 +90,7 @@
   [{:keys [limit state count] :as handler}]
   (cond (number? limit)
         (> limit count)
-        
+
         (fn? limit)
         (limit state count)
 
@@ -99,7 +99,7 @@
 
 (defn retry-state
   "calculates the next retry state
- 
+
    (retry-state {:apply (fn [state e]
                           (update-in state [:file-errors] (fnil inc 0)))
                  :state {}}
@@ -117,7 +117,7 @@
 
 (defn retry
   "sets up arguments if retrying. if no retry, returns nil
- 
+
    (-> (retry {:arglist [:age :gender :retry]
                :retry {:handlers [{:on {:cats odd?}
                                    :apply   (fn [state e]
@@ -155,7 +155,7 @@
                       (first))
         handler  (if handler
                    (map/merge-nil handler default))]
-    (if (and handler (retry-check handler))      
+    (if (and handler (retry-check handler))
       (let [_        (retry-wait handler)
             nstate   (retry-state handler e)
             nretry   (-> retry

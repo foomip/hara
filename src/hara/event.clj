@@ -36,19 +36,19 @@
 
 (defn uninstall-listener
   "installs a global signal listener
- 
+
    (def ^:dynamic *global* (atom {}))
- 
+
    (deflistener count-listener :log
      [msg]
      (swap! *global* update-in [:counts] (fnil #(conj % (count msg)) [])))
    (uninstall-listener count-listener)
- 
+
    (signal [:log {:msg \"Hello World\"}])
    (raise  [:log {:msg \"How are you?\"}]
            (option :nil [] nil)
            (default :nil))
- 
+
    @*global*
    => {}"
   {:added "2.2"}
@@ -63,21 +63,21 @@
 
 (defmacro deflistener
   "installs a global signal listener
- 
+
    (def ^:dynamic *global* (atom {}))
- 
+
    (deflistener count-listener :log
      [msg]
      (swap! *global* update-in [:counts] (fnil #(conj % (count msg)) [])))
- 
+
    (signal [:log {:msg \"Hello World\"}])
    (raise  [:log {:msg \"How are you?\"}]
            (option :nil [] nil)
            (default :nil))
- 
+
    @*global*
    => {:counts [11 12]}
- 
+
    "
   {:added "2.2"}
   [name checker bindings & more]
@@ -89,15 +89,15 @@
 
 (defmacro signal
   "signals an event that is sent to, it does not do anything by itself
- 
+
    (signal :anything) => ()
- 
+
    (deflistener hello _
      e
      e)
- 
+
    (signal :anything) => '({:id hara.event-test/hello :result {:anything true}})
- 
+
    "
   {:added "2.2"}
   [data]
@@ -107,7 +107,7 @@
 
 (defmacro continue
   "used within a manage form to continue on with a particular value
- 
+
    (manage [1 2 (raise {:error \"should be 3\"})]
            (on :error
                _
@@ -118,13 +118,13 @@
   `{:type :continue :value (do ~@body)})
 
 (defmacro default
-  "used within either a raise or escalate form to specify the default option to take if no other options arise. 
- 
+  "used within either a raise or escalate form to specify the default option to take if no other options arise.
+
    (raise :error
           (option :specify [a] a)
           (default :specify 3))
    => 3
- 
+
    (manage
     (raise :error
            (option :specify [a] a)
@@ -139,7 +139,7 @@
 
 (defmacro choose
   "used within a manage form to definitively fail the system
- 
+
    (manage (raise :error
                   (option :specify [a] a))
            (on :error
@@ -152,7 +152,7 @@
 
 (defmacro fail
   "used within a manage form to definitively fail the system
- 
+
    (manage (raise :error)
            (on :error
                _
@@ -165,7 +165,7 @@
 
 (defmacro escalate
   "used within a manage form to add further data on an issue
- 
+
    (manage [1 2 (raise :error)]
            (on :error
                _
@@ -184,10 +184,10 @@
 
 (defmacro raise
   "raise an issue, like throw but can be conditionally managed as well as automatically resolved:
- 
+
    (raise  [:error {:msg \"A problem.\"}])
    => (throws)
- 
+
    (raise [:error {:msg \"A resolvable problem\"}]
           (option :something [] 42)
           (default :something))
@@ -207,7 +207,7 @@
 
 (defmacro manage
   "manages a raised issue, like try but is continuable:
- 
+
    (manage [1 2 (raise {:error \"should be 3\"})]
            (on :error
                _

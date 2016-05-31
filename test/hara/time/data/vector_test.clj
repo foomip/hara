@@ -48,7 +48,7 @@
     (to-vector (time/-from-long 0 {:type ZonedDateTime})
                {:timezone "GMT"} [:month :day :year])
     => [1 1 1970]
-    
+
     (to-vector (time/-from-long 0 {:type ZonedDateTime})
                {:timezone "PST"}
                [:month :day :year])

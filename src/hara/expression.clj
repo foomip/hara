@@ -5,8 +5,8 @@
             [hara.expression.load]
             [hara.expression.shorthand])
   (:refer-clojure :exclude [load]))
-            
-(ns/import 
+
+(ns/import
   hara.expression.compile     :all
   hara.expression.form        :all
   hara.expression.load        :all

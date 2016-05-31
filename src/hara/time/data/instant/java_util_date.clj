@@ -29,10 +29,10 @@
   (-get-timezone  [t] nil)
   (-with-timezone [t _] t))
 
-(defmethod time/-from-long Date 
+(defmethod time/-from-long Date
   [^Long long _]
   (Date. long))
 
-(defmethod time/-now Date 
+(defmethod time/-now Date
   [_]
   (Date.))

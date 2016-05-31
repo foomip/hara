@@ -76,7 +76,7 @@
   (-> (t/from-long 0 {:timezone "Asia/Kolkata"
                       :type Calendar})
       (t/to-map))
-  
+
   => {:type java.util.GregorianCalendar,
       :timezone "Asia/Kolkata", :long 0
       :year 1970, :month 1, :day 1,
@@ -87,7 +87,7 @@
   (-> (t/from-long 0 {:timezone "Asia/Kolkata"
                       :type Date})
       (t/to-map {:timezone "GMT"} [:year :month :day]))
-  => {:type java.util.Date, :timezone "GMT", :long 0, 
+  => {:type java.util.Date, :timezone "GMT", :long 0,
       :year 1970, :month 1, :day 1})
 
 ^{:refer hara.time/from-map :added "2.2"}
@@ -96,7 +96,7 @@
                :timezone "Asia/Kolkata", :long 0
                :year 1970, :month 1, :day 1,
                :hour 5, :minute 30 :second 0, :millisecond 0}
-              
+
               {:timezone "Asia/Kolkata"
                :type Date})
   => #inst "1970-01-01T00:00:00.000-00:00"
@@ -186,7 +186,7 @@
   ^:hidden
   (t/epoch {:type clojure.lang.PersistentArrayMap :timezone "GMT"})
   {:type clojure.lang.PersistentArrayMap,
-   :timezone "GMT", :long 0, 
+   :timezone "GMT", :long 0,
    :year 1970, :month 1, :day 1, :hour 0, :minute 0, :second 0, :millisecond 0, })
 
 ^{:refer hara.time/equal :added "2.2"}
@@ -222,8 +222,8 @@
   (t/adjust (Date. 0) {:year 2000 :second 10} {:timezone "GMT"})
   => #inst "2000-01-01T00:00:10.000-00:00"
   ^:hidden
-  (t/adjust {:year 1970, :month 1 :day 1, :day-of-week 4, 
-             :hour 0 :minute 0 :second 0 :millisecond 0, 
+  (t/adjust {:year 1970, :month 1 :day 1, :day-of-week 4,
+             :hour 0 :minute 0 :second 0 :millisecond 0,
              :timezone "GMT"}
             {:year 1999})
   => {:type clojure.lang.PersistentHashMap,
@@ -234,7 +234,7 @@
 (fact "adjust fields of a particular time"
   (t/coerce 0 {:type Date})
   => #inst "1970-01-01T00:00:00.000-00:00"
-  
+
   (t/coerce {:type clojure.lang.PersistentHashMap,
              :timezone "PST", :long 915148800000,
              :year 1999, :month 1, :day 1, :hour 0, :minute 0 :second 0, :millisecond 0}
@@ -246,7 +246,7 @@
   (t/truncate #inst "1989-12-28T12:34:00.000-00:00"
               :hour {:timezone "GMT"})
   => #inst "1989-12-28T12:00:00.000-00:00"
-  
+
   (t/truncate #inst "1989-12-28T12:34:00.000-00:00"
               :year {:timezone "GMT"})
   => #inst "1989-01-01T00:00:00.000-00:00"

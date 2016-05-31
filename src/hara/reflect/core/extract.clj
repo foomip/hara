@@ -31,9 +31,9 @@
 
 (defn extract-to-var
   "extracts a class method into a namespace.
- 
+
    (extract-to-var 'hash-without clojure.lang.IPersistentMap 'without [])
- 
+
    (with-out-str (eval '(clojure.repl/doc hash-without)))
    => (str \"-------------------------\\n\"
            \"hara.reflect.core.extract-test/hash-without\\n\"
@@ -42,7 +42,7 @@
            \"member: clojure.lang.IPersistentMap/without\\n\"
            \"type: clojure.lang.IPersistentMap\\n\"
            \"modifiers: instance, method, public, abstract\\n\")
- 
+
    (eval '(hash-without {:a 1 :b 2} :a))
    => {:b 2}"
   {:added "2.1"}
@@ -63,7 +63,7 @@
 
 (defn extract-to-ns
   "extracts all class methods into its own namespace.
- 
+
    (map #(.sym %)
         (extract-to-ns 'test.string String [:private #\"serial\"]))
    => '[serialPersistentFields serialVersionUID]"

@@ -2,7 +2,7 @@
   (:use midje.sweet)
   (:require [hara.reflect.hierarchy :refer :all]
             [hara.common.primitives :as common]))
-  
+
 (def without-method
     (-> clojure.lang.PersistentArrayMap
         (.getDeclaredMethod "without"

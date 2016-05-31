@@ -21,13 +21,13 @@
 
 (defn started?
   "checks if a component has been started
- 
+
    (started? (Database.))
    => false
- 
+
    (started? (start (Database.)))
    => true
- 
+
    (started? (stop (start (Database.))))
    => false"
   {:added "2.1"}
@@ -40,13 +40,13 @@
 
 (defn stopped?
   "checks if a component has been stopped
- 
+
    (stopped? (Database.))
    => true
- 
+
    (stopped? (start (Database.)))
    => false
- 
+
    (stopped? (stop (start (Database.))))
    => true"
   {:added "2.1"}
@@ -59,7 +59,7 @@
 
 (defn start
   "starts a component/array/system
- 
+
    (start (Database.))
    => (just {:status \"started\"})"
   {:added "2.1"}
@@ -71,7 +71,7 @@
 
 (defn stop
   "stops a component/array/system
- 
+
    (stop (start (Database.)))
    => (just {})"
   {:added "2.1"}
@@ -144,7 +144,7 @@
 
 (defn array
   "creates an array of components
- 
+
    (let [recs (start (array map->Database [{:id 1} {:id 2}]))]
     (count (seq recs)) => 2
      (first recs) => (just {:id 1 :status \"started\"}))"
@@ -157,7 +157,7 @@
 
 (defn array?
   "checks if object is a component array
- 
+
    (array? (array map->Database []))
    => true"
   {:added "2.1"}
@@ -335,7 +335,7 @@
 
 (defn system
   "creates a system of components
- 
+
    (let [topo {:db     [map->Database]
                :files  [[map->Filesystem]]
                :store  [[map->Database] [:files :fs] :db]}
@@ -343,11 +343,11 @@
                :files [{:path \"/app/local/1\"} {:path \"/app/local/2\"}]
               :store [{:id 1} {:id 2}]}
          sys (-> (system topo cfg) start)]
- 
+
      (:db sys) => (just {:status \"started\", :type :basic, :port 8080, :host \"localhost\"})
- 
+
      (-> sys :files seq first) => (just {:status \"started\", :path \"/app/local/1\"})
- 
+
      (-> sys :store seq first keys))  => (just [:status :fs :db :id] :in-any-order)"
   {:added "2.1"}
   ([topology config] (system topology config nil))
@@ -385,7 +385,7 @@
 
 (defn system?
   "checks if object is a component system
- 
+
    (system? (system {} {}))
    => true"
   {:added "2.1"}

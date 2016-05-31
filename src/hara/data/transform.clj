@@ -128,7 +128,7 @@
     (fn [m]
       ))
 
-  
+
 
   (defn collect [rel]
     (->> (map collect-paths rel)

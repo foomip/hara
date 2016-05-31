@@ -27,11 +27,11 @@
 
 (defn pipe
   "creates a pipe so that tasks can be acted upon asynchronously in order in which they were sent
- 
+
    (def atm (atom []))
    (def p (pipe (fn [msg]
                   (swap! atm conj msg))))
- 
+
    (pipe/send p 1)
    (pipe/send p 2)
    (pipe/send p 3)

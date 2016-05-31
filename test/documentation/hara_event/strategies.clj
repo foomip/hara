@@ -188,7 +188,7 @@
   [[:subsection {:title "Overriding Defaults"}]]
 
   "This is an example of higher-tier managers overriding options"
-  
+
    [[{:title "Choose Default :X2"}]]
 
   (manage                            ;; L2
@@ -210,7 +210,7 @@
   [[:subsection {:title "Simple Escalation"}]]
 
   "When issues are escalated, more information  can be added and this then is passed on to higher-tier managers"
-  
+
   [[{:title "Escalate :B"}]]
   (manage                            ;; L2
    [1 2 (manage                      ;; L1

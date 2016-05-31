@@ -3,13 +3,13 @@
 (defn dissoc-in
   "disassociates keys from a nested map. Setting `keep` to `true` will
    not remove a empty map after dissoc
- 
+
    (dissoc-in {:a {:b 10 :c 20}} [:a :b])
    => {:a {:c 20}}
- 
+
    (dissoc-in {:a {:b 10}} [:a :b])
    => {}
- 
+
    (dissoc-in {:a {:b 10}} [:a :b] true)
    => {:a {}}"
   {:added "2.1"}
@@ -27,13 +27,13 @@
 
 (defn unique
   "returns a map of all key/value pairs that differ from a second map
- 
+
    (unique {:a 1} {:a 2})
    => {:a 1}
- 
+
    (unique {:a 1 :b 2} {:b 2})
    => {:a 1}
- 
+
    (unique {:b 2} {:b 2 :a 1})
    => nil"
   {:added "2.1"}
@@ -46,10 +46,10 @@
 
 (defn assoc-if
   "assoc key/value pairs to the map only on non-nil values
- 
+
    (assoc-if {} :a 1)
    => {:a 1}
- 
+
    (assoc-if {} :a 1 :b nil)
    => {:a 1}"
   {:added "2.1"}
@@ -60,10 +60,10 @@
 
 (defn assoc-in-if
   "assoc-in a nested key/value pair to a map only on non-nil values
- 
+
    (assoc-in-if {} [:a :b] 1)
    => {:a {:b 1}}
- 
+
    (assoc-in-if {} [:a :b] nil)
    => {}"
   {:added "2.1"}
@@ -72,10 +72,10 @@
 
 (defn update-in-if
   "update-in a nested key/value pair only if the value exists
- 
+
    (update-in-if {:a {:b 1}} [:a :b] inc)
    => {:a {:b 2}}
- 
+
    (update-in-if {} [:a :b] inc)
    => {}"
   {:added "2.1"}
@@ -87,13 +87,13 @@
 
 (defn merge-if
   "merges key/value pairs into a single map only if the value exists
- 
+
    (merge-if {:a nil :b 1})
    => {:b 1}
- 
+
    (merge-if {:a 1} {:b nil :c 2})
    => {:a 1 :c 2}
- 
+
    (merge-if {:a 1} {:b nil} {:c 2})
    => {:a 1 :c 2}"
   {:added "2.1"}
@@ -112,10 +112,10 @@
 (defn into-if
   "like into but filters nil values for both key/value pairs
    and sequences
- 
+
    (into-if [] [1 nil 2 3])
    => [1 2 3]
- 
+
    (into-if {:a 1} {:b nil :c 2})
    => {:a 1 :c 2}"
   {:added "2.1"}
@@ -129,10 +129,10 @@
 
 (defn select-keys-if
   "selects only the non-nil key/value pairs from a map
- 
+
    (select-keys-if {:a 1 :b nil} [:a :b])
    => {:a 1}
- 
+
    (select-keys-if {:a 1 :b nil :c 2} [:a :b :c])
    => {:a 1 :c 2}"
   {:added "2.1"}
@@ -146,10 +146,10 @@
 
 (defn merge-nil
   "only merge if the value in the original map is nil
- 
+
    (merge-nil {:a 1} {:b 2})
    => {:a 1 :b 2}
- 
+
    (merge-nil {:a 1} {:a 2})
    => {:a 1}"
   {:added "2.1"}
@@ -166,10 +166,10 @@
 
 (defn assoc-nil
   "only assoc if the value in the original map is nil
- 
+
    (assoc-nil {:a 1} :b 2)
    => {:a 1 :b 2}
- 
+
    (assoc-nil {:a 1} :a 2 :b 2)
    => {:a 1 :b 2}"
   {:added "2.1"}
@@ -180,10 +180,10 @@
 
 (defn assoc-in-nil
   "only assoc-in if the value in the original map is nil
- 
+
    (assoc-in-nil {} [:a :b] 2)
    => {:a {:b 2}}
- 
+
    (assoc-in-nil {:a {:b 1}} [:a :b] 2)
    => {:a {:b 1}}"
   {:added "2.1"}

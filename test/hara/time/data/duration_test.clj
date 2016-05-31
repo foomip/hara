@@ -20,7 +20,7 @@
 (fact "calculates the number of days to be adjusted based on month"
   (adjust-month-days 0 2 {:year 2012 :month 3 :day 1})
   => 61
-  
+
   (adjust-month-days 0 2 {:year 2012 :month 3 :day 1 :backward true})
   => 60
 
@@ -34,7 +34,7 @@
 (fact "calculates the number of days to be forwarded based on year and month"
   (adjust-days {:years 0 :months 2} {:year 2012 :month 1 :day 31})
   => 60
-  
+
   (adjust-days {:years 1 :months 2} {:year 2012 :month 1 :day 31})
   => 425
 

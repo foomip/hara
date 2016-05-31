@@ -25,16 +25,16 @@
 - [clojure-watch](https://github.com/derekchiang/Clojure-Watch)
 - [dirwatch](https://github.com/juxt/dirwatch)
 - [hawk](https://github.com/wkf/hawk)
-- [watchtower](https://github.com/ibdknox/watchtower) 
+- [watchtower](https://github.com/ibdknox/watchtower)
 - [java-watcher](https://github.com/klauern/java-watcher.clj)
 - [panoptic](https://github.com/xsc/panoptic)
 - [ojo](https://github.com/rplevy/ojo)
 - [filevents](https://github.com/Raynes/filevents)
 
-As well as seperate filewatch implementations as part of larger application libraries. 
+As well as seperate filewatch implementations as part of larger application libraries.
 
 - [lein-midje](https://github.com/marick/lein-midje)
-- [ns-tracker](https://github.com/weavejester/ns-tracker) 
+- [ns-tracker](https://github.com/weavejester/ns-tracker)
 - [lazytest](https://github.com/stuartsierra/lazytest)
 
 The novelty of `hara.io.watch` lies in the concept that it extends `hara.common.watch` (which is an abstraction around clojure`s `add-watch` semantics).
@@ -52,7 +52,7 @@ There's a pattern for watching things that already exists in clojure:
   (add-watch object :key (fn [object key previous next])))
 
 "
-However, `add-watch` is a generic concept that exists beyond atoms. It can be applied to all sorts of objects. Furthermore, watching something usually comes with a condition. We usually don't react on every change that comes to us in our lives. We only react when a certain condition comes about. For example, we can see the condition that is placed on this statement: 
+However, `add-watch` is a generic concept that exists beyond atoms. It can be applied to all sorts of objects. Furthermore, watching something usually comes with a condition. We usually don't react on every change that comes to us in our lives. We only react when a certain condition comes about. For example, we can see the condition that is placed on this statement:
 
 >  Watch the noodles on the stove and IF it starts
 >  boiling over, add some cold water to the pot
@@ -65,7 +65,7 @@ The `hara.common.watch` package provides for additional options to be specified 
         observer (atom nil)]
     (watch/add subject :clone
                (fn [_ _ p n] (reset! observer n))
-               
+
                ;; Options
                {:select :b   ;; we will only look at :b
                 :diff true   ;; we will only trigger if :b changes
@@ -82,37 +82,37 @@ The `hara.common.watch` package provides for additional options to be specified 
 "The same concept of `watch` is used for filesystems. So instead of an atom, a directory is specified using very similar semantics:"
 
 (fact
-  
+
   (def ^:dynamic *happy* (promise))
-  
-  ;; We add a watch  
+
+  ;; We add a watch
   (watch/add (io/file ".") :save
              (fn [f k _ [cmd ^java.io.File file]]
-               
-               ;; One-shot strategy where we remove the 
+
+               ;; One-shot strategy where we remove the
                ;; watch after a single event
                (watch/remove f k)
                (.delete file)
                (deliver *happy* [cmd (.getName file)]))
-             
+
              ;; Options
-             {:types #{:create :modify} 
+             {:types #{:create :modify}
               :recursive false
               :filter  [".hara"]
               :exclude [".git" "target"]
               :mode :async})
-  
+
   ;; We can look at the watches on the current directory
   (watch/list (io/file "."))
   => (contains {:save fn?})
-  
+
   ;; Create a file to see if the watch triggers
   (spit "happy.hara" "hello")
-  
+
   ;; It does!
   @*happy*
   => (contains [anything "happy.hara"])
-  
+
   ;; We see that the one-shot watch has worked
   (watch/list (io/file "."))
   => {})
@@ -121,7 +121,7 @@ The `hara.common.watch` package provides for additional options to be specified 
 
 "There are a couple of cenfigurable options for the filewatch:
 
-- `:types` determine which actions are responded to. The possible values are 
+- `:types` determine which actions are responded to. The possible values are
    - `:create`, when a file is created
    - `:modify`, when a file is mobifies
    - `:delete`, when a file is deleted

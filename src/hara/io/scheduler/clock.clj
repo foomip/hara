@@ -31,7 +31,7 @@
             (if-let [ticker (:ticker clock)]
               (reset! ticker {:time (time/truncate next-time (:truncate opts) opts)
                               :array next-array})))
-        
+
         :else
         (let [interval   (-> clock :meta :interval)
               sleep-time (- 1000
@@ -40,7 +40,7 @@
           (if (< 0 sleep-time)
             (Thread/sleep sleep-time)
             (Thread/sleep interval))))
-      (if recur? 
+      (if recur?
         (recur clock recur?)
         clock))))
 
@@ -92,10 +92,10 @@
     (str "#clock " (-> @clock
                        (dissoc :current-array :thread)
                        (assoc  :running (clock-started? clock)))))
-  
+
   clojure.lang.IDeref
   (deref [clock] @state)
-  
+
   component/IComponent
   (-start [clock]
     (clock-start clock))
