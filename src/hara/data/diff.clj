@@ -18,16 +18,16 @@
    (diff-changes m1 m2 []))
   ([m1 m2 arr]
    (reduce-kv (fn [out k1 v1]
-                (if-let [v2 (and (contains? m2 k1)
-                                 (get m2 k1))]
-                  (cond (and (hash-map? v1) (hash-map? v2))
-                        (merge out (diff-changes v1 v2 (conj arr k1)))
+                (if (contains? m2 k1)
+                  (let [v2 (get m2 k1)]
+                    (cond (and (hash-map? v1) (hash-map? v2))
+                          (merge out (diff-changes v1 v2 (conj arr k1)))
 
-                        (= v1 v2)
-                        out
+                          (= v1 v2)
+                          out
 
-                        :else
-                        (assoc out (conj arr k1) v1))
+                          :else
+                          (assoc out (conj arr k1) v1)))
                   out))
               {}
               m1)))

@@ -16,7 +16,19 @@
   => {}
 
   (diff-changes {:a 1 :b 2} {:a 1 :b 2 :c 3})
-  => {})
+  => {}
+
+  (diff-changes {:a 1} {:a nil})
+  => {[:a] 1}
+
+  (diff-changes {:a nil} {:a 1})
+  => {[:a] nil}
+
+  (diff-changes {:a true} {:a false})
+  => {[:a] true}
+
+  (diff-changes {:a false} {:a true})
+  => {[:a] false})
 
 ^{:refer hara.data.diff/diff-new :added "2.1"}
 (fact "Finds new elements in nested maps, does not consider changes"
