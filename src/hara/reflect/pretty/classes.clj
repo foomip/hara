@@ -1,7 +1,7 @@
 (ns hara.reflect.pretty.classes
-  (require [hara.reflect.common :refer :all]
-           [hara.reflect.pretty.primitives :refer :all]
-           [hara.common.string :as string]))
+  (:require [hara.reflect.common :refer :all]
+            [hara.reflect.pretty.primitives :refer :all]
+            [hara.common.string :as string]))
 
 (def class-reps #{:raw :symbol :string :class :container})
 
