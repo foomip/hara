@@ -1,4 +1,5 @@
-(ns hara.common.checks)
+(ns hara.common.checks
+  (:refer-clojure :exclude [boolean? double? bigdec? uuid? uri? bytes?]))
 
 ;; ## Type Predicates
 ;;
