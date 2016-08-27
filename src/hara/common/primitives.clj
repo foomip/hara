@@ -1,5 +1,5 @@
 (ns hara.common.primitives
-  (:require [hara.common.checks :refer [bytes?]]
+  (:require [hara.common.checks :as checks]
             [hara.common.error :refer [error]]))
 
 (defn T
@@ -51,7 +51,7 @@
   ([id]
      (cond (string? id)
            (java.util.UUID/fromString id)
-           (bytes? id)
+           (checks/bytes? id)
            (java.util.UUID/nameUUIDFromBytes id)
            :else (error id " can only be a string or byte array")))
   ([^Long msb ^Long lsb]
