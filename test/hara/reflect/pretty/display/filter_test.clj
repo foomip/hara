@@ -1,5 +1,5 @@
 (ns hara.reflect.pretty.display.filter-test
-  (:use midje.sweet)
+  (:use hara.test)
   (:require [hara.reflect.pretty.display.filter :refer :all]))
 
 

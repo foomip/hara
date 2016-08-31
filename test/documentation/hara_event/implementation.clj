@@ -1,5 +1,5 @@
 (ns documentation.hara-event.implementation
-  (:use midje.sweet)
+  (:use hara.test)
   (:require [hara.event :refer :all]))
 
 

@@ -1,5 +1,5 @@
 (ns hara.reflect.core.class-test
-  (:use midje.sweet)
+  (:use hara.test)
   (:require [hara.reflect.core.class :refer :all]))
 
 ^{:refer hara.reflect.core.class/class-info :added "2.1"}

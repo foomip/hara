@@ -1,5 +1,5 @@
 (ns hara.io.watch-test
-  (:use midje.sweet)
+  (:use hara.test)
   (:require [hara.io.watch :refer :all]
             [hara.common.watch :as watch]
             [clojure.java.io :as io]))

@@ -1,5 +1,5 @@
 (ns hara.class.inheritance-test
-  (:use midje.sweet)
+  (:use hara.test)
   (:require [hara.class.inheritance :refer :all]))
 
 ^{:refer hara.class.inheritance/ancestor-list :added "2.1"}

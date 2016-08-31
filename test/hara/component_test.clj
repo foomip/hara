@@ -1,5 +1,5 @@
 (ns hara.component-test
-  (:use midje.sweet)
+  (:use hara.test)
   (:require [hara.component :refer :all]))
 
 (defrecord Database []
@@ -56,9 +56,9 @@
 ^{:refer hara.component/array :added "2.1"}
 (fact "creates an array of components"
 
-  (let [recs (start (array map->Database [{:id 1} {:id 2}]))]
-    (count (seq recs)) => 2
-    (first recs) => (just {:id 1 :status "started"})))
+  (def recs (start (array map->Database [{:id 1} {:id 2}])))
+  (count (seq recs)) => 2
+  (first recs) => (just {:id 1 :status "started"}))
 
 ^{:refer hara.component/array? :added "2.1"}
 (fact "checks if object is a component array"
@@ -69,20 +69,23 @@
 
 ^{:refer hara.component/system :added "2.1"}
 (fact "creates a system of components"
+  (def topo {:db     [map->Database]
+             :files  [[map->Filesystem]]
+             :store  [[map->Database] [:files :fs] :db]})
+  (def cfg  {:db {:type :basic :host "localhost" :port 8080}
+             :files [{:path "/app/local/1"} {:path "/app/local/2"}]
+             :store [{:id 1} {:id 2}]})
+  (def sys (-> (system topo cfg) start))
 
-  (let [topo {:db     [map->Database]
-              :files  [[map->Filesystem]]
-              :store  [[map->Database] [:files :fs] :db]}
-        cfg  {:db {:type :basic :host "localhost" :port 8080}
-              :files [{:path "/app/local/1"} {:path "/app/local/2"}]
-              :store [{:id 1} {:id 2}]}
-        sys (-> (system topo cfg) start)]
-
-    (:db sys) => (just {:status "started", :type :basic, :port 8080, :host "localhost"})
-
-    (-> sys :files seq first) => (just {:status "started", :path "/app/local/1"})
-
-    (-> sys :store seq first keys))  => (just [:status :fs :db :id] :in-any-order))
+  (:db sys) => (just {:status "started",
+                      :type :basic,
+                      :port 8080,
+                      :host "localhost"})
+  (-> sys :files seq first)
+  => (just {:status "started",
+            :path "/app/local/1"})
+  (-> sys :store seq first keys)
+  => (just [:status :fs :db :id] :in-any-order))
 
 
 ^{:refer hara.component/system? :added "2.1"}

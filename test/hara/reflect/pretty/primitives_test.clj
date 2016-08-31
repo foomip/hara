@@ -1,5 +1,5 @@
 (ns hara.reflect.pretty.primitives-test
-  (:use midje.sweet)
+  (:use hara.test)
   (:require [hara.reflect.pretty.primitives :refer :all]))
 
 ^{:refer hara.reflect.pretty.primitives/primitive-convert :added "2.1"}

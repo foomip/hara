@@ -1,5 +1,5 @@
 (ns hara.reflect.util-test
-  (:use midje.sweet)
+  (:use hara.test)
   (:require [hara.common.primitives :refer [class-array]]
             [hara.reflect.util :refer :all]))
 

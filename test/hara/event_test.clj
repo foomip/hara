@@ -1,5 +1,5 @@
 (ns hara.event-test
-  (:use midje.sweet)
+  (:use hara.test)
   (:require [hara.event :refer :all]))
 
 ^{:refer hara.event/clear-listeners :added "2.2"}

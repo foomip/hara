@@ -1,5 +1,5 @@
 (ns hara.common.primitives-test
-  (:use midje.sweet)
+  (:use hara.test)
   (:require [hara.common.primitives :refer :all]))
 
 ^{:refer hara.common.primitives/T :added "2.0"}

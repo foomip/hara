@@ -1,5 +1,5 @@
 (ns hara.data.complex-test
-  (:use midje.sweet)
+  (:use hara.test)
   (:require [hara.data.complex :refer :all]
             [hara.common.checks :refer [hash-map?]]))
 

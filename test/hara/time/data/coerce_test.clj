@@ -1,5 +1,5 @@
 (ns hara.time.data.coerce-test
-  (:use midje.sweet)
+  (:use hara.test)
   (:require [hara.time.data
              [coerce :refer :all]
              [common :as common]

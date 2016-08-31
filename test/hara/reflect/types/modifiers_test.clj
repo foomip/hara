@@ -1,5 +1,5 @@
 (ns hara.reflect.types.modifiers-test
-  (:use midje.sweet)
+  (:use hara.test)
   (:require [hara.reflect.types.modifiers :refer :all]))
 
 ^{:refer hara.reflect.types.modifiers/int-to-modifiers :added "2.1"}

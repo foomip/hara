@@ -1,5 +1,5 @@
 (ns hara.time.data.format-test
-  (:use midje.sweet)
+  (:use hara.test)
   (:require [hara.protocol.time :as time]
             [hara.time.data.format :as f]
             [hara.time.data :as data]

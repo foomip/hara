@@ -1,5 +1,5 @@
 (ns hara.data.path-test
-  (:use midje.sweet)
+  (:use hara.test)
   (:require [hara.data.path :refer :all]))
 
 ^{:refer hara.data.path/list-ns-keys :added "2.1"}

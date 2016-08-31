@@ -1,16 +1,15 @@
-(defproject im.chit/hara "2.3.7"
+(defproject im.chit/hara "2.4.0"
   :description "patterns and utilities"
   :url "https://github.com/zcaudate/hara"
   :license {:name "The MIT License"
             :url "http://http://opensource.org/licenses/MIT"}
   :dependencies [[org.clojure/clojure "1.8.0"]]
-  :profiles {:dev {:dependencies [[midje "1.6.3"]
-                                  [compojure "1.4.0"]
+  :aliases {"test" ["run" "-m" "hara.test"]}
+  :profiles {:dev {:dependencies [[compojure "1.4.0"]
                                   [ring "1.4.0"]
                                   [clj-http "2.1.0"]
                                   [org.eclipse.jgit "4.0.1.201506240215-r"]]
-                   :plugins [[lein-midje "3.1.3"]
-                             [lein-repack "0.2.10"]
+                   :plugins [[lein-repack "0.2.10"]
                              [lein-hydrox "0.1.16"]]}}
   :documentation {:site   "hara"
                   :output "docs"
@@ -128,4 +127,4 @@
   :repack [{:type :clojure
             :levels 2
             :path "src"
-            :standalone #{"reflect" "time" "event" "object"}}])
+            :standalone #{"reflect" "time" "event" "object" "test"}}])

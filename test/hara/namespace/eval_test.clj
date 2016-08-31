@@ -1,5 +1,5 @@
 (ns hara.namespace.eval-test
-  (:use midje.sweet)
+  (:use hara.test)
   (:require [hara.namespace.eval :refer :all]))
 
 ^{:refer hara.namespace.eval/eval-ns :added "2.2"}

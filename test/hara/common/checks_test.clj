@@ -1,5 +1,5 @@
 (ns hara.common.checks-test
-  (:use midje.sweet)
+  (:use hara.test)
   (:require [hara.common.checks :refer :all]))
 
 ^{:refer hara.common.checks/boolean? :added "2.0"}
@@ -113,7 +113,6 @@
 
   (promise? (promise)) => true
   (promise? (future))  => false)
-
 
 ^{:refer hara.common.checks/thread? :added "2.2"}
 (fact "Returns `true` is `x` is a thread"

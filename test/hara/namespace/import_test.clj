@@ -1,5 +1,5 @@
 (ns hara.namespace.import-test
-  (:use midje.sweet)
+  (:use hara.test)
   (:require [hara.namespace.import :refer :all]
             [hara.common.checks])
   (:refer-clojure :exclude [import]))

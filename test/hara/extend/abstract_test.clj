@@ -1,5 +1,5 @@
 (ns hara.extend.abstract-test
-  (:use midje.sweet)
+  (:use hara.test)
   (:require [hara.extend.abstract :refer :all]))
 
 (defprotocol IData (-data [this]))

@@ -1,5 +1,5 @@
 (ns hara.data.record-test
-  (:use midje.sweet)
+  (:use hara.test)
   (:require [hara.data.seq :refer :all]))
 
 ^{:refer hara.data.seq/positions :added "2.2"}

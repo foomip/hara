@@ -1,5 +1,5 @@
 (ns hara.data.record-test
-  (:use midje.sweet)
+  (:use hara.test)
   (:require [hara.data.record :refer :all]))
 
 (defrecord Database [host port])

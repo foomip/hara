@@ -1,5 +1,5 @@
 (ns hara.expression.compile-test
-  (:use midje.sweet)
+  (:use hara.test)
   (:require [hara.expression.compile :refer :all]))
 
 ^{:refer hara.expression.compile/const :added "2.1"}

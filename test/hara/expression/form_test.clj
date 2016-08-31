@@ -1,5 +1,5 @@
 (ns hara.expression.form-test
-  (:use midje.sweet)
+  (:use hara.test)
   (:require [hara.expression.form :refer :all]))
 
 ^{:refer hara.expression.form/form-require :added "2.1" :hidden true}
@@ -12,20 +12,18 @@
 ^{:refer hara.expression.form/form-prep :added "2.1" :hidden true}
 (fact "Prepares the form into a function form"
   ^:hidden
-  (let [my-inc (form-prep '(+ 1 %))]
+  (def my-inc (form-prep '(+ 1 %)))
+  
+  ((eval my-inc) 1) => 2
+  (meta my-inc) => {:source "#(+ 1 %)\n"})
 
-    ((eval my-inc) 1) => 2
-
-    (meta my-inc) => {:source "#(+ 1 %)\n"}))
 
 ^{:refer hara.expression.form/form-fn :added "2.1"}
 (fact "Creates a function out of a list"
+  (def my-inc (form-fn '(+ 1 %)))
 
-  (let [my-inc (form-fn '(+ 1 %))]
-
-    (my-inc 1) => 2
-
-    (meta my-inc) => {:source "#(+ 1 %)\n"}))
+  (my-inc 1) => 2
+  (meta my-inc) => {:source "#(+ 1 %)\n"})
 
 ^{:refer hara.expression.form/form-eval :added "2.1"}
 (fact "Evaluates a list as a functions and to a set of arguments."

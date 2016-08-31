@@ -1,5 +1,5 @@
 (ns hara.data.nested-test
-  (:use midje.sweet)
+  (:use hara.test)
   (:require [hara.data.nested :refer :all]
             [clojure.string :as string]))
 

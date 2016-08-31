@@ -1,6 +1,7 @@
 (ns hara.reflect.core.extract-test
-  (:use midje.sweet)
-  (:require [hara.reflect.core.extract :refer :all]))
+  (:use hara.test)
+  (:require [hara.reflect.core.extract :refer :all]
+            [clojure.repl :as repl]))
 
 ^{:refer hara.reflect.core.extract/extract-to-var :added "2.1"}
 (fact "extracts a class method into a namespace."

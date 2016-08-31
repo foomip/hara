@@ -1,5 +1,5 @@
 (ns hara.time.data.vector-test
-  (:use midje.sweet)
+  (:use hara.test)
   (:require [hara.protocol.time :as time]
             [hara.time.data
              [common :as common]

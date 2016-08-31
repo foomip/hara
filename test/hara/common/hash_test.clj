@@ -1,5 +1,5 @@
 (ns hara.common.hash-test
-  (:use midje.sweet)
+  (:use hara.test)
   (:require [hara.common.hash :refer :all]))
 
 ^{:refer hara.common.hash/hash-label :added "2.0"}

@@ -1,5 +1,5 @@
 (ns hara.event.common-test
-  (:use midje.sweet)
+  (:use hara.test)
   (:require [hara.event.common :refer :all]))
 
 ^{:refer hara.event.common/expand-data :added "2.2"}

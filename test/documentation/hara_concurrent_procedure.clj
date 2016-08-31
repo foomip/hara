@@ -1,5 +1,5 @@
 (ns documentation.hara-concurrent-procedure
-  (:use midje.sweet)
+  (:use hara.test)
   (:require [hara.concurrent.procedure :refer :all]
             [hara.concurrent.procedure.registry :as registry]))
 

@@ -1,5 +1,5 @@
 (ns documentation.hara-concurrent-ova.scoreboard
-  (:use midje.sweet)
+  (:use hara.test)
   (:require [hara.concurrent.ova :refer :all]
             [hara.common.watch :as watch]))
 

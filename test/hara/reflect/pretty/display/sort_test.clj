@@ -1,5 +1,5 @@
 (ns hara.reflect.pretty.display.sort-test
-  (:use midje.sweet)
+  (:use hara.test)
   (:require [hara.reflect.pretty.display.sort :refer :all]))
 
 ^{:refer hara.reflect.pretty.display.sort/sort-fn :added "2.1"}

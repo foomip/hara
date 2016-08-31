@@ -1,5 +1,5 @@
 (ns documentation.hara-event
-  (:use midje.sweet)
+  (:use hara.test)
   (:require [hara.event :refer :all]))
 
 [[:chapter {:title "Introduction"}]]

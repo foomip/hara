@@ -1,5 +1,5 @@
 (ns hara.io.scheduler-test
-  (:use midje.sweet)
+  (:use hara.test)
   (:require [hara.io.scheduler :refer :all]
             [hara.component :as component]
             [hara.concurrent.procedure :as procedure]))

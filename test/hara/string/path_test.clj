@@ -1,5 +1,5 @@
 (ns hara.string.path-test
-  (:use midje.sweet)
+  (:use hara.test)
   (:require [hara.string.path :as path]))
 
 ^{:refer hara.string.path/join :added "2.1"}

@@ -1,5 +1,5 @@
 (ns hara.concurrent.procedure-test
-  (:use midje.sweet)
+  (:use hara.test)
   (:require [hara.concurrent.procedure :refer :all]
             [hara.event :refer :all]
             [hara.common.state :as state]))

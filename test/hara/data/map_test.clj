@@ -1,5 +1,5 @@
 (ns hara.data.map-test
-  (:use midje.sweet)
+  (:use hara.test)
   (:require [hara.data.map :refer :all]
             [clojure.string :as string]))
 

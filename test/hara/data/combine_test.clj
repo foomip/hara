@@ -1,5 +1,5 @@
 (ns hara.data.combine-test
-  (:use midje.sweet)
+  (:use hara.test)
   (:require [hara.data.combine :refer :all]))
 
 ^{:refer hara.data.combine/combine-select :added "2.1"}

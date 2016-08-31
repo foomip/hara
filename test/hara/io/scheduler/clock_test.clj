@@ -1,5 +1,5 @@
 (ns hara.io.scheduler.clock-test
-  (:use midje.sweet)
+  (:use hara.test)
   (:require [hara.io.scheduler.clock :refer :all]
             [hara.io.scheduler :as scheduler]))
 

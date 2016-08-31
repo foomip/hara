@@ -1,5 +1,5 @@
 (ns hara.common.state-test
-  (:use midje.sweet)
+  (:use hara.test)
   (:require [hara.common.state :as state]
             [hara.common.checks :refer :all])
   (:refer-clojure :exclude [get set]))
@@ -39,8 +39,8 @@
 ^{:refer hara.common.state/dispatch :added "2.1"}
 (fact "Updates the value contained within a container using another thread."
 
-  (let [res (state/dispatch (atom 0)
-                (fn [x]  (inc x)))]
-    res   => future?
-    @res  => atom?
-    @@res => 1))
+  (def res (state/dispatch (atom 0)
+                           (fn [x]  (inc x))))
+  res   => future?
+  @res  => atom?
+  @@res => 1)

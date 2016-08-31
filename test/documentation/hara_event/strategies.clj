@@ -1,7 +1,6 @@
 (ns documentation.hara-event.strategies
-  (:use midje.sweet)
-  (:require [hara.event :refer :all]
-            [documentation.hara-event.api :refer [raises-issue]]))
+  (:use hara.test)
+  (:require [hara.event :refer :all]))
 
 "This is a comprehensive (though non-exhaustive) list of program control strategies that can be used. It can be noted that the `try/catch` paradigm can implement sections [{{normal}}](#normal) and [{{catch}}](#catch). Other clojure restart libraries such as `errorkit`, `swell` and `conditions` additionally implement sections [{{continue}}](#continue), [{{choose}}](#choose) and [{{choose-more}}](#choose-more).
 
@@ -27,7 +26,7 @@
   (manage                          ;; L2
    [1 2 (manage                    ;; L1
          (raise {:A true}))])      ;; L0
-  => (raises-issue {:A true})
+  => (raises {:A true})
 
   [[:image {:src "img/hara_event/norm_unmanaged.png" :height "300px" :title "Unmanaged Issue Flow"}]])
 
@@ -253,7 +252,7 @@
                 (default :X))
          (on :A []                 ;; H1A
              (fail :B)))])
-  => (raises-issue {:A true :B true})
+  => (raises {:A true :B true})
   [[:image {:src "img/hara_event/fail.png" :height "300px" :title "Force Fail Flow"}]]
 )
 

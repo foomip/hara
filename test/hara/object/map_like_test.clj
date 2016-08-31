@@ -1,5 +1,5 @@
 (ns hara.object.map-like-test
-  (:use midje.sweet)
+  (:use hara.test)
   (:require [hara.object.map-like :refer :all]
             [hara.object.write :as write]))
 

@@ -1,5 +1,5 @@
 (ns hara.sort.hierarchical-test
-  (:use midje.sweet)
+  (:use hara.test)
   (:require [hara.sort.hierarchical :refer :all]))
 
 ^{:refer hara.sort.hierarchical/top-node :added "2.2"}

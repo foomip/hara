@@ -1,5 +1,5 @@
 (ns hara.common.string-test
-  (:use midje.sweet)
+  (:use hara.test)
   (:require [hara.common.string :refer :all]))
 
 ^{:refer hara.common.string/to-string :added "2.1"}

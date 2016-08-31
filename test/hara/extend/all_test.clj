@@ -1,5 +1,5 @@
 (ns hara.extend.all-test
-  (:use midje.sweet)
+  (:use hara.test)
   (:require [hara.extend.all :refer :all]))
 
 ^{:refer hara.extend.all/extend-single :added "2.1"}

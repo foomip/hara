@@ -1,5 +1,5 @@
 (ns hara.function.args-test
-  (:use midje.sweet)
+  (:use hara.test)
   (:require [hara.function.args :refer :all]))
 
 ^{:refer hara.function.args/vargs? :added "2.1"}

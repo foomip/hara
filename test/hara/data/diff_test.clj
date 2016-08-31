@@ -1,5 +1,5 @@
 (ns hara.data.diff-test
-  (:use midje.sweet)
+  (:use hara.test)
   (:require [hara.data.diff :refer :all]))
 
 ^{:refer hara.data.diff/diff-changes :added "2.1"}
@@ -68,8 +68,9 @@
   (let [m1  {:a {:b 1 :d 3}}
         m2  {:a {:c 2 :d 4}}
         df  (diff m2 m1)]
-    (patch m1 df)
-    => m2))
+    (patch m1 df))
+  => {:a {:c 2 :d 4}})
+
 
 ^{:refer hara.data.diff/unpatch :added "2.1"}
 (fact "Use the diff to convert one map to another in the reverse
@@ -78,5 +79,5 @@
   (let [m1  {:a {:b 1 :d 3}}
         m2  {:a {:c 2 :d 4}}
         df  (diff m2 m1 true)]
-    (unpatch m2 df)
-    => m1))
+    (unpatch m2 df))
+  => {:a {:b 1 :d 3}})

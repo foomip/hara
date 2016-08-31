@@ -1,5 +1,5 @@
 (ns hara.io.environment-test
-  (:use midje.sweet)
+  (:use hara.test)
   (:require [hara.io.environment :as env]))
 
 ^{:refer hara.io.environment/clojure-version :added "2.2"}

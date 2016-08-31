@@ -1,5 +1,5 @@
 (ns hara.function.dispatch-test
-  (:use midje.sweet)
+  (:use hara.test)
   (:require [hara.function.dispatch :refer :all]))
 
 ^{:refer hara.function.dispatch/call :added "2.1"}

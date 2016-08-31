@@ -1,5 +1,5 @@
 (ns documentation.hara-io-watch
-  (:use midje.sweet)
+  (:use hara.test)
   (:require [hara.io.watch]
             [hara.common.watch :as watch]
             [clojure.java.io :as io]))
@@ -61,21 +61,25 @@ The `hara.common.watch` package provides for additional options to be specified 
 "
 
 (fact
-  (let [subject  (atom {:a 1 :b 2})
-        observer (atom nil)]
-    (watch/add subject :clone
-               (fn [_ _ p n] (reset! observer n))
+  (def subject  (atom {:a 1 :b 2}))
+  (def observer (atom nil))
+        
+  (watch/add subject :clone
+             (fn [_ _ p n] (reset! observer n))
 
-               ;; Options
-               {:select :b   ;; we will only look at :b
-                :diff true   ;; we will only trigger if :b changes
-                })
+             ;; Options
+             {:select :b   ;; we will only look at :b
+              :diff true   ;; we will only trigger if :b changes
+              })
 
-    (swap! subject assoc :a 0) ;; change in :a does not
-    @observer => nil           ;; affect watch
+  (swap! subject assoc :a 0) ;; change in :a does not
 
-    (swap! subject assoc :b 1) ;; change in :b does
-    @observer => 1))
+  @observer => nil           ;; affect watch
+
+
+  (swap! subject assoc :b 1) ;; change in :b does
+
+  @observer => 1)
 
 [[:section {:title "Watching Files"}]]
 

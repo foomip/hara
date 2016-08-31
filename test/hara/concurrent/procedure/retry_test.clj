@@ -1,5 +1,5 @@
 (ns hara.concurrent.procedure.retry_test
-  (:use midje.sweet)
+  (:use hara.test)
   (:require [hara.concurrent.procedure.retry :refer :all]))
 
 ^{:refer hara.concurrent.procedure.retry/retry-wait :added "2.2"}

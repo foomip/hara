@@ -1,5 +1,5 @@
 (ns hara.object.base-test
-  (:use midje.sweet)
+  (:use hara.test)
   (:require [hara.object.read :as read]
             [hara.object.write :as write]
             [hara.protocol.object :as object]
@@ -25,11 +25,19 @@
   [_]
   {:methods (read/read-getters Pet)})
 
+(defmethod object/-meta-read Dog
+  [_]
+  {:methods (read/read-getters Dog)})
+
 (defmethod object/-meta-write Dog
   [_]
   {:from-map (fn [m] (-> m
                          (write/from-map DogBuilder)
                          (.build)))})
+
+(defmethod object/-meta-read Cat
+  [_]
+  {:methods (read/read-getters Cat)})
 
 (defmethod object/-meta-write Cat
   [_]
@@ -124,7 +132,7 @@
 (fact "creates the object from a string or map"
   (read/to-data "hello")
   => "hello"
-
+  
   (read/to-data (write/from-map {:name "hello" :species "dog"} Pet))
   => {:name "hello", :species "dog"})
 

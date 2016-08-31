@@ -1,5 +1,5 @@
 (ns hara.reflect.pretty.classes-test
-  (:use midje.sweet)
+  (:use hara.test)
   (:require [hara.reflect.pretty.classes :refer :all]
             [hara.reflect.element.common]))
 

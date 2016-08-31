@@ -1,5 +1,5 @@
 (ns documentation.hara-component
-  (:use midje.sweet)
+  (:use hara.test)
   (:require [hara.component :as component]
             [hara.concurrent.ova :as ova]
             [compojure.core :as routes]

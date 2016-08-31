@@ -1,5 +1,5 @@
 (ns hara.time-test
-  (:use midje.sweet)
+  (:use hara.test)
   (:require [hara.time :as t]
             [hara.time.data
              [common :as common]

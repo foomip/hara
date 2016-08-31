@@ -1,5 +1,5 @@
 (ns documentation.hara-event.unlucky-numbers
-  (:use midje.sweet)
+  (:use hara.test)
   (:require [hara.event :refer :all]))
 
 [[:section {:title "Unlucky Numbers"}]]

@@ -1,5 +1,5 @@
 (ns hara.time.data.common-test
-  (:use midje.sweet)
+  (:use hara.test)
   (:require [hara.time.data.common :refer :all]
             [hara.protocol.time :as time])
   (:import [java.util Date TimeZone Calendar]))

@@ -1,5 +1,5 @@
 (ns hara.reflect.hierarchy-test
-  (:use midje.sweet)
+  (:use hara.test)
   (:require [hara.reflect.hierarchy :refer :all]
             [hara.common.primitives :as common]))
 

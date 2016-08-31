@@ -1,5 +1,5 @@
 (ns hara.concurrent.latch-test
-  (:use midje.sweet)
+  (:use hara.test)
   (:require [hara.concurrent.latch :refer :all]))
 
 ^{:refer hara.concurrent.latch/latch :added "2.1"}

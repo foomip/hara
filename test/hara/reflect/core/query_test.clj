@@ -1,5 +1,5 @@
 (ns hara.reflect.core.query-test
-  (:use midje.sweet)
+  (:use hara.test)
   (:require [hara.reflect.core.query :refer :all]))
 
 ^{:refer hara.reflect.core.query/query-class :added "2.1"}

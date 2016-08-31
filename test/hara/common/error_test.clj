@@ -1,5 +1,5 @@
 (ns hara.common.error-test
-  (:use midje.sweet)
+  (:use hara.test)
   (:require [hara.common.error :refer :all]))
 
 ^{:refer hara.common.error/error :added "2.0"}

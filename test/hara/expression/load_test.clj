@@ -1,5 +1,5 @@
 (ns hara.expression.load-test
-  (:use midje.sweet)
+  (:use hara.test)
   (:require [hara.expression.load :refer :all])
   (:refer-clojure :exclude [load]))
 

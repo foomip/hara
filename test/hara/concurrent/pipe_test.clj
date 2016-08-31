@@ -1,5 +1,5 @@
 (ns hara.concurrent.pipe-test
-  (:use midje.sweet)
+  (:use hara.test)
   (:require [hara.concurrent.pipe :as pipe :refer [pipe]]))
 
 ^{:refer hara.concurrent.pipe/pipe :added "2.2"}

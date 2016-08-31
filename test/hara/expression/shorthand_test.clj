@@ -1,5 +1,5 @@
 (ns hara.expression.shorthand-test
-  (:use midje.sweet)
+  (:use hara.test)
   (:require [hara.expression.shorthand :refer :all]))
 
 ^{:refer hara.expression.shorthand/shorthand-form :added "2.1"}

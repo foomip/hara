@@ -1,5 +1,5 @@
 (ns hara.object.enum-test
-  (:use midje.sweet)
+  (:use hara.test)
   (:require [hara.object.enum :refer :all]
             [hara.object.write :as write])
   (:import java.lang.annotation.ElementType))
@@ -16,7 +16,7 @@
 
   (->> (enum-values ElementType)
        (map str))
-  => (contains "TYPE" "FIELD" "METHOD" "PARAMETER" "CONSTRUCTOR"
+  => (contains ["TYPE" "FIELD" "METHOD" "PARAMETER" "CONSTRUCTOR"]
                :in-any-order :gaps-ok))
 
 ^{:refer hara.object.write/from-data!enum :added "2.2"}

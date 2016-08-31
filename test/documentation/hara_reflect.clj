@@ -1,5 +1,5 @@
 (ns documentation.hara-reflect
-  (:use midje.sweet)
+  (:use hara.test)
   (:require [hara.reflect :refer :all]))
 
  [[:chapter {:title "Introduction"}]]
@@ -126,14 +126,13 @@ If the previous author had taken shortcuts in design, those private keywords tur
   (value-of 100) => "100" ; long
   (value-of 3.9) => "3.9" ; double
 
-
-  (let [arr (make-array Character/TYPE 5)
-        _   (doall (map-indexed (fn [i v]
-                                  (aset arr i v))
-                                [\h \e \l \l \o]))]
-    (value-of arr) => "hello"    ; char []
-    (value-of arr 0 2) => "he"   ; char[], int, int
-))
+  (def arr (make-array Character/TYPE 5))
+  (doall (map-indexed (fn [i v]
+                        (aset arr i v))
+                      [\h \e \l \l \o]))
+  (value-of arr) => "hello"    ; char []
+  (value-of arr 0 2) => "he"   ; char[], int, int
+)
 
 [[:section {:title "Options"}]]
 

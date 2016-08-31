@@ -1,5 +1,5 @@
 (ns documentation.hara-event.api
-  (:use midje.sweet)
+  (:use hara.test)
   (:require [hara.event :refer :all]))
 
 [[:section {:title "raise" :tag "api-raise"}]]
@@ -20,13 +20,7 @@
       (ex-data e)))
   => {:error true})
 
-"The payload can be expressed as a `hash-map`, a `keyword` or a `vector`. We define the `raises-issue` macro to help explore this a little further:"
-
-(defmacro raises-issue [payload]
-  `(throws (fn [e#]
-             ((just ~payload) (ex-data e#)))))
-
-"Please note that the `raises-issue` macro is only working with `midje`. In order to work outside of midje, we need to define the `payload` macro:"
+"The payload can be expressed as a `hash-map`, a `keyword` or a `vector`. We can to define the `payload` macro:"
 
 (defmacro payload [& body]
     `(try ~@body
@@ -48,7 +42,7 @@
 
 (fact
   (raise {:error true :data "data"})
-  => (raises-issue {:error true :data "data"}))
+  => (raises {:error true :data "data"}))
 
 [[:subsection {:title "keyword"}]]
 
@@ -56,7 +50,7 @@
 
 (fact
   (raise :error)
-  => (raises-issue {:error true}))
+  => (raises {:error true}))
 
 [[:subsection {:title "vector"}]]
 "Vectors can contain only keywords or both maps and keywords. They are there mainly for syntacic sugar"
@@ -64,11 +58,11 @@
 (fact
 
    (raise [:lvl-1 :lvl-2 :lvl-3])
-  => (raises-issue {:lvl-1 true :lvl-2 true :lvl-3 true})
+  => (raises {:lvl-1 true :lvl-2 true :lvl-3 true})
 
 
   (raise [:lvl-1 {:lvl-2 true :data "data"}])
-   => (raises-issue {:lvl-1 true :lvl-2 true :data "data"}))
+   => (raises {:lvl-1 true :lvl-2 true :data "data"}))
 
 [[:section {:title "option/default"}]]
 
@@ -96,7 +90,7 @@
   (raise :error
          (option :use-nil [] nil)
          (option :use-custom [n] n))
-  => (raises-issue {:error true}))
+  => (raises {:error true}))
 
 
 [[:section {:title "manage/on"}]]
@@ -130,7 +124,7 @@
   => 1
 
   (half-int 3)
-  => (raises-issue {:odd-number true :value 3}))
+  => (raises {:odd-number true :value 3}))
 
 [[:section {:title "checkers"}]]
 
@@ -300,7 +294,7 @@
     (mapv half-int [1 2 3 4])
     (on :odd-number []
       (fail [:unhandled :error])))
-  => (raises-issue {:value 1 :odd-number true :unhandled true :error true})
+  => (raises {:value 1 :odd-number true :unhandled true :error true})
   )
 
 [[:section {:title "choose" :tag "api-choose"}]]

@@ -1,5 +1,5 @@
 (ns hara.time.data.duration-test
-  (:use midje.sweet)
+  (:use hara.test)
   (:require [hara.time.data.duration :refer :all]))
 
 ^{:refer hara.time.data.duration/adjust-year-days :added "2.2"}

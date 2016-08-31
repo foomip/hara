@@ -1,5 +1,5 @@
 (ns hara.reflect.core.apply-test
-  (:use midje.sweet)
+  (:use hara.test)
   (:require [hara.reflect.core.apply :refer :all]))
 
 ^{:refer hara.reflect.core.apply/apply-element :added "2.1"}

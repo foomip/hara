@@ -1,5 +1,5 @@
 (ns hara.object.string-like-test
-  (:use midje.sweet)
+  (:use hara.test)
   (:require [hara.object.string-like :refer :all]
             [hara.object :as object]))
 

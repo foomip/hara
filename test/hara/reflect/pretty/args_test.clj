@@ -1,5 +1,5 @@
 (ns hara.reflect.pretty.args-test
-  (:use midje.sweet)
+  (:use hara.test)
   (:require [hara.reflect.pretty.args :refer :all]))
 
 ^{:refer hara.reflect.pretty.args/args-classify :added "2.1" :author "Chris Zheng"}

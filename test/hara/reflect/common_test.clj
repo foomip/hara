@@ -1,5 +1,5 @@
 (ns hara.reflect.common-test
-  (:use midje.sweet)
+  (:use hara.test)
   (:require [hara.reflect.common :refer :all]))
 
 ^{:refer hara.reflect.common/context-class :added "2.1"}

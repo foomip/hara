@@ -1,5 +1,5 @@
 (ns hara.string.case-test
-  (:use midje.sweet)
+  (:use hara.test)
   (:require [hara.string.case :refer :all]))
 
 ^{:refer hara.string.case/title-case :added "2.1"}

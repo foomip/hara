@@ -1,5 +1,5 @@
 (ns hara.io.classloader-test
-  (:use midje.sweet)
+  (:use hara.test)
   (:require [hara.io.classloader :refer :all]))
 
 ^{:refer hara.io.classloader/delegation :added "2.2"}

@@ -1,5 +1,5 @@
 (ns hara.group-test
-  (:use midje.sweet)
+  (:use hara.test)
   (:require [hara.group :refer :all]))
 
 (defrecord Person [])

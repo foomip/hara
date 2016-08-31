@@ -1,5 +1,5 @@
 (ns hara.concurrent.propagate-test
-  (:use midje.sweet)
+  (:use hara.test)
   (:require [hara.concurrent.propagate :refer :all]))
 
 

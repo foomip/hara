@@ -1,5 +1,5 @@
 (ns hara.core-test
-  (:use midje.sweet)
+  (:use hara.test)
   (:require [hara.core :refer :all])
   (:refer-clojure :exclude [if-let when-let comp]))
 

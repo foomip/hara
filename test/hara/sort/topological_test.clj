@@ -1,5 +1,5 @@
 (ns hara.sort.topological-test
-  (:use midje.sweet)
+  (:use hara.test)
   (:require [hara.sort.topological :refer :all]))
 
 ^{:refer hara.sort.topological/top-nodes :added "2.1"}

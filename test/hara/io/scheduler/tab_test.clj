@@ -1,5 +1,5 @@
 (ns hara.io.scheduler.tab-test
-    (:use midje.sweet)
+    (:use hara.test)
     (:require [hara.time :as t]
               [hara.io.scheduler.tab :refer :all]))
 
