@@ -11,7 +11,7 @@
    (-> (coerce-zone \"Asia/Kolkata\" {:type TimeZone})
        (string/-to-string))
    => \"Asia/Kolkata\"
-
+ 
    (-> (coerce-zone nil {:type TimeZone})
        (string/-to-string))
    => (-> (TimeZone/getDefault)

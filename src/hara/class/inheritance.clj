@@ -34,7 +34,7 @@
 
 (defn best-match
   "finds the best matching interface or class from a list of candidates
-
+ 
    (best-match #{Object} Long) => Object
    (best-match #{String} Long) => nil
    (best-match #{Object Number} Long) => Number"

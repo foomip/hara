@@ -27,15 +27,17 @@
 
 (defn pipe
   "creates a pipe so that tasks can be acted upon asynchronously in order in which they were sent
-
+ 
    (def atm (atom []))
    (def p (pipe (fn [msg]
                   (swap! atm conj msg))))
-
-   (pipe/send p 1)
-   (pipe/send p 2)
-   (pipe/send p 3)
-   @atm => [1 2 3]"
+ 
+   (do (pipe/send p 1)
+       (pipe/send p 2)
+       (pipe/send p 3)
+       (Thread/sleep 100)
+       @atm)
+   => [1 2 3]"
   {:added "2.2"}
   [handler]
   (let [queue  (atom (common/queue))

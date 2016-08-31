@@ -3,7 +3,9 @@
             [hara.io.file :as fs]
             [hara.event :as event]
             [hara.common.primitives :refer [uuid]]
-            [hara.test.checker.base :as checker])
+            [hara.test.checker.base :as checker]
+            [hara.test.form.print :as print]
+            [hara.display.ansii :as ansii])
   (:refer-clojure :exclude [test])
   (:import java.io.File))
  
@@ -43,53 +45,70 @@
     (unbind-id common/*accumulator* id)
     @sink))
 
-(defn stats [acc]
-  (let [results (mapcat :results acc)
+(defn interim [facts]
+  (let [results (mapcat :results facts)
         checks  (filter #(-> % :from (= :verify)) results)
         forms   (filter #(-> % :from (= :evaluate)) results)
         thrown  (filter #(-> % :type (= :exception)) forms)
         passed  (filter checker/succeeded? checks)
+        failed  (filter (comp not checker/succeeded?) checks)
         files   (->> checks
                      (map (comp :path :meta))
                      (frequencies)
                      (keys))]
-    {:files  (count files)
-     :thrown (count thrown)
-     :facts  (count acc)
-     :checks (count checks)
-     :passed (count passed)
-     :failed (- (count checks) (count passed))}))
+    {:files  files
+     :thrown thrown
+     :facts  facts
+     :checks checks
+     :passed passed
+     :failed failed}))
 
 (defn run-namespace
   ([] (run-namespace (.getName *ns*)))
   ([ns]
-   (let [acc (accumulate (fn [id sink]
-                           (when-let [path (get (all-files) ns)]
-                             (binding [common/*path* path]
-                               (load-file path)))))]
-     (event/signal {:test :bulk :results acc})
-     (stats acc))))
+   (println "\n")
+   (println (-> (format "---- Namespace (%s) ----" (str ns))
+                (ansii/style  #{:blue :bold})))
+   (binding [*warn-on-reflection* false]
+     (let [facts (accumulate (fn [id sink]
+                             (when-let [path (get (all-files) ns)]
+                               (binding [common/*path* path]
+                                 (load-file path)))))
+           results (interim facts)]
+       (event/signal {:test :bulk :results results})
+       (reduce-kv (fn [out k v]
+                      (assoc out k (count v)))
+                    {}
+                    results)))))
+
+(defn project-name []
+  (-> (fs/source-seq "project.clj")
+      first
+      second))
 
 (defn run
   ([]
-   (binding [*warn-on-reflection* false]
-     (let [acc (accumulate (fn [id sink]
-                             (doseq [path (vals (all-files))]
-                               (binding [common/*path* path]
-                                 (load-file path)))))]
-       (event/signal {:test :bulk :results acc})
-       (stats acc)))))
+   (let [all-ns (-> (all-files) seq sort)
+         proj (project-name)]
+     (println "\n")
+     (println (-> (format "---- Project (%s%s) ----" (if proj (str proj ":") "") (count all-ns))
+                  (ansii/style  #{:blue :bold})))
+     (println "")
+     (binding [*warn-on-reflection* false]
+       (let [facts (accumulate (fn [id sink]
+                                 (doseq [[ns path] all-ns]
+                                   (println (ansii/style ns  #{:blue}))
+                                   (binding [common/*path* path]
+                                     (load-file path)))))
+             results (interim facts)]
+         (event/signal {:test :bulk :results results})
+         (reduce-kv (fn [out k v]
+                      (assoc out k (count v)))
+                    {}
+                    results))))))
 
 (comment
-  (first (test-ns 'hara.common.checks-test))
-
-  (test-ns 'hara.io.scheduler.tab-test)
-  {:files 84, :thrown 0, :facts 567, :checks 1019, :passed 1019}
-  {:files 84, :thrown 0, :facts 567, :checks 1019, :passed 1017}
-  {:files 84, :thrown 1, :facts 567, :checks 1015, :passed 1012}
-  {:files 84, :thrown 14, :facts 567, :checks 967, :passed 964}
-  {:files 83, :thrown 21, :facts 568, :checks 956, :passed 945}
-  {:files 83, :thrown 26, :facts 567, :checks 945, :passed 924}
-  {:files 83, :thrown 26, :facts 567, :checks 945, :passed 909})
+  (run-namespace)
+  (run-namespace 'hara.common.checks-test))
 
 

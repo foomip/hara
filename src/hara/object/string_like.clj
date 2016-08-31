@@ -5,13 +5,15 @@
 
 (defmacro extend-string-like
   "creates an entry for string-like classes
-
+ 
    (extend-string-like
     java.io.File
     {:tag \"path\"
-     :read .getPath
-     :write (fn [^String path _] (java.io.File. path))})
-
+     :read (fn [f] (.getPath f))
+     :write (fn [^String path] (java.io.File. path))})
+ 
+   (object/from-data \"/home\" java.io.File)
+ 
    (with-out-str
      (prn (java.io.File. \"/home\")))
    => \"#path \"/home\"\""

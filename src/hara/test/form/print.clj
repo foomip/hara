@@ -63,22 +63,31 @@
               (str "\n  " (ansii/white "Thrown") "  " (ansii/yellow thrown))
               ""))))))
 
+(defn print-summary [{:keys [files thrown facts checks passed failed] :as result}]
+  (let [npassed (count passed)
+        nchecks (count checks)
+        nfailed (count failed)
+        nthrown (count thrown)]
+    (println
+     "\n"
+     (str (ansii/style (str "Summary (" (count files) ")") #{:blue :bold})
+          (str "\n  " (ansii/white " Files") "  " (ansii/blue (count files)))
+          (str "\n  " (ansii/white " Facts") "  " (ansii/blue (count facts)))
+          (str "\n  " (ansii/white "Checks") "  " (ansii/blue nchecks))
+          (str "\n  " (ansii/white "Passed") "  " ((if (= npassed nchecks)
+                                                     ansii/blue
+                                                     ansii/yellow) npassed))
+          (str "\n  " (ansii/white "Thrown") "  " ((if (pos? nthrown)
+                                                     ansii/yellow
+                                                     ansii/blue) nthrown))))
+    
+    (if (pos? nfailed)
+      (println
+       "\n"
+       (ansii/style (str "Failed  (" nfailed ")") #{:red :bold}))
 
-(comment
-  (print-failure {:name 'hara.test.form/arrows :ns 'hara.test.form-test :line 10
-                  :desc "Hello There"
-                  :form 1
-                  :actual 2
-                  :check 1
-                  })
-
-  (print-thrown {:name 'hara.test.form/arrows :ns 'hara.test.form-test :line 10
-                 :desc "Hello There"
-                 :form 1
-                 :actual 2
-                 :check 1
-                 })
-
-  (print-success {:ns 'hara.test.form-test :line 10}))
+      (println
+       "\n"
+       (ansii/style (str "Success (" npassed ")") #{:cyan :bold})))))
 
 

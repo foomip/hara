@@ -14,12 +14,12 @@
    => {:type java.lang.Long, :timezone \"GMT\", :long 0
        :year 1970, :month 1, :day 1,
        :hour 0, :minute 0 :second 0 :millisecond 0}
-
+ 
    (to-map (Date. 0) {:timezone \"EST\"}
            [:year :day :month])
    => {:type java.util.Date, :timezone \"EST\", :long 0
        :year 1969, :day 31, :month 12}
-
+ 
    (to-map {:type java.lang.Long, :timezone \"GMT\", :long 0
             :year 1970, :month 1, :day 1,
             :hour 0, :minute 0 :second 0 :millisecond 0}
@@ -54,7 +54,7 @@
              {:timezone \"Asia/Kolkata\"}
              {})
    => 0
-
+ 
    (-> (from-map {:type java.util.Calendar
                   :year 1970, :month 1, :day 1,
                   :hour 0, :minute 0 :second 0 :millisecond 0
@@ -65,12 +65,12 @@
    => {:type java.util.GregorianCalendar, :timezone \"Asia/Kolkata\", :long 0
        :year 1970, :month 1, :day 1,
        :hour 5, :minute 30 :second 0 :millisecond 0}
-
+ 
    (to-map (common/calendar (Date. 0)
                             (TimeZone/getTimeZone \"EST\"))
            {:timezone \"GMT\"} [:month :day :year])
    => {:type java.util.GregorianCalendar, :timezone \"GMT\", :long 0,
-       :year 1970 :month 1, :day 1}"
+      :year 1970 :month 1, :day 1}"
   {:added "2.2"}
   [m opts fill]
   (let [m    (merge fill m)

@@ -13,7 +13,7 @@
 
 (defn topological-sort
   "sorts a directed graph into its dependency order
-
+ 
    (topological-sort {:a #{:b :c},
                       :b #{:d :e},
                       :c #{:e :f},
@@ -21,7 +21,7 @@
                       :e #{:f},
                       :f nil})
    => [:f :d :e :b :c :a]
-
+ 
    (topological-sort {:a #{:b},
                       :b #{:a}})
    => (throws Exception)"

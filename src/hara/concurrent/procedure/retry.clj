@@ -6,11 +6,11 @@
 
 (defn retry-wait
   "waits in milliseconds depending upon the handler
-
+ 
    (retry-wait {}) => 0
-
+ 
    (retry-wait {:wait 100}) => 100
-
+ 
    (retry-wait {:wait (fn [state count]
                         (if (> (:expiry state) count)
                           1000
@@ -34,10 +34,10 @@
   "chooses the exception handler based upon the exception
    (retry-pick {:on #{Exception}} (Exception.))
    => true
-
+ 
    (retry-pick {:on Exception} (Exception.))
    => true
-
+ 
    (retry-pick {:on {:a #(= :error %)}} (ex-info \"error\" {:a :error}))
    => true"
   {:added "2.2"}
@@ -76,10 +76,10 @@
 
 (defn retry-check
   "checks to see if a retry is needed
-
+ 
    (retry-check {:limit 2 :count 3})
    => false
-
+ 
    (retry-check {:limit (fn [state count]
                           (> (/ (inc count) (:restarted state))
                              2))
@@ -99,7 +99,7 @@
 
 (defn retry-state
   "calculates the next retry state
-
+ 
    (retry-state {:apply (fn [state e]
                           (update-in state [:file-errors] (fnil inc 0)))
                  :state {}}
@@ -117,7 +117,7 @@
 
 (defn retry
   "sets up arguments if retrying. if no retry, returns nil
-
+ 
    (-> (retry {:arglist [:age :gender :retry]
                :retry {:handlers [{:on {:cats odd?}
                                    :apply   (fn [state e]

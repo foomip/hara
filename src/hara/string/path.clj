@@ -5,10 +5,10 @@
 
 (defn join
   "joins a sequence of elements into a path seperated value
-
+ 
    (path/join [\"a\" \"b\" \"c\"])
    => \"a/b/c\"
-
+ 
    (path/join '[a b c] '-)
    => 'a-b-c"
   {:added "2.1"}
@@ -23,10 +23,10 @@
 
 (defn split
   "splits a sequence of elements into a path seperated value
-
+ 
    (path/split :hello/world)
    => [:hello :world]
-
+ 
    (path/split \"a/b/c/d\")
    => '[\"a\" \"b\" \"c\" \"d\"]"
   {:added "2.1"}
@@ -41,10 +41,10 @@
 
 (defn contains
   "check that a path contains the subkey
-
+ 
    (path/contains :hello/world :hello)
    => true
-
+ 
    (path/contains \"a/b/c/d\" \"a/b/c\")
    => true"
   {:added "2.1"}
@@ -55,7 +55,7 @@
 
 (defn path-vec
   "returns the path vector of the string/keyword/symbol
-
+ 
    (path/path-vec \"a/b/c/d\")
    => [\"a\" \"b\" \"c\"]"
   {:added "2.1"}
@@ -64,7 +64,7 @@
 
 (defn path-vec?
   "check for the path vector of the string/keyword/symbol
-
+ 
    (path/path-vec? \"a/b/c/d\" [\"a\" \"b\" \"c\"])
    => true"
   {:added "2.1"}
@@ -73,7 +73,7 @@
 
 (defn path-ns
   "returns the path namespace of the string/keyword/symbol
-
+ 
    (path/path-ns \"a/b/c/d\")
    => \"a/b/c\""
   {:added "2.1"}
@@ -82,7 +82,7 @@
 
 (defn path-ns?
   "check for the path namespace of the string/keyword/symbol
-
+ 
    (path/path-ns? \"a/b/c/d\" \"a/b/c\")
    => true"
   {:added "2.1"}
@@ -94,7 +94,7 @@
 
 (defn path-root
   "returns the path root of the string/keyword/symbol
-
+ 
    (path/path-root \"a/b/c/d\")
    => \"a\""
   {:added "2.1"}
@@ -103,7 +103,7 @@
 
 (defn path-root?
   "check for the path root of the string/keyword/symbol
-
+ 
    (path/path-root? \"a/b/c/d\" \"a\")
    => true"
   {:added "2.1"}
@@ -112,7 +112,7 @@
 
 (defn path-stem-vec
   "returns the path stem vector of the string/keyword/symbol
-
+ 
    (path/path-stem-vec \"a/b/c/d\")
    =>  [\"b\" \"c\" \"d\"]"
   {:added "2.1"}
@@ -121,7 +121,7 @@
 
 (defn path-stem-vec?
   "check for the path stem vector of the string/keyword/symbol
-
+ 
    (path/path-stem-vec? \"a/b/c/d\" [\"b\" \"c\" \"d\"])
    => true"
   {:added "2.1"}
@@ -130,7 +130,7 @@
 
 (defn path-stem
   "returns the path stem of the string/keyword/symbol
-
+ 
    (path/path-stem \"a/b/c/d\")
    => \"b/c/d\""
   {:added "2.1"}
@@ -139,7 +139,7 @@
 
 (defn path-stem?
   "check for the path stem of the string/keyword/symbol
-
+ 
    (path/path-stem? \"a/b/c/d\" \"b/c/d\")
    => true"
   {:added "2.1"}
@@ -148,7 +148,7 @@
 
 (defn val
   "returns the val of the string/keyword/symbol
-
+ 
    (path/val \"a/b/c/d\")
    => \"d\""
   {:added "2.1"}
@@ -157,7 +157,7 @@
 
 (defn val?
   "check for the val of the string/keyword/symbol
-
+ 
    (path/val? \"a/b/c/d\" \"d\")
    => true"
   {:added "2.1"}

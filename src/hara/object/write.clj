@@ -9,7 +9,7 @@
 
 (defn meta-write
   "accesses the write-attributes of an object
-
+ 
    (write/meta-write DogBuilder)
    => (contains {:class test.DogBuilder
                  :empty fn?,
@@ -40,7 +40,7 @@
   "write fields of an object through setter methods
    (write/write-setters Dog)
    => {}
-
+ 
    (keys (write/write-setters DogBuilder))
    => [:name]"
   {:added "2.3"}

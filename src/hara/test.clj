@@ -11,7 +11,6 @@
 
 (defn -main []
   (let [{:keys [thrown failed] :as stats} (run)]
-    (println "Results:" stats)
     (System/exit (+ thrown failed))))
 
 (comment

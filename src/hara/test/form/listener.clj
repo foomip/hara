@@ -50,3 +50,7 @@
 (event/deflistener fact-accumulator {:test :fact}
   [id meta results]
   (reset! common/*accumulator* {:id id :meta meta :results results}))
+
+(event/deflistener bulk-printer {:test :bulk}
+  [results]
+  (print/print-summary results))

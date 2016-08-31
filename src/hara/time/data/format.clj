@@ -43,13 +43,13 @@
   "converts a date into a string
    (f/format (Date. 0) \"HH MM dd Z\" {:timezone \"GMT\" :cached true})
    => \"00 01 01 +0000\"
-
+ 
    (f/format (common/calendar (Date. 0)
                               (TimeZone/getTimeZone \"GMT\"))
              \"HH MM dd Z\"
              {})
    => \"00 01 01 +0000\"
-
+ 
    (f/format (Timestamp. 0)
              \"HH MM dd Z\"
              {:timezone \"PST\"})
@@ -69,14 +69,14 @@
   "converts a string into a date
    (f/parse \"00 00 01 01 01 1989 +0000\" \"ss mm HH dd MM yyyy Z\" {:type Date :timezone \"GMT\"})
    => #inst \"1989-01-01T01:00:00.000-00:00\"
-
+ 
    (-> (f/parse \"00 00 01 01 01 1989 -0800\" \"ss mm HH dd MM yyyy Z\"
                 {:type Calendar})
        (map/to-map {:timezone \"GMT\"} common/+default-keys+))
    {:type java.util.GregorianCalendar, :timezone \"GMT\", :long 599648400000,
     :year 1989, :month 1, :day 1, :hour 9, :minute 0, :second 0, :millisecond 0}
-
-
+ 
+ 
    (-> (f/parse \"00 00 01 01 01 1989 +0000\" \"ss mm HH dd MM yyyy Z\"
                 {:type Timestamp})
        (map/to-map {:timezone \"Asia/Kolkata\"} common/+default-keys+))

@@ -22,7 +22,7 @@
 
 (defn list-items
   "returns a list of keys to items in the group
-
+ 
    (list-items people)
    => [:andy :bob]"
   {:added "2.2"}

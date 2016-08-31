@@ -6,9 +6,9 @@
 
 (defn enum?
   "Check to see if class is an enum type
-
+ 
    (enum? java.lang.annotation.ElementType) => true
-
+ 
    (enum? String) => false"
   {:added "2.2"}
   [type]
@@ -19,10 +19,10 @@
 
 (defn enum-values
   "Returns all values of an enum type
-
+ 
    (->> (enum-values ElementType)
         (map str))
-   => (contains \"TYPE\" \"FIELD\" \"METHOD\" \"PARAMETER\" \"CONSTRUCTOR\"
+   => (contains [\"TYPE\" \"FIELD\" \"METHOD\" \"PARAMETER\" \"CONSTRUCTOR\"]
                 :in-any-order :gaps-ok)"
   {:added "2.2"}
   [type]

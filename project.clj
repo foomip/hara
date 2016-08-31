@@ -10,7 +10,7 @@
                                   [clj-http "2.1.0"]
                                   [org.eclipse.jgit "4.0.1.201506240215-r"]]
                    :plugins [[lein-repack "0.2.10"]
-                             [lein-hydrox "0.1.16"]]}}
+                             [lein-hydrox "0.1.17"]]}}
   :documentation {:site   "hara"
                   :output "docs"
                   :description "patterns and utilities"

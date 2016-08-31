@@ -9,16 +9,16 @@
   "converts an instant to an array representation
    (to-vector 0 {:timezone \"GMT\"} :all)
    => [1970 1 1 0 0 0 0]
-
+ 
    (to-vector (Date. 0) {:timezone \"GMT\"} :day)
    => [1970 1 1]
-
+ 
    (to-vector (common/calendar (Date. 0)
                                (TimeZone/getTimeZone \"EST\"))
               {}
               [:month :day :year])
    => [12 31 1969]
-
+ 
    (to-vector (common/calendar (Date. 0)
                                (TimeZone/getTimeZone \"EST\"))
               {:timezone \"GMT\"}

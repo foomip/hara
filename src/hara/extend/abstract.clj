@@ -5,11 +5,11 @@
 (defn protocol-basis
   "Helper function that transforms the functions in the protocol to
    the neccessary format in preparation for extend-abstract and extend-implementations
-
+ 
    (defprotocol IVal
      (-set [this val])
      (-get [this]))
-
+ 
    (protocol-basis IVal '- 'pre- '-tail)
    => (contains '({:args [this], :fn pre-get-tail, :name -get}
                   {:args [this val], :fn pre-set-tail, :name -set})
@@ -37,10 +37,10 @@
 (defn map-walk-submap
   "Gets a submap depending on whether it is a key or it
    is a key witthin a hashset
-
+ 
    (map-walk-submap {:hello \"world\"} :hello)
    => \"world\"
-
+ 
    (map-walk-submap {#{:hello} \"world\"} :hello)
    => \"world\""
   {:added "2.1"}
@@ -56,7 +56,7 @@
 (defn map-walk
   "Helper function for evaluation of various utility functions
    within the namespace
-
+ 
    (map-walk :hello {#{:hello} (fn [k arg1] (str (name k) \" world \" arg1))}
              [\"again\"]  identity
              (fn [_ _ _] :none)
@@ -76,11 +76,11 @@
 
 (defn protocol-default-form
   "creates a :default defmethod form from a protocol basis
-
+ 
    (protocol-default-form '{:args [this], :fn data-env, :name -data}
                           '{#{-data} ([this & args] nil)})
    => '(defmethod data-env :default [this & args] nil)
-
+ 
    (protocol-default-form '{:args [this], :fn data-env, :name -data}
                           '{#{-data} (fn [basis]
                                        `(~(:args basis)
@@ -105,7 +105,7 @@
 
 (defn protocol-multi-form
   "creates a :default defmethod form from a protocol basis
-
+ 
    (protocol-multi-form '{:args [this], :fn data-env, :name -data}
                         '{#{-data} (-> % :meta :type)})
    => '(defmulti data-env (fn [this] (-> this :meta :type)))"
@@ -124,7 +124,7 @@
 
 (defn protocol-multimethods
   "creates a set of defmulti and defmethods for each entry in all-basis
-
+ 
    (protocol-multimethods '[{:args [this], :fn data-env, :name -data}]
                           {:defaults '([this & args] (Exception. \"No input\"))
                            :dispatch '(-> % :meta :type)})
@@ -139,12 +139,12 @@
 
 (defn protocol-extend-type-wrappers
   "applies form template for simple template rewrites
-
+ 
    (protocol-extend-type-wrappers '{:args [this], :fn data-env, :name -data}
                                   '{-data (process %)}
                                   '(data-env this))
    => '(process (data-env this))
-
+ 
    (protocol-extend-type-wrappers '{:args [this], :fn data-env, :name -data}
                                   '{-data (fn [form basis] (concat ['apply] form [[]]))}
                                   '(data-env this))
@@ -163,7 +163,7 @@
 
 (defn protocol-extend-type-function
   "utility to create a extend-type function  with template and macros
-
+ 
    (protocol-extend-type-function '{:args [this], :fn data-env, :name -data}
                                   '{-data (fn [form basis] (concat ['apply] form [[]]))})
    => '(-data [this] (apply data-env this []))"
@@ -197,7 +197,7 @@
 (defmacro extend-abstract
   "Creates a set of abstract multimethods as well as extends a set of
    protocols to a given type
-
+ 
    (extend-abstract
     Envelope [IData]
     :select -
@@ -207,10 +207,10 @@
     :dispatch   :type
     :defaults   {nil   ([this & args] (Exception. \"No input\"))
                  -data ([this] (:hello this))})
-
+ 
    (data-env (map->Envelope {:hello \"world\"}))
    => \"world\"
-
+ 
    (-data (map->Envelope {:hello \"world\"}))
    => \"hello world\""
   {:added "2.1"}
@@ -239,12 +239,12 @@
 (defmacro extend-implementations
   "Creates a set of implementation functions for implementation
    of protocol functionality
-
+ 
    (extend-implementations
     [IData]
     :wrappers (fn [form _]
                 (list 'str form \" again\")))
-
+ 
    (data (map->Envelope {:hello \"world\"}))
    => \"hello world again\""
   {:added "2.1"}

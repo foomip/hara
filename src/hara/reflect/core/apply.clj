@@ -69,7 +69,7 @@
 
 (defn apply-element
   "apply the class element to arguments
-
+ 
    (seq (apply-element \"123\" \"value\" []))
    => [\1 \2 \3]"
   {:added "2.1"}

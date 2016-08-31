@@ -10,9 +10,9 @@
 
 (defn call
   "Executes `(f v1 ... vn)` if `f` is not nil
-
+ 
    (call nil 1 2 3) => nil
-
+ 
    (call + 1 2 3) => 6"
   {:added "2.1"}
   ([f] (if-not (nil? f) (f)) )
@@ -24,12 +24,12 @@
 
 (defn msg
   "Message dispatch for object orientated type calling convention.
-
+ 
    (def obj {:a 10
              :b 20
              :get-sum (fn [this]
                        (+ (:b this) (:a this)))})
-
+ 
    (msg obj :get-sum) => 30"
   {:added "2.1"}
   ([obj kw] (call (obj kw) obj))

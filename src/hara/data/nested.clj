@@ -6,7 +6,7 @@
 
 (defn keys-nested
   "The set of all nested keys in a map
-
+ 
    (keys-nested {:a {:b 1 :c {:d 1}}})
    => #{:a :b :c :d}"
   {:added "2.1"}
@@ -19,10 +19,10 @@
 
 (defn key-paths
   "The set of all paths in a map, governed by a max level of nesting
-
+ 
    (key-paths {:a {:b 1} :c {:d 1}})
    => (contains [[:c :d] [:a :b]] :in-any-order)
-
+ 
    (key-paths {:a {:b 1} :c {:d 1}} 1)
    => (contains [[:c] [:a]] :in-any-order)"
   {:added "2.1"}
@@ -40,10 +40,10 @@
 
 (defn update-keys-in
   "updates all keys in a map with given function
-
+ 
    (update-keys-in {:x {[\"a\" \"b\"] 1 [\"c\" \"d\"] 2}} [:x] string/join)
    => {:x {\"ab\" 1 \"cd\" 2}}
-
+ 
    (update-keys-in {:a {:c 1} :b {:d 2}} 2 name)
    => {:b {\"d\" 2}, :a {\"c\" 1}}"
   {:added "2.1"}
@@ -70,16 +70,16 @@
 
 (defn update-vals-in
   "updates all values in a map with given function
-
+ 
    (update-vals-in {:a 1 :b 2} [] inc)
    => {:a 2 :b 3}
-
+ 
    (update-vals-in {:a {:c 1} :b 2} [:a] inc)
    => {:a {:c 2} :b 2}
-
+ 
    (update-vals-in {:a {:c 1} :b {:d 2}} 2 inc)
    => {:a {:c 2} :b {:d 3}}
-
+ 
    (update-vals-in {:a 1 :b 2} 1 inc)
    => {:a 2, :b 3}"
   {:added "2.1"}
@@ -107,10 +107,10 @@
 
 (defn merge-nested
   "Merges nested values from left to right.
-
+ 
    (merge-nested {:a {:b {:c 3}}} {:a {:b 3}})
    => {:a {:b 3}}
-
+ 
    (merge-nested {:a {:b {:c 1 :d 2}}}
                  {:a {:b {:c 3}}})
    => {:a {:b {:c 3 :d 2}}}"
@@ -138,10 +138,10 @@
 
 (defn merge-nil-nested
   "Merges nested values from left to right, provided the merged value does not exist
-
+ 
    (merge-nil-nested {:a {:b 2}} {:a {:c 2}})
    => {:a {:b 2 :c 2}}
-
+ 
    (merge-nil-nested {:b {:c :old}} {:b {:c :new}})
    => {:b {:c :old}}"
   {:added "2.1"}
@@ -164,7 +164,7 @@
 
 (defn dissoc-nested
   "Returns `m` without all nested keys in `ks`.
-
+ 
    (dissoc-nested {:a {:b 1 :c {:b 1}}} [:b])
    => {:a {:c {}}}"
   {:added "2.1"}
@@ -183,11 +183,11 @@
 
 (defn unique-nested
   "All nested values in `m1` that are unique to those in `m2`.
-
+ 
    (unique-nested {:a {:b 1}}
                 {:a {:b 1 :c 1}})
    => {}
-
+ 
    (unique-nested {:a {:b 1 :c 1}}
                 {:a {:b 1}})
    => {:a {:c 1}}"
@@ -215,10 +215,10 @@
 
 (defn clean-nested
   "Returns a associative with nils and empty hash-maps removed.
-
+ 
     (clean-nested {:a {:b {:c {}}}})
     => {}
-
+ 
     (clean-nested {:a {:b {:c {} :d 1 :e nil}}})
     => {:a {:b {:d 1}}}"
   {:added "2.1"}

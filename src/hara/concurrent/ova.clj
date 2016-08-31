@@ -39,16 +39,17 @@
 
 (defn get-filtered
   "gets the first element in the ova that matches the selector:
-
-   (let [o (ova [{:id :1 :val 1} {:id :2 :val 1}])]
-    (get-filtered o :1 nil nil)
-     => {:val 1, :id :1}
-
-     (get-filtered o :2 nil nil)
-     => {:val 1, :id :2}
-
-     (get-filtered o :3 nil :not-found)
-     => :not-found)"
+ 
+   (def o (ova [{:id :1 :val 1} {:id :2 :val 1}]))
+   
+   (get-filtered o :1 nil nil)
+   => {:val 1, :id :1}
+ 
+   (get-filtered o :2 nil nil)
+   => {:val 1, :id :2}
+ 
+   (get-filtered o :3 nil :not-found)
+   => :not-found"
   {:added "2.1"}
   [ova k sel nv]
   (cond (and (nil? sel) (integer? k))
@@ -195,7 +196,7 @@
 
 (defn ova
   "constructs an ova instance
-
+ 
    (ova []) ;=> #ova []
    (ova [1 2 3]) ;=>  #ova [1 2 3]
    (ova [{:id :1} {:id :2}]) ;=> #ova [{:id :1} {:id :2}]
@@ -210,7 +211,7 @@
 
 (defn concat!
   "works like clojure.core/concat, but modifies ova state
-
+ 
    (let [o1 (ova [{:id :1 :val 1} {:id :2 :val 1}])
          o2 (ova [{:id :3 :val 2}])
          arr [{:id :4 :val 2}]]
@@ -227,7 +228,7 @@
 
 (defn append!
   "like conj! but appends multiple array elements to the ova
-
+ 
    (let [o (ova [{:id :1 :val 1}])]
      (dosync (append! o {:id :2 :val 1} {:id :3 :val 2}))
      (persistent! o))
@@ -245,10 +246,11 @@
 
 (defn init!
   "re-initialises the ova to either an empty array or the second argument`coll`
-
-   (let [o (ova [])]
-     (dosync (init! o [{:id :1 :val 1} {:id :2 :val 1}]))
-     (persistent! o))
+ 
+       
+   (def o (ova []))
+   (dosync (init! o [{:id :1 :val 1} {:id :2 :val 1}]))
+   (persistent! o)
    => [{:val 1, :id :1} {:val 1, :id :2}]"
   {:added "2.1"}
   ([ova]
@@ -260,15 +262,15 @@
 
 (defn indices
   "provides intuitive filtering functionality of ova elements, outputting valid indices
-
-   (let [o (ova [{:id :1 :val 1} {:id :2 :val 1}
-                 {:id :3 :val 2} {:id :4 :val 2}])]
-     (indices o) => [0 1 2 3]
-    (indices o 0) => [0]
-     (indices o [:val 1]) => [0 1]
-     (indices o [:val even?]) => [2 3]
-     (indices o [:val even? '(:id (name) (bigint)) odd?]) => [2])
-
+       
+   (def o (ova [{:id :1 :val 1} {:id :2 :val 1}
+                {:id :3 :val 2} {:id :4 :val 2}]))
+   (indices o) => [0 1 2 3]
+   (indices o 0) => [0]
+   (indices o [:val 1]) => [0 1]
+   (indices o [:val even?]) => [2 3]
+   (indices o [:val even? '(:id (name) (bigint)) odd?]) => [2]
+ 
    "
   {:added "2.1"}
   ([ova] (-> (count ova) range vec))
@@ -302,20 +304,19 @@
 
 (defn select
   "grabs the selected ova entries as a set of values
-
-   (let [o (ova [{:id :1 :val 1} {:id :2 :val 1}
-                {:id :3 :val 2} {:id :4 :val 2}])]
-
-     (select o) => #{{:id :1, :val 1} {:id :2, :val 1} {:id :3, :val 2} {:id :4, :val 2}}
-     (select o 0) => #{{:id :1 :val 1}}
-     (select o #{1 2}) => #{{:id :2 :val 1} {:id :3 :val 2}}
-     (select o #(even? (:val %))) => #{{:id :3 :val 2} {:id :4 :val 2}}
-     (select o [:val 1]) => #{{:id :1 :val 1} {:id :2 :val 1}}
-     (select o [:val even?]) => #{{:id :3 :val 2} {:id :4 :val 2}}
-     (select o #{[:id :1] [:val 2]})
-     => #{{:id :1 :val 1} {:id :3 :val 2} {:id :4 :val 2}}
-     (select o [:id '((name) (bigint) (odd?))])
-     => #{{:id :1 :val 1} {:id :3 :val 2}})"
+ 
+   (def o (ova [{:id :1 :val 1} {:id :2 :val 1}
+                {:id :3 :val 2} {:id :4 :val 2}]))
+   (select o) => #{{:id :1, :val 1} {:id :2, :val 1} {:id :3, :val 2} {:id :4, :val 2}}
+   (select o 0) => #{{:id :1 :val 1}}
+   (select o #{1 2}) => #{{:id :2 :val 1} {:id :3 :val 2}}
+   (select o #(even? (:val %))) => #{{:id :3 :val 2} {:id :4 :val 2}}
+   (select o [:val 1]) => #{{:id :1 :val 1} {:id :2 :val 1}}
+   (select o [:val even?]) => #{{:id :3 :val 2} {:id :4 :val 2}}
+   (select o #{[:id :1] [:val 2]})
+   => #{{:id :1 :val 1} {:id :3 :val 2} {:id :4 :val 2}}
+   (select o [:id '((name) (bigint) (odd?))])
+   => #{{:id :1 :val 1} {:id :3 :val 2}}"
   {:added "2.1"}
   ([ova] (set (selectv ova)))
   ([ova pchk]
@@ -323,14 +324,13 @@
 
 (defn has?
   "checks that the ova contains elements matching a selector
-
-   (let [o (ova [{:id :1 :val 1} {:id :2 :val 1}
-                {:id :3 :val 2} {:id :4 :val 2}])]
-
-     (has? o) => true
-     (has? o 0) => true
-     (has? o -1) => false
-     (has? o [:id '((name) (bigint) (odd?))]) => true)"
+ 
+   (def o (ova [{:id :1 :val 1} {:id :2 :val 1}
+                {:id :3 :val 2} {:id :4 :val 2}]))
+   (has? o) => true
+   (has? o 0) => true
+   (has? o -1) => false
+   (has? o [:id '((name) (bigint) (odd?))]) => true"
   {:added "2.1"}
   ([ova]
      (-> (select ova) empty? not))
@@ -339,10 +339,10 @@
 
 (defn map!
   "applies a function on the ova with relevent arguments
-
-   (let [o (ova [{:id :1} {:id :2}])]
-     (dosync (map! o assoc :val 1))
-     (persistent! o))
+       
+   (def o (ova [{:id :1} {:id :2}]))
+   (dosync (map! o assoc :val 1))
+   (persistent! o)
    => [{:val 1, :id :1} {:val 1, :id :2}]"
   {:added "2.1"}
   [ova f & args]
@@ -353,11 +353,11 @@
 (defn map-indexed!
   "applies a function that taking the data index as well as the data
    to all elements of the ova
-
-   (let [o (ova [{:id :1} {:id :2}])]
-     (dosync (map-indexed! o (fn [i m]
-                               (assoc m :val i))))
-     (persistent! o))
+ 
+   (def o (ova [{:id :1} {:id :2}]))
+   (dosync (map-indexed! o (fn [i m]
+                             (assoc m :val i))))
+   (persistent! o)
    => [{:val 0, :id :1} {:val 1, :id :2}]"
   {:added "2.1"}
   [ova f]
@@ -367,12 +367,12 @@
 
 (defn smap!
   "applies a function to only selected elements of the array
-
-   (let [o (ova [{:id :1 :val 1} {:id :2 :val 1}
-                 {:id :3 :val 2} {:id :4 :val 2}])]
-     (dosync (smap! o [:val 1]
-                    update-in [:val] #(+ % 100)))
-     (persistent! o))
+ 
+   (def o (ova [{:id :1 :val 1} {:id :2 :val 1}
+                {:id :3 :val 2} {:id :4 :val 2}]))
+   (dosync (smap! o [:val 1]
+                  update-in [:val] #(+ % 100)))
+   (persistent! o)
    => [{:val 101, :id :1} {:val 101, :id :2} {:val 2, :id :3} {:val 2, :id :4}]"
   {:added "2.1"}
   [ova pchk f & args]
@@ -384,13 +384,13 @@
 (defn smap-indexed!
   "applies a function that taking the data index as well as the data
    to selected elements of the ova
-
-   (let [o (ova [{:id :1 :val 1} {:id :2 :val 1}
-                 {:id :3 :val 2} {:id :4 :val 2}])]
-     (dosync (smap-indexed! o [:val 1]
-                            (fn [i m]
-                              (update-in m [:val] #(+ i 100 %)))))
-    (persistent! o))
+ 
+   (def o (ova [{:id :1 :val 1} {:id :2 :val 1}
+                {:id :3 :val 2} {:id :4 :val 2}]))
+   (dosync (smap-indexed! o [:val 1]
+                          (fn [i m]
+                            (update-in m [:val] #(+ i 100 %)))))
+   (persistent! o)
    => [{:val 101, :id :1} {:val 102, :id :2} {:val 2, :id :3} {:val 2, :id :4}]"
   {:added "2.1"}
   [ova pchk f]
@@ -407,11 +407,11 @@
 
 (defn insert!
   "inserts data at either the end of the ova or when given an index
-
-   (let [o (ova (range 5))]
-     (dosync (insert! o 6))
-     (dosync (insert! o 5 5))
-     (persistent! o))
+ 
+   (def o (ova (range 5)))
+   (dosync (insert! o 6))
+   (dosync (insert! o 5 5))
+   (persistent! o)
    => [0 1 2 3 4 5 6]"
   {:added "2.1"}
   [ova val & [i]]
@@ -422,13 +422,14 @@
 
 (defn sort!
   "sorts all data in the ova using a comparator function
-
-   (let [o (ova [2 1 3 4 0])]
-    (dosync (sort! o >))
-     (persistent! o) => [4 3 2 1 0]
-
-     (dosync (sort! o <))
-     (persistent! o) => [0 1 2 3 4])"
+ 
+   (def o (ova [2 1 3 4 0]))
+ 
+   (dosync (sort! o >))
+   (persistent! o) => [4 3 2 1 0]
+ 
+   (dosync (sort! o <))
+   (persistent! o) => [0 1 2 3 4]"
   {:added "2.1"}
   ([ova] (sort! ova compare))
   ([ova comp]
@@ -450,9 +451,9 @@
 
 (defn reverse!
   "reverses the order of elements in the ova
-   (let [o (ova (range 5))]
-     (dosync (reverse! o))
-    (persistent! o) => [4 3 2 1 0])"
+   (def o (ova (range 5)))
+   (dosync (reverse! o))
+   (persistent! o) => [4 3 2 1 0]"
   {:added "2.1"}
   [ova]
   (alter (state/get ova) (comp vec reverse))
@@ -471,20 +472,20 @@
 
 (defn remove!
   "removes data from the ova that matches a selector
-
-   (let [o (ova (range 10))]
-     (dosync (remove! o odd?))
-     (persistent! o))
+ 
+   (def o (ova (range 10)))
+   (dosync (remove! o odd?))
+   (persistent! o)
    => [0 2 4 6 8]
-
-   (let [o (ova (range 10))]
-     (dosync (remove! o '(not= 3)))
-     (persistent! o))
+ 
+   (def o (ova (range 10)))
+   (dosync (remove! o '(not= 3)))
+   (persistent! o)
    => [3]
-
-   (let [o (ova (range 10))]
-     (dosync (remove! o #{'(< 3) '(> 6)}))
-     (persistent! o))
+ 
+   (def o (ova (range 10)))
+   (dosync (remove! o #{'(< 3) '(> 6)}))
+   (persistent! o)
    => [3 4 5 6]"
   {:added "2.1"}
   [ova pchk]
@@ -496,15 +497,15 @@
   "filter is the opposite of reverse. It keeps the
    elements that matches a selector instead of throwing
    them away
-
-   (let [o (ova (range 10))]
-     (dosync (filter! o odd?))
-     (persistent! o))
+ 
+   (def o (ova (range 10)))
+   (dosync (filter! o odd?))
+   (persistent! o)
    => [1 3 5 7 9]
-
-   (let [o (ova (range 10))]
-     (dosync (filter! o #{'(< 3) '(> 6)}))
-     (persistent! o))
+ 
+   (def o (ova (range 10)))
+   (dosync (filter! o #{'(< 3) '(> 6)}))
+   (persistent! o)
    => [0 1 2 7 8 9]"
   {:added "2.1"}
   [ova pchk]
@@ -516,11 +517,12 @@
 
 (defn clone
   "creates an exact copy of the ova, including its watches
-   (let [o (ova (range 10))
-         _ (watch/set o {:a (fn [_ _ _ _ _])})
-        o-clone (clone o)]
-     (persistent! o-clone) => (range 10)
-     (watch/list o-clone) => (just {:a fn?}))"
+   (def o (ova (range 10)))
+   (watch/set o {:a (fn [_ _ _ _ _])})
+   
+   (def o-clone (clone o))
+   (persistent! o-clone) => (range 10)
+   (watch/list o-clone) => (just {:a fn?})"
   {:added "2.1"}
   [old]
   (let [ova (ova old)]
@@ -530,10 +532,11 @@
 
 (defn split
   "creates an exact copy of the ova, including its watches
-   (let [o (ova (range 10))
-         sp (dosync (split o #{'(< 3) '(> 6)}))]
-    (persistent! (sp true))  => [0 1 2 7 8 9]
-     (persistent! (sp false)) => [3 4 5 6])"
+   (def o (ova (range 10)))
+   (def sp (dosync (split o #{'(< 3) '(> 6)})))
+ 
+   (persistent! (sp true))  => [0 1 2 7 8 9]
+   (persistent! (sp false)) => [3 4 5 6]"
   {:added "2.1"}
   [ova pchk]
   (let [pos (clone ova)
@@ -566,14 +569,14 @@
 
 (defmacro !>
   "applies a set of transformations to a selector on the ova
-   (let [ov (ova [{:id :1}])]
-
-     (dosync (!> ov 0
-                 (assoc-in [:a :b] 1)
-                 (update-in [:a :b] inc)
-                 (assoc :c 3)))
-     (<< ov))
-  => [{:id :1 :c 3 :a {:b 2}}]"
+   
+   (def ov (ova [{:id :1}]))
+   (dosync (!> ov 0
+               (assoc-in [:a :b] 1)
+               (update-in [:a :b] inc)
+               (assoc :c 3)))
+   (<< ov)
+   => [{:id :1 :c 3 :a {:b 2}}]"
   {:added "2.1"}
   [ova pchk & forms]
   `(smap! ~ova ~pchk

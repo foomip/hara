@@ -22,67 +22,54 @@
           (.getCanonicalFile (io/file path)))))
 
 (defn directory?
-  "Return true if `path` is a directory."
   [path]
   (.isDirectory (file path)))
 
 (defn exists?
-  "Return true if `path` exists."
   [path]
   (.exists (file path)))
 
 (defn absolute?
-  "Return true if `path` is absolute."
   [path]
   (.isAbsolute (file path)))
 
 (defn executable?
-  "Return true if `path` is executable."
   [path]
   (.canExecute (file path)))
 
 (defn readable?
-  "Return true if `path` is readable."
   [path]
   (.canRead (file path)))
 
 (defn writeable?
-  "Return true if `path` is writeable."
   [path]
   (.canWrite (file path)))
 
 (defn file?
-  "Return true if `path` is a file."
   [path]
   (.isFile (file path)))
 
 (defn hidden?
-  "Return true if `path` is hidden."
   [path]
   (.isHidden (file path)))
 
 (defn parent
-  "Return the parent path."
   [path]
   (.getParentFile (file path)))
 
 (defn last-modified
-  "Return file modification time."
   [path]
   (.lastModified (file path)))
 
 (defn size
-  "Return size (in bytes) of file."
   [path]
   (.length (file path)))
 
 (defn list-files
-  "List files and directories under `path`."
   [path]
   (seq (.listFiles (file path))))
 
 (defn list-all-files
-  "Lists all files under `path`.'"
   [path]
   (tree-seq directory? list-files (file path)))
 

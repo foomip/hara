@@ -4,7 +4,8 @@
             [hara.concurrent.ova :as ova]
             [compojure.core :as routes]
             [ring.adapter.jetty :as jetty]
-            [clj-http.client :as client]))
+            [clj-http.client :as client])
+  (:refer-clojure :exclude [random-sample]))
 
 [[:chapter {:title "Introduction"}]]
 

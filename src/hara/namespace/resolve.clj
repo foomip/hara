@@ -3,11 +3,11 @@
 
 (defn resolve-ns
   "resolves the namespace or else returns nil if it does not exist
-
+ 
    (resolve-ns 'clojure.core) => 'clojure.core
-
+ 
    (resolve-ns 'clojure.core/some) => 'clojure.core
-
+ 
    (resolve-ns 'clojure.hello) => nil"
   {:added "2.1"}
   [^clojure.lang.Symbol sym]
@@ -20,7 +20,7 @@
 
 (defn ns-vars
   "lists the vars in a particular namespace
-
+ 
    (ns-vars 'hara.namespace.resolve) => '[ns-vars resolve-ns]"
   {:added "2.1"}
   [ns]
