@@ -1,5 +1,5 @@
 (ns hara.test.checker.base-test
-  (:use [hara.test :only [fact contains contains-in exactly]])
+  (:use [hara.test :exclude [satisfies anything throws]])
   (:require [hara.test.checker.base :refer :all]
             [hara.test.common :as common]))
 			

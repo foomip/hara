@@ -1,4 +1,5 @@
 (ns hara.test.checker-test
+  (:use )
   (:require [hara.test :refer [fact =>]]
             [hara.test.checker :refer :all]
             [hara.test.common :as common]))
@@ -140,7 +141,7 @@
   ((contains-in [odd? {:a {:b even?}}]) [3 {:a {:b 4 :c 5}}])
   => true)
 
-^{:refer hara.test.checker/contains-in :added "2.4"}
+^{:refer hara.test.checker/just-in :added "2.4"}
 (fact "shorthand for exactly checking nested maps and vectors"
 
   ((just-in {:a {:b {:c odd?}}}) {:a {:b {:c 1 :d 2}}})
