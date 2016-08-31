@@ -33,7 +33,7 @@
 (defn collect [meta results]
   (event/signal {:id common/*id* :test :fact :meta meta :results results})
   (->> results
-       (filter #(-> % :from :verify))
+       (filter #(-> % :from (= :verify)))
        (mapv :data)
        (every? true?)))
 

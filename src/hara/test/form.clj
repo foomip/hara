@@ -29,17 +29,17 @@
                            :form x})))))
 
 (defmacro fact
-  [desc? & body]
-  (let [[desc body] (if (string? desc?)
-                      [desc? body]
-                      [nil (cons desc? body)])
-        fmeta  (assoc (meta &form) :path common/*path* :desc desc :ns (.getName *ns*))
-        body   (binding [common/*meta* fmeta] (split body))]
-    `(binding [common/*meta* ~(list `quote fmeta)]
-       (if (match/match-options common/*meta* common/*settings*)
-         (->> (mapv run/process ~(list `quote body))
-              (run/collect common/*meta*))
-         (run/skip common/*meta*)))))
+  ([& [desc? & body]]
+   (let [[desc body] (if (string? desc?)
+                       [desc? body]
+                       [nil (cons desc? body)])
+         fmeta  (assoc (meta &form) :path common/*path* :desc desc :ns (.getName *ns*))
+         body   (binding [common/*meta* fmeta] (split body))]
+     `(binding [common/*meta* ~(list `quote fmeta)]
+        (if (match/match-options common/*meta* common/*settings*)
+          (->> (mapv run/process ~(list `quote body))
+               (run/collect common/*meta*))
+          (run/skip common/*meta*))))))
 
 (defmacro facts [& more]
   `(fact ~@more))

@@ -4,7 +4,7 @@
             [hara.test form runner]))
 
 (ns/import hara.test.checker.base [throws satisfies anything]
-           hara.test.checker.collection [contains just raises]
+           hara.test.checker.collection [contains just contains-in just-in raises]
            hara.test.checker.logic [exactly any all]
            hara.test.form [fact facts =>]
            hara.test.runner [run run-namespace])
@@ -15,7 +15,5 @@
 
 (comment
   (require '[hara.event :refer :all])
-
   (-main)
-  (System/exit)
   )

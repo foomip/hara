@@ -1,12 +1,11 @@
 (ns hara.test.runner
-  (:require [hara.test.common :as common]
-            [hara.io.file :as fs]
-            [hara.event :as event]
-            [hara.common.primitives :refer [uuid]]
+  (:require [hara.common.primitives :refer [uuid]]
+            [hara.test.common :as common]
             [hara.test.checker.base :as checker]
             [hara.test.form.print :as print]
+            [hara.io.file :as fs]
+            [hara.event :as event]
             [hara.display.ansii :as ansii])
-  (:refer-clojure :exclude [test])
   (:import java.io.File))
  
 (defn read-namespace [path]
@@ -109,6 +108,7 @@
 
 (comment
   (run-namespace)
-  (run-namespace 'hara.common.checks-test))
+  (run-namespace 'hara.common.checks-test)
+  (run-namespace 'hara.test.checker.util-test))
 
 
