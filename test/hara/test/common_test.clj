@@ -52,3 +52,10 @@
   
   (checker? (checker {:tag :anything :fn (fn [x] true)}))
   => true)
+
+^{:refer hara.test.common/evaluate :added "2.4"}
+(fact "converts a form to a result"
+  
+  (->> (evaluate '(+ 1 2 3))
+       (into {}))
+  => {:type :success, :data 6, :form '(+ 1 2 3), :from :evaluate})

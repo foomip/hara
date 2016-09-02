@@ -26,7 +26,7 @@
   (manage                          ;; L2
    [1 2 (manage                    ;; L1
          (raise {:A true}))])      ;; L0
-  => (raises {:A true})
+  => (throws-info {:A true})
 
   [[:image {:src "img/hara_event/norm_unmanaged.png" :height "300px" :title "Unmanaged Issue Flow"}]])
 
@@ -252,7 +252,7 @@
                 (default :X))
          (on :A []                 ;; H1A
              (fail :B)))])
-  => (raises {:A true :B true})
+  => (throws-info {:A true :B true})
   [[:image {:src "img/hara_event/fail.png" :height "300px" :title "Force Fail Flow"}]]
 )
 

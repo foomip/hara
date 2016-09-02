@@ -51,16 +51,6 @@
   => java.lang.ArithmeticException)
 
 
-^{:refer hara.test.checker/exactly :added "2.4"}
-(fact "checker that allows exact verifications"
-
-  ((exactly 1) 1) => true
-  
-  ((exactly Long) 1) => false
-
-  ((exactly number?) 1) => false)
-
-
 ^{:refer hara.test.checker/any :added "2.4"}
 (fact "checker that allows 'or' composition of checkers"
 

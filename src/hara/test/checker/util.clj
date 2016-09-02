@@ -1,6 +1,13 @@
 (ns hara.test.checker.util)
 
 (defn contains-exact
+  "checks if a sequence matches exactly
+   (contains-exact [0 1 2 3] (map checker/->checker [1 2 3]))
+   => true
+ 
+   (contains-exact [0 1 2 3] (map checker/->checker [1 3]))
+   => false"
+  {:added "2.4"}
   [seq pattern]
   (let [len (count pattern)
         n (- (count seq) len)
@@ -13,7 +20,18 @@
              (some true?))
         false)))
 
-(defn contains-with-gaps [seq pattern]
+(defn contains-with-gaps
+  "checks if a sequence matches the pattern, with gaps allowed
+   (contains-with-gaps [0 1 2 3] (map checker/->checker [1 2 3]))
+   => true
+ 
+   (contains-with-gaps [0 1 2 3] (map checker/->checker [1 3]))
+   => true
+ 
+   (contains-with-gaps [0 1 2 3] (map checker/->checker [2 0]))
+   => false"
+  {:added "2.4"}
+  [seq pattern]
   (cond (empty? pattern) true
           
           (empty? seq) false
@@ -25,6 +43,16 @@
           (recur (next seq) pattern)))
 
 (defn perm-check
+  "decide if a given vector of perms are appropriately matched
+   (perm-check [#{0 1 2} #{2} #{0 2}] #{0 1 2})
+   => true
+ 
+   (perm-check [#{2} #{0 1 2} #{2}] #{0 1 2})
+   => false
+ 
+   (perm-check [#{1} #{1 0} #{0 2 1} #{1 0} #{0 2 1}] #{0 1 2})
+   => true"
+  {:added "2.4"}
   ([perm all]
    (perm-check perm all (zipmap all (repeat nil))))
   ([perm all selection]
@@ -55,7 +83,15 @@
                     (disj all i)
                     (assoc selection i col)))))))
 
-(defn perm-build [seq pattern]
+(defn perm-build
+  "builds a perm out of a sequence and checks
+   (perm-build [0 1 2 3] (map checker/->checker [1 3]))
+   => [#{} #{0} #{} #{1}]
+ 
+   (perm-build [0 1 2 3] (map checker/->checker [odd? 3 number?]))
+   => [#{2} #{0 2} #{2} #{0 1 2}]"
+  {:added "2.4"}
+  [seq pattern]
   (let [idx (->> pattern
                  (map-indexed (fn [i pat] [i pat]))
                  (into {}))]
@@ -68,7 +104,15 @@
                        idx))
           seq)))
 
-(defn contains-any-order [seq pattern]
+(defn contains-any-order
+  "checks if a sequence matches the pattern, with any order allowed
+   (contains-any-order [0 1 2 3] (map checker/->checker [2 1 3]))
+   => true
+ 
+   (contains-any-order [0 1 2 3] (map checker/->checker [2 0 3]))
+   => false"
+  {:added "2.4"}
+  [seq pattern]
   (let [seq (vec seq)
         len (count pattern)
         n (- (count seq) len)
@@ -81,6 +125,17 @@
               (some true?))
         false)))
 
-(defn contains-all [seq pattern]
+(defn contains-all
+  "checks if a sequence matches any of the checks
+   (contains-all [0 1 2 3] (map checker/->checker [2 1 3]))
+   => true
+ 
+   (contains-all [0 1 2 3] (map checker/->checker [2 0 3]))
+   => true
+ 
+   (contains-all [0 1 2 3] (map checker/->checker [0 0]))
+   => false"
+  {:added "2.4"}
+  [seq pattern]
   (let [index (perm-build seq pattern)]
     (perm-check index (-> pattern count range set))))

@@ -3,18 +3,46 @@
             [hara.test.common :as common]
             [hara.test.checker.base :as checker]
             [hara.test.form.print :as print]
+            [hara.test.form.listener :as listener]
             [hara.io.file :as fs]
             [hara.event :as event]
             [hara.display.ansii :as ansii])
   (:import java.io.File))
+
+(defn project-name
+  "returns the name, read from project.clj
  
-(defn read-namespace [path]
+   (project-name)
+   => 'im.chit/hara"
+  {:added "2.4"}
+  []
+  (-> (fs/source-seq "project.clj")
+      first
+      second))
+
+(defn read-namespace
+  "reads the namespace of the given path
+ 
+   (read-namespace \"src/hara/test/runner.clj\")
+   => 'hara.test.runner"
+  {:added "2.4"}
+  [path]
   (->> (fs/source-seq path)
        (filter #(-> % first (= 'ns)))
        first
        second))
 
 (defn all-files
+  "returns all the clojure files in a directory
+   
+   (+ (count (all-files [\"test/hara\"]))
+      (count (all-files [\"test/documentation\"])))
+   => (count (all-files [\"test\"]))
+ 
+   (-> (all-files [\"test\"])
+       (get 'hara.test.runner-test))
+   => #(.endsWith ^String % \"/test/hara/test/runner_test.clj\")"
+  {:added "2.4"}
   ([] (all-files (:test-paths common/*settings*)))
   ([paths]
    (->> paths
@@ -27,24 +55,25 @@
         (map (juxt read-namespace identity))
         (into {}))))
 
-(defn bind-id [source sink id]
-  (add-watch source id (fn [_ _ _ n]
-                         (if (= (:id n) id)
-                           (swap! sink conj n)))))
-
-(defn unbind-id [source id]
-  (remove-watch source id))
-
-(defn accumulate [func]
+(defn accumulate
+  "helper function for accumulating results over disparate facts and files"
+  {:added "2.4"}
+  [func]
   (let [id (-> (uuid) str keyword)
-        sink (atom [])]
-    (bind-id common/*accumulator* sink id)
+        sink (atom [])
+        source common/*accumulator*]
+    (add-watch source id (fn [_ _ _ n]
+                         (if (= (:id n) id)
+                           (swap! sink conj n))))
     (binding [common/*id* id]
       (func id sink))
-    (unbind-id common/*accumulator* id)
+    (remove-watch source id)
     @sink))
 
-(defn interim [facts]
+(defn interim
+  "summary function for accumulated results"
+  {:added "2.4"}
+  [facts]
   (let [results (mapcat :results facts)
         checks  (filter #(-> % :from (= :verify)) results)
         forms   (filter #(-> % :from (= :evaluate)) results)
@@ -63,6 +92,8 @@
      :failed failed}))
 
 (defn run-namespace
+  "run tests for namespace"
+  {:added "2.4"}
   ([] (run-namespace (.getName *ns*)))
   ([ns]
    (println "\n")
@@ -80,12 +111,9 @@
                     {}
                     results)))))
 
-(defn project-name []
-  (-> (fs/source-seq "project.clj")
-      first
-      second))
-
 (defn run
+  "run tests for entire project"
+  {:added "2.4"}
   ([]
    (let [all-ns (-> (all-files) seq sort)
          proj (project-name)]

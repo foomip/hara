@@ -136,3 +136,11 @@
               _
               (fail :failed)))
   => (throws))
+
+^{:refer hara.event/with-temp-listener :added "2.4"}
+(fact "used for isolating and testing signaling"
+  
+  (with-temp-listener [{:id string?}
+                       (fn [e] "world")]
+    (signal {:id "hello"}))
+  => '({:result "world", :id :temp}))

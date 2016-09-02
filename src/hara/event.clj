@@ -235,3 +235,16 @@
              (catch clojure.lang.ExceptionInfo ~'ex
                (manage/manage-condition manager# ~'ex)))
            ~@try-forms)))))
+		   
+(defmacro with-temp-listener
+  "used for isolating and testing signaling
+   
+   (with-temp-listener [{:id string?}
+                        (fn [e] \"world\")]
+     (signal {:id \"hello\"}))
+   => '({:result \"world\", :id :temp})"
+  {:added "2.4"}
+  [[checker handler] & body]
+  `(binding [*signal-manager* (atom (common/manager))]
+     (install-listener :temp ~checker ~handler)
+     ~@body))

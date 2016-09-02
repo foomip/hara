@@ -2,15 +2,13 @@
   (:require [hara.test.common :as common]
             [hara.test.checker.base :as base]))
 
-(defn exactly
-  [v]
-  (common/checker
-   {:tag :exactly
-    :doc "Checks if the result exactly satisfies the condition"
-    :fn (fn [res] (= (common/->data res) v))
-    :expect v}))
-
 (defn any
+  "checker that allows `or` composition of checkers
+ 
+   (mapv (any even? 1)
+         [1 2 3 4 5])
+   => [true true false true false]"
+  {:added "2.4"}
   [& cks]
   (let [cks (mapv base/->checker cks)]
     (common/checker
@@ -24,6 +22,12 @@
       :expect cks})))
 
 (defn all
+  "checker that allows `and` composition of checkers
+ 
+   (mapv (all even? #(< 3 %))
+         [1 2 3 4 5])
+   => [false false false true false]"
+  {:added "2.4"}
   [& cks]
   (let [cks (mapv base/->checker cks)]
     (common/checker

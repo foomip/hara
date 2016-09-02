@@ -1,5 +1,5 @@
 (ns hara.test.checker.base-test
-  (:use [hara.test :exclude [satisfies anything throws]])
+  (:use [hara.test :exclude [satisfies anything throws exactly]])
   (:require [hara.test.checker.base :refer :all]
             [hara.test.common :as common]))
 			
@@ -41,6 +41,15 @@
     {:type :exception
      :data (Exception. "Hello There")}))
   => true)
+
+^{:refer hara.test.checker.base/exactly :added "2.4"}
+(fact "checker that allows exact verifications"
+
+  ((exactly 1) 1) => true
+  
+  ((exactly Long) 1) => false
+
+  ((exactly number?) 1) => false)
 
 ^{:refer hara.test.checker.base/satisfies :added "2.4"}
 (fact "checker that allows loose verifications"

@@ -42,7 +42,7 @@
 
 (fact
   (raise {:error true :data "data"})
-  => (raises {:error true :data "data"}))
+  => (throws-info {:error true :data "data"}))
 
 [[:subsection {:title "keyword"}]]
 
@@ -50,7 +50,7 @@
 
 (fact
   (raise :error)
-  => (raises {:error true}))
+  => (throws-info {:error true}))
 
 [[:subsection {:title "vector"}]]
 "Vectors can contain only keywords or both maps and keywords. They are there mainly for syntacic sugar"
@@ -58,11 +58,11 @@
 (fact
 
    (raise [:lvl-1 :lvl-2 :lvl-3])
-  => (raises {:lvl-1 true :lvl-2 true :lvl-3 true})
+  => (throws-info {:lvl-1 true :lvl-2 true :lvl-3 true})
 
 
   (raise [:lvl-1 {:lvl-2 true :data "data"}])
-   => (raises {:lvl-1 true :lvl-2 true :data "data"}))
+   => (throws-info {:lvl-1 true :lvl-2 true :data "data"}))
 
 [[:section {:title "option/default"}]]
 
@@ -90,7 +90,7 @@
   (raise :error
          (option :use-nil [] nil)
          (option :use-custom [n] n))
-  => (raises {:error true}))
+  => (throws-info {:error true}))
 
 
 [[:section {:title "manage/on"}]]
@@ -124,7 +124,7 @@
   => 1
 
   (half-int 3)
-  => (raises {:odd-number true :value 3}))
+  => (throws-info {:odd-number true :value 3}))
 
 [[:section {:title "checkers"}]]
 
@@ -294,7 +294,7 @@
     (mapv half-int [1 2 3 4])
     (on :odd-number []
       (fail [:unhandled :error])))
-  => (raises {:value 1 :odd-number true :unhandled true :error true})
+  => (throws-info {:value 1 :odd-number true :unhandled true :error true})
   )
 
 [[:section {:title "choose" :tag "api-choose"}]]
