@@ -1,7 +1,9 @@
 (ns hara.test.checker.base
   (:require [hara.test.common :as common]
-            [hara.common.primitives :refer [T]])
-  (:import [hara.test.common Result Checker]))
+            [hara.common.primitives :refer [T]]
+            [hara.common.checks :as checks])
+  (:import [hara.test.common Result Checker]
+           [java.util.regex Pattern]))
 
 (defn verify
   "verifies a value with it's associated check
@@ -96,7 +98,9 @@
  
    ((satisfies [1 2 3]) 1) => false
  
-   ((satisfies number?) \"e\") => false"
+   ((satisfies number?) \"e\") => false
+ 
+   ((satisfies #\"hello\") #\"hello\") => true"
   {:added "2.4"}
   [v]
   (common/checker
@@ -113,6 +117,16 @@
                   (vector? v) (= data v)
                   
                   (ifn? v) (boolean (v data))
+
+                  (checks/regex? v)
+                  (cond (checks/regex? data)
+                        (= (.pattern ^Pattern v)
+                           (.pattern ^Pattern data))
+                        
+                        (string? data)
+                        (boolean (re-find v data))
+
+                        :else false)
                   
                   :else false)))
     :expect v}))

@@ -27,10 +27,13 @@
    => 'hara.test.runner"
   {:added "2.4"}
   [path]
-  (->> (fs/source-seq path)
-       (filter #(-> % first (= 'ns)))
-       first
-       second))
+  (try
+    (->> (fs/source-seq path)
+         (filter #(-> % first (= 'ns)))
+         first
+         second)
+    (catch Throwable t
+      (println path "Cannot be loaded"))))
 
 (defn all-files
   "returns all the clojure files in a directory

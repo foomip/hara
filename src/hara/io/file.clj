@@ -21,6 +21,10 @@
                      f)]
           (.getCanonicalFile (io/file path)))))
 
+(defn path
+  [f]
+  (.getAbsolutePath (file f)))
+
 (defn directory?
   [path]
   (.isDirectory (file path)))
@@ -74,8 +78,15 @@
   (tree-seq directory? list-files (file path)))
 
 (defn pushback
-  [path]
-  (java.io.PushbackReader. (io/reader (file path))))
+  [io]
+  (let [reader (cond (instance? java.io.Reader io) io
+                     
+                     (instance? java.io.InputStream io)
+                     (io/reader io)
+
+                     :else
+                     (io/reader (file io)))]
+    (java.io.PushbackReader. reader)))
 
 (defn source-seq
   [path]

@@ -64,7 +64,9 @@
 
   ((satisfies [1 2 3]) 1) => false
 
-  ((satisfies number?) "e") => false)
+  ((satisfies number?) "e") => false
+
+  ((satisfies #"hello") #"hello") => true)
 
 ^{:refer hara.test.checker.base/anything :added "2.4"}
 (fact "a checker that returns true for any value"
