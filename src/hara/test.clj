@@ -19,11 +19,9 @@
            [run run-namespace])
 
 (defn -main
-  []
-  (let [{:keys [thrown failed] :as stats} (run)]
-    (System/exit (+ thrown failed))))
-
-(comment
-  (require '[hara.event :refer :all])
-  (-main)
-  )
+  ([& [exit?]]
+   (let [{:keys [thrown failed] :as stats} (run)
+         res (+ thrown failed)]
+     (if exit?
+       (System/exit res)
+       res))))

@@ -49,7 +49,6 @@
   {:added "2.4"}
   [meta results]
   (event/signal {:id common/*id* :test :fact :meta meta :results results})
-  (print results)
   (->> results
        (filter #(-> % :from (= :verify)))
        (mapv :data)

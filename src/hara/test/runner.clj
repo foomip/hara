@@ -9,6 +9,13 @@
             [hara.display.ansii :as ansii])
   (:import java.io.File))
 
+(defn source-seq [path]
+  [path]
+  (let [reader (fs/reader :pushback path)]
+    (take-while identity
+                (repeatedly #(try (read reader)
+                                  (catch Throwable e))))))
+
 (defn project-name
   "returns the name, read from project.clj
  
@@ -16,7 +23,7 @@
    => 'im.chit/hara"
   {:added "2.4"}
   []
-  (-> (fs/source-seq "project.clj")
+  (-> (source-seq "project.clj")
       first
       second))
 
@@ -28,7 +35,7 @@
   {:added "2.4"}
   [path]
   (try
-    (->> (fs/source-seq path)
+    (->> (source-seq path)
          (filter #(-> % first (= 'ns)))
          first
          second)
@@ -49,12 +56,11 @@
   ([] (all-files (:test-paths common/*settings*)))
   ([paths]
    (->> paths
-        (mapcat fs/list-all-files)
-        (filter (fn [^File f]
-                 (let [name (.getName f)]
-                   (and (.endsWith name ".clj")
-                        (not (.startsWith name "."))))))
-        (map #(.getCanonicalPath ^File %))
+        (mapcat fs/select)
+        (filter fs/file?)
+        (map str)
+        (filter (fn [^String name]
+                  (and (.endsWith name ".clj"))))
         (map (juxt read-namespace identity))
         (into {}))))
 

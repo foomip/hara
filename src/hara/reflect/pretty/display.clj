@@ -38,5 +38,3 @@
     (filter-terms-fn grp))
    eles))
 
-;;((comp #(+ 3 %) #(* 8 %)) 0)
-

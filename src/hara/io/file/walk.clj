@@ -58,8 +58,8 @@
                              :pattern #\"test\"}]})
    => false"
   {:added "2.4"}
-  [{:keys [path attrs root include exclude] :as m}]
-  (or (= (str root) (str path))
+  [{:keys [path attrs root include exclude with] :as m}]
+  (or (and (get with :root) (= (str root) (str path)))
       (let [include (if (empty? include)
                       [{:tag :fn :fn T}]
                       include)
@@ -72,7 +72,7 @@
 (defn visit-directory-pre
   "helper function, triggers before visiting a directory"
   {:added "2.4"}
-  [{:keys [path attrs accumulate] :as m}]
+  [{:keys [root path attrs accumulate] :as m}]
   (let [f      (-> m :directory :pre)
         run?   (match-filter m)
         result (try
@@ -90,10 +90,9 @@
   "helper function, triggers after visiting a directory"
   {:added "2.4"}
   [m]
-  (option/lookup
-   (or (if-let [f (get-in m [:directory :post])]
-         (f m))
-       :continue)))
+  (if-let [f (get-in m [:directory :post])]
+    (f m))
+  (option/lookup :continue))
 
 (defn visit-file
   "helper function, triggers on visiting a file"
@@ -152,7 +151,7 @@
   {:added "2.4"}
   [root {:keys [directory file include 
                 exclude recursive depth options 
-				accumulator accumulate] 
+                accumulator accumulate with] 
 		 :as m}]
   (let [directory (cond (nil? directory)
                         {:pre F}
@@ -164,8 +163,9 @@
         file      (cond (nil? file) F
 
                         :else directory)
-        options   (->> (seq options) (map option/lookup) (set))
-        depth     (or (if (false? recursive) 1)
+        options   (-> (map option/file-visit-options options) (set) (disj nil))
+        depth     (or (cond (false? recursive) 1
+                            (true? recursive) Integer/MAX_VALUE)
                       depth
                       Integer/MAX_VALUE)
         root        (path/path root)
@@ -173,12 +173,14 @@
         accumulator (or accumulator (atom []))
         include   (map filter/characterise-filter include)
         exclude   (map filter/characterise-filter exclude)
+        with      (or with #{:root})
         state     (merge m {:root root
                             :directory directory
                             :depth depth  
                             :include include
                             :exclude exclude
                             :options options
+                            :with with
                             :accumulate accumulate
                             :accumulator accumulator})
         visitor    (visitor state)]

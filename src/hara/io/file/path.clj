@@ -51,7 +51,7 @@
   {:added "2.4"}
   ([x]
    (cond (instance? Path x)
-         (.normalize ^Path x)
+         x
          
          (string? x)
          (.normalize (Paths/get (relavitize x) *empty-string-array*))
@@ -69,6 +69,9 @@
          (throw (Exception. (str "Input " x " is not of the correct format")))))
   ([s & more]
    (.normalize (Paths/get (relavitize s) (into-array String more)))))
+
+(defn path? [x]
+  (instance? Path x))
 
 (defmethod print-method Path
   [^Path v ^Writer w]
