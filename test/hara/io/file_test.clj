@@ -21,7 +21,7 @@
 (fact "returns the permissions for a given file"
 
   (permissions "src")
-  => "rwxr-xr-x")
+  => string?)
 
 ^{:refer hara.io.file/shorthand :added "2.4"}
 (fact "returns the permissions for a given file"
@@ -33,8 +33,8 @@
 (fact "lists the files and attributes for a given directory"
 
   (list "src")
-  => {(str (path "src")) "rwxr-xr-x/d",
-      (str (path "src/hara")) "rwxr-xr-x/d"}
+  => (contains {(str (path "src")) string?
+                (str (path "src/hara")) string?})
 
   (list "src" {:recursive true})
   => map?)

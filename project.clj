@@ -1,10 +1,10 @@
-(defproject im.chit/hara "2.4.1"
+(defproject im.chit/hara "2.4.2"
   :description "patterns and utilities"
   :url "https://github.com/zcaudate/hara"
   :license {:name "The MIT License"
             :url "http://http://opensource.org/licenses/MIT"}
   :dependencies [[org.clojure/clojure "1.8.0"]]
-  :aliases {"test" ["run" "-m" "hara.test"]}
+  :aliases {"test" ["run" "-m" "hara.test" "exit"]}
   :profiles {:dev {:dependencies [[compojure "1.4.0"]
                                   [ring "1.4.0"]
                                   [clj-http "2.1.0"]
@@ -80,6 +80,10 @@
                           {:input "test/documentation/hara_group.clj"
                            :title "group"
                            :subtitle "generic typed collections"}
+                          "hara-io-file"
+                          {:input "test/documentation/hara_io_file.clj"
+                           :title "io.file"
+                           :subtitle "tools for the file system"}
                           "hara-io-environment"
                           {:input "test/documentation/hara_io_environment.clj"
                            :title "io.environment"
@@ -112,6 +116,10 @@
                           {:input "test/documentation/hara_string.clj"
                            :title "string"
                            :subtitle "methods for string manipulation"}
+                          "hara-test"
+                          {:input "test/documentation/hara_test.clj"
+                           :title "test"
+                           :subtitle "easy to use test framework"}
                           "hara-time"
                           {:input "test/documentation/hara_time.clj"
                            :title "time"

@@ -1,0 +1,179 @@
+
+
+<!DOCTYPE html>
+<html >
+  <head>
+    <meta charset="UTF-8">
+    <meta name="google" value="notranslate">
+
+
+    <title>io.file</title>
+
+    
+  <link href='http://fonts.googleapis.com/css?family=Raleway:300' rel='stylesheet' type='text/css'>
+  <link rel="stylesheet" type="text/css" href="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.5/css/bootstrap.min.css">
+  <link rel="stylesheet" type="text/css" href="//cdnjs.cloudflare.com/ajax/libs/font-awesome/4.3.0/css/font-awesome.min.css">
+
+  <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.6/highlight.min.js"></script>
+  <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.6/languages/clojure.min.js"></script>
+  <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.6/styles/magula.min.css">
+
+  <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+  <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.5/js/bootstrap.min.js"></script>
+  <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/angular.js/1.4.2/angular.min.js"></script>
+  <script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/angularjs/1.4.2/angular-cookies.min.js"></script>
+  <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/angular-ui-bootstrap/0.13.0/ui-bootstrap-tpls.min.js"></script>
+  <script type="text/javascript" src="js/angular-highlightjs.min.js"></script>
+
+  <link rel="stylesheet" type="text/css" href="css/rdash.min.css">
+  <link rel="stylesheet" type="text/css" href="css/scrollspy.css">
+
+
+  <script>
+    window.console = window.console || function(t) {};
+    window.open = function(){ console.log("window.open is disabled."); };
+    window.print   = function(){ console.log("window.print is disabled."); };
+  </script>
+
+  <script>
+    var app = angular.module('app', ['hljs']);
+  </script>
+  </head>
+
+  <body ng-app="app" data-spy="scroll" data-target=".scrollspy">
+  <!-- Fixed navbar -->
+    <nav class="navbar navbar-fixed-top">
+      <div class="container">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="index.html"><img src="img/logo.png"></a>
+        </div>
+        <div id="navbar" class="navbar-collapse collapse">
+          <ul class="nav navbar-nav">
+            <li class="dropdown">
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Guides <span class="caret"></span></a>
+              <ul class="dropdown-menu">
+                <li><a href="hara-class.html">class</a></li>
+                <li><a href="hara-common.html">common</a></li>
+                <li><a href="hara-component.html">component</a></li>
+                <li><a href="hara-concurrent.html">concurrent</a></li>
+                <li><a href="hara-concurrent-ova.html">concurrent.ova</a></li>
+                <li><a href="hara-concurrent-procedure.html">concurrent.procedure</a></li>
+                <li><a href="hara-data.html">data</a></li>
+                <li><a href="hara-event.html">event</a></li>
+                <li><a href="hara-expression.html">expression</a></li>
+                <li><a href="hara-extend.html">extend</a></li>
+                <li><a href="hara-function.html">function</a></li>
+                <li><a href="hara-group.html">group</a></li>
+                <li><a href="hara-io-environment.html">io.environment</a></li>
+                <li><a href="hara-io-file.html">io.file</a></li>
+                <li><a href="hara-io-scheduler.html">io.scheduler</a></li>
+                <li><a href="hara-io-watch.html">io.watch</a></li>
+                <li><a href="hara-namespace.html">namespace</a></li>
+                <li><a href="hara-object.html">object</a></li>
+                <li><a href="hara-reflect.html">reflect</a></li>
+                <li><a href="hara-sort.html">sort</a></li>
+                <li><a href="hara-string.html">string</a></li>
+                <li><a href="hara-test.html">test</a></li>
+                <li><a href="hara-time.html">time</a></li>
+            </ul>
+            </li>
+            <li>
+              <a href="https://github.com/zcaudate/hara" target="_blank">Github</a></li>
+            <li>
+              <a href="http://gitter.im/zcaudate/hara" target="_blank">Gitter</a></li>
+          </ul>
+        </div><!--/.nav-collapse -->
+      </div>
+    </nav>
+
+
+  <div class="container row">
+    <div class="col-md-4 scrollspy pull-right">
+      <ul id="nav" class="nav hidden-xs hidden-sm" data-spy="affix">
+        <li><a href="#introduction">1  &nbsp;&nbsp; Introduction</a><ul class="nav"><li><a href="#installation">1.1  &nbsp;&nbsp; Installation</a></li></ul></li><li><a href="#api">2  &nbsp;&nbsp; API</a></li>
+      </ul>
+    </div>
+    <div class="col-md-8" id="content">
+      <div class="jumbotron">
+        <div class="container">
+          <h1>io.file</h1>
+          <h4>tools for the file system</h4>
+        </div>
+      </div>
+      <section class="chapter" id="introduction"><h2 class="chapter">1  &nbsp;&nbsp; Introduction</h2><div class="group"><div class="paragraph"><p><a href='https://github.com/zcaudate/hara/blob/master/src/hara/io/file.clj'>hara.io.file</a> contain functions and utilities for file system manipulation using the <code>java.nio.file</code> package.</p></div></div><section class="section" id="installation"><h3 class="section">1.1  &nbsp;&nbsp; Installation</h3><div class="paragraph"><p>Add to <code>project.clj</code> dependencies:</p><pre><code>&#91;im.chit/hara.io.file &quot;2.4.2&quot;&#93;
+</code></pre></div></section></section><section class="chapter" id="api"><h2 class="chapter">2  &nbsp;&nbsp; API</h2><div class="group"><div class="paragraph"><p><a href='https://github.com/zcaudate/hara/blob/master/src/hara/io/file.clj'>hara.io.file</a></p></div><div class="api"><hr /><div><a name="api-hara-io-file"></a><h4><i>API</i></h4><a href="#api-hara-io-file--copy">copy</a>&nbsp;&nbsp;<a href="#api-hara-io-file--create-directory">create-directory</a>&nbsp;&nbsp;<a href="#api-hara-io-file--create-symlink">create-symlink</a>&nbsp;&nbsp;<a href="#api-hara-io-file--create-tmpdir">create-tmpdir</a>&nbsp;&nbsp;<a href="#api-hara-io-file--delete">delete</a>&nbsp;&nbsp;<a href="#api-hara-io-file--directory?">directory?</a>&nbsp;&nbsp;<a href="#api-hara-io-file--executable?">executable?</a>&nbsp;&nbsp;<a href="#api-hara-io-file--exists?">exists?</a>&nbsp;&nbsp;<a href="#api-hara-io-file--file?">file?</a>&nbsp;&nbsp;<a href="#api-hara-io-file--hidden?">hidden?</a>&nbsp;&nbsp;<a href="#api-hara-io-file--link?">link?</a>&nbsp;&nbsp;<a href="#api-hara-io-file--list">list</a>&nbsp;&nbsp;<a href="#api-hara-io-file--move">move</a>&nbsp;&nbsp;<a href="#api-hara-io-file--permissions">permissions</a>&nbsp;&nbsp;<a href="#api-hara-io-file--readable?">readable?</a>&nbsp;&nbsp;<a href="#api-hara-io-file--reader">reader</a>&nbsp;&nbsp;<a href="#api-hara-io-file--select">select</a>&nbsp;&nbsp;<a href="#api-hara-io-file--shorthand">shorthand</a>&nbsp;&nbsp;<a href="#api-hara-io-file--writable?">writable?</a>&nbsp;&nbsp;</div><hr /><div><div><a name="api-hara-io-file--copy"></a><h4>copy <a href="#api-hara-io-file">&#9652;</a></h4><div hljs="hljs" language="clojure" no-escape="no-escape">&quot;copies all specified files from one to another&quot;
+
+(copy &quot;src&quot; &quot;.src&quot; {:include [&quot;.clj&quot;]})
+=&gt; map?</div></div><div><a name="api-hara-io-file--create-directory"></a><h4>create-directory <a href="#api-hara-io-file">&#9652;</a></h4><div hljs="hljs" language="clojure" no-escape="no-escape">&quot;creates a directory on the filesystem&quot;
+
+(do (create-directory &quot;.hello/.world/.foo&quot;)
+    (directory? &quot;.hello/.world/.foo&quot;))
+=&gt; true</div></div><div><a name="api-hara-io-file--create-symlink"></a><h4>create-symlink <a href="#api-hara-io-file">&#9652;</a></h4><div hljs="hljs" language="clojure" no-escape="no-escape">&quot;creates a symlink to another file&quot;
+
+(do (create-symlink &quot;project.lnk&quot; &quot;project.clj&quot;)
+    (link? &quot;project.lnk&quot;))
+=&gt; true</div></div><div><a name="api-hara-io-file--create-tmpdir"></a><h4>create-tmpdir <a href="#api-hara-io-file">&#9652;</a></h4><div hljs="hljs" language="clojure" no-escape="no-escape">&quot;creates a temp directory on the filesystem&quot;
+
+(create-tmpdir)
+=&gt; path?</div></div><div><a name="api-hara-io-file--delete"></a><h4>delete <a href="#api-hara-io-file">&#9652;</a></h4><div hljs="hljs" language="clojure" no-escape="no-escape">&quot;copies all specified files from one to another&quot;
+
+(do (copy &quot;src&quot; &quot;.src&quot; {:include [&quot;.clj&quot;]})
+    (delete &quot;.src&quot; {:include [&quot;test.clj&quot;]}))
+=&gt; #{(str (path &quot;.src/hara/test.clj&quot;))}
+  
+(delete &quot;.src&quot;)
+=&gt; set?</div></div><div><a name="api-hara-io-file--directory?"></a><h4>directory? <a href="#api-hara-io-file">&#9652;</a></h4><div hljs="hljs" language="clojure" no-escape="no-escape">&quot;checks whether a file is a directory&quot;</div></div><div><a name="api-hara-io-file--executable?"></a><h4>executable? <a href="#api-hara-io-file">&#9652;</a></h4><div hljs="hljs" language="clojure" no-escape="no-escape">&quot;checks whether a file is executable&quot;</div></div><div><a name="api-hara-io-file--exists?"></a><h4>exists? <a href="#api-hara-io-file">&#9652;</a></h4><div hljs="hljs" language="clojure" no-escape="no-escape">&quot;checks whether a file exists&quot;</div></div><div><a name="api-hara-io-file--file?"></a><h4>file? <a href="#api-hara-io-file">&#9652;</a></h4><div hljs="hljs" language="clojure" no-escape="no-escape">&quot;checks whether a file is not a link or directory&quot;</div></div><div><a name="api-hara-io-file--hidden?"></a><h4>hidden? <a href="#api-hara-io-file">&#9652;</a></h4><div hljs="hljs" language="clojure" no-escape="no-escape">&quot;checks whether a file is hidden&quot;</div></div><div><a name="api-hara-io-file--link?"></a><h4>link? <a href="#api-hara-io-file">&#9652;</a></h4><div hljs="hljs" language="clojure" no-escape="no-escape">&quot;checks whether a file is a link&quot;</div></div><div><a name="api-hara-io-file--list"></a><h4>list <a href="#api-hara-io-file">&#9652;</a></h4><div hljs="hljs" language="clojure" no-escape="no-escape">&quot;lists the files and attributes for a given directory&quot;
+
+(list &quot;src&quot;)
+=&gt; (contains {(str (path &quot;src&quot;)) string?
+              (str (path &quot;src/hara&quot;)) string?})
+
+(list &quot;src&quot; {:recursive true})
+=&gt; map?</div></div><div><a name="api-hara-io-file--move"></a><h4>move <a href="#api-hara-io-file">&#9652;</a></h4><div hljs="hljs" language="clojure" no-escape="no-escape">&quot;moves a file or directory&quot;
+
+(move &quot;.non-existent&quot; &quot;.moved&quot;)
+=&gt; (throws)</div></div><div><a name="api-hara-io-file--permissions"></a><h4>permissions <a href="#api-hara-io-file">&#9652;</a></h4><div hljs="hljs" language="clojure" no-escape="no-escape">&quot;returns the permissions for a given file&quot;
+
+(permissions &quot;src&quot;)
+=&gt; string?</div></div><div><a name="api-hara-io-file--readable?"></a><h4>readable? <a href="#api-hara-io-file">&#9652;</a></h4><div hljs="hljs" language="clojure" no-escape="no-escape">&quot;checks whether a file is readable&quot;</div></div><div><a name="api-hara-io-file--reader"></a><h4>reader <a href="#api-hara-io-file">&#9652;</a></h4><div hljs="hljs" language="clojure" no-escape="no-escape">&quot;creates a reader for a given input&quot;
+
+(-&gt; (reader :pushback &quot;project.clj&quot;)
+    (read)
+    second)
+=&gt; 'im.chit/hara</div></div><div><a name="api-hara-io-file--select"></a><h4>select <a href="#api-hara-io-file">&#9652;</a></h4><div hljs="hljs" language="clojure" no-escape="no-escape">&quot;selects all the files in a directory&quot;
+
+(select &quot;src&quot;)
+=&gt; vector?</div></div><div><a name="api-hara-io-file--shorthand"></a><h4>shorthand <a href="#api-hara-io-file">&#9652;</a></h4><div hljs="hljs" language="clojure" no-escape="no-escape">&quot;returns the permissions for a given file&quot;
+
+(shorthand &quot;src&quot;)
+=&gt; &quot;d&quot;</div></div><div><a name="api-hara-io-file--writable?"></a><h4>writable? <a href="#api-hara-io-file">&#9652;</a></h4><div hljs="hljs" language="clojure" no-escape="no-escape">&quot;checks whether a file is writable&quot;</div></div></div></div></div></section>
+    </div>
+</div><!--end of .container-->
+
+  <section class="application">
+    
+  </section>
+</body>
+
+<script>
+  $('#nav').affix({
+    offset: {
+        top: $('#nav').offset().top,
+        bottom: $('footer').outerHeight(true) + $('.application').outerHeight(true) + 40
+    }});
+</script>
+
+
+<script>
+  if (document.location.search.match(/type=embed/gi)) {
+    window.parent.postMessage("resize", "*");
+  }
+</script>
+</body>
+</html>
