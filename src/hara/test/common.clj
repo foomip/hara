@@ -14,7 +14,7 @@
 
 (defonce ^:dynamic *accumulator* (atom nil))
 
-(def ^:dynamic *print* #{:print-thrown :print-failure})
+(def ^:dynamic *print* #{:print-thrown :print-failure :print-bulk})
 
 (defrecord Op []
   Object

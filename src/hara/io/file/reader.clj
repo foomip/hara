@@ -59,3 +59,5 @@
   [_ io opts]
   (StringReader. ^String io))
 
+(defn reader-types []
+  (keys (.getMethodTable reader)))

@@ -22,16 +22,23 @@
            (not))
       default)
    (if-not (empty? refers)
-     (->> (:refer fmeta)
-          (get (set refers))
-          (nil?)
-          (not))
+     (let [refer (:refer fmeta)
+           refers (set refers)
+           ns    (if (symbol? refer)
+                   (symbol (namespace refer)))]
+       (boolean (or (if ns (refers ns))
+                    (refers refer))))
      default)
    (if-not (empty? namespaces)
      (or (->> namespaces
               (map (fn [namespace]
-                     (.startsWith (str (:ns fmeta))
-                                  (str namespace))))
+                     (cond (symbol? namespace)
+                           (= (str (:ns fmeta))
+                              (str namespace))
+
+                           (instance? java.util.regex.Pattern namespace)
+                           (boolean (re-find namespace(str (:ns fmeta))))
+                           )))
               (some true?))
          false)
      default)])
@@ -68,20 +75,27 @@
   "determines whether a set of options can match
    (match-options {:tags #{:web}
                    :refer 'user/foo}
-                  {:includes [{:tages #{:web}}]
-                   :excludes []})
+                  {:include [{:tags #{:web}}]
+                   :exclude []})
    => true
  
    (match-options {:tags #{:web}
                    :refer 'user/foo}
-                  {:includes [{:tages #{:web}}]
-                   :excludes [{:refers '[user/foo]}]})
-   => false"
+                  {:include [{:tags #{:web}}]
+                   :exclude [{:refers '[user/foo]}]})
+   => false
+ 
+   (match-options {:tags #{:web}
+                   :ns 'user
+                   :refer 'user/foo}
+                  {:include [{:namespaces [#\"us\"]}]})
+   => true"
   {:added "2.4"}
-  [fmeta {:keys [includes excludes]}]
-  (and (->> includes
-            (map #(match-include fmeta %))
-            (every? true?))
-       (->> excludes
+  [fmeta {:keys [include exclude] :as settings}]
+  (and (if (empty? include) true
+           (->> include
+                (map #(match-include fmeta %))
+                (some true?)))
+       (->> exclude
             (map #(match-exclude fmeta %))
             (every? false?))))

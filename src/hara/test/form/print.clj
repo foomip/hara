@@ -37,7 +37,7 @@
           (if desc (str "\n    " (ansii/white "Info") "  \"" desc ""\") "")
           (str "\n    " (ansii/white "Form") "  " form)))))
 
-(defn print-fact [{:keys [name ns line desc] :as meta}  results]
+(defn print-fact [{:keys [name ns line desc refer] :as meta}  results]
   (let [name   (if name (str name " @ ") "")
         file   (-> (string/split (str ns) #"\.") last munge (str ".clj"))
         line   (if line (str ":" line) "")
@@ -54,6 +54,7 @@
       (println
        "\n"
        (str (ansii/style "   Fact" #{:blue :bold}) "  " name "[" file  line "]"
+            (if refer (str " - " refer))
             (if desc (str "\n    " (ansii/white "Info") "  \"" desc ""\") "")
             (str "\n  " (ansii/white "Passed") "  "
                  (str (ansii/style num (if (= num total) #{:blue} #{:green}))

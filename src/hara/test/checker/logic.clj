@@ -2,6 +2,22 @@
   (:require [hara.test.common :as common]
             [hara.test.checker.base :as base]))
 
+(defn is-not
+  "checker that allows negative composition of checkers
+ 
+   (mapv (is-not even?)
+         [1 2 3 4 5])
+   => [true false true false true]"
+  {:added "2.4"}
+  [ck]
+  (let [ck (base/->checker ck)]
+    (common/checker
+     {:tag :is-not
+      :doc "Checks if the result is not an outcome"
+      :fn (fn [res]
+            (not (ck res)))
+      :expect ck})))
+
 (defn any
   "checker that allows `or` composition of checkers
  
@@ -31,7 +47,7 @@
   [& cks]
   (let [cks (mapv base/->checker cks)]
     (common/checker
-     {:tag :any
+     {:tag :all
       :doc "Checks if the result matches all of the checkers"
       :fn (fn [res]
             (->> cks

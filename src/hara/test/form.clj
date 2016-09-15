@@ -71,7 +71,7 @@
          fmeta  (assoc (meta &form) :path common/*path* :desc desc :ns (.getName *ns*))
          body   (binding [common/*meta* fmeta] (split body))]
      `(binding [common/*meta* ~(list `quote fmeta)]
-        (if (match/match-options common/*meta* common/*settings*)
+        (if (match/match-options common/*meta* (:checks common/*settings*))
           (->> (mapv process/process ~(list `quote body))
                (collect common/*meta*))
           (skip common/*meta*))))))

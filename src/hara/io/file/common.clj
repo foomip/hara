@@ -13,5 +13,5 @@
 
 (def ^:dynamic *system*
   (if (.startsWith (System/getProperty "os.name") "Windows")
-    :windows
+    :dos
     :unix))

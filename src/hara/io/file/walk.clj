@@ -32,11 +32,12 @@
              :fn      (let [f (:fn single)]
                         (f m))
              :pattern (let [pat (:pattern single)]
-                        (->> (str root)
-                             (count)
-                             (inc)
-                             (subs (str path))
-                             (re-find pat)))
+                        (if-not (= (str root) (str path))
+                          (->> (str root)
+                               (count)
+                               (inc)
+                               (subs (str path))
+                               (re-find pat))))
              :mode    (do (:mode single)
                           (throw (Exception. "TODO"))))))
 

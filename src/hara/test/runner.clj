@@ -54,15 +54,19 @@
    => #(.endsWith ^String % \"/test/hara/test/runner_test.clj\")"
   {:added "2.4"}
   ([] (all-files (:test-paths common/*settings*)))
-  ([paths]
-   (->> paths
-        (mapcat fs/select)
-        (filter fs/file?)
-        (map str)
-        (filter (fn [^String name]
-                  (and (.endsWith name ".clj"))))
-        (map (juxt read-namespace identity))
-        (into {}))))
+  ([paths] (all-files paths common/*settings*))
+  ([paths opts]
+   (let [filt (-> {:include [#".clj$"]}
+                  (merge opts)
+                  (update-in [:exclude]
+                             conj (fn [{:keys [path] :as m}]
+                                    (fs/link? path))))
+         result (->> paths
+                     (mapcat #(fs/select % filt))
+                     (map str)
+                     (map (juxt read-namespace identity))
+                     (into {}))]
+     result)))
 
 (defn accumulate
   "helper function for accumulating results over disparate facts and files"
@@ -89,6 +93,7 @@
         thrown  (filter #(-> % :type (= :exception)) forms)
         passed  (filter checker/succeeded? checks)
         failed  (filter (comp not checker/succeeded?) checks)
+        facts   (filter (comp not empty? :results) facts)
         files   (->> checks
                      (map (comp :path :meta))
                      (frequencies)
@@ -104,14 +109,18 @@
   "run tests for namespace"
   {:added "2.4"}
   ([] (run-namespace (.getName *ns*)))
-  ([ns]
-   (println "\n")
-   (println (-> (format "---- Namespace (%s) ----" (str ns))
-                (ansii/style  #{:blue :bold})))
-   (binding [*warn-on-reflection* false]
+  ([ns] (run-namespace ns common/*settings*))
+  ([ns settings]
+   (binding [*warn-on-reflection* false
+             common/*settings* (merge common/*settings* settings)
+             common/*print* (or (:print settings) common/*print*)]
+     (println "\n")
+     (println (-> (format "---- Namespace (%s) ----" (str ns))
+                  (ansii/style  #{:blue :bold})))
      (let [facts (accumulate (fn [id sink]
                              (when-let [path (get (all-files) ns)]
                                (binding [common/*path* path]
+                                 (prn path)
                                  (load-file path)))))
            results (interim facts)]
        (event/signal {:test :bulk :results results})
@@ -123,14 +132,17 @@
 (defn run
   "run tests for entire project"
   {:added "2.4"}
-  ([]
-   (let [all-ns (-> (all-files) seq sort)
-         proj (project-name)]
-     (println "\n")
-     (println (-> (format "---- Project (%s%s) ----" (if proj (str proj ":") "") (count all-ns))
-                  (ansii/style  #{:blue :bold})))
-     (println "")
-     (binding [*warn-on-reflection* false]
+  ([] (run common/*settings*))
+  ([settings]
+   (binding [*warn-on-reflection* false
+             common/*settings* (merge common/*settings* settings)
+             common/*print* (or (:print settings) common/*print*)]
+     (let [all-ns (-> (all-files) seq sort)
+           proj (project-name)]
+       (println "\n")
+       (println (-> (format "---- Project (%s%s) ----" (if proj (str proj ":") "") (count all-ns))
+                    (ansii/style  #{:blue :bold})))
+       (println "")
        (let [facts (accumulate (fn [id sink]
                                  (doseq [[ns path] all-ns]
                                    (println (ansii/style ns  #{:blue}))
@@ -142,10 +154,3 @@
                       (assoc out k (count v)))
                     {}
                     results))))))
-
-(comment
-  (run-namespace)
-  (run-namespace 'hara.common.checks-test)
-  (run-namespace 'hara.test.checker.util-test))
-
-

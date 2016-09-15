@@ -1,7 +1,14 @@
 (ns hara.test.checker.logic-test
-  (:use [hara.test :exclude [any all]])
+  (:use [hara.test :exclude [any all is-not]])
   (:require [hara.test.checker.logic :refer :all]
             [hara.test.common :as common]))
+
+^{:refer hara.test.checker.logic/is-not :added "2.4"}
+(fact "checker that allows negative composition of checkers"
+
+  (mapv (is-not even?)
+        [1 2 3 4 5])
+  => [true false true false true])
 
 ^{:refer hara.test.checker.logic/any :added "2.4"}
 (fact "checker that allows `or` composition of checkers"

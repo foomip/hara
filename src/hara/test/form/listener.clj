@@ -43,8 +43,9 @@
     (print/print-success (summarise-verify result))))
 
 (event/deflistener fact-printer {:test :fact}
-  [meta results]
-  (if (common/*print* :print-facts)
+  [meta results skipped]
+  (if (and (common/*print* :print-facts)
+           (not skipped))
     (print/print-fact meta results)))
 
 (event/deflistener fact-accumulator {:test :fact}
@@ -53,4 +54,5 @@
 
 (event/deflistener bulk-printer {:test :bulk}
   [results]
-  (print/print-summary results))
+  (if (common/*print* :print-bulk)
+    (print/print-summary results)))

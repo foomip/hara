@@ -40,12 +40,18 @@
 (fact "determines whether a set of options can match"
   (match-options {:tags #{:web}
                   :refer 'user/foo}
-                 {:includes [{:tages #{:web}}]
-                  :excludes []})
+                 {:include [{:tags #{:web}}]
+                  :exclude []})
   => true
 
   (match-options {:tags #{:web}
                   :refer 'user/foo}
-                 {:includes [{:tages #{:web}}]
-                  :excludes [{:refers '[user/foo]}]})
-  => false)
+                 {:include [{:tags #{:web}}]
+                  :exclude [{:refers '[user/foo]}]})
+  => false
+
+  (match-options {:tags #{:web}
+                  :ns 'user
+                  :refer 'user/foo}
+                 {:include [{:namespaces [#"us"]}]})
+  => true)

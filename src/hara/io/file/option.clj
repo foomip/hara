@@ -9,7 +9,15 @@
                           StandardOpenOption)
            (java.nio.file.attribute PosixFilePermission
                                     PosixFilePermissions)))
-						  
+
+(defn enum->keyword
+  [enum]
+  (-> enum
+      str
+      case/lower-case
+      case/spear-case
+      keyword))
+
 (defn enum-lookup
   "creates lookup table for enumerations
    (enum-lookup (object/enum-values AccessMode))

@@ -12,7 +12,9 @@
            (java.nio.file.attribute FileAttribute FileTime PosixFilePermissions))
   (:refer-clojure :exclude [list]))
 
-(ns/import hara.io.file.path [path path?])
+(ns/import hara.io.file.path [path path?]
+           hara.io.file.attribute [attributes set-attributes]
+           hara.io.file.reader [reader-types])
 
 (defn reader
   "creates a reader for a given input
@@ -44,20 +46,21 @@
   "returns the permissions for a given file
  
    (permissions \"src\")
-   => \"rwxr-xr-x\""
+   => string?"
   {:added "2.4"}
   [path]
   (let [path (path/path path)]
     (->> common/*no-follow*
-              (Files/getPosixFilePermissions path)
-              (PosixFilePermissions/toString))))
+         (Files/getPosixFilePermissions path)
+         (PosixFilePermissions/toString))))
 
 (defn shorthand
   "returns the permissions for a given file
  
    (shorthand \"src\")
    => \"d\""
-  {:added "2.4"} [path]
+  {:added "2.4"}
+  [path]
   (let [path (path/path path)]
     (cond (Files/isDirectory path (LinkOption/values))
           "d"
@@ -71,8 +74,8 @@
   "lists the files and attributes for a given directory
  
    (list \"src\")
-   => {(str (path \"src\")) \"rwxr-xr-x/d\",
-       (str (path \"src/hara\")) \"rwxr-xr-x/d\"}
+   => (contains {(str (path \"src\")) string?
+                 (str (path \"src/hara\")) string?})
  
    (list \"src\" {:recursive true})
    => map?"
