@@ -1,12 +1,12 @@
 (ns hara.io.file.option-test
   (:use hara.test)
   (:require [hara.io.file.option :refer :all]
-            [hara.object :as object])
+            [hara.class.enum :as enum])
   (:import (java.nio.file AccessMode)))
 
 ^{:refer hara.io.file.option/enum-lookup :added "2.4"}
 (fact "creates lookup table for enumerations"
-  (enum-lookup (object/enum-values AccessMode))
+  (enum-lookup (enum/enum-values AccessMode))
   => {:read    AccessMode/READ
       :write   AccessMode/WRITE
       :execute AccessMode/EXECUTE})

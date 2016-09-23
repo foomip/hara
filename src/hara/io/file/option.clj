@@ -1,5 +1,5 @@
 (ns hara.io.file.option
-  (:require [hara.object :as object]
+  (:require [hara.class.enum :as enum]
             [hara.string.case :as case])
   (:import (java.nio.file AccessMode
                           FileVisitOption
@@ -32,7 +32,7 @@
        (into {})))
 
 (def file-permissions
-  (enum-lookup (object/enum-values PosixFilePermission)))
+  (enum-lookup (enum/enum-values PosixFilePermission)))
 
 (defn to-mode-string
   "transforms mode numbers to mode strings
@@ -115,25 +115,25 @@
        (to-mode-number)))
 
 (def access-modes
-  (enum-lookup (object/enum-values AccessMode)))
+  (enum-lookup (enum/enum-values AccessMode)))
 
 (def access-modes
-  (enum-lookup (object/enum-values AccessMode)))
+  (enum-lookup (enum/enum-values AccessMode)))
 
 (def copy-options
-  (enum-lookup (object/enum-values StandardCopyOption)))
+  (enum-lookup (enum/enum-values StandardCopyOption)))
 
 (def file-visit-options
-  (enum-lookup (object/enum-values FileVisitOption)))
+  (enum-lookup (enum/enum-values FileVisitOption)))
 
 (def file-visit-results
-  (enum-lookup (object/enum-values FileVisitResult)))
+  (enum-lookup (enum/enum-values FileVisitResult)))
 
 (def link-options
-  (enum-lookup (object/enum-values LinkOption)))
+  (enum-lookup (enum/enum-values LinkOption)))
 
 (def open-options
-  (enum-lookup (object/enum-values StandardOpenOption)))
+  (enum-lookup (enum/enum-values StandardOpenOption)))
 
 (def lookup
   (merge copy-options

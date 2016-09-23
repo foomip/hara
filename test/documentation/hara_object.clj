@@ -1,4 +1,5 @@
 (ns documentation.hara-object
+  (:use hara.test)
   (:require [hara.object :as object]
             [hara.object.map-like :refer [extend-map-like]]))
 
@@ -132,12 +133,9 @@ Constructing a File object, notice that the output is different from before:"
 (object/from-data "NEW" java.lang.Thread$State)
 ;;=> #enum[java.lang.Thread$State NEW]
 
-"All enumeration values can be obtained using `enum-values`"
-
-(->> (object/enum-values java.lang.Thread$State)
-     (map object/to-data)
-     (sort))
-;;=> ("BLOCKED" "NEW" "RUNNABLE" "TERMINATED" "TIMED_WAITING" "WAITING")
+(fact
+  (object/from-data "NON-EXISTENT" java.lang.Thread$State)
+  => (throws))
 
 [[:chapter {:title "vector-like"}]]
 

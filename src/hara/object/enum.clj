@@ -2,32 +2,7 @@
   (:require [hara.protocol.string :as string]
             [hara.protocol.object :as object]
             [hara.reflect :as reflect]
-            [hara.class.inheritance :as inheritance]))
-
-(defn enum?
-  "Check to see if class is an enum type
- 
-   (enum? java.lang.annotation.ElementType) => true
- 
-   (enum? String) => false"
-  {:added "2.2"}
-  [type]
-  (if (-> (inheritance/ancestor-list type)
-          (set)
-          (get java.lang.Enum))
-    true false))
-
-(defn enum-values
-  "Returns all values of an enum type
- 
-   (->> (enum-values ElementType)
-        (map str))
-   => (contains [\"TYPE\" \"FIELD\" \"METHOD\" \"PARAMETER\" \"CONSTRUCTOR\"]
-                :in-any-order :gaps-ok)"
-  {:added "2.2"}
-  [type]
-  (let [vf (reflect/query-class type ["$VALUES" :#])]
-    (->> (vf type) (seq))))
+            [hara.class.enum :as enum]))
 
 (defmethod object/-meta-read Enum
   [_]
@@ -48,7 +23,7 @@
   (if-let [field (reflect/query-class type [data :#])]
     (field type)
     (throw (Exception. (str "Options for " (.getName type) " are: "
-                            (mapv str (enum-values type)))))))
+                            (mapv str (enum/enum-values type)))))))
 
 (defmethod print-method Enum
   [v w]

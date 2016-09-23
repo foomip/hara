@@ -24,6 +24,10 @@ Individual namespaces can be added seperately:
 
 [[:api {:namespace "hara.class.checks"}]]
 
+"[hara.class.enum](https://github.com/zcaudate/hara/blob/master/src/hara/class/enum.clj) contain enum information:"
+
+[[:api {:namespace "hara.class.enum"}]]
+
 [[:chapter {:title "API - inheritance"}]]
 
 "[hara.class.inheritance](https://github.com/zcaudate/hara/blob/master/src/hara/class/inheritance.clj) contain inheritance checking predicates:"
