@@ -212,6 +212,10 @@
   ([prefix]
    (Files/createTempDirectory prefix (make-array FileAttribute 0))))
 
+(defn parent
+  [path]
+  (.getParent (path/path path)))
+
 (defn directory?
   "checks whether a file is a directory"
   {:added "2.4"}
@@ -259,3 +263,10 @@
   {:added "2.4"}
   [path]
   (Files/isWritable (path/path path)))
+
+(defn code [path]
+  [path]
+  (let [reader (reader :pushback path)]
+    (take-while identity
+                (repeatedly #(try (read reader)
+                                  (catch Throwable e))))))

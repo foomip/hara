@@ -90,6 +90,9 @@
   (create-tmpdir)
   => path?)
 
+^{:refer hara.io.file/parent :added "2.4"}
+(fact "returns the parent of the path")
+
 ^{:refer hara.io.file/directory? :added "2.4"}
 (fact "checks whether a file is a directory")
 
@@ -113,3 +116,7 @@
 
 ^{:refer hara.io.file/writable? :added "2.4"}
 (fact "checks whether a file is writable")
+
+^{:refer hara.io.file/code :added "2.4"}
+(fact "takes a file and returns a lazy seq of top-level forms")
+
