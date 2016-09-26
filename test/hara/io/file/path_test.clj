@@ -4,18 +4,17 @@
             [hara.io.file.common :as common]
             [clojure.string :as string]))
 
-^{:refer hara.io.file.path/relavitize :added "2.4"}
+^{:refer hara.io.file.path/normalise :added "2.4"}
 (fact "creates a string that takes notice of the user home"
   
-  (relavitize ".")
+  (normalise ".")
   => (str common/*cwd* "/" ".")
 
-  (relavitize "~/hello/world.txt")
+  (normalise "~/hello/world.txt")
   => (str common/*home* "/hello/world.txt")
   
-  (relavitize "/usr/home")
+  (normalise "/usr/home")
   => "/usr/home")
-
 
 ^{:refer hara.io.file.path/path :added "2.4"}
 (fact "returns a java.nio.file.Path object"
@@ -32,3 +31,21 @@
 
   (str (path ["hello" "world.txt"]))
   => (str common/*cwd* "/hello/world.txt"))
+
+^{:refer hara.io.file.path/path? :added "2.4"}
+(fact "checks to see if the object is of type Path"
+
+  (path? (path "/home"))
+  => true)
+
+^{:refer hara.io.file.path/section :added "2.4"}
+(fact "creates a path object without normalisation"
+
+  (str (section "home"))
+  => "home")
+
+^{:refer hara.io.file.path/to-file :added "2.4"}
+(fact "creates a java.io.File object"
+
+  (str (to-file (section "home")))
+  => "home")

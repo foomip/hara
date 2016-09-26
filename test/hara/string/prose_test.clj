@@ -24,7 +24,7 @@
 (fact "for regex purposes, escape dollar signs in strings"
 
   (escape-dollars "$")
-  => "\\$")
+  => string?)
 
 ^{:refer hara.string.prose/escape-escapes :added "2.4"}
 (fact "makes sure that newlines are printable"

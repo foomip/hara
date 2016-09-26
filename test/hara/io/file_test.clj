@@ -91,7 +91,17 @@
   => path?)
 
 ^{:refer hara.io.file/parent :added "2.4"}
-(fact "returns the parent of the path")
+(fact "returns the parent of the path"
+  
+  (str (parent "/hello/world.html"))
+  => "/hello")
+
+^{:refer hara.io.file/relativize :added "2.4"}
+(fact "returns the relationship between two paths"
+
+  (str (relativize "hello"
+                   "hello/world.html"))
+  => "world.html")
 
 ^{:refer hara.io.file/directory? :added "2.4"}
 (fact "checks whether a file is a directory")
@@ -120,3 +130,5 @@
 ^{:refer hara.io.file/code :added "2.4"}
 (fact "takes a file and returns a lazy seq of top-level forms")
 
+^{:refer hara.io.file/write :added "2.4"}
+(fact "writes a stream to a path")

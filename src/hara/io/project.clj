@@ -4,6 +4,8 @@
 (def ^:dynamic *current* nil)
 
 (defn project
+  "returns `project.clj` as a map"
+  {:added "2.4"}
   ([] (project "project.clj"))
   ([path]
    (let [path  (fs/path path)
@@ -36,8 +38,8 @@
 (defn file-namespace
   "reads the namespace of the given path
  
-   (read-namespace \"src/hara/test/runner.clj\")
-   => 'hara.test.runner"
+   (file-namespace \"src/hara/io/project.clj\")
+   => 'hara.io.project"
   {:added "2.4"}
   [path]
   (try
@@ -56,8 +58,8 @@
    => (count (all-files [\"test\"]))
  
    (-> (all-files [\"test\"])
-       (get 'hara.test.runner-test))
-   => #(.endsWith ^String % \"/test/hara/test/runner_test.clj\")"
+       (get 'hara.io.project-test))
+   => #(.endsWith ^String % \"/test/hara/io/project_test.clj\")"
   {:added "2.4"}
   ([] (all-files ["."]))
   ([paths] (all-files paths {}))

@@ -12,7 +12,7 @@
            (java.nio.file.attribute FileAttribute FileTime PosixFilePermissions))
   (:refer-clojure :exclude [list]))
 
-(ns/import hara.io.file.path [path path?]
+(ns/import hara.io.file.path [section path path?]
            hara.io.file.attribute [attributes set-attributes]
            hara.io.file.reader [reader-types])
 
@@ -110,7 +110,7 @@
    (let [copy-fn (fn [{:keys [root path attrs target accumulator simulate]}]
                    (let [rel   (.relativize ^Path root path)
                          dest  (.resolve ^Path target rel)
-                         copts (->> [:replace-existing :copy-attributes :nofollow-links]
+                         copts (->> [:copy-attributes :nofollow-links]
                                     (or (:options opts))
                                     (mapv option/lookup)
                                     (into-array CopyOption))]
@@ -141,7 +141,7 @@
    (if-not (:simulate opts)
      (Files/move (path/path source)
                  (path/path target)
-                 (->> [:replace-existing :atomic-move]
+                 (->> [:atomic-move]
                       (or (:options opts))
                       (mapv option/lookup)
                       (into-array CopyOption))))))
@@ -213,8 +213,23 @@
    (Files/createTempDirectory prefix (make-array FileAttribute 0))))
 
 (defn parent
+  "returns the parent of the path
+   
+   (str (parent \"/hello/world.html\"))
+   => \"/hello\""
+  {:added "2.4"}
   [path]
   (.getParent (path/path path)))
+
+(defn relativize
+  "returns the relationship between two paths
+ 
+   (str (relativize \"hello\"
+                    \"hello/world.html\"))
+   => \"world.html\""
+  {:added "2.4"}
+  [path1 path2]
+  (.relativize (path/path path1) (path/path path2)))
 
 (defn directory?
   "checks whether a file is a directory"
@@ -264,9 +279,23 @@
   [path]
   (Files/isWritable (path/path path)))
 
-(defn code [path]
+(defn code
+  "takes a file and returns a lazy seq of top-level forms"
+  {:added "2.4"}
   [path]
   (let [reader (reader :pushback path)]
     (take-while identity
                 (repeatedly #(try (read reader)
                                   (catch Throwable e))))))
+
+(defn write
+  "writes a stream to a path"
+  {:added "2.4"}
+  ([stream path]
+   (write stream path {}))
+  ([stream path opts]
+   (Files/copy stream
+               (path/path path)
+               (->> (:options opts)
+                    (mapv option/lookup)
+                    (into-array CopyOption)))))

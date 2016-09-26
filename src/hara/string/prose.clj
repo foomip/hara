@@ -26,7 +26,10 @@
   (or (= "" s) (re-find #"^[\s\t]+$" s)))
 
 (defn escape-dollars
-  "for regex purposes, escape dollar signs in templates"
+  "for regex purposes, escape dollar signs in strings
+ 
+   (escape-dollars \"$\")
+   => string?"
   {:added "2.4"}
   [s]
   (.replaceAll s "\\$" "\\\\\\$"))

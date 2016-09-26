@@ -20,7 +20,7 @@
 
 (defn enum-lookup
   "creates lookup table for enumerations
-   (enum-lookup (object/enum-values AccessMode))
+   (enum-lookup (enum/enum-values AccessMode))
    => {:read    AccessMode/READ
        :write   AccessMode/WRITE
        :execute AccessMode/EXECUTE}"
