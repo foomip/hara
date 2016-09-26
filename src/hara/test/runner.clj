@@ -78,7 +78,7 @@
    (binding [*warn-on-reflection* false
              common/*settings* (merge common/*settings* settings)
              common/*print* (or (:print settings) common/*print*)]
-     (let [all-ns (-> (project/all-files) seq sort)
+     (let [all-ns (-> (project/all-files (:test-paths common/*settings*)) seq sort)
            proj (project/project-name)]
        (println "\n")
        (println (-> (format "---- Project (%s%s) ----" (if proj (str proj ":") "") (count all-ns))

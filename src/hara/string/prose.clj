@@ -41,8 +41,7 @@
    => \"\\n\""
   {:added "2.4"}
   [s]
-  (-> s
-      (.replaceAll "\\n" "\\\\n")))
+  (.replaceAll s "\\n" "\\\\n"))
 
 (defn escape-escapes
   "makes sure that newlines are printable
@@ -51,8 +50,7 @@
    => \"\\\n\""
   {:added "2.4"}
   [s]
-  (-> s
-      (.replaceAll "(\\\\)([A-Za-z])" "$1$1$2")))
+  (.replaceAll s "(\\\\)([A-Za-z])" "$1$1$2"))
 
 (defn escape-quotes
   "makes sure that quotes are printable in string form
@@ -61,5 +59,4 @@
    => \"\\\"hello\\\"\""
   {:added "2.4"}
   [s]
-  (-> s
-      (.replaceAll "(\\\\)?\"" "$1$1\\\\\\\"")))
+  (.replaceAll s "(\\\\)?\"" "$1$1\\\\\\\""))
