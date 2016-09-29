@@ -117,9 +117,6 @@
 (def access-modes
   (enum-lookup (enum/enum-values AccessMode)))
 
-(def access-modes
-  (enum-lookup (enum/enum-values AccessMode)))
-
 (def copy-options
   (enum-lookup (enum/enum-values StandardCopyOption)))
 
@@ -135,9 +132,14 @@
 (def open-options
   (enum-lookup (enum/enum-values StandardOpenOption)))
 
-(def lookup
+(def all-options
   (merge copy-options
          file-visit-options
          file-visit-results
          link-options
          open-options))
+
+(defn option
+  ([] (keys all-options))
+  ([k]
+   (all-options k)))

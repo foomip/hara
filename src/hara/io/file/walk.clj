@@ -85,7 +85,7 @@
                  (catch clojure.lang.ExceptionInfo e
                    (or (:command (ex-data e))
                        (throw e))))]
-    (option/lookup result)))
+    (option/option result)))
 
 (defn visit-directory-post
   "helper function, triggers after visiting a directory"
@@ -93,7 +93,7 @@
   [m]
   (if-let [f (get-in m [:directory :post])]
     (f m))
-  (option/lookup :continue))
+  (option/option :continue))
 
 (defn visit-file
   "helper function, triggers on visiting a file"
@@ -110,13 +110,13 @@
                  (catch clojure.lang.ExceptionInfo e
                    (or (:command (ex-data e))
                        (throw e))))]
-    (option/lookup result)))
+    (option/option result)))
 
 (defn visit-file-failed
   "helper function, triggers on after a file cannot be visited"
   {:added "2.4"}
   [m]
-  (option/lookup
+  (option/option
    (or (if-let [f (-> m :failed)]
          (f m))
        :continue)))

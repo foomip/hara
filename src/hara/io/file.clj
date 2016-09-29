@@ -14,7 +14,8 @@
 
 (ns/import hara.io.file.path [section path path?]
            hara.io.file.attribute [attributes set-attributes]
-           hara.io.file.reader [reader-types])
+           hara.io.file.reader [reader-types]
+           hara.io.file.option [option])
 
 (defn reader
   "creates a reader for a given input
@@ -112,7 +113,7 @@
                          dest  (.resolve ^Path target rel)
                          copts (->> [:copy-attributes :nofollow-links]
                                     (or (:options opts))
-                                    (mapv option/lookup)
+                                    (mapv option/option)
                                     (into-array CopyOption))]
                      (when-not simulate
                        (Files/createDirectories (.getParent dest) attr/*empty*)
@@ -143,7 +144,7 @@
                  (path/path target)
                  (->> [:atomic-move]
                       (or (:options opts))
-                      (mapv option/lookup)
+                      (mapv option/option)
                       (into-array CopyOption))))))
 
 (defn delete
@@ -288,6 +289,16 @@
                 (repeatedly #(try (read reader)
                                   (catch Throwable e))))))
 
+(defn copy-single
+  ([source target]
+   (copy-single source target {}))
+  ([source target opts]
+   (Files/copy (path/path source)
+               (path/path target)
+               (->> (:options opts)
+                    (mapv option/option)
+                    (into-array CopyOption)))))
+
 (defn write
   "writes a stream to a path"
   {:added "2.4"}
@@ -297,5 +308,5 @@
    (Files/copy stream
                (path/path path)
                (->> (:options opts)
-                    (mapv option/lookup)
+                    (mapv option/option)
                     (into-array CopyOption)))))

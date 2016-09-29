@@ -159,7 +159,7 @@
                (fail :failed)))
    => (throws)"
   {:added "2.2"}
-  ([] {:type :fail})
+  ([] {:type :fail :data {}})
   ([data]
      `{:type :fail :data ~data}))
 
