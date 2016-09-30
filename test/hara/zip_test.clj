@@ -45,7 +45,7 @@
   (-> (vector-zip [1 [[2] 3]])
       (find-next even?)
       (cursor))
-  => ([1 [[| 2] 3]]))
+  => '([1 [[| 2] 3]]))
 
 ^{:refer hara.zip/cursor-str :added "2.4"}
 (fact "returns the string form of the cursor"

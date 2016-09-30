@@ -1,7 +1,3 @@
-(ns hara.io.file.filter
-  (:use hara.test)
-  (:require [hara.io.file.filter :refer :all]))
-
 ^{:refer hara.io.file.filter/pattern :added "2.4"}
 (fact "takes a string as turns it into a regex pattern"
 

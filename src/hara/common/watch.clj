@@ -50,20 +50,34 @@
     f))
 
 (defn add
-  "testing the watch/add with ova functionality
+  "Adds a watch function through the IWatch protocol
  
-   (def ov     (ova []))
-   (def out    (atom []))
-   (def o-fn   (fn  [_ _ p v]
-                 (swap! out conj [p v])))
-   (do (watch/add ov :conj o-fn
-                  {:type :ova
-                   :select #(mapv deref %)})
-       (dosync (conj! ov 1))
-       (dosync (conj! ov 2))
-       (dosync (conj! ov 3)))
-   (persistent! ov) => [1 2 3]
-   (sort @out) => [[[] [1]] [[1] [1 2]] [[1 2] [1 2 3]]]"
+   (def subject (atom nil))
+   (def observer (atom nil))
+   
+   (watch/add subject :follow
+              (fn [_ _ _ n]
+                (reset! observer n)))
+   (reset! subject 1)
+   @observer => 1
+ 
+   Alternatively, options can be given to either transform the current
+   as well as to only execute the callback if there is a difference.
+ 
+   (def subject  (atom {:a 1 :b 2}))
+   (def observer (atom nil))
+ 
+   (watch/add subject :clone
+              (fn [_ _ p n] (reset! observer n))
+              {:select :b
+               :diff true})
+ 
+   (swap! subject assoc :a 0) ;; change in :a does not
+   @observer => nil           ;; affect watch
+ 
+ 
+   (swap! subject assoc :b 1) ;; change in :b does
+   @observer => 1"
   {:added "2.1"}
   ([obj f] (add obj nil f nil))
   ([obj k f] (add obj k f nil))

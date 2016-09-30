@@ -91,11 +91,11 @@
                                         project)
            proj (:name project)]
        (println "\n")
-       (println (-> (format "---- Project (%s%s) ----" (if proj (str proj ":") "") (count all-ns))
+       (println (-> (format "---- Project (%s%s) ----" (if proj (str proj ":") "") (count all-files))
                     (ansii/style  #{:blue :bold})))
        (println "")
        (let [facts (accumulate (fn [id sink]
-                                 (doseq [[ns path] (-> all-ns seq sort)]
+                                 (doseq [[ns path] (-> all-files seq sort)]
                                    (println (ansii/style ns  #{:blue}))
                                    (binding [common/*path* path]
                                      (load-file path)))))
