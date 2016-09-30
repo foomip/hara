@@ -50,42 +50,52 @@
   "run tests for namespace"
   {:added "2.4"}
   ([] (run-namespace (.getName *ns*)))
-  ([ns] (run-namespace ns common/*settings*))
+  ([ns]
+   (run-namespace ns common/*settings*))
   ([ns settings]
+   (run-namespace ns settings (project/project)))
+  ([ns settings project]
    (binding [*warn-on-reflection* false
              common/*settings* (merge common/*settings* settings)
              common/*print* (or (:print settings) common/*print*)]
      (println "\n")
      (println (-> (format "---- Namespace (%s) ----" (str ns))
                   (ansii/style  #{:blue :bold})))
-     (let [facts (accumulate (fn [id sink]
-                             (when-let [path (get (project/all-files) ns)]
-                               (binding [common/*path* path]
-                                 (prn path)
-                                 (load-file path)))))
+     (let [all-files (project/all-files (:test-paths common/*settings*)
+                                        {}
+                                        project)
+           facts (accumulate (fn [id sink]
+                               (when-let [path (get all-files ns)]
+                                 (binding [common/*path* path]
+                                   (prn path)
+                                   (load-file path)))))
            results (interim facts)]
        (event/signal {:test :bulk :results results})
        (reduce-kv (fn [out k v]
-                      (assoc out k (count v)))
-                    {}
-                    results)))))
+                    (assoc out k (count v)))
+                  {}
+                  results)))))
 
 (defn run
   "run tests for entire project"
   {:added "2.4"}
   ([] (run common/*settings*))
   ([settings]
+   (run settings (project/project)))
+  ([settings project]
    (binding [*warn-on-reflection* false
              common/*settings* (merge common/*settings* settings)
              common/*print* (or (:print settings) common/*print*)]
-     (let [all-ns (-> (project/all-files (:test-paths common/*settings*)) seq sort)
-           proj (project/project-name)]
+     (let [all-files (project/all-files (:test-paths common/*settings*)
+                                        {}
+                                        project)
+           proj (:name project)]
        (println "\n")
        (println (-> (format "---- Project (%s%s) ----" (if proj (str proj ":") "") (count all-ns))
                     (ansii/style  #{:blue :bold})))
        (println "")
        (let [facts (accumulate (fn [id sink]
-                                 (doseq [[ns path] all-ns]
+                                 (doseq [[ns path] (-> all-ns seq sort)]
                                    (println (ansii/style ns  #{:blue}))
                                    (binding [common/*path* path]
                                      (load-file path)))))

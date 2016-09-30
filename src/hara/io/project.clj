@@ -1,8 +1,6 @@
 (ns hara.io.project
   (:require [hara.io.file :as fs]))
 
-(def ^:dynamic *current* nil)
-
 (defn project
   "returns `project.clj` as a map"
   {:added "2.4"}
@@ -20,7 +18,6 @@
          proj (-> proj
                   (update-in [:source-paths] (fnil identity ["src"]))
                   (update-in [:test-paths] (fnil identity ["test"])))]
-     (alter-var-root #'*current* (constantly proj))
      proj)))
 
 (defn project-name
@@ -64,6 +61,8 @@
   ([] (all-files ["."]))
   ([paths] (all-files paths {}))
   ([paths opts]
+   (all-files paths opts (project)))
+  ([paths opts project]
    (let [filt (-> {:include [#".clj$"]}
                   (merge opts)
                   (update-in [:exclude]
@@ -71,8 +70,14 @@
                              (fn [{:keys [path] :as m}]
                                (fs/link? path))))
          result (->> paths
+                     (map #(fs/path (:root project) %))
                      (mapcat #(fs/select % filt))
                      (map str)
                      (map (juxt file-namespace identity))
                      (into {}))]
      (dissoc result nil))))
+
+(comment
+  (all-files ["."]
+             {}
+             (project "../../chit/hara/project.clj")))
