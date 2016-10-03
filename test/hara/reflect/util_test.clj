@@ -1,7 +1,6 @@
 (ns hara.reflect.util-test
   (:use hara.test)
-  (:require [hara.common.primitives :refer [class-array]]
-            [hara.reflect.util :refer :all]))
+  (:require [hara.reflect.util :refer :all]))
 
 
 ^{:refer hara.reflect.util/box-arg :added "2.1"}

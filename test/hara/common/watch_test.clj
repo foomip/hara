@@ -15,8 +15,9 @@
   (reset! subject 1)
   @observer => 1
 
-  "Alternatively, options can be given to either transform the current
-    as well as to only execute the callback if there is a difference."
+  ;; options can be given to either transform
+  ;; the current input as well as to only execute
+  ;; the callback if there is a difference.
 
   (def subject  (atom {:a 1 :b 2}))
   (def observer (atom nil))

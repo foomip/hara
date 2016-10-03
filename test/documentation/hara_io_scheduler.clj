@@ -38,6 +38,10 @@ The library was originally developed as [cronj](https://www.github.com/zcaudate/
 - [schejulure](https://github.com/AdamClements/schejulure)
 "
 
+[[:chapter {:title "API" :link "hara.io.scheduler"}]]
+
+[[:api {:namespace "hara.io.scheduler" :title ""}]]
+
 [[:chapter {:title "Concepts and Design"}]]
 
 "`hara.io.scheduler` was built around a concept of a **task**. A task has two components:
@@ -706,10 +710,6 @@ It can be seen that we can simulate the actual speed of outputs by keeping the s
   => 10)
 
 "`restart!`, like `shutdown!` also kills all running instances but then calls `start!` again"
-
-[[:chapter {:title "API"}]]
-
-[[:api {:namespace "hara.io.scheduler"}]]
 
 [[:chapter {:title "Cronj"}]]
 

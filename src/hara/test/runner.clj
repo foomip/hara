@@ -6,7 +6,7 @@
             [hara.test.form.listener :as listener]
             [hara.io.project :as project]
             [hara.event :as event]
-            [hara.display.ansii :as ansii])
+            [hara.io.ansii :as ansii])
   (:import java.io.File))
 
 (defn accumulate
@@ -51,9 +51,9 @@
   {:added "2.4"}
   ([] (run-namespace (.getName *ns*)))
   ([ns]
-   (run-namespace ns common/*settings*))
-  ([ns settings]
-   (run-namespace ns settings (project/project)))
+   (run-namespace ns (project/project)))
+  ([ns project]
+   (run-namespace ns common/*settings* project))
   ([ns settings project]
    (binding [*warn-on-reflection* false
              common/*settings* (merge common/*settings* settings)
@@ -79,9 +79,9 @@
 (defn run
   "run tests for entire project"
   {:added "2.4"}
-  ([] (run common/*settings*))
-  ([settings]
-   (run settings (project/project)))
+  ([] (run (project/project)))
+  ([project]
+   (run common/*settings* project))
   ([settings project]
    (binding [*warn-on-reflection* false
              common/*settings* (merge common/*settings* settings)

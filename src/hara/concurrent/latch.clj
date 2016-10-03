@@ -4,47 +4,47 @@
             [hara.common.state :as state]
             [clojure.string :as string]))
 
-(defn latch-fn
+(defn- latch-fn
   [rf f]
   (fn [_ _ _ v]
     (state/set rf (f v))))
 
 (defn latch
-  "Followes two irefs together so that when `master`
-   changes, the `slave` will also be updated.
+  "Followes two irefs together so that when `primary`
+   changes, the `follower` will also be updated.
  
-   (def master (atom 1))
-   (def slave (atom nil))
+   (def primary (atom 1))
+   (def follower (atom nil))
  
-   (latch master slave #(* 10 %))
-   (swap! master inc)
+   (latch primary follower #(* 10 %))
+   (swap! primary inc)
  
-   @master => 2
-   @slave => 20"
+   @primary => 2
+   @follower => 20"
   {:added "2.1"}
-  ([master slave] (latch master slave identity))
-  ([master slave f] (latch master slave f nil))
-  ([master slave f opts]
-     (watch/add master
-                (keyword (hash-label master slave))
-                (latch-fn slave f)
+  ([primary follower] (latch primary follower identity))
+  ([primary follower f] (latch primary follower f nil))
+  ([primary follower f opts]
+     (watch/add primary
+                (keyword (hash-label primary follower))
+                (latch-fn follower f)
                 opts)))
 
 (defn unlatch
   "Removes the latch so that updates will not be propagated
  
-   (def master (atom 1))
-   (def slave (atom nil))
+   (def primary (atom 1))
+   (def follower (atom nil))
  
-   (latch master slave)
-   (swap! master inc)
-   @master => 2
-   @slave => 2
+   (latch primary follower)
+   (swap! primary inc)
+   @primary => 2
+   @follower => 2
  
-   (unlatch master slave)
-   (swap! master inc)
-   @master => 3
-   @slave => 2"
+   (unlatch primary follower)
+   (swap! primary inc)
+   @primary => 3
+   @follower => 2"
   {:added "2.1"}
-  [master slave]
-  (watch/remove master (keyword (hash-label master slave))))
+  [primary follower]
+  (watch/remove primary (keyword (hash-label primary follower))))

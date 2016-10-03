@@ -24,7 +24,7 @@
 (fact "move cursor down")
 
 ^{:refer hara.zip/root-node :added "2.4"}
-(fact "Accesses the top level node"
+(fact "accesses the top level node"
 
   (-> (vector-zip [[[3] 2] 1])
       (move-bottom-most)
@@ -32,7 +32,7 @@
   => [[[3] 2] 1])
 
 ^{:refer hara.zip/surround :added "2.4"}
-(fact "Adds additional levels to the element"
+(fact "adds additional levels to the element"
   
   (-> (vector-zip 1)
       (surround 2)

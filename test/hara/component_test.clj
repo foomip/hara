@@ -11,10 +11,17 @@
 
 (defrecord Filesystem []
     IComponent
-    (-start [db]
-      (assoc db :status "started"))
-    (-stop [db]
-      (dissoc db :status)))
+    (-start [sys]
+      (assoc sys :status "started"))
+    (-stop [sys]
+      (dissoc sys :status)))
+
+(defrecord Catalog []
+    IComponent
+    (-start [store]
+      (assoc store :status "started"))
+    (-stop [store]
+      (dissoc store :status)))
 
 ^{:refer hara.component/started? :added "2.1"}
 (fact "checks if a component has been started"
@@ -69,23 +76,45 @@
 
 ^{:refer hara.component/system :added "2.1"}
 (fact "creates a system of components"
-  (def topo {:db     [map->Database]
-             :files  [[map->Filesystem]]
-             :store  [[map->Database] [:files :fs] :db]})
-  (def cfg  {:db {:type :basic :host "localhost" :port 8080}
-             :files [{:path "/app/local/1"} {:path "/app/local/2"}]
-             :store [{:id 1} {:id 2}]})
+  
+  ;; The topology specifies how the system is linked
+  (def topo {:db        [map->Database]
+             :files     [[map->Filesystem]]
+             :catalogs  [[map->Filestore] [:files :fs] :db]})
+
+  ;; The configuration customises the system
+  (def cfg  {:db     {:type :basic
+                      :host "localhost"
+                      :port 8080}
+             :files [{:path "/app/local/1"}
+                     {:path "/app/local/2"}]
+             :catalogs [{:id 1}
+                        {:id 2}]})
+
+  ;; `system` will build it and calling `start` initiates it
   (def sys (-> (system topo cfg) start))
 
-  (:db sys) => (just {:status "started",
-                      :type :basic,
-                      :port 8080,
-                      :host "localhost"})
-  (-> sys :files seq first)
+  ;; Check that the `:db` entry has started
+  (:db sys)
+  => (just {:status "started",
+            :type :basic,
+            :port 8080,
+            :host "localhost"})
+
+  ;; Check the first `:files` entry has started
+  (-> sys :files first)
   => (just {:status "started",
             :path "/app/local/1"})
-  (-> sys :store seq first keys)
-  => (just [:status :fs :db :id] :in-any-order))
+
+  ;; Check that the second `:store` entry has started
+  (->> sys :catalogs second)
+  => (contains {:id 2
+                :status "started"
+                :db {:status "started",
+                        :type :basic,
+                        :port 8080,
+                        :host "localhost"}
+                :fs {:path "/app/local/2", :status "started"}}))
 
 
 ^{:refer hara.component/system? :added "2.1"}
@@ -109,6 +138,12 @@
     [v ^java.io.Writer w]
     (.write w (str v)))
 
+^{:refer hara.component/component? :added "2.2"}
+(fact "checks if an instance extends IComponent"
+
+  (component? (Database.))
+  => true)
+
 ^{:refer hara.component/more-tests :added "2.1"}
 (fact "creates a system of components"
 
@@ -129,9 +164,9 @@
   (start (system topology
                  {:watchmen [{:id 1} {:id 2}]
                   :cameras  ^{:hello "world"} [{:id 1} {:id 2 :hello "again"}]}))
-  => (contains {:database (contains {:status "started"})
-                :cameras (contains [(contains {:hello "world", :id 1,  :a 1 :status "started"})
-                                    (contains {:hello "again", :id 2,  :a 1 :status "started"})])}))
+  => (contains-in {:database {:status "started"}
+                   :cameras [{:hello "world", :id 1,  :a 1 :status "started"}
+                             {:hello "again", :id 2,  :a 1 :status "started"}]}))
 
 
 ^{:refer hara.component/expose-test :added "2.2"}

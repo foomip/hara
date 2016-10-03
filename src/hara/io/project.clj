@@ -77,6 +77,14 @@
                      (into {}))]
      (dissoc result nil))))
 
+(defn file-lookup
+  ([] (file-lookup (project)))
+  ([project]
+   (all-files (concat (:source-paths project)
+                      (:test-paths project))
+              {}
+              project)))
+
 (comment
   (all-files ["."]
              {}

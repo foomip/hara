@@ -1,5 +1,5 @@
 (ns hara.test.form.print
-  (:require [hara.display.ansii :as ansii]
+  (:require [hara.io.ansii :as ansii]
             [hara.test.checker.base :as checker]
             [hara.test.common :as common]
             [clojure.string :as string]))

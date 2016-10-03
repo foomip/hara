@@ -1,113 +1,575 @@
 
-
 <!DOCTYPE html>
-<html >
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en-us">
+
   <head>
-    <meta charset="UTF-8">
-    <meta name="google" value="notranslate">
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+
+  <!-- Enable responsiveness on mobile devices-->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+  <link rel="shortcut icon" href="favicon.ico">
+  <title>hara.component - constructing composable systems</title>
+  <script src="js/highlight.min.js"></script>
+  <script src="js/gumshoe.min.js"></script>
+  <script src="js/smooth-scroll.min.js"></script>
+  
+  <!-- CSS -->
+  <link rel="stylesheet" href="css/poole.css">
+  <link rel="stylesheet" href="css/syntax.css">
+  <link rel="stylesheet" href="css/lanyon.css">
+  <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=PT+Serif:400,400italic,700|PT+Sans:400">
+  
+  <style>
+  .error {
+  font-weight: bold;
+}
+
+.error.version {
+  color: #ac4142;
+  text-decoration: line-through;
+}
+
+.api .entry pre.error {
+  background-color: #ac4142;
+}
+.api .entry pre.error h6 {
+  color: white;
+  float: left;
+}
+
+.api .entry-description
+{
+ display: block;
+ }
+ 
+.api ul
+{
+  list-style-type: none;
+  padding-left: 5px;
+}
+
+.api .entry-description h4
+{
+  height 30px;
+  margin-top: 2rem;
+  font-size: larger;
+ }
+
+.api .entry-description p
+{
+ margin-bottom: 0px;
+ margin-top: 0px;
+ }
+
+.api .entry-option h6
+{
+ padding-right:5px;
+ padding-top: 0.6em;
+ margin-top: 0;
+ }
+
+.api .entry-option .args
+{
+ font-weight: lighter;
+ }
+ 
+.api .entry pre
+ {
+   width: 100%;
+}
+  
+.api pre h6
+{
+ float: right;
+ font-size: small;
+ margin-top: 0;
+ }
+ 
+ pre.source {
+  position: absolute;
+  visibility: hidden;
+  opacity: 0;
+  height: 0px;
+  transition: visibility 0s, opacity 1s linear;
+ }
+
+.api input.source-toggle{
+  display: none;
+}
+
+.api label.source-toggle {
+  position: relative;
+  float: right;
+  top: -1.9em;
+  right: 2em;
+  color: #ac4142;
+  font-style: italic;
+  cursor: pointer;
+}
+
+.api input[type="checkbox"] + label:after {
+  content: "show";
+}
+.api input[type="checkbox"]:checked + label:after {
+  content: "hide";
+}
+
+.api input[type="checkbox"]:checked ~ pre.source {
+  position: relative;
+  height: auto;
+  visibility: visible;
+  opacity: 1;
+}
+ 
+ 
+ 
+  html {
+  font-size: 15px;
+}
+
+h2 {
+  margin-top: 2.5rem;
+  font-size: 1.5rem;
+  margin-bottom: 1rem;
+}
+
+h3 {
+  margin-top: 2.5rem;
+}
+
+.top {
+  margin-top: 0.5em;
+  display: block;
+  font-size: 1.4em;
+  font-style: italic;
+}
+
+.top.active {
+  text-decoration: underline;
+}
+
+.heading {
+  display: flex;
+  padding-bottom: 1em;
+}
+.heading h5 {
+  font-size: 0.8rem; 
+  margin-top: 0.2em;
+  margin-bottom: 0.2em
+}
+
+.toc ul{
+  list-style-type: none;
+  padding-left: 0;
+}
+
+.toc a h4 {
+  color: #ac4142;
+}
+
+.toc a h5 {
+  color: #ac4142;
+  font-size: 0.8rem;
+  margin-top: 0.1em;
+  margin-bottom: 0.2em;
+  padding-left: 0.8em;
+}
+
+.outline .toc{
+  display: none;
+}
+
+.sidebar {
+  font-size: 0.9rem;
+  line-height: 1.3;
+}
+
+.sidebar-nav-item {
+    display: block;
+    padding-top: 0rem;
+    padding-bottom: 0rem; 
+    border-top: none;
+}
+
+.sidebar-nav {
+    border-bottom: none;
+}
+
+pre{
+  border: solid 1px;
+  border-color: #f0f0f0;
+  background-color: white;
+}
 
 
-    <title>component - constructing composable systems</title>
+.code .failed
+{
+  background-color:#ac4142; 
+  padding: 10px;
+  font-size: large;
+}
 
-    
-  <link href='http://fonts.googleapis.com/css?family=Raleway:300' rel='stylesheet' type='text/css'>
-  <link rel="stylesheet" type="text/css" href="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.5/css/bootstrap.min.css">
-  <link rel="stylesheet" type="text/css" href="//cdnjs.cloudflare.com/ajax/libs/font-awesome/4.3.0/css/font-awesome.min.css">
+.code .failed h5
+{
+  color: white;
+  margin-top: 0;
+  margin-botton: 0;
+  font-size: small;
+}
 
-  <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.6/highlight.min.js"></script>
-  <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.6/languages/clojure.min.js"></script>
-  <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.6/styles/magula.min.css">
+.code .failed h4
+{  
+  color: white;
+  font-style: italic;
+}
 
-  <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
-  <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.5/js/bootstrap.min.js"></script>
-  <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/angular.js/1.4.2/angular.min.js"></script>
-  <script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/angularjs/1.4.2/angular-cookies.min.js"></script>
-  <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/angular-ui-bootstrap/0.13.0/ui-bootstrap-tpls.min.js"></script>
-  <script type="text/javascript" src="js/angular-highlightjs.min.js"></script>
+.code .failed hr
+{
+  margin-top: 15px;
+  margin-bottom: 0px;
+}
 
-  <link rel="stylesheet" type="text/css" href="css/rdash.min.css">
-  <link rel="stylesheet" type="text/css" href="css/scrollspy.css">
+.masthead a
+{
+  font-size: 1.8em;
+}
 
+@media (max-width: 48rem){
+.masthead-title {
+    text-align: left;
+}}
 
-  <script>
-    window.console = window.console || function(t) {};
-    window.open = function(){ console.log("window.open is disabled."); };
-    window.print   = function(){ console.log("window.print is disabled."); };
-  </script>
-
-  <script>
-    var app = angular.module('app', ['hljs']);
-  </script>
-  </head>
-
-  <body ng-app="app" data-spy="scroll" data-target=".scrollspy">
-  <!-- Fixed navbar -->
-    <nav class="navbar navbar-fixed-top">
-      <div class="container">
-        <div class="navbar-header">
-          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
-            <span class="sr-only">Toggle navigation</span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-          </button>
-          <a class="navbar-brand" href="index.html"><img src="img/logo.png"></a>
-        </div>
-        <div id="navbar" class="navbar-collapse collapse">
-          <ul class="nav navbar-nav">
-            <li class="dropdown">
-              <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Guides <span class="caret"></span></a>
-              <ul class="dropdown-menu">
-                <li><a href="hara-class.html">class</a></li>
-                <li><a href="hara-common.html">common</a></li>
-                <li><a href="hara-component.html">component</a></li>
-                <li><a href="hara-concurrent.html">concurrent</a></li>
-                <li><a href="hara-concurrent-ova.html">concurrent.ova</a></li>
-                <li><a href="hara-concurrent-procedure.html">concurrent.procedure</a></li>
-                <li><a href="hara-data.html">data</a></li>
-                <li><a href="hara-event.html">event</a></li>
-                <li><a href="hara-expression.html">expression</a></li>
-                <li><a href="hara-extend.html">extend</a></li>
-                <li><a href="hara-function.html">function</a></li>
-                <li><a href="hara-group.html">group</a></li>
-                <li><a href="hara-io-environment.html">io.environment</a></li>
-                <li><a href="hara-io-file.html">io.file</a></li>
-                <li><a href="hara-io-scheduler.html">io.scheduler</a></li>
-                <li><a href="hara-io-watch.html">io.watch</a></li>
-                <li><a href="hara-namespace.html">namespace</a></li>
-                <li><a href="hara-object.html">object</a></li>
-                <li><a href="hara-reflect.html">reflect</a></li>
-                <li><a href="hara-sort.html">sort</a></li>
-                <li><a href="hara-string.html">string</a></li>
-                <li><a href="hara-test.html">test</a></li>
-                <li><a href="hara-time.html">time</a></li>
-            </ul>
-            </li>
-            <li>
-              <a href="https://github.com/zcaudate/hara" target="_blank">Github</a></li>
-            <li>
-              <a href="http://gitter.im/zcaudate/hara" target="_blank">Gitter</a></li>
-          </ul>
-        </div><!--/.nav-collapse -->
-      </div>
-    </nav>
+@media (max-width: 40rem){
+.masthead-title {
+    text-align: center;
+}
+.masthead a
+{
+  font-size: x-large;
+}
+}
 
 
-  <div class="container row">
-    <div class="col-md-4 scrollspy pull-right">
-      <ul id="nav" class="nav hidden-xs hidden-sm" data-spy="affix">
-        <li><a href="#introduction">1  &nbsp;&nbsp; Introduction</a><ul class="nav"><li><a href="#installation">1.1  &nbsp;&nbsp; Installation</a></li><li><a href="#motivation">1.2  &nbsp;&nbsp; Motivation</a></li></ul></li><li><a href="#config-driven-design">2  &nbsp;&nbsp; Config Driven Design</a><ul class="nav"><li><a href="#the-bug-trapper">2.1  &nbsp;&nbsp; The Bug Trapper</a></li><li><a href="#configuration">2.2  &nbsp;&nbsp; Configuration</a></li></ul></li><li><a href="#probability-model">3  &nbsp;&nbsp; Probability Model</a><ul class="nav"><li><a href="#linear-adjustment">3.1  &nbsp;&nbsp; linear-adjustment</a></li><li><a href="#toggle-adjustment">3.2  &nbsp;&nbsp; toggle-adjustment</a></li><li><a href="#add-distributions">3.3  &nbsp;&nbsp; add-distributions</a></li><li><a href="#adjusted-distribution">3.4  &nbsp;&nbsp; adjusted-distribution</a></li></ul></li><li><a href="#sampling-model">4  &nbsp;&nbsp; Sampling Model</a><ul class="nav"><li><a href="#cumultive">4.1  &nbsp;&nbsp; cumultive</a></li><li><a href="#category">4.2  &nbsp;&nbsp; category</a></li><li><a href="#random-sample">4.3  &nbsp;&nbsp; random-sample</a></li></ul></li><li><a href="#implementing-components">5  &nbsp;&nbsp; Implementing Components</a><ul class="nav"><li><a href="#model">5.1  &nbsp;&nbsp; Model</a></li><li><a href="#trap">5.2  &nbsp;&nbsp; Trap</a></li><li><a href="#partial-system-testing">5.3  &nbsp;&nbsp; Partial System Testing</a></li><li><a href="#app">5.4  &nbsp;&nbsp; App</a></li><li><a href="#app-testing">5.5  &nbsp;&nbsp; App Testing</a></li><li><a href="#server">5.6  &nbsp;&nbsp; Server</a></li><li><a href="#server-testing">5.7  &nbsp;&nbsp; Server Testing</a></li></ul></li><li><a href="#the-big-picture">6  &nbsp;&nbsp; The Big Picture</a><ul class="nav"><li><a href="#summary">6.1  &nbsp;&nbsp; Summary</a></li><li><a href="#further-extension">6.2  &nbsp;&nbsp; Further Extension</a></li></ul></li><li><a href="#links-and-resources">7  &nbsp;&nbsp; Links and Resources</a></li>
-      </ul>
-    </div>
-    <div class="col-md-8" id="content">
-      <div class="jumbotron">
+
+@media (min-width: 38rem){
+.container {
+    max-width: 37rem;
+    margin-left: 6rem;
+ }
+}
+
+@media (min-width: 56rem){
+.container {
+    max-width: 54rem;
+}
+.page {
+  margin-right: 15rem;
+}
+}
+
+@media (min-width: 60rem){
+.outline .toc{
+  display: block;
+  padding-left: 2em;
+  position: fixed;
+  right: 1em;
+  top: 1em;
+  width: 18em;
+  background-color: white;
+  border: solid 1px #f0f0f0;
+}
+.outline .toc li.active a.chapter h4{
+  font-size: larger;
+  font-style: italic;
+}
+
+.outline .toc li .section{
+  display: none;
+}
+
+.outline .toc li.active .section{
+  display: inherit;
+}
+
+.outline .toc li.active a.active.chapter h4{
+  text-decoration: underline;
+}
+
+.outline .toc li.active a.active.section h5{
+  text-decoration: underline;
+}
+}
+
+
+@media (min-width: 70rem){
+.container {
+    max-width: 66rem;
+}}
+  /*
+
+Original highlight.js style (c) Ivan Sagalaev <maniac@softwaremaniacs.org>
+
+*/
+
+.hljs {
+  display: block;
+  overflow-x: auto;
+  padding: 0.5em;
+}
+
+
+/* Base color: saturation 0; */
+
+.hljs,
+.hljs-subst {
+  color: #444;
+}
+
+.hljs-comment {
+  color: #888888;
+}
+
+.hljs-keyword,
+.hljs-attribute,
+.hljs-selector-tag,
+.hljs-meta-keyword,
+.hljs-doctag,
+.hljs-name {
+  font-weight: bold;
+}
+
+
+/* User color: hue: 0 */
+
+.hljs-type,
+.hljs-string,
+.hljs-number,
+.hljs-selector-id,
+.hljs-selector-class,
+.hljs-quote,
+.hljs-template-tag,
+.hljs-deletion {
+  color: #880000;
+}
+
+.hljs-title,
+.hljs-section {
+  color: #880000;
+  font-weight: bold;
+}
+
+.hljs-regexp,
+.hljs-symbol,
+.hljs-variable,
+.hljs-template-variable,
+.hljs-link,
+.hljs-selector-attr,
+.hljs-selector-pseudo {
+  color: #BC6060;
+}
+
+
+/* Language color: hue: 90; */
+
+.hljs-literal {
+  color: #78A960;
+}
+
+.hljs-built_in,
+.hljs-bullet,
+.hljs-code,
+.hljs-addition {
+  color: #397300;
+}
+
+
+/* Meta color: hue: 200 */
+
+.hljs-meta {
+  color: #1f7199;
+}
+
+.hljs-meta-string {
+  color: #4d99bf;
+}
+
+
+/* Misc effects */
+
+.hljs-emphasis {
+  font-style: italic;
+}
+
+.hljs-strong {
+  font-weight: bold;
+}
+  </style>
+  <!-- Icons -->
+</head>
+
+
+  <body class="theme-base-08">
+    <span id="page-top"></span>
+
+    <!-- Target for toggling the sidebar `.sidebar-checkbox` is for regular
+     styles, `#sidebar-checkbox` for behavior. -->
+<input type="checkbox" class="sidebar-checkbox" id="sidebar-checkbox">
+
+<!-- Toggleable sidebar -->
+<div class="sidebar" id="sidebar">
+  <nav class="sidebar-nav">
+    <a class="sidebar-nav-item header" href="index.html"><img src="img/logo-white.png"/></a>
+    <span>&nbsp;</span>
+    <a class="sidebar-nav-item" href="hara-class.html">class</a><a class="sidebar-nav-item" href="hara-common.html">common</a><a class="sidebar-nav-item active" href="hara-component.html">component</a><a class="sidebar-nav-item" href="hara-concurrent.html">concurrent</a><a class="sidebar-nav-item" href="hara-concurrent-ova.html">concurrent.ova</a><a class="sidebar-nav-item" href="hara-concurrent-procedure.html">concurrent.procedure</a><a class="sidebar-nav-item" href="hara-data.html">data</a><a class="sidebar-nav-item" href="hara-event.html">event</a><a class="sidebar-nav-item" href="hara-expression.html">expression</a><a class="sidebar-nav-item" href="hara-extend.html">extend</a><a class="sidebar-nav-item" href="hara-function.html">function</a><a class="sidebar-nav-item" href="hara-group.html">group</a><a class="sidebar-nav-item" href="hara-io.html">io</a><a class="sidebar-nav-item" href="hara-io-file.html">io.file</a><a class="sidebar-nav-item" href="hara-io-scheduler.html">io.scheduler</a><a class="sidebar-nav-item" href="hara-io-watch.html">io.watch</a><a class="sidebar-nav-item" href="hara-namespace.html">namespace</a><a class="sidebar-nav-item" href="hara-object.html">object</a><a class="sidebar-nav-item" href="hara-reflect.html">reflect</a><a class="sidebar-nav-item" href="hara-sort.html">sort</a><a class="sidebar-nav-item" href="hara-string.html">string</a><a class="sidebar-nav-item" href="hara-test.html">test</a><a class="sidebar-nav-item" href="hara-time.html">time</a><a class="sidebar-nav-item" href="hara-zip.html">zip</a>
+    <span class="sidebar-nav-item">&nbsp;</span>
+    <span class="sidebar-nav-item">&nbsp;</span>
+  </nav>
+</div>
+
+
+    <!-- Wrap is the content to shift when toggling the sidebar. We wrap the
+         content to avoid any CSS collisions with our real content. -->
+    <div class="wrap">
+      <div class="masthead">
         <div class="container">
-          <h1>component</h1>
-          <h4>constructing composable systems</h4>
+          <h3 class="masthead-title">
+            <a href="/" title="Home">hara.component</a>
+            <small>constructing composable systems</small>
+          </h3>
         </div>
       </div>
-      <section class="chapter" id="introduction"><h2 class="chapter">1  &nbsp;&nbsp; Introduction</h2><div class="group"><div class="paragraph"><p><a href='https://github.com/zcaudate/hara/blob/master/src/hara/component.clj'>hara.component</a> is a dependency injection framework inspired by the original Stuart Sierra component <a href='https://github.com/stuartsierra/component'>library</a> and <a href='http://www.youtube.com/watch?v=13cmHf&#95;kt-Q'>talk</a>. The virtues of this type of design for composing large systems has been much lauded and is quite a common practise within enterprise applications. Doing a <a href='https://www.google.com?q=stuart+sierra+component'>search</a> will yield many uses of such a pattern.</p></div></div><section class="section" id="installation"><h3 class="section">1.1  &nbsp;&nbsp; Installation</h3><div class="paragraph"><p>Add to <code>project.clj</code> dependencies:</p><pre><code>&#91;im.chit/hara.component &quot;2.4.4&quot;&#93;
-</code></pre></div><div class="paragraph"><p>All functions are in the <code>hara.component</code> namespace.</p></div><div class="code"><div hljs="hljs" language="clojure" no-escape="no-escape">(require '[hara.component :as component])</div></div></section><section class="section" id="motivation"><h3 class="section">1.2  &nbsp;&nbsp; Motivation</h3><div class="paragraph"><p>The main reason for a reinterpretation of the original <a href='https://github.com/stuartsierra/component'>stuartsierra/component</a> was for a couple reasons:</p><ul><li>the <code>component/Lifecycle</code> protocol did not expose <code>started?</code> and <code>stopped?</code> methods</li><li>the new library has been designed to work well with configuration files</li><li>dependencies are now not required to be explicitly defined</li><li>added support for dealing with arrays of component</li><li>more control was needed when working with nested systems</li><li>more emphasis has been placed on prettiness and readibility</li></ul><p>The differentiation of <code>hara.component</code> is to tease apart configuration and application topology. Configuration gives the ability to set the starting state of the entire program and should be easy as possible. Many a system become bloated due to not being able to properly manage configuration, therefore composing systems with configuration at the forefront will make for much simpler code and design. This library was build with this paradigm in mind.</p></div></section></section><section class="chapter" id="config-driven-design"><h2 class="chapter">2  &nbsp;&nbsp; Config Driven Design</h2><div class="group"><div class="paragraph"><p>We will aim to create a system based upon a configuration file. As components are a very high level concept, using the pattern in code is more of a state of mind than following a set of APIs. Therefore in this documentation, it is hoped that a tutorial based approach will demonstrate the core functionality within the library. We seperate the guide into the following sections</p><ul><li><a href='#probability-model'>Probability Model</a> - How to calculate a bug distribution model.</li><li><a href='#sampling-model'>Sampling Model</a> - How to sample the distribution model.</li><li><a href='#implementing-components'>Implementing Components</a> - How to create and pretty up components so they are easy to integrate.</li><li><a href='#the-big-picture'>The Big Picture</a> - How to think about building and extending systems</li></ul><p>The first two chapters are not really about components, but it is important in showing how to create functions based around a particular configuration. The rest of the sections take a comphrensive approach of how to configure and reason about entire systems based on the component approach.</p></div></div><section class="section" id="the-bug-trapper"><h3 class="section">2.1  &nbsp;&nbsp; The Bug Trapper</h3><div class="paragraph"><p>We are creating a simulation based on trapping bugs in different parts of the house, then tallying up the results and displaying it through a web interface. We can see how the sub-systems connect together in the diagram below:</p></div><div class="figure"><a name="sub-system-dependencies"></a><div class="img"><img height="400px" src="img/hara_component/dependency.png" /></div><h4><i>fig.1  &nbsp;-&nbsp; sub-system dependencies</i></h4></div><div class="paragraph"><p>At the very bottom is a statistical model for generating events ie, how often an insect would be likely to appear given a certain set of conditions such as brightness, dampness, if it is indoors or outdoors, etc. This is used by a number of <code>traps</code>, which are an array of devices that simulates events of an insect going into the trap. An insect may or may not be captured by the trap itself and this is also tallied. The <code>app</code> itself tracks events over time by putting results into a <em>'database'</em> and the server takes live results and outputs a string via http.</p></div></section><section class="section" id="configuration"><h3 class="section">2.2  &nbsp;&nbsp; Configuration</h3><div class="paragraph"><p>A datastructure can be created that customises various aspects of the simulation:</p></div><div class="code"><div hljs="hljs" language="clojure" no-escape="no-escape">(def config
+
+      <div class="container content">
+        <div class="page">
+          <div class="heading">
+            <div>
+              <h5>Author: Chris Zheng&nbsp;&nbsp;<a href="mailto:z@caudate.me">(z@caudate.me)</a></h5>
+              <h5>Date: 03 October 2016</h5>
+              <h5>Repository: <a href="https://github.com/zcaudate/hara">https://github.com/zcaudate/hara</a></h5>
+              <h5>Version: 2.4.5</h5></div></div>
+          <hr/>
+          <div class="outline">
+            <div class="toc">
+              <nav data-gumshoe-header>
+                <ul data-gumshoe>
+                  <a data-scroll class="top" href="#page-top">TOP</a>
+                  <li><a class="chapter" data-scroll="" href="#introduction"><h4>1 &nbsp; Introduction</h4></a><a class="section" data-scroll="" href="#installation"><h5><i>1.1 &nbsp; Installation</i></h5></a><a class="section" data-scroll="" href="#motivation"><h5><i>1.2 &nbsp; Motivation</i></h5></a></li><li><a class="chapter" data-scroll="" href="#api"><h4>2 &nbsp; API</h4></a><a class="section" data-scroll="" href="#entry__hara_component__system"><h5><i>system</i></h5></a><a class="section" data-scroll="" href="#entry__hara_component__system_QMARK_"><h5><i>system?</i></h5></a><a class="section" data-scroll="" href="#entry__hara_component__start"><h5><i>start</i></h5></a><a class="section" data-scroll="" href="#entry__hara_component__stop"><h5><i>stop</i></h5></a></li><li><a class="chapter" data-scroll="" href="#config-driven-design"><h4>3 &nbsp; Config Driven Design</h4></a><a class="section" data-scroll="" href="#the-bug-trapper"><h5><i>3.1 &nbsp; The Bug Trapper</i></h5></a><a class="section" data-scroll="" href="#configuration"><h5><i>3.2 &nbsp; Configuration</i></h5></a></li><li><a class="chapter" data-scroll="" href="#probability-model"><h4>4 &nbsp; Probability Model</h4></a><a class="section" data-scroll="" href="#linear-adjustment"><h5><i>4.1 &nbsp; linear-adjustment</i></h5></a><a class="section" data-scroll="" href="#toggle-adjustment"><h5><i>4.2 &nbsp; toggle-adjustment</i></h5></a><a class="section" data-scroll="" href="#add-distributions"><h5><i>4.3 &nbsp; add-distributions</i></h5></a><a class="section" data-scroll="" href="#adjusted-distribution"><h5><i>4.4 &nbsp; adjusted-distribution</i></h5></a></li><li><a class="chapter" data-scroll="" href="#sampling-model"><h4>5 &nbsp; Sampling Model</h4></a><a class="section" data-scroll="" href="#cumultive"><h5><i>5.1 &nbsp; cumultive</i></h5></a><a class="section" data-scroll="" href="#category"><h5><i>5.2 &nbsp; category</i></h5></a><a class="section" data-scroll="" href="#random-sample"><h5><i>5.3 &nbsp; random-sample</i></h5></a></li><li><a class="chapter" data-scroll="" href="#implementing-components"><h4>6 &nbsp; Implementing Components</h4></a><a class="section" data-scroll="" href="#model"><h5><i>6.1 &nbsp; Model</i></h5></a><a class="section" data-scroll="" href="#trap"><h5><i>6.2 &nbsp; Trap</i></h5></a><a class="section" data-scroll="" href="#partial-system-testing"><h5><i>6.3 &nbsp; Partial System Testing</i></h5></a><a class="section" data-scroll="" href="#app"><h5><i>6.4 &nbsp; App</i></h5></a><a class="section" data-scroll="" href="#app-testing"><h5><i>6.5 &nbsp; App Testing</i></h5></a><a class="section" data-scroll="" href="#server"><h5><i>6.6 &nbsp; Server</i></h5></a><a class="section" data-scroll="" href="#server-testing"><h5><i>6.7 &nbsp; Server Testing</i></h5></a></li><li><a class="chapter" data-scroll="" href="#the-big-picture"><h4>7 &nbsp; The Big Picture</h4></a><a class="section" data-scroll="" href="#summary"><h5><i>7.1 &nbsp; Summary</i></h5></a><a class="section" data-scroll="" href="#further-extension"><h5><i>7.2 &nbsp; Further Extension</i></h5></a></li><li><a class="chapter" data-scroll="" href="#links-and-resources"><h4>8 &nbsp; Links and Resources</h4></a></li>
+                </ul>
+              </nav>
+            </div>
+          </div>
+
+          <div class="toc">
+              <nav>
+                <ul>
+                  <li><a class="chapter" data-scroll="" href="#introduction"><h4>1 &nbsp; Introduction</h4></a><a class="section" data-scroll="" href="#installation"><h5><i>1.1 &nbsp; Installation</i></h5></a><a class="section" data-scroll="" href="#motivation"><h5><i>1.2 &nbsp; Motivation</i></h5></a></li><li><a class="chapter" data-scroll="" href="#api"><h4>2 &nbsp; API</h4></a><a class="section" data-scroll="" href="#entry__hara_component__system"><h5><i>system</i></h5></a><a class="section" data-scroll="" href="#entry__hara_component__system_QMARK_"><h5><i>system?</i></h5></a><a class="section" data-scroll="" href="#entry__hara_component__start"><h5><i>start</i></h5></a><a class="section" data-scroll="" href="#entry__hara_component__stop"><h5><i>stop</i></h5></a></li><li><a class="chapter" data-scroll="" href="#config-driven-design"><h4>3 &nbsp; Config Driven Design</h4></a><a class="section" data-scroll="" href="#the-bug-trapper"><h5><i>3.1 &nbsp; The Bug Trapper</i></h5></a><a class="section" data-scroll="" href="#configuration"><h5><i>3.2 &nbsp; Configuration</i></h5></a></li><li><a class="chapter" data-scroll="" href="#probability-model"><h4>4 &nbsp; Probability Model</h4></a><a class="section" data-scroll="" href="#linear-adjustment"><h5><i>4.1 &nbsp; linear-adjustment</i></h5></a><a class="section" data-scroll="" href="#toggle-adjustment"><h5><i>4.2 &nbsp; toggle-adjustment</i></h5></a><a class="section" data-scroll="" href="#add-distributions"><h5><i>4.3 &nbsp; add-distributions</i></h5></a><a class="section" data-scroll="" href="#adjusted-distribution"><h5><i>4.4 &nbsp; adjusted-distribution</i></h5></a></li><li><a class="chapter" data-scroll="" href="#sampling-model"><h4>5 &nbsp; Sampling Model</h4></a><a class="section" data-scroll="" href="#cumultive"><h5><i>5.1 &nbsp; cumultive</i></h5></a><a class="section" data-scroll="" href="#category"><h5><i>5.2 &nbsp; category</i></h5></a><a class="section" data-scroll="" href="#random-sample"><h5><i>5.3 &nbsp; random-sample</i></h5></a></li><li><a class="chapter" data-scroll="" href="#implementing-components"><h4>6 &nbsp; Implementing Components</h4></a><a class="section" data-scroll="" href="#model"><h5><i>6.1 &nbsp; Model</i></h5></a><a class="section" data-scroll="" href="#trap"><h5><i>6.2 &nbsp; Trap</i></h5></a><a class="section" data-scroll="" href="#partial-system-testing"><h5><i>6.3 &nbsp; Partial System Testing</i></h5></a><a class="section" data-scroll="" href="#app"><h5><i>6.4 &nbsp; App</i></h5></a><a class="section" data-scroll="" href="#app-testing"><h5><i>6.5 &nbsp; App Testing</i></h5></a><a class="section" data-scroll="" href="#server"><h5><i>6.6 &nbsp; Server</i></h5></a><a class="section" data-scroll="" href="#server-testing"><h5><i>6.7 &nbsp; Server Testing</i></h5></a></li><li><a class="chapter" data-scroll="" href="#the-big-picture"><h4>7 &nbsp; The Big Picture</h4></a><a class="section" data-scroll="" href="#summary"><h5><i>7.1 &nbsp; Summary</i></h5></a><a class="section" data-scroll="" href="#further-extension"><h5><i>7.2 &nbsp; Further Extension</i></h5></a></li><li><a class="chapter" data-scroll="" href="#links-and-resources"><h4>8 &nbsp; Links and Resources</h4></a></li>
+                </ul>
+              </nav>
+          </div>
+          <div><span id="introduction" name="introduction"></span><h2><b>1 &nbsp;&nbsp; Introduction</b></h2></div><div><p><a href='https://github.com/zcaudate/hara/blob/master/src/hara/component.clj'>hara.component</a> is a dependency injection framework for clojure. The virtues of this type of design for composing large systems has been much lauded. This library places emphasis on building large systems using a toplogy of how subsystems fit together and data of how it is to be configured.</p></div><div><span id="installation" name="installation"></span><h3>1.1 &nbsp;&nbsp; Installation</h3></div><div><p>Add to <code>project.clj</code> dependencies:</p><pre><code>&#91;im.chit/hara.component &quot;2.4.5&quot;&#93;</code></pre></div><div><p>All functions are in the <code>hara.component</code> namespace.</p></div><div class="code"><pre><code class="clojure">(require '[hara.component :as component])</code></pre></div><div><span id="motivation" name="motivation"></span><h3>1.2 &nbsp;&nbsp; Motivation</h3></div><div><p>There are two existing component libraries, namely:  </p><ul><li><a href='https://github.com/stuartsierra/component'>component</a></li><li><a href='https://github.com/tolitius/mount'>mount</a></li></ul><p><code>hara.component</code> takes the more simplified idea proposed by the <a href='https://github.com/stuartsierra/component'>original</a> library where there is whole system start up and teardown. However, it extends upon that concept by teasing apart configuration and application topology to give cleaner notion of design.</p><p>Configuration gives the ability to set the starting state of the entire program and should be easy as possible. Many a system become bloated due to not being able to properly manage configuration, therefore composing systems with configuration at the forefront will make for much simpler code and design. This library was build with this paradigm in mind. </p><p>Additionally, there are additional features that enable developers to write their systems in a clearer fashion.</p><ul><li>support for dealing with arrays of component</li><li>control with nested systems</li></ul></div><div><span id="api" name="api"></span><h2><b>2 &nbsp;&nbsp; API</b></h2></div><div><p>Because component is a framework for building systems, we have to start off with concepts of what we wish to build:</p><ul><li>A <code>Catalog</code> searches through files in a smart way and consists of a <code>FileSystem</code> and a <code>Database</code></li><li>A <code>Filesystem</code> stores and manages files</li><li>A <code>Database</code> stores indexed information about files</li></ul><p>The most simple representation is:</p></div><div class="code"><pre><code class="clojure">(defrecord Database []
+  component/IComponent
+  (-start [db]
+    (assoc db :status &quot;started&quot;))
+  (-stop [db]
+    (dissoc db :status)))
+
+(defrecord Filesystem []
+  component/IComponent
+  (-start [fs]
+    (assoc fs :status &quot;started&quot;))
+  (-stop [fs]
+    (dissoc fs :status)))
+
+(defrecord Catalog []
+  component/IComponent
+  (-start [store]
+    (assoc store :status &quot;started&quot;))
+  (-stop [store]
+    (dissoc store :status)))</code></pre></div><div><p>These definitions are then used in context of specifying a system consisting of two <code>Catalog</code> instances, having the same <code>Database</code> instance, but different <code>Filesystem</code> instances.</p></div><div class="api"><span id="entry__hara_component__"></span><hr /><div><ul><li><a data-scroll="" href="#entry__hara_component__system">system</a></li><li><a data-scroll="" href="#entry__hara_component__system_QMARK_">system?</a></li><li><a data-scroll="" href="#entry__hara_component__start">start</a></li><li><a data-scroll="" href="#entry__hara_component__stop">stop</a></li></ul><hr style="margin-bottom: 0" /><div><div class="entry"><span id="entry__hara_component__system"></span><div class="entry-description"><h4><b>system&nbsp<a data-scroll="" href="#entry__hara_component__">^</a></b></h4><p><i>creates a system of components</i></p></div><div class="entry-option"><h6><a href="https://github.com/zcaudate/hara/blob/master/src/hara/component.clj#L336-L387" target="_blank">v&nbsp;2.1</a>&nbsp;&nbsp;args: <i class="args">[topology config] [topology config name]</i>&nbsp;&nbsp;&nbsp;</h6><div><input class="source-toggle" id="entry__pre_hara_component__system" type="checkbox" /><label class="source-toggle" for="entry__pre_hara_component__system"></label><pre class="source"><code class="clojure">(defn system
+  ([topology config] (system topology config nil))
+  ([topology config name]
+   (let [deps  (system-dependencies  topology)
+         ctors (system-constructors  topology)
+         exps  (system-exposes       topology)
+         inits (system-initialisers  topology)
+         augms (system-augmentations topology)]
+     (with-meta
+       (reduce (fn [sys [k ctor]]
+                 (assoc sys k (cond (and (nil? ctor)
+                                         (nil? (get exps k)))
+                                    config
+
+                                    (get exps k) nil
+
+                                    (vector? ctor)
+                                    (let [arr-cfg (get config k)]
+                                      (if (vector? arr-cfg)
+                                        (array (first ctor) arr-cfg)
+                                        (throw (Exception. (str "config for component " k
+                                                                " has to be a vector.")))))
+
+                                    :else
+                                    (ctor (get config k)))))
+               (ComponentSystem.)
+               ctors)
+       {:name name
+        :dependencies deps
+        :constructors ctors
+        :exposes      exps
+        :initialisers inits
+        :augmentations augms}))))</code></pre></div></div><pre><h6><i><a href="https://github.com/zcaudate/hara/blob/master/test/hara/component_test.clj#L78-L117" target="_blank">link</a></i></h6><code class="clojure">;; The topology specifies how the system is linked
+(def topo {:db        [map->Database]
+           :files     [[map->Filesystem]]
+           :catalogs  [[map->Filestore] [:files :fs] :db]})
+
+;; The configuration customises the system
+(def cfg  {:db     {:type :basic
+                    :host "localhost"
+                    :port 8080}
+           :files [{:path "/app/local/1"}
+                   {:path "/app/local/2"}]
+           :catalogs [{:id 1}
+                      {:id 2}]})
+
+;; `system` will build it and calling `start` initiates it
+(def sys (-> (system topo cfg) start))
+
+;; Check that the `:db` entry has started
+(:db sys)
+=> (just {:status "started",
+          :type :basic,
+          :port 8080,
+          :host "localhost"})
+
+;; Check the first `:files` entry has started
+(-> sys :files first)
+=> (just {:status "started",
+          :path "/app/local/1"})
+
+;; Check that the second `:store` entry has started
+(->> sys :catalogs second)
+=> (contains {:id 2
+              :status "started"
+              :db {:status "started",
+                      :type :basic,
+                      :port 8080,
+                      :host "localhost"}
+              :fs {:path "/app/local/2", :status "started"}})</code></pre></div><div class="entry"><span id="entry__hara_component__system_QMARK_"></span><div class="entry-description"><h4><b>system?&nbsp<a data-scroll="" href="#entry__hara_component__">^</a></b></h4><p><i>checks if object is a component system</i></p></div><div class="entry-option"><h6><a href="https://github.com/zcaudate/hara/blob/master/src/hara/component.clj#L389-L396" target="_blank">v&nbsp;2.1</a>&nbsp;&nbsp;args: <i class="args">[x]</i>&nbsp;&nbsp;&nbsp;</h6><div><input class="source-toggle" id="entry__pre_hara_component__system_QMARK_" type="checkbox" /><label class="source-toggle" for="entry__pre_hara_component__system_QMARK_"></label><pre class="source"><code class="clojure">(defn system?
+  [x]
+  (instance? ComponentSystem x))</code></pre></div></div><pre><h6><i><a href="https://github.com/zcaudate/hara/blob/master/test/hara/component_test.clj#L121-L124" target="_blank">link</a></i></h6><code class="clojure">(system? (system {} {}))
+=> true</code></pre></div><div class="entry"><span id="entry__hara_component__start"></span><div class="entry-description"><h4><b>start&nbsp<a data-scroll="" href="#entry__hara_component__">^</a></b></h4><p><i>starts a component/array/system</i></p></div><div class="entry-option"><h6><a href="https://github.com/zcaudate/hara/blob/master/src/hara/component.clj#L60-L70" target="_blank">v&nbsp;2.1</a>&nbsp;&nbsp;args: <i class="args">[component]</i>&nbsp;&nbsp;&nbsp;</h6><div><input class="source-toggle" id="entry__pre_hara_component__start" type="checkbox" /><label class="source-toggle" for="entry__pre_hara_component__start"></label><pre class="source"><code class="clojure">(defn start
+  [component]
+  (let [cp (-start component)]
+    (if (instance? clojure.lang.IObj cp)
+      (vary-meta cp assoc :started true)
+      cp)))</code></pre></div></div><pre><h6><i><a href="https://github.com/zcaudate/hara/blob/master/test/hara/component_test.clj#L52-L55" target="_blank">link</a></i></h6><code class="clojure">(start (Database.))
+=> (just {:status "started"})</code></pre></div><div class="entry"><span id="entry__hara_component__stop"></span><div class="entry-description"><h4><b>stop&nbsp<a data-scroll="" href="#entry__hara_component__">^</a></b></h4><p><i>stops a component/array/system</i></p></div><div class="entry-option"><h6><a href="https://github.com/zcaudate/hara/blob/master/src/hara/component.clj#L72-L82" target="_blank">v&nbsp;2.1</a>&nbsp;&nbsp;args: <i class="args">[component]</i>&nbsp;&nbsp;&nbsp;</h6><div><input class="source-toggle" id="entry__pre_hara_component__stop" type="checkbox" /><label class="source-toggle" for="entry__pre_hara_component__stop"></label><pre class="source"><code class="clojure">(defn stop
+  [component]
+  (let [cp (-stop component)]
+    (if (instance? clojure.lang.IObj cp)
+      (vary-meta cp dissoc :started)
+      cp)))</code></pre></div></div><pre><h6><i><a href="https://github.com/zcaudate/hara/blob/master/test/hara/component_test.clj#L58-L61" target="_blank">link</a></i></h6><code class="clojure">(stop (start (Database.)))
+=> (just {})</code></pre></div></div></div></div><div><span id="config-driven-design" name="config-driven-design"></span><h2><b>3 &nbsp;&nbsp; Config Driven Design</b></h2></div><div><p>Following on from the general concepts we have have a look at how such a framework can be used in practice.</p><p>We will aim to create a system based upon a configuration file. As components are a very high level concept, using the pattern in code is more of a state of mind than following a set of APIs. Therefore in this documentation, it is hoped that a tutorial based approach will demonstrate the core functionality within the library. We seperate the guide into the following sections</p><ul><li><a href='#probability-model'>Probability Model</a> - How to calculate a bug distribution model.</li><li><a href='#sampling-model'>Sampling Model</a> - How to sample the distribution model.</li><li><a href='#implementing-components'>Implementing Components</a> - How to create and pretty up components so they are easy to integrate.</li><li><a href='#the-big-picture'>The Big Picture</a> - How to think about building and extending systems</li></ul><p>The first two chapters are not really about components, but it is important in showing how to create functions based around a particular configuration. The rest of the sections take a comphrensive approach of how to configure and reason about entire systems based on the component approach.</p></div><div><span id="the-bug-trapper" name="the-bug-trapper"></span><h3>3.1 &nbsp;&nbsp; The Bug Trapper</h3></div><div><p>We are creating a simulation based on trapping bugs in different parts of the house, then tallying up the results and displaying it through a web interface. We can see how the sub-systems connect together in the diagram below:</p></div><div class="figure"><a id="sub-system-dependencies" name="sub-system-dependencies"></a><h4><i>fig.1  &nbsp;-&nbsp; sub-system dependencies</i></h4><div class="img"><img height="400px" line="{:row 99, :col 1, :end-row 99, :end-col 103}" src="img/hara_component/dependency.png" title="sub-system dependencies" /></div><p></p></div><div><p>At the very bottom is a statistical model for generating events ie, how often an insect would be likely to appear given a certain set of conditions such as brightness, dampness, if it is indoors or outdoors, etc. This is used by a number of <code>traps</code>, which are an array of devices that simulates events of an insect going into the trap. An insect may or may not be captured by the trap itself and this is also tallied. The <code>app</code> itself tracks events over time by putting results into a <em>'database'</em> and the server takes live results and outputs a string via http.</p></div><div><span id="configuration" name="configuration"></span><h3>3.2 &nbsp;&nbsp; Configuration</h3></div><div><p>A datastructure can be created that customises various aspects of the simulation:</p></div><div class="code"><pre><code class="clojure">(def config
   {:server     {:port 8090}
    :app        {}
    :traps     ^{:fuzziness 0.1 :efficiency 0.6}
@@ -127,12 +589,12 @@
                 :toggle  {:indoor     {:fly 0.3
                                        :mosquito 0.2}
                           :outdoor    {:bee 0.1
-                                       :ladybug 0.1}}}})</div></div></section></section><section class="chapter" id="probability-model"><h2 class="chapter">3  &nbsp;&nbsp; Probability Model</h2><div class="group"><div class="paragraph"><p>We have a model of what percentage of bugs and depending on location, brightness and dampness, we adjust our model accordingly. So for example, we should be able to write a function <code>adjusted-distribution</code> that takes in a model and some parameter settings and spits out a probability distribution in the form of a map:</p></div><div class="code"><div hljs="hljs" language="clojure" no-escape="no-escape">(adjusted-distribution {} (-&gt; config :model))
+                                       :ladybug 0.1}}}})</code></pre></div><div><span id="probability-model" name="probability-model"></span><h2><b>4 &nbsp;&nbsp; Probability Model</b></h2></div><div><p>We have a model of what percentage of bugs and depending on location, brightness and dampness, we adjust our model accordingly. So for example, we should be able to write a function <code>adjusted-distribution</code> that takes in a model and some parameter settings and spits out a probability distribution in the form of a map:</p></div><div class="code"><pre><code class="clojure">(adjusted-distribution {} (-&gt; config :model))
 =&gt; {:fly 0.5, :ladybug 0.05, :mosquito 0.35, :bee 0.1}
 
 (adjusted-distribution {:indoor true}
                        (-&gt; config :model))
-=&gt; {:fly 0.8, :ladybug 0.05, :mosquito 0.55, :bee 0.1}</div></div></div><section class="section" id="linear-adjustment"><h3 class="section">3.1  &nbsp;&nbsp; linear-adjustment</h3><div class="paragraph"><p>We write a functions to adjustment for the linear increase:</p></div><div class="code"><div hljs="hljs" language="clojure" no-escape="no-escape">(defn linear-adjustment [params linear]
+=&gt; {:fly 0.8, :ladybug 0.05, :mosquito 0.55, :bee 0.1}</code></pre></div><div><span id="linear-adjustment" name="linear-adjustment"></span><h3>4.1 &nbsp;&nbsp; linear-adjustment</h3></div><div><p>We write a functions to adjustment for the linear increase:</p></div><div class="code"><pre><code class="clojure">(defn linear-adjustment [params linear]
   (reduce-kv (fn [m k stats]
                (if-let [mul (get params k)]
                  (reduce-kv (fn [m k v]
@@ -142,7 +604,7 @@
                             stats)
                  m))
              {}
-             linear))</div></div><div class="paragraph"><p>It can be applied to the model:</p></div><div class="code"><div hljs="hljs" language="clojure" no-escape="no-escape">(linear-adjustment {:brightness 0.1}
+             linear))</code></pre></div><div><p>It can be applied to the model:</p></div><div class="code"><pre><code class="clojure">(linear-adjustment {:brightness 0.1}
                    (-&gt; config :model :linear))
 =&gt; {:bee 0.05}
 
@@ -156,7 +618,7 @@
 
 (linear-adjustment {:dampness 0.5}
                    (-&gt; config :model :linear))
-=&gt; {:mosquito 0.2}</div></div></section><section class="section" id="toggle-adjustment"><h3 class="section">3.2  &nbsp;&nbsp; toggle-adjustment</h3><div class="paragraph"><p>The second function is for toggle adjustment, meaning that depending on a particular flag, we add a certain amount to the overall distribution:</p></div><div class="code"><div hljs="hljs" language="clojure" no-escape="no-escape">(defn toggle-adjustment [params toggle]
+=&gt; {:mosquito 0.2}</code></pre></div><div><span id="toggle-adjustment" name="toggle-adjustment"></span><h3>4.2 &nbsp;&nbsp; toggle-adjustment</h3></div><div><p>The second function is for toggle adjustment, meaning that depending on a particular flag, we add a certain amount to the overall distribution:</p></div><div class="code"><pre><code class="clojure">(defn toggle-adjustment [params toggle]
   (reduce-kv (fn [m k stats]
                (if-let [mul (get params k)]
                  (reduce-kv (fn [m k v]
@@ -166,13 +628,13 @@
                             stats)
                  m))
              {}
-             toggle))</div></div><div class="paragraph"><p>It can be applied to the model:</p></div><div class="code"><div hljs="hljs" language="clojure" no-escape="no-escape">(toggle-adjustment {:indoor true}
+             toggle))</code></pre></div><div><p>It can be applied to the model:</p></div><div class="code"><pre><code class="clojure">(toggle-adjustment {:indoor true}
                    (-&gt; config :model :toggle))
 =&gt; {:fly 0.3, :mosquito 0.2}
 
 (toggle-adjustment {:outdoor true}
                    (-&gt; config :model :toggle))
-=&gt; {:bee 0.1, :ladybug 0.1}</div></div></section><section class="section" id="add-distributions"><h3 class="section">3.3  &nbsp;&nbsp; add-distributions</h3><div class="paragraph"><p>A helper function is defined to add distributions together</p></div><div class="code"><div hljs="hljs" language="clojure" no-escape="no-escape">(defn add-distributions
+=&gt; {:bee 0.1, :ladybug 0.1}</code></pre></div><div><span id="add-distributions" name="add-distributions"></span><h3>4.3 &nbsp;&nbsp; add-distributions</h3></div><div><p>A helper function is defined to add distributions together</p></div><div class="code"><pre><code class="clojure">(defn add-distributions
   ([] {})
   ([m] m)
   ([m1 m2]
@@ -181,11 +643,11 @@
               m1
               m2))
   ([m1 m2 &amp; more]
-   (apply add-distributions (add-distributions m1 m2) more)))</div></div><div class="paragraph"><p>The function is relatively generic and can be used to add arbitrary maps together:</p></div><div class="code"><div hljs="hljs" language="clojure" no-escape="no-escape">(add-distributions {:a 0.1} {:a 0.1 :b 0.3} {:a 0.3 :c 0.3})
-=&gt; {:a 0.5, :b 0.3, :c 0.3}</div></div></section><section class="section" id="adjusted-distribution"><h3 class="section">3.4  &nbsp;&nbsp; adjusted-distribution</h3><div class="paragraph"><p>Combining the three functions, we can get an adjusted distribution based on the model taken from the config:</p></div><div class="code"><div hljs="hljs" language="clojure" no-escape="no-escape">(defn adjusted-distribution [params {:keys [default linear toggle] :as model}]
+   (apply add-distributions (add-distributions m1 m2) more)))</code></pre></div><div><p>The function is relatively generic and can be used to add arbitrary maps together:</p></div><div class="code"><pre><code class="clojure">(add-distributions {:a 0.1} {:a 0.1 :b 0.3} {:a 0.3 :c 0.3})
+=&gt; {:a 0.5, :b 0.3, :c 0.3}</code></pre></div><div><span id="adjusted-distribution" name="adjusted-distribution"></span><h3>4.4 &nbsp;&nbsp; adjusted-distribution</h3></div><div><p>Combining the three functions, we can get an adjusted distribution based on the model taken from the config:</p></div><div class="code"><pre><code class="clojure">(defn adjusted-distribution [params {:keys [default linear toggle] :as model}]
   (let [ladjust (linear-adjustment params linear)
         tadjust (toggle-adjustment params toggle)]
-    (add-distributions default ladjust tadjust)))</div></div><div class="paragraph"><p>The adjusted distributions for each trap can then be calculated:</p></div><div class="code"><div hljs="hljs" language="clojure" no-escape="no-escape">(mapv #(adjusted-distribution % (-&gt; config :model))
+    (add-distributions default ladjust tadjust)))</code></pre></div><div><p>The adjusted distributions for each trap can then be calculated:</p></div><div class="code"><pre><code class="clojure">(mapv #(adjusted-distribution % (-&gt; config :model))
       (-&gt; config :traps))
 =&gt; [;; kitchen
     {:fly 0.8, :ladybug 0.05,
@@ -198,9 +660,9 @@
      :mosquito 0.35, :bee 0.44999999999999996}
     ;; bathroom
     {:fly 0.8, :ladybug 0.05,
-     :mosquito 0.6699999999999999, :bee 0.1}]</div></div></section></section><section class="chapter" id="sampling-model"><h2 class="chapter">4  &nbsp;&nbsp; Sampling Model</h2><div class="group"><div class="paragraph"><p>The sampling model is easier to construct. We wish to create a function that takes in a distribution and returns a key that is proportional to the values of the map:</p></div><div class="code"><div hljs="hljs" language="clojure" no-escape="no-escape">(random-sample {:a 0.5 :b 0.5})
+     :mosquito 0.6699999999999999, :bee 0.1}]</code></pre></div><div><span id="sampling-model" name="sampling-model"></span><h2><b>5 &nbsp;&nbsp; Sampling Model</b></h2></div><div><p>The sampling model is easier to construct. We wish to create a function that takes in a distribution and returns a key that is proportional to the values of the map:</p></div><div class="code"><pre><code class="clojure">(random-sample {:a 0.5 :b 0.5})
 =&gt; ;; either returns :a or :b
-#(get #{:a :b} %)</div></div></div><section class="section" id="cumultive"><h3 class="section">4.1  &nbsp;&nbsp; cumultive</h3><div class="paragraph"><p>culmultive takes a distribution and turns it into a range, sorted by value:</p></div><div class="code"><div hljs="hljs" language="clojure" no-escape="no-escape">(defn cumultive [distribution]
+#(get #{:a :b} %)</code></pre></div><div><span id="cumultive" name="cumultive"></span><h3>5.1 &nbsp;&nbsp; cumultive</h3></div><div><p>culmultive takes a distribution and turns it into a range, sorted by value:</p></div><div class="code"><pre><code class="clojure">(defn cumultive [distribution]
   (dissoc (reduce (fn [out [k v]]
                     (let [total (::total out)
                           ntotal (+ total v)]
@@ -209,12 +671,12 @@
                              ::total ntotal)))
                   {::total 0}
                   (sort-by val distribution))
-          ::total))</div></div><div class="paragraph"><p>examples of its usage can be seen:</p></div><div class="code"><div hljs="hljs" language="clojure" no-escape="no-escape">(cumultive {:a 0.3 :b 0.5 :c 0.2})
-=&gt; {:c [0 0.2], :a [0.2 0.5], :b [0.5 1.0]}</div></div></section><section class="section" id="category"><h3 class="section">4.2  &nbsp;&nbsp; category</h3><div class="paragraph"><p>category takes a cumultive distribution and a point, return which section it belongs to:</p></div><div class="code"><div hljs="hljs" language="clojure" no-escape="no-escape">(defn category [cumulative stat]
+          ::total))</code></pre></div><div><p>examples of its usage can be seen:</p></div><div class="code"><pre><code class="clojure">(cumultive {:a 0.3 :b 0.5 :c 0.2})
+=&gt; {:c [0 0.2], :a [0.2 0.5], :b [0.5 1.0]}</code></pre></div><div><span id="category" name="category"></span><h3>5.2 &nbsp;&nbsp; category</h3></div><div><p>category takes a cumultive distribution and a point, return which section it belongs to:</p></div><div class="code"><pre><code class="clojure">(defn category [cumulative stat]
   (-&gt;&gt; cumulative
        (keep (fn [[k [lower upper]]]
                (if (&lt;= lower stat upper) k)))
-       first))</div></div><div class="paragraph"><p>examples of its usage can be seen:</p></div><div class="code"><div hljs="hljs" language="clojure" no-escape="no-escape">(def dist (cumultive {:a 0.3 :b 0.5 :c 0.2}))
+       first))</code></pre></div><div><p>examples of its usage can be seen:</p></div><div class="code"><pre><code class="clojure">(def dist (cumultive {:a 0.3 :b 0.5 :c 0.2}))
 ;; {:c [0 0.2], :a [0.2 0.5], :b [0.5 1.0]} 0.1
 
 
@@ -222,24 +684,24 @@
 
 (category dist 0.3) =&gt; :a
 
-(category dist 0.8) =&gt; :b</div></div></section><section class="section" id="random-sample"><h3 class="section">4.3  &nbsp;&nbsp; random-sample</h3><div class="paragraph"><p>Now the <code>random-sample</code> function can be written:</p></div><div class="code"><div hljs="hljs" language="clojure" no-escape="no-escape">(defn random-sample [distribution]
+(category dist 0.8) =&gt; :b</code></pre></div><div><span id="random-sample" name="random-sample"></span><h3>5.3 &nbsp;&nbsp; random-sample</h3></div><div><p>Now the <code>random-sample</code> function can be written:</p></div><div class="code"><pre><code class="clojure">(defn random-sample [distribution]
   (let [total (apply + (vals distribution))
         stat  (rand total)]
-    (category (cumultive distribution) stat)))</div></div><div class="paragraph"><p>We can now use this with a probability map:</p></div><div class="code"><div hljs="hljs" language="clojure" no-escape="no-escape">(random-sample {:a 0.3 :b 0.5 :c 0.2})
+    (category (cumultive distribution) stat)))</code></pre></div><div><p>We can now use this with a probability map:</p></div><div class="code"><pre><code class="clojure">(random-sample {:a 0.3 :b 0.5 :c 0.2})
 =&gt; ;; Returns either :a :b or :c
-#(get #{:a :b :c} %)</div></div><div class="paragraph"><p>As well as with <code>adjusted-model</code> defined in the <a href='#probability-models'>previous chapter</a></p></div><div class="code"><div hljs="hljs" language="clojure" no-escape="no-escape">(random-sample
+#(get #{:a :b :c} %)</code></pre></div><div><p>As well as with <code>adjusted-model</code> defined in the <a href='#probability-models'>previous chapter</a></p></div><div class="code"><pre><code class="clojure">(random-sample
  (adjusted-distribution {:brightness 0.3 :indoor true :rate 0.5}
                         (-&gt; config :model)))
 =&gt; ;; Return either :fly :ladybug :mosquito :bee
-#(get #{:fly :ladybug :mosquito :bee} %)</div></div></section></section><section class="chapter" id="implementing-components"><h2 class="chapter">5  &nbsp;&nbsp; Implementing Components</h2><section class="section" id="model"><h3 class="section">5.1  &nbsp;&nbsp; Model</h3><div class="paragraph"><p>We create a record for <code>Model</code>. The data is just a nested map but a record is used purely for printing purposes. There is quite alot of stuff in the map and we should be able to only show the necessary amount of information - in this case, we only want to know the keys of the datastructure:</p></div><div class="code"><div hljs="hljs" language="clojure" no-escape="no-escape">(defrecord Model []
+#(get #{:fly :ladybug :mosquito :bee} %)</code></pre></div><div><span id="implementing-components" name="implementing-components"></span><h2><b>6 &nbsp;&nbsp; Implementing Components</b></h2></div><div><span id="model" name="model"></span><h3>6.1 &nbsp;&nbsp; Model</h3></div><div><p>We create a record for <code>Model</code>. The data is just a nested map but a record is used purely for printing purposes. There is quite alot of stuff in the map and we should be able to only show the necessary amount of information - in this case, we only want to know the keys of the datastructure:</p></div><div class="code"><pre><code class="clojure">(defrecord Model []
   Object
   (toString [obj]
     (str &quot;#model&quot; (vec (keys (into {} obj))))))
 
 (defmethod print-method Model
   [v w]
-  (.write w (str v)))</div></div><div class="paragraph"><p>We can now use the <code>map-&gt;Model</code> function to create a nicer new on the model:</p></div><div class="code"><div hljs="hljs" language="clojure" no-escape="no-escape">(map-&gt;Model (:model config))
-;;=&gt; #model[:default :linear :toggle]</div></div></section><section class="section" id="trap"><h3 class="section">5.2  &nbsp;&nbsp; Trap</h3><div class="paragraph"><p><code>Trap</code> is a component that needs to be started and stopped. It simulates a trap that knows what insect went inside the trap, what time it entered and if it had been captured. We create a basic function for one round of the trapping an insect:</p></div><div class="code"><div hljs="hljs" language="clojure" no-escape="no-escape">(defn trap-bug [{:keys [rate efficiency fuzziness model output] :as trap}]
+  (.write w (str v)))</code></pre></div><div><p>We can now use the <code>map-&gt;Model</code> function to create a nicer new on the model:</p></div><div class="code"><pre><code class="clojure">(map-&gt;Model (:model config))
+;;=&gt; #model[:default :linear :toggle]</code></pre></div><div><span id="trap" name="trap"></span><h3>6.2 &nbsp;&nbsp; Trap</h3></div><div><p><code>Trap</code> is a component that needs to be started and stopped. It simulates a trap that knows what insect went inside the trap, what time it entered and if it had been captured. We create a basic function for one round of the trapping an insect:</p></div><div class="code"><pre><code class="clojure">(defn trap-bug [{:keys [rate efficiency fuzziness model output] :as trap}]
   (let [pause   (long (* (+ rate
                             (* (- (rand 1) 0.5) fuzziness))
                          1000))]
@@ -249,7 +711,7 @@
             :bug (random-sample
                   (adjusted-distribution trap model))
             :captured (&lt; (rand 1) efficiency)})
-    trap))</div></div><div class="paragraph"><p>The usage for such a function can be seen below:</p></div><div class="code"><div hljs="hljs" language="clojure" no-escape="no-escape">(-&gt; (trap-bug {:rate 0.8
+    trap))</code></pre></div><div><p>The usage for such a function can be seen below:</p></div><div class="code"><pre><code class="clojure">(-&gt; (trap-bug {:rate 0.8
                :efficiency 0.5
                :fuzziness 0.1
                :model (:model config)
@@ -258,7 +720,7 @@
     deref)
 =&gt; (contains {:time #(instance? java.util.Date %)
               :bug #(#{:fly :bee :ladybug :mosquito} %)
-              :captured #(instance? Boolean %)})</div></div><div class="paragraph"><p>We create a record that implements the <code>IComponent</code> interface, making sure that we hide keys that are not useful</p></div><div class="code"><div hljs="hljs" language="clojure" no-escape="no-escape">(defrecord Trap []
+              :captured #(instance? Boolean %)})</code></pre></div><div><p>We create a record that implements the <code>IComponent</code> interface, making sure that we hide keys that are not useful</p></div><div class="code"><pre><code class="clojure">(defrecord Trap []
   Object
   (toString [obj]
     (let [selected [:location :output]]
@@ -283,9 +745,9 @@
 
 (defmethod print-method Trap
   [v w]
-  (.write w (str v)))</div></div><div class="paragraph"><p>Finally, we create a <code>trap</code> constructor taking a config map and outputting a <code>Trap</code> record:</p></div><div class="code"><div hljs="hljs" language="clojure" no-escape="no-escape">(defn trap [m]
+  (.write w (str v)))</code></pre></div><div><p>Finally, we create a <code>trap</code> constructor taking a config map and outputting a <code>Trap</code> record:</p></div><div class="code"><pre><code class="clojure">(defn trap [m]
   (assoc (map-&gt;Trap m)
-         :output (atom nil)))</div></div></section><section class="section" id="partial-system-testing"><h3 class="section">5.3  &nbsp;&nbsp; Partial System Testing</h3><div class="paragraph"><p>Having implemented the records for <code>:traps</code> and <code>:model</code>, we can test to see if our array of traps are working. The call to system takes two parameters - a topology map and a configuration map. The topology map specifies functions and dependencies whilst the configuration map specifies the initial input data. Note that to specify contruction of an array of components put the constructor in an additional vector:</p></div><div class="code"><div hljs="hljs" language="clojure" no-escape="no-escape">(def topology {:traps [[trap] :model]
+         :output (atom nil)))</code></pre></div><div><span id="partial-system-testing" name="partial-system-testing"></span><h3>6.3 &nbsp;&nbsp; Partial System Testing</h3></div><div><p>Having implemented the records for <code>:traps</code> and <code>:model</code>, we can test to see if our array of traps are working. The call to system takes two parameters - a topology map and a configuration map. The topology map specifies functions and dependencies whilst the configuration map specifies the initial input data. Note that to specify contruction of an array of components put the constructor in an additional vector:</p></div><div class="code"><pre><code class="clojure">(def topology {:traps [[trap] :model]
                :model [map-&gt;Model]})
 
 (def sys (-&gt; (component/system toplogy config)
@@ -315,7 +777,7 @@
 ;;             #trap{:location &quot;bedroom&quot;, :output nil}
 ;;             #trap{:location &quot;patio&quot;, :output nil}
 ;;             #trap{:location &quot;bathroom&quot;, :output nil],
-;;    :model #model[:default :linear :toggle]}</div></div></section><section class="section" id="app"><h3 class="section">5.4  &nbsp;&nbsp; App</h3><div class="paragraph"><p>The role of the app is to hook up the sensors to a datastore, in this case an <a href='hara-concurrent-ova.html'>ova</a>, a mutable array of elements. We define <code>initialise-app</code> to setup watches to provide some summary and coordination:</p></div><div class="code"><div hljs="hljs" language="clojure" no-escape="no-escape">(require '[hara.concurrent.ova :as ova])
+;;    :model #model[:default :linear :toggle]}</code></pre></div><div><span id="app" name="app"></span><h3>6.4 &nbsp;&nbsp; App</h3></div><div><p>The role of the app is to hook up the sensors to a datastore, in this case an <a href='hara-concurrent-ova.html'>ova</a>, a mutable array of elements. We define <code>initialise-app</code> to setup watches to provide some summary and coordination:</p></div><div class="code"><pre><code class="clojure">(require '[hara.concurrent.ova :as ova])
 
 (defn initialise-app [{:keys [db traps display total] :as app}]
   (let [data (mapv (fn [trap]
@@ -333,12 +795,12 @@
                                     (fnil #(update-in % [bug] (fnil inc 0))
                                           {}))))
          (swap! total update-in [bug] (fnil inc 0))))))
-  app)</div></div><div class="paragraph"><p>The opposite method <code>deinitialise-app</code> is also defined:</p></div><div class="code"><div hljs="hljs" language="clojure" no-escape="no-escape">(defn deinitialise-app [{:keys [db traps total] :as app}]
+  app)</code></pre></div><div><p>The opposite method <code>deinitialise-app</code> is also defined:</p></div><div class="code"><pre><code class="clojure">(defn deinitialise-app [{:keys [db traps total] :as app}]
   (dosync (ova/empty! db))
   (reset! total {})
   (doseq [{:keys [output]} traps]
     (remove-watch output :summary))
-  app)</div></div><div class="paragraph"><p>The two functions are then hooked up via <code>-start</code> and <code>-stop</code> protocol methods for the component architecture:</p></div><div class="code"><div hljs="hljs" language="clojure" no-escape="no-escape">(defrecord App []
+  app)</code></pre></div><div><p>The two functions are then hooked up via <code>-start</code> and <code>-stop</code> protocol methods for the component architecture:</p></div><div class="code"><pre><code class="clojure">(defrecord App []
   Object
   (toString [app]
     (str &quot;#app&quot; (-&gt; app keys vec)))
@@ -357,7 +819,7 @@
   (.write w (str v)))
 
 (defn app [m]
-  (assoc (map-&gt;App m) :total (atom {})))</div></div></section><section class="section" id="app-testing"><h3 class="section">5.5  &nbsp;&nbsp; App Testing</h3><div class="paragraph"><p>We can now do a more testing by including a couple more constructors. Note that the keys <code>:db</code>, <code>app</code> and <code>summary</code> have been added. Also see the syntax for the <code>:summary</code> topology to expose the <code>:total</code> submap from <code>:app</code>.</p><p>The syntax for the <code>:summary</code> key should be further explained. What <code>component/start</code> sees a initialisation of {:expose [:total]}, it take the first dependency (in this case, <code>:app</code>), gets the <code>:total</code> submap and exposes it as <code>:summary</code> in the system map. The value of <code>:expose</code> can be either a vector (for nested map supprt) or a function for more generic operations. This promotes reuse and composition of multiple systems.</p></div><div class="code"><div hljs="hljs" language="clojure" no-escape="no-escape">(def topology {:traps   [[trap] :model]
+  (assoc (map-&gt;App m) :total (atom {})))</code></pre></div><div><span id="app-testing" name="app-testing"></span><h3>6.5 &nbsp;&nbsp; App Testing</h3></div><div><p>We can now do a more testing by including a couple more constructors. Note that the keys <code>:db</code>, <code>app</code> and <code>summary</code> have been added. Also see the syntax for the <code>:summary</code> topology to expose the <code>:total</code> submap from <code>:app</code>.</p><p>The syntax for the <code>:summary</code> key should be further explained. What <code>component/start</code> sees a initialisation of {:expose [:total]}, it take the first dependency (in this case, <code>:app</code>), gets the <code>:total</code> submap and exposes it as <code>:summary</code> in the system map. The value of <code>:expose</code> can be either a vector (for nested map supprt) or a function for more generic operations. This promotes reuse and composition of multiple systems.</p></div><div class="code"><pre><code class="clojure">(def topology {:traps   [[trap] :model]
                :model   [map-&gt;Model]
                :db      [ova/ova]
                :app     [app :traps :db]
@@ -389,9 +851,9 @@
 ;;                #trap{:location &quot;bedroom&quot;,  :output nil}
 ;;                #trap{:location &quot;patio&quot;,    :output nil}
 ;;                #trap{:location &quot;bathroom&quot;, :output nil}]
-;;    :model #model[:default :linear :toggle]}</div></div></section><section class="section" id="server"><h3 class="section">5.6  &nbsp;&nbsp; Server</h3><div class="paragraph"><p>The server requires a couple of external dependencies:</p></div><div class="code"><div hljs="hljs" language="clojure" no-escape="no-escape">(require '[compojure.core :as routes]
+;;    :model #model[:default :linear :toggle]}</code></pre></div><div><span id="server" name="server"></span><h3>6.6 &nbsp;&nbsp; Server</h3></div><div><p>The server requires a couple of external dependencies:</p></div><div class="code"><pre><code class="clojure">(require '[compojure.core :as routes]
          '[ring.adapter.jetty :as jetty]
-         '[clj-http.client :as client])</div></div><div class="paragraph"><p>We define a very simple server with one route that just returns the summary as a string:</p></div><div class="code"><div hljs="hljs" language="clojure" no-escape="no-escape">(defn make-routes
+         '[clj-http.client :as client])</code></pre></div><div><p>We define a very simple server with one route that just returns the summary as a string:</p></div><div class="code"><pre><code class="clojure">(defn make-routes
   [{:keys [summary] :as serv}]
   (routes/GET &quot;*&quot; [] (str @summary)))
 
@@ -411,9 +873,9 @@
   (-stop [{:keys [summary instance] :as serv}]
     (println (str &quot;STOPPING SERVER on port &quot; (:port serv)))
     (.stop instance)
-    (dissoc serv :instance)))</div></div><div class="paragraph"><p>Again, <code>print-method</code> is defined for prettiness:</p></div><div class="code"><div hljs="hljs" language="clojure" no-escape="no-escape">(defmethod print-method Server
+    (dissoc serv :instance)))</code></pre></div><div><p>Again, <code>print-method</code> is defined for prettiness:</p></div><div class="code"><pre><code class="clojure">(defmethod print-method Server
   [v w]
-  (.write w (str v)))</div></div></section><section class="section" id="server-testing"><h3 class="section">5.7  &nbsp;&nbsp; Server Testing</h3><div class="paragraph"><p>Again, we add an additional constructor to the system and start:</p></div><div class="code"><div hljs="hljs" language="clojure" no-escape="no-escape">(def sys (-&gt; {:traps   [[trap] :model]
+  (.write w (str v)))</code></pre></div><div><span id="server-testing" name="server-testing"></span><h3>6.7 &nbsp;&nbsp; Server Testing</h3></div><div><p>Again, we add an additional constructor to the system and start:</p></div><div class="code"><pre><code class="clojure">(def sys (-&gt; {:traps   [[trap] :model]
               :model   [map-&gt;Model]
               :db      [ova/ova]
               :app     [app :traps :db]
@@ -425,7 +887,7 @@
 ;; Starting trap in bathroom
 ;; Starting trap in kitchen
 ;; Starting trap in bedroom
-;; STARTING SERVER on PORT 8090</div></div><div class="paragraph"><p>We can now use a client to access the summary via a http protocol:</p></div><div class="code"><div hljs="hljs" language="clojure" no-escape="no-escape">;; First Time
+;; STARTING SERVER on PORT 8090</code></pre></div><div><p>We can now use a client to access the summary via a http protocol:</p></div><div class="code"><pre><code class="clojure">;; First Time
 (-&gt; (client/get &quot;http://localhost:8090/&quot;)
     :body)
 ;;=&gt; &quot;{:fly 249, :bee 55, :mosquito 187, :ladybug 19}&quot;
@@ -434,7 +896,7 @@
 ;; Second Time
 (-&gt; (client/get &quot;http://localhost:8090/&quot;)
     :body)
-;; =&gt; &quot;{:fly 305, :bee 70, :mosquito 227, :ladybug 26}&quot;</div></div><div class="paragraph"><p>Stopping is no different to before</p></div><div class="code"><div hljs="hljs" language="clojure" no-escape="no-escape">(component/stop sys)
+;; =&gt; &quot;{:fly 305, :bee 70, :mosquito 227, :ladybug 26}&quot;</code></pre></div><div><p>Stopping is no different to before</p></div><div class="code"><pre><code class="clojure">(component/stop sys)
 ;; STOPPING SERVER on PORT 8090
 ;; Stopping trap in kitchen
 ;; Stopping trap in bedroom
@@ -448,11 +910,11 @@
 ;;                #trap{:location &quot;patio&quot;,    :output nil}
 ;;                #trap{:location &quot;bathroom&quot;, :output nil}]
 ;;    :model #model[:default :linear :toggle]
-;;    :server #server[:port]}</div></div></section></section><section class="chapter" id="the-big-picture"><h2 class="chapter">6  &nbsp;&nbsp; The Big Picture</h2><section class="section" id="summary"><h3 class="section">6.1  &nbsp;&nbsp; Summary</h3><div class="paragraph"><p>We have created the bug trapping system based on our <a href='#sub-system-dependencies'>dependency diagram</a>. We can visualize the essential components that make up our system in the diagram below:</p></div><div class="figure"><a name="the-system"></a><div class="img"><img src="img/hara_component/system.png" width="100%" /></div><h4><i>fig.2  &nbsp;-&nbsp; the system</i></h4></div><div class="paragraph"><p>The constructors and the dependencies form our system topology whilst the data that initialised our system form our config. There are significant advantages of doing this:</p><ul><li>The final code is almost the same as the diagram of the system.</li><li>There is an isometric correspondence between process and data.</li><li>It clearly seperates data (which is normally loaded from a file) from process.</li><li>It keeps all the initialisations in a single place.</li><li>Systems can be built incrementally in the way that we have just done.</li></ul></div></section><section class="section" id="further-extension"><h3 class="section">6.2  &nbsp;&nbsp; Further Extension</h3><div class="paragraph"><p>Say we needed to add more functionality to our system, in which we define the <code>make-routes</code> method to add an endpoint giving us information about the status of the datastore:</p></div><div class="code"><div hljs="hljs" language="clojure" no-escape="no-escape">(defn make-routes
+;;    :server #server[:port]}</code></pre></div><div><span id="the-big-picture" name="the-big-picture"></span><h2><b>7 &nbsp;&nbsp; The Big Picture</b></h2></div><div><span id="summary" name="summary"></span><h3>7.1 &nbsp;&nbsp; Summary</h3></div><div><p>We have created the bug trapping system based on our <a href='#sub-system-dependencies'>dependency diagram</a>. We can visualize the essential components that make up our system in the diagram below:</p></div><div class="figure"><a id="the-system" name="the-system"></a><h4><i>fig.2  &nbsp;-&nbsp; the system</i></h4><div class="img"><img line="{:row 653, :col 1, :end-row 653, :end-col 84}" src="img/hara_component/system.png" title="the system" width="100%" /></div><p></p></div><div><p>The constructors and the dependencies form our system topology whilst the data that initialised our system form our config. There are significant advantages of doing this:</p><ul><li>The final code is almost the same as the diagram of the system.</li><li>There is an isometric correspondence between process and data.</li><li>It clearly seperates data (which is normally loaded from a file) from process.</li><li>It keeps all the initialisations in a single place.</li><li>Systems can be built incrementally in the way that we have just done.</li></ul></div><div><span id="further-extension" name="further-extension"></span><h3>7.2 &nbsp;&nbsp; Further Extension</h3></div><div><p>Say we needed to add more functionality to our system, in which we define the <code>make-routes</code> method to add an endpoint giving us information about the status of the datastore:</p></div><div class="code"><pre><code class="clojure">(defn make-routes
   [{:keys [db summary] :as serv}]
   (routes/routes
     (routes/GET &quot;/total&quot; [] (str @summary))
-    (routes/GET &quot;/db&quot; []    (str (persistent! db)))))</div></div><div class="paragraph"><p>It is very easy to redefine topology to include the extra dependency:</p></div><div class="code"><div hljs="hljs" language="clojure" no-escape="no-escape">(def toplogy {:traps   [[trap] :model]
+    (routes/GET &quot;/db&quot; []    (str (persistent! db)))))</code></pre></div><div><p>It is very easy to redefine topology to include the extra dependency:</p></div><div class="code"><pre><code class="clojure">(def toplogy {:traps   [[trap] :model]
               :model   [map-&gt;Model]
               :db      [ova/ova]
               :app     [app :traps :db]
@@ -460,28 +922,20 @@
               :server  [map-&gt;Server :summary :db]}) ;; note the extra `:db` key
 
 (def sys (-&gt; (component/system topology config)
-             (component/start)))</div></div><div class="paragraph"><p>We can again visualize the extended system:</p></div><div class="figure"><a name="the-extended-system"></a><div class="img"><img src="img/hara_component/system2.png" width="100%" /></div><h4><i>fig.3  &nbsp;-&nbsp; the extended system</i></h4></div></section></section><section class="chapter" id="links-and-resources"><h2 class="chapter">7  &nbsp;&nbsp; Links and Resources</h2><div class="group"><div class="paragraph"><p>Here are some more links and resources on the web:</p><ul><li><a href='https://github.com/stuartsierra/component'>stuartsierra/component</a> - original library</li><li><a href='http://z.caudate.me/hara-component-just-a-bit-more-structure/'>just a bit more structure</a> - the announcement on my blog</li></ul></div></div></section>
+             (component/start)))</code></pre></div><div><p>We can again visualize the extended system:</p></div><div class="figure"><a id="the-extended-system" name="the-extended-system"></a><h4><i>fig.3  &nbsp;-&nbsp; the extended system</i></h4><div class="img"><img line="{:row 688, :col 1, :end-row 688, :end-col 94}" src="img/hara_component/system2.png" title="the extended system" width="100%" /></div><p></p></div><div><span id="links-and-resources" name="links-and-resources"></span><h2><b>8 &nbsp;&nbsp; Links and Resources</b></h2></div><div><p>Here are some more links and resources on the web:</p><ul><li><a href='https://github.com/stuartsierra/component'>stuartsierra/component</a> - original library</li><li><a href='http://z.caudate.me/hara-component-just-a-bit-more-structure/'>just a bit more structure</a> - the announcement on my blog</li></ul></div>
+        </div>
+      </div>
     </div>
-</div><!--end of .container-->
 
-  <section class="application">
-    
-  </section>
-</body>
+    <label for="sidebar-checkbox" class="sidebar-toggle"></label>
 
-<script>
-  $('#nav').affix({
-    offset: {
-        top: $('#nav').offset().top,
-        bottom: $('footer').outerHeight(true) + $('.application').outerHeight(true) + 40
-    }});
-</script>
+  </body>
 
-
-<script>
-  if (document.location.search.match(/type=embed/gi)) {
-    window.parent.postMessage("resize", "*");
-  }
-</script>
-</body>
+  <script type="text/javascript">
+    smoothScroll.init();
+    gumshoe.init({});
+  
+    hljs.registerLanguage("clojure",function(e){var t={"builtin-name":"def defonce cond apply if-not if-let if not not= = < > <= >= == + / * - rem quot neg? pos? delay? symbol? keyword? true? false? integer? empty? coll? list? set? ifn? fn? associative? sequential? sorted? counted? reversible? number? decimal? class? distinct? isa? float? rational? reduced? ratio? odd? even? char? seq? vector? string? map? nil? contains? zero? instance? not-every? not-any? libspec? -> ->> .. . inc compare do dotimes mapcat take remove take-while drop letfn drop-last take-last drop-while while intern condp case reduced cycle split-at split-with repeat replicate iterate range merge zipmap declare line-seq sort comparator sort-by dorun doall nthnext nthrest partition eval doseq await await-for let agent atom send send-off release-pending-sends add-watch mapv filterv remove-watch agent-error restart-agent set-error-handler error-handler set-error-mode! error-mode shutdown-agents quote var fn loop recur throw try monitor-enter monitor-exit defmacro defn defn- macroexpand macroexpand-1 for dosync and or when when-not when-let comp juxt partial sequence memoize constantly complement identity assert peek pop doto proxy defstruct first rest cons defprotocol cast coll deftype defrecord last butlast sigs reify second ffirst fnext nfirst nnext defmulti defmethod meta with-meta ns in-ns create-ns import refer keys select-keys vals key val rseq name namespace promise into transient persistent! conj! assoc! dissoc! pop! disj! use class type num float double short byte boolean bigint biginteger bigdec print-method print-dup throw-if printf format load compile get-in update-in pr pr-on newline flush read slurp read-line subvec with-open memfn time re-find re-groups rand-int rand mod locking assert-valid-fdecl alias resolve ref deref refset swap! reset! set-validator! compare-and-set! alter-meta! reset-meta! commute get-validator alter ref-set ref-history-count ref-min-history ref-max-history ensure sync io! new next conj set! to-array future future-call into-array aset gen-class reduce map filter find empty hash-map hash-set sorted-map sorted-map-by sorted-set sorted-set-by vec vector seq flatten reverse assoc dissoc list disj get union difference intersection extend extend-type extend-protocol int nth delay count concat chunk chunk-buffer chunk-append chunk-first chunk-rest max min dec unchecked-inc-int unchecked-inc unchecked-dec-inc unchecked-dec unchecked-negate unchecked-add-int unchecked-add unchecked-subtract-int unchecked-subtract chunk-next chunk-cons chunked-seq? prn vary-meta lazy-seq spread list* str find-keyword keyword symbol gensym force rationalize"},r="a-zA-Z_\\-!.?+*=<>&#'",n="["+r+"]["+r+"0-9/;:]*",a="[-+]?\\d+(\\.\\d+)?",o={b:n,r:0},s={cN:"number",b:a,r:0},i=e.inherit(e.QSM,{i:null}),c=e.C(";","$",{r:0}),d={cN:"literal",b:/\b(true|false|nil)\b/},l={b:"[\\[\\{]",e:"[\\]\\}]"},m={cN:"comment",b:"\\^"+n},p=e.C("\\^\\{","\\}"),u={cN:"symbol",b:"[:]{1,2}"+n},f={b:"\\(",e:"\\)"},h={eW:!0,r:0},y={k:t,l:n,cN:"name",b:n,starts:h},b=[f,i,m,p,c,u,l,s,d,o];return f.c=[e.C("comment",""),y,h],h.c=b,l.c=b,{aliases:["clj"],i:/\S/,c:[f,i,m,p,c,u,l,s,d]}});
+    hljs.initHighlightingOnLoad();
+  </script>
 </html>

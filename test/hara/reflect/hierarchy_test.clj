@@ -6,7 +6,7 @@
 (def without-method
     (-> clojure.lang.PersistentArrayMap
         (.getDeclaredMethod "without"
-                            (hara.common.primitives/class-array [Object]))))
+                            (into-array [Object]))))
 
 ^{:refer hara.reflect.hierarchy/has-method :added "2.1"}
 (fact "Checks to see if any given method exists in a particular class"
@@ -28,7 +28,7 @@
   ^:hidden
   (methods-with-same-name-and-count
    (.getDeclaredMethod String "charAt"
-                       (hara.common.primitives/class-array Class [Integer/TYPE]))
+                       (into-array Class [Integer/TYPE]))
    CharSequence)
   =>
   #(-> % count (= 1))  ;; (#<Method java.lang.CharSequence.charAt(int)>)
@@ -49,7 +49,7 @@
   (def without-method
     (-> clojure.lang.PersistentArrayMap
         (.getDeclaredMethod "without"
-                            (hara.common.primitives/class-array [Object]))))
+                            (into-array [Object]))))
 
   (origins without-method)
   => [clojure.lang.IPersistentMap

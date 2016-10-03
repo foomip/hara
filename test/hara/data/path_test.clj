@@ -110,3 +110,18 @@
                 :again {:c 3 :d 4}} [:hello :there] [:+] )
   => {:a 1 :b 2
       :+ {:again {:c 3 :d 4}}})
+
+^{:refer hara.data.path/pathify-keys-nested :added "2.1"}
+(fact "converts a nested map structure into a flat map structure"
+  
+  (pathify-keys-nested {:a {:b {:c 1}}})
+  => {[:a :b :c] 1}
+
+  (pathify-keys-nested {:a {:b {:c 1}}} 2)
+  => {[:a :b] {:c 1}}
+
+  (pathify-keys-nested {:a {:b {:c 1
+                                :d 3
+                                :e {}}}}
+                       -1 true)
+  => {[:a :b :c] 1, [:a :b :d] 3, [:a :b :e] {}})

@@ -79,7 +79,9 @@
        (assoc diff :< (diff-changes m2 m1))
        diff))))
 
-(defn merge-or-replace [x v]
+(defn merge-or-replace
+  ""
+  [x v]
   (cond (and (hash-map? x)
              (hash-map? v))
         (nested/merge-nested x v)

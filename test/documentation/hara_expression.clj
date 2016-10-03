@@ -1,45 +1,58 @@
 (ns documentation.hara-expression)
 
-[[:chapter {:title "Introduction"}]]
-
 "
 [hara.expression](https://github.com/zcaudate/hara/blob/master/src/hara/expression.clj) allow transformations of forms into functions and predicates in a succint way."
 
-[[:section {:title "Installation"}]]
+[[:chapter {:title "expression.compile" :link "hara.expression.compile"}]]
 
-"
-Add to `project.clj` dependencies:
-
-    [im.chit/hara.expression \"{{PROJECT.version}}\"]
-
-Individual namespaces can be added seperately:
+"Add to `project.clj` dependencies:
 
     [im.chit/hara.expression.compile \"{{PROJECT.version}}\"]
-    [im.chit/hara.expression.form \"{{PROJECT.version}}\"]
-    [im.chit/hara.expression.load \"{{PROJECT.version}}\"]
-    [im.chit/hara.expression.shorthand \"{{PROJECT.version}}\"]
-"
 
-[[:chapter {:title "API - compile"}]]
+**hara.expression.compile** looks at compiler time expressions"
 
-"[hara.expression.compile](https://github.com/zcaudate/hara/blob/master/src/hara/expression/compile.clj)"
+[[:api {:namespace "hara.expression.compile" :title ""}]]
 
-[[:api {:namespace "hara.expression.compile"}]]
 
-[[:chapter {:title "API - form"}]]
 
-"[hara.expression.form](https://github.com/zcaudate/hara/blob/master/src/hara/expression/form.clj):"
+[[:chapter {:title "expression.form"
+            :link "hara.expression.form"
+            :exclude ["form-prep"]}]]
 
-[[:api {:namespace "hara.expression.form"}]]
+"Add to `project.clj` dependencies:
 
-[[:chapter {:title "API - load"}]]
+     [im.chit/hara.expression.form \"{{PROJECT.version}}\"]
 
-"[hara.expression.load](https://github.com/zcaudate/hara/blob/master/src/hara/expression/load.clj):"
+**hara.expression.form** provides methods that transform forms into anonymous functions"
 
-[[:api {:namespace "hara.expression.load"}]]
+[[:api {:namespace "hara.expression.form"
+        :title ""
+        :exclude ["form-prep"]}]]
 
-[[:chapter {:title "API - shorthand"}]]
 
-"[hara.expression.shorthand](https://github.com/zcaudate/hara/blob/master/src/hara/expression/shorthand.clj):"
 
-[[:api {:namespace "hara.expression.shorthand"}]]
+[[:chapter {:title "expression.load"
+            :link "hara.expression.load"
+            :only ["load"]}]]
+
+"Add to `project.clj` dependencies:
+
+     [im.chit/hara.expression.load \"{{PROJECT.version}}\"]
+
+**hara.expression.load** provides a simple mechanism for loading code that can be in a form"
+
+[[:api {:namespace "hara.expression.load"
+        :title ""
+        :only ["load"]}]]
+
+
+
+[[:chapter {:title "expression.shorthand" :link "hara.expression.shorthand"}]]
+
+"Add to `project.clj` dependencies:
+
+     [im.chit/hara.expression.shorthand \"{{PROJECT.version}}\"]
+
+**hara.expression.shorthand** provides methods that work with code as data"
+
+[[:api {:namespace "hara.expression.shorthand" :title ""}]]

@@ -25,25 +25,7 @@
 
 [[:section {:title "Motivation"}]]
 
-"
-For those that are not familiar with restart systems (most well know in Common Lisp), they can be thought of as an issue resolution system or `try++/catch++`. In `hara.event`, we use the term `issues` to differentiate them from `exceptions`. The difference is purely semantic: `issues` are `managed` whilst `exceptions` are `caught`. They all refer to abnormal program flow.
-
-There are two forms of `exceptions` that a programmer will typically encounter:
-
- 1. **Programming Mistakes** - These are a result of logic and reasoning errors, should not occur in normal operation and should be eliminated as soon as possible. The best strategy for dealing with this is to use offensive checks such as pre- and post- conditions, write unit tests and have functions fail early with a clear message to the programmer about the error. Typical cases are:
-
-  - Null pointer exceptions
-  - Wrong inputs to functions
-
- 2. **Exceptions due to Circumstances** - These are circumstancial and should be considered part of the normal operation of the program. There are a wide variety of such exceptions and usually is up to the programming workflow to handle such cases:
-  - A database connection going down
-  - A file not found
-  - User input not valid
-
-The method of `try` and `catch` exception handing, though commonly used and familiar to most programmers is a very weak system for exception handling. The try blocks are not really needed when dealing with the *Type 1* exceptions and a little too weak when dealing with those of *Type 2*. The net effect of using only the `try/catch` paradigm in application code is that in order to mitigate these *Type 2* exceptions, there requires a lot of defensive programming. This turns the middle level of the application into spagetti code with program control flow (`try/catch`) mixed in with program logic.
-
-Conditional restarts provide a way for the top-level application to more cleanly deal with *Type 2* exceptions. A simple use case looking at advantages in using restarts over exceptions can be seen in the [quickstart](#quickstart). For those that wish to know more about conditional restarts, there is a comprehensive [strategies](#strategies) chapter to the listing different ways abnormal program flow can be dealt with. For those curious about how the framework has been implementated, please jump over to the [implementation](#implementation) chapter.
-"
+"For those that are not familiar with restart systems (most well know in Common Lisp), they can be thought of as an issue resolution system or `try++/catch++`. In `hara.event`, we use the term `issues` to differentiate them from `exceptions`. The difference is purely semantic: `issues` are `managed` whilst `exceptions` are `caught`. They all refer to abnormal program flow. Conditional restarts provide a way for the top-level application to more cleanly deal with *Type 2* exceptions."
 
 [[:section {:title "Other Libraries"}]]
 
@@ -54,6 +36,10 @@ There are currently three other conditional restart libraries for clojure, in th
 
 - [swell](https://github.com/hugoduncan/swell) and [conditions](https://github.com/bwo/conditions) have been written to work with [slingshot](https://github.com/scgilardi/slingshot).
 "
+
+[[:chapter {:title "API" :link "hara.event"}]]
+
+[[:api {:namespace "hara.event" :title ""}]]
 
 [[:chapter {:title "Event Management"}]]
 
@@ -151,7 +137,7 @@ Using these six different different issue resolution directives, the programmer 
 
 [[:file {:src "test/documentation/hara_event/unlucky_numbers.clj"}]]
 
-[[:chapter {:title "API"}]]
+[[:chapter {:title "Guides"}]]
 
 [[:file {:src "test/documentation/hara_event/api.clj"}]]
 

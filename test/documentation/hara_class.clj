@@ -1,35 +1,43 @@
 (ns documentation.hara-class)
 
-[[:chapter {:title "Introduction"}]]
+"**hara.class** contain functions that give information about class properties. The library provides utility support for other hara libraries, categorised in many sub-namespaces. However, the functions are useful in their own right and are necessary for better understanding of the Java interop."
 
-"
-[hara.class](https://github.com/zcaudate/hara/blob/master/src/hara/class.clj) are a set of functions that give information about class properties. There used by [hara.reflect](hara-reflect.html) and [hara.object](hara-object.html) for their reflection calls."
+[[:chapter {:title "class.checks" :link "hara.class.checks"}]]
 
-[[:section {:title "Installation"}]]
-
-"
-Add to `project.clj` dependencies:
-
-    [im.chit/hara.class \"{{PROJECT.version}}\"]
-
-Individual namespaces can be added seperately:
+"Add to `project.clj` dependencies:
 
     [im.chit/hara.class.checks \"{{PROJECT.version}}\"]
+
+**hara.class.checks** contain basic methods for class checking and predicates."
+
+[[:api {:namespace "hara.class.checks" :title ""}]]
+
+[[:chapter {:title "class.enum" :link "hara.class.enum"}]]
+
+"Add to `project.clj` dependencies:
+
+    [im.chit/hara.class.enum \"{{PROJECT.version}}\"]
+
+**hara.class.enum** contain functions that work with enums, turning them into more accessible data."
+
+[[:api {:namespace "hara.class.enum" :title ""}]]
+
+[[:chapter {:title "class.inheritance" :link "hara.class.inheritance"}]]
+
+"Add to `project.clj` dependencies:
+
     [im.chit/hara.class.inheritance \"{{PROJECT.version}}\"]
-"
 
-[[:chapter {:title "API - checks"}]]
+**hara.class.inheritance** contain functions that output inheritance properties of objects. It is used by many libraries including [hara.reflect](hara-reflect.html) and [hara.object](hara-object.html)."
 
-"[hara.class.checks](https://github.com/zcaudate/hara/blob/master/src/hara/class/checks.clj) contain class checking predicates:"
+[[:api {:namespace "hara.class.inheritance" :title ""}]]
 
-[[:api {:namespace "hara.class.checks"}]]
+[[:chapter {:title "class.multi" :link "hara.class.multi"}]]
 
-"[hara.class.enum](https://github.com/zcaudate/hara/blob/master/src/hara/class/enum.clj) contain enum information:"
+"Add to `project.clj` dependencies:
 
-[[:api {:namespace "hara.class.enum"}]]
+    [im.chit/hara.class.multi \"{{PROJECT.version}}\"]
 
-[[:chapter {:title "API - inheritance"}]]
+**hara.class.multi** contain functions that operate on multimethods"
 
-"[hara.class.inheritance](https://github.com/zcaudate/hara/blob/master/src/hara/class/inheritance.clj) contain inheritance checking predicates:"
-
-[[:api {:namespace "hara.class.inheritance"}]]
+[[:api {:namespace "hara.class.multi" :title ""}]]

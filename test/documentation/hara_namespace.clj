@@ -2,37 +2,33 @@
 
 [[:chapter {:title "Introduction"}]]
 
-"
-[hara.namespace](https://github.com/zcaudate/hara/blob/master/src/hara/namespace.clj) contain namespace functions and utilities"
+"`hara.namespace` contain namespace functions and utilities"
 
-[[:section {:title "Installation"}]]
+[[:chapter {:title "namespace.eval"
+            :link "hara.namespace.eval"}]]
 
-"
-Add to `project.clj` dependencies:
-
-    [im.chit/hara.namespace \"{{PROJECT.version}}\"]
-
-Individual namespaces can be added seperately:
+"Add to `project.clj` dependencies:
 
     [im.chit/hara.namespace.eval \"{{PROJECT.version}}\"]
-    [im.chit/hara.namespace.import \"{{PROJECT.version}}\"]
-    [im.chit/hara.namespace.resolve \"{{PROJECT.version}}\"]
-"
 
-[[:chapter {:title "API - eval"}]]
+**hara.namespace.eval** allows for evaluation within a given namespace"
 
-"[hara.namespace.eval](https://github.com/zcaudate/hara/blob/master/src/hara/namespace/eval.clj)"
+[[:api {:namespace "hara.namespace.eval" :title ""}]]
 
-[[:api {:namespace "hara.namespace.eval"}]]
+[[:chapter {:title "namespace.import"
+            :link "hara.namespace.import"}]]
 
-[[:chapter {:title "API - import"}]]
+"Add to `project.clj` dependencies:
 
-"[hara.namespace.import](https://github.com/zcaudate/hara/blob/master/src/hara/namespace/import.clj)"
+    [im.chit/hara.namespace.eval \"{{PROJECT.version}}\"]
 
-[[:api {:namespace "hara.namespace.import"}]]
+**hara.namespace.import** allows for moving function definitions around"
 
-[[:chapter {:title "API - resolve"}]]
+[[:api {:namespace "hara.namespace.import" :title ""}]]
 
-"[hara.namespace.import](https://github.com/zcaudate/hara/blob/master/src/hara/namespace/resolve.clj)"
+[[:chapter {:title "namespace.resolve"
+            :link "hara.namespace.resolve"}]]
 
-[[:api {:namespace "hara.namespace.resolve"}]]
+"**hara.namespace.resolve** allows for resolving namespaces"
+
+[[:api {:namespace "hara.namespace.resolve" :title ""}]]

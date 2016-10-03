@@ -10,6 +10,12 @@
       "codePointCount" "compareTo" "compareToIgnoreCase"
       "concat" "contains" "contentEquals" "copyValueOf"])
 
+^{:refer hara.reflect.core.query/query-hierarchy :added "2.1"}
+(fact "lists what methods could be applied to a particular instance"
+
+  (query-hierarchy String [:name #"^to"])
+  => ["toCharArray" "toLowerCase" "toString" "toUpperCase"])
+
 ^{:refer hara.reflect.core.query/query-instance :added "2.1"}
 (fact "lists what methods could be applied to a particular instance"
 

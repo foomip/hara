@@ -1,4 +1,4 @@
-(ns hara.data.record-test
+(ns hara.data.seq-test
   (:use hara.test)
   (:require [hara.data.seq :refer :all]))
 

@@ -10,7 +10,7 @@
 [[:chapter {:title "Introduction"}]]
 
 "
-[hara.component](https://github.com/zcaudate/hara/blob/master/src/hara/component.clj) is a dependency injection framework inspired by the original Stuart Sierra component [library](https://github.com/stuartsierra/component) and [talk](http://www.youtube.com/watch?v=13cmHf_kt-Q). The virtues of this type of design for composing large systems has been much lauded and is quite a common practise within enterprise applications. Doing a [search](https://www.google.com?q=stuart+sierra+component) will yield many uses of such a pattern."
+[hara.component](https://github.com/zcaudate/hara/blob/master/src/hara/component.clj) is a dependency injection framework for clojure. The virtues of this type of design for composing large systems has been much lauded. This library places emphasis on building large systems using a toplogy of how subsystems fit together and data of how it is to be configured."
 
 [[:section {:title "Installation"}]]
 
@@ -24,21 +24,66 @@
 
 [[:section {:title "Motivation"}]]
 
+"There are two existing component libraries, namely:
+ 
+- [component](https://github.com/stuartsierra/component)
+- [mount](https://github.com/tolitius/mount)
+
+`hara.component` takes the more simplified idea proposed by the [original](https://github.com/stuartsierra/component) library where there is whole system start up and teardown. However, it extends upon that concept by teasing apart configuration and application topology to give cleaner notion of design.
+
+Configuration gives the ability to set the starting state of the entire program and should be easy as possible. Many a system become bloated due to not being able to properly manage configuration, therefore composing systems with configuration at the forefront will make for much simpler code and design. This library was build with this paradigm in mind. 
+
+Additionally, there are additional features that enable developers to write their systems in a clearer fashion.
+
+- support for dealing with arrays of component
+- control with nested systems
+
 "
-The main reason for a reinterpretation of the original [stuartsierra/component](https://github.com/stuartsierra/component) was for a couple reasons:
 
-- the `component/Lifecycle` protocol did not expose `started?` and `stopped?` methods
-- the new library has been designed to work well with configuration files
-- dependencies are now not required to be explicitly defined
-- added support for dealing with arrays of component
-- more control was needed when working with nested systems
-- more emphasis has been placed on prettiness and readibility
+[[:chapter {:title "API" :link "hara.component"
+            :only ["system" "system?" "start" "stop"]}]]
 
-The differentiation of `hara.component` is to tease apart configuration and application topology. Configuration gives the ability to set the starting state of the entire program and should be easy as possible. Many a system become bloated due to not being able to properly manage configuration, therefore composing systems with configuration at the forefront will make for much simpler code and design. This library was build with this paradigm in mind."
+"Because component is a framework for building systems, we have to start off with concepts of what we wish to build:
+
+- A `Catalog` searches through files in a smart way and consists of a `FileSystem` and a `Database`
+- A `Filesystem` stores and manages files
+- A `Database` stores indexed information about files
+
+The most simple representation is:"
+
+(comment
+  (defrecord Database []
+    component/IComponent
+    (-start [db]
+      (assoc db :status "started"))
+    (-stop [db]
+      (dissoc db :status)))
+
+  (defrecord Filesystem []
+    component/IComponent
+    (-start [fs]
+      (assoc fs :status "started"))
+    (-stop [fs]
+      (dissoc fs :status)))
+
+  (defrecord Catalog []
+    component/IComponent
+    (-start [store]
+      (assoc store :status "started"))
+    (-stop [store]
+      (dissoc store :status))))
+
+"These definitions are then used in context of specifying a system consisting of two `Catalog` instances, having the same `Database` instance, but different `Filesystem` instances."
+
+[[:api {:title ""
+        :namespace "hara.component"
+        :only ["system" "system?" "start" "stop"]}]]
 
 [[:chapter {:title "Config Driven Design"}]]
 
-"We will aim to create a system based upon a configuration file. As components are a very high level concept, using the pattern in code is more of a state of mind than following a set of APIs. Therefore in this documentation, it is hoped that a tutorial based approach will demonstrate the core functionality within the library. We seperate the guide into the following sections
+"Following on from the general concepts we have have a look at how such a framework can be used in practice.
+
+We will aim to create a system based upon a configuration file. As components are a very high level concept, using the pattern in code is more of a state of mind than following a set of APIs. Therefore in this documentation, it is hoped that a tutorial based approach will demonstrate the core functionality within the library. We seperate the guide into the following sections
 
 - [Probability Model](#probability-model) - How to calculate a bug distribution model.
 - [Sampling Model](#sampling-model) - How to sample the distribution model.

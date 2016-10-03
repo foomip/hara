@@ -54,6 +54,10 @@ Ignoring [duckling](https://github.com/wit-ai/duckling), which is about ten year
 An example of extensiblity can be seen with [hara.time.joda](https://github.com/zcaudate/hara.time.joda), an add-on package for `hara.time` for [joda-time](http://www.joda.org/joda-time/) compatibility.
 "
 
+[[:chapter {:title "API" :link "hara.time"}]]
+
+[[:api {:namespace "hara.time" :title ""}]]
+
 [[:chapter {:title "Walkthrough"}]]
 
 [[:section {:title "Representation"}]]

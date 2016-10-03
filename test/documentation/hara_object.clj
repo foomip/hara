@@ -8,6 +8,11 @@
 "
 [hara.object](https://github.com/zcaudate/hara/blob/master/src/hara/object.clj) is a library for converting java classes into clojure data types. It is somewhat like the `bean` command but enables more control and customisation of the output."
 
+"Libraries that rely on `hara.object` for exposing functionality:
+- [gita](https://github.com/zcaudate/gita)
+- [gulfstream](https://github.com/helpshift/gulfstream)
+"
+
 [[:section {:title "Installation"}]]
 
 "
@@ -19,28 +24,11 @@ Add to `project.clj` dependencies:
 
 (comment (require '[hara.object :as object]))
 
-[[:section {:title "Motivation"}]]
 
-"
-Quoting Wikipedia:
+[[:chapter {:title "API" :link "hara.object"}]]
 
-> Object-oriented programming (OOP) is a programming paradigm based on the concept of objects, which are structures that contain data, in the form of fields, often known as attributes; and code, in the form of procedures, often known as methods.
+[[:api {:namespace "hara.object" :title ""}]]
 
-Clojure is tightly bounded to Java and so cannot escape from the world of objects. Objects provide data encapsulation, meaning that it is very difficult to access data within an object except through custom interfaces. Encapsulation run counter to the openess of Clojure's philosophy where all data can be represented as a map.
-
-Reflection provides a way around this problem. The general technique is to query the object for the names and values of it's fields and return them as a map. [hara.object](https://www.github.com/zcaudate/hara) does just that. We cannot represent all fields in all objects as a datastructure (especially when there are circular references). However, in most cases, we just need to grab the most critical information from an object in order to make sense of what is going on and to then decide on a course of action; [hara.object](https://www.github.com/zcaudate/hara) has been built for this approach, allowing customization of what fields to return and exclude.
-"
-
-
-"
-[hara.object](https://github.com/zcaudate/hara/blob/master/src/hara/object.clj) has been extracted out from [gita](https://github.com/zcaudate/gita) where it was used to analyse the [jgit porcelain](https://wiki.eclipse.org/JGit/User_Guide#Porcelain_API) api and to reflectively generate an interface for git. A similar technique was used to recursively access cassandra datastructures in [cassius](https://github.com/mypost/cassius) though it was done through protocols and not in such a generic fashion.
-
-The reason one may wish to use such a library would be to quickly visualize the structure of a class as well as to customize how the class looks in the repl. It can also be used to wrap java apis. The library is very similar in concept to the `def-map-type` and `def-derived-type` in [potemkin](https://github.com/ztellman/potemkin) but instead of defining a wrapper to the class, data with the class is accessed directly through reflection. Currently the implementation is not optimised though it has an extremely broad use cases.
-
-Libraries that rely on `hara.object` for exposing functionality:
-- [gita](https://github.com/zcaudate/gita)
-- [gulfstream](https://github.com/helpshift/gulfstream)
-"
 
 [[:chapter {:title "Philosophy"}]]
 

@@ -29,11 +29,15 @@ Coordination in multi-threaded applications have always been a pain. Most times 
 - Written in pure clojure, no external dependencies.
 "
 
+[[:chapter {:title "API" :link "hara.concurrent.ova"}]]
+
+[[:api {:namespace "hara.concurrent.ova" :title ""}]]
+
 [[:chapter {:title "Walkthrough"}]]
 
 [[:file {:src "test/documentation/hara_concurrent_ova/walkthrough.clj"}]]
 
-[[:chapter {:title "API"}]]
+[[:chapter {:title "Guide"}]]
 
 [[:file {:src "test/documentation/hara_concurrent_ova/api.clj"}]]
 

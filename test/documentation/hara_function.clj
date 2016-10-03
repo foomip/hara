@@ -1,31 +1,23 @@
 (ns documentation.hara-function)
 
-[[:chapter {:title "Introduction"}]]
+"[hara.function](https://github.com/zcaudate/hara/blob/master/src/hara/function.clj) allow reasoning and dispatch of functions."
 
-"
-[hara.function](https://github.com/zcaudate/hara/blob/master/src/hara/function.clj) allow reasoning and dispatch of functions."
+[[:chapter {:title "function.args" :link "hara.function.args"}]]
 
-[[:section {:title "Installation"}]]
-
-"
-Add to `project.clj` dependencies:
-
-    [im.chit/hara.function \"{{PROJECT.version}}\"]
-
-Individual namespaces can be added seperately:
+"Add to `project.clj` dependencies:
 
     [im.chit/hara.function.args \"{{PROJECT.version}}\"]
+
+**hara.function.args** allow reasoning on the arguments of clojure methods"
+
+[[:api {:namespace "hara.function.args" :title ""}]]
+
+[[:chapter {:title "function.dispatch" :link "hara.function.args"}]]
+
+"Add to `project.clj` dependencies:
+
     [im.chit/hara.function.dispatch \"{{PROJECT.version}}\"]
-"
 
-[[:chapter {:title "API - args"}]]
+**hara.function.dispatch** allows alternative ways of calling a function"
 
-"[hara.function.args](https://github.com/zcaudate/hara/blob/master/src/hara/function/args.clj)"
-
-[[:api {:namespace "hara.function.args"}]]
-
-[[:chapter {:title "API - dispatch"}]]
-
-"[hara.function.dispatch](https://github.com/zcaudate/hara/blob/master/src/hara/function/disatch.clj)"
-
-[[:api {:namespace "hara.function.dispatch"}]]
+[[:api {:namespace "hara.function.dispatch"  :title ""}]]

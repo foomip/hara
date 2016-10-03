@@ -2,7 +2,7 @@
   (:require [hara.common.checks :refer [hash-map?]]
             [hara.data.map :refer [assoc-if]]
             [hara.data.nested :refer [merge-nested]]
-            [hara.data.record :refer [empty-record]]
+            [hara.data.record :as record]
             [hara.sort.topological :refer [topological-sort]]))
 
 (defprotocol IComponent
@@ -100,7 +100,7 @@
 
                                       :else
                                       (assoc m k v)))
-                              (empty-record v)
+                              (record/empty v)
                               v)))
                arr)))
 
@@ -183,7 +183,7 @@
 
                                                      :else
                                                      (assoc m k v)))
-                                             (empty-record v)
+                                             (record/empty v)
                                              v))))
                   {} sys)))))
 

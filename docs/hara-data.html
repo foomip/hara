@@ -1,410 +1,1140 @@
 
-
 <!DOCTYPE html>
-<html >
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en-us">
+
   <head>
-    <meta charset="UTF-8">
-    <meta name="google" value="notranslate">
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+
+  <!-- Enable responsiveness on mobile devices-->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+  <link rel="shortcut icon" href="favicon.ico">
+  <title>hara.data - manipulation of maps and representations of data</title>
+  <script src="js/highlight.min.js"></script>
+  <script src="js/gumshoe.min.js"></script>
+  <script src="js/smooth-scroll.min.js"></script>
+  
+  <!-- CSS -->
+  <link rel="stylesheet" href="css/poole.css">
+  <link rel="stylesheet" href="css/syntax.css">
+  <link rel="stylesheet" href="css/lanyon.css">
+  <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=PT+Serif:400,400italic,700|PT+Sans:400">
+  
+  <style>
+  .error {
+  font-weight: bold;
+}
+
+.error.version {
+  color: #ac4142;
+  text-decoration: line-through;
+}
+
+.api .entry pre.error {
+  background-color: #ac4142;
+}
+.api .entry pre.error h6 {
+  color: white;
+  float: left;
+}
+
+.api .entry-description
+{
+ display: block;
+ }
+ 
+.api ul
+{
+  list-style-type: none;
+  padding-left: 5px;
+}
+
+.api .entry-description h4
+{
+  height 30px;
+  margin-top: 2rem;
+  font-size: larger;
+ }
+
+.api .entry-description p
+{
+ margin-bottom: 0px;
+ margin-top: 0px;
+ }
+
+.api .entry-option h6
+{
+ padding-right:5px;
+ padding-top: 0.6em;
+ margin-top: 0;
+ }
+
+.api .entry-option .args
+{
+ font-weight: lighter;
+ }
+ 
+.api .entry pre
+ {
+   width: 100%;
+}
+  
+.api pre h6
+{
+ float: right;
+ font-size: small;
+ margin-top: 0;
+ }
+ 
+ pre.source {
+  position: absolute;
+  visibility: hidden;
+  opacity: 0;
+  height: 0px;
+  transition: visibility 0s, opacity 1s linear;
+ }
+
+.api input.source-toggle{
+  display: none;
+}
+
+.api label.source-toggle {
+  position: relative;
+  float: right;
+  top: -1.9em;
+  right: 2em;
+  color: #ac4142;
+  font-style: italic;
+  cursor: pointer;
+}
+
+.api input[type="checkbox"] + label:after {
+  content: "show";
+}
+.api input[type="checkbox"]:checked + label:after {
+  content: "hide";
+}
+
+.api input[type="checkbox"]:checked ~ pre.source {
+  position: relative;
+  height: auto;
+  visibility: visible;
+  opacity: 1;
+}
+ 
+ 
+ 
+  html {
+  font-size: 15px;
+}
+
+h2 {
+  margin-top: 2.5rem;
+  font-size: 1.5rem;
+  margin-bottom: 1rem;
+}
+
+h3 {
+  margin-top: 2.5rem;
+}
+
+.top {
+  margin-top: 0.5em;
+  display: block;
+  font-size: 1.4em;
+  font-style: italic;
+}
+
+.top.active {
+  text-decoration: underline;
+}
+
+.heading {
+  display: flex;
+  padding-bottom: 1em;
+}
+.heading h5 {
+  font-size: 0.8rem; 
+  margin-top: 0.2em;
+  margin-bottom: 0.2em
+}
+
+.toc ul{
+  list-style-type: none;
+  padding-left: 0;
+}
+
+.toc a h4 {
+  color: #ac4142;
+}
+
+.toc a h5 {
+  color: #ac4142;
+  font-size: 0.8rem;
+  margin-top: 0.1em;
+  margin-bottom: 0.2em;
+  padding-left: 0.8em;
+}
+
+.outline .toc{
+  display: none;
+}
+
+.sidebar {
+  font-size: 0.9rem;
+  line-height: 1.3;
+}
+
+.sidebar-nav-item {
+    display: block;
+    padding-top: 0rem;
+    padding-bottom: 0rem; 
+    border-top: none;
+}
+
+.sidebar-nav {
+    border-bottom: none;
+}
+
+pre{
+  border: solid 1px;
+  border-color: #f0f0f0;
+  background-color: white;
+}
 
 
-    <title>data - manipulation of maps and representations of data</title>
+.code .failed
+{
+  background-color:#ac4142; 
+  padding: 10px;
+  font-size: large;
+}
 
-    
-  <link href='http://fonts.googleapis.com/css?family=Raleway:300' rel='stylesheet' type='text/css'>
-  <link rel="stylesheet" type="text/css" href="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.5/css/bootstrap.min.css">
-  <link rel="stylesheet" type="text/css" href="//cdnjs.cloudflare.com/ajax/libs/font-awesome/4.3.0/css/font-awesome.min.css">
+.code .failed h5
+{
+  color: white;
+  margin-top: 0;
+  margin-botton: 0;
+  font-size: small;
+}
 
-  <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.6/highlight.min.js"></script>
-  <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.6/languages/clojure.min.js"></script>
-  <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.6/styles/magula.min.css">
+.code .failed h4
+{  
+  color: white;
+  font-style: italic;
+}
 
-  <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
-  <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.5/js/bootstrap.min.js"></script>
-  <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/angular.js/1.4.2/angular.min.js"></script>
-  <script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/angularjs/1.4.2/angular-cookies.min.js"></script>
-  <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/angular-ui-bootstrap/0.13.0/ui-bootstrap-tpls.min.js"></script>
-  <script type="text/javascript" src="js/angular-highlightjs.min.js"></script>
+.code .failed hr
+{
+  margin-top: 15px;
+  margin-bottom: 0px;
+}
 
-  <link rel="stylesheet" type="text/css" href="css/rdash.min.css">
-  <link rel="stylesheet" type="text/css" href="css/scrollspy.css">
+.masthead a
+{
+  font-size: 1.8em;
+}
 
+@media (max-width: 48rem){
+.masthead-title {
+    text-align: left;
+}}
 
-  <script>
-    window.console = window.console || function(t) {};
-    window.open = function(){ console.log("window.open is disabled."); };
-    window.print   = function(){ console.log("window.print is disabled."); };
-  </script>
-
-  <script>
-    var app = angular.module('app', ['hljs']);
-  </script>
-  </head>
-
-  <body ng-app="app" data-spy="scroll" data-target=".scrollspy">
-  <!-- Fixed navbar -->
-    <nav class="navbar navbar-fixed-top">
-      <div class="container">
-        <div class="navbar-header">
-          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
-            <span class="sr-only">Toggle navigation</span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-          </button>
-          <a class="navbar-brand" href="index.html"><img src="img/logo.png"></a>
-        </div>
-        <div id="navbar" class="navbar-collapse collapse">
-          <ul class="nav navbar-nav">
-            <li class="dropdown">
-              <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Guides <span class="caret"></span></a>
-              <ul class="dropdown-menu">
-                <li><a href="hara-class.html">class</a></li>
-                <li><a href="hara-common.html">common</a></li>
-                <li><a href="hara-component.html">component</a></li>
-                <li><a href="hara-concurrent.html">concurrent</a></li>
-                <li><a href="hara-concurrent-ova.html">concurrent.ova</a></li>
-                <li><a href="hara-concurrent-procedure.html">concurrent.procedure</a></li>
-                <li><a href="hara-data.html">data</a></li>
-                <li><a href="hara-event.html">event</a></li>
-                <li><a href="hara-expression.html">expression</a></li>
-                <li><a href="hara-extend.html">extend</a></li>
-                <li><a href="hara-function.html">function</a></li>
-                <li><a href="hara-group.html">group</a></li>
-                <li><a href="hara-io-environment.html">io.environment</a></li>
-                <li><a href="hara-io-file.html">io.file</a></li>
-                <li><a href="hara-io-scheduler.html">io.scheduler</a></li>
-                <li><a href="hara-io-watch.html">io.watch</a></li>
-                <li><a href="hara-namespace.html">namespace</a></li>
-                <li><a href="hara-object.html">object</a></li>
-                <li><a href="hara-reflect.html">reflect</a></li>
-                <li><a href="hara-sort.html">sort</a></li>
-                <li><a href="hara-string.html">string</a></li>
-                <li><a href="hara-test.html">test</a></li>
-                <li><a href="hara-time.html">time</a></li>
-            </ul>
-            </li>
-            <li>
-              <a href="https://github.com/zcaudate/hara" target="_blank">Github</a></li>
-            <li>
-              <a href="http://gitter.im/zcaudate/hara" target="_blank">Gitter</a></li>
-          </ul>
-        </div><!--/.nav-collapse -->
-      </div>
-    </nav>
+@media (max-width: 40rem){
+.masthead-title {
+    text-align: center;
+}
+.masthead a
+{
+  font-size: x-large;
+}
+}
 
 
-  <div class="container row">
-    <div class="col-md-4 scrollspy pull-right">
-      <ul id="nav" class="nav hidden-xs hidden-sm" data-spy="affix">
-        <li><a href="#introduction">1  &nbsp;&nbsp; Introduction</a><ul class="nav"><li><a href="#installation">1.1  &nbsp;&nbsp; Installation</a></li></ul></li><li><a href="#api---map">2  &nbsp;&nbsp; API - map</a></li><li><a href="#api---nested">3  &nbsp;&nbsp; API - nested</a></li><li><a href="#api---diff">4  &nbsp;&nbsp; API - diff</a></li><li><a href="#api---combine">5  &nbsp;&nbsp; API - combine</a></li><li><a href="#api---complex">6  &nbsp;&nbsp; API - complex</a></li><li><a href="#api---record">7  &nbsp;&nbsp; API - record</a></li><li><a href="#api---path">8  &nbsp;&nbsp; API - path</a></li><li><a href="#api---seq">9  &nbsp;&nbsp; API - seq</a></li>
-      </ul>
-    </div>
-    <div class="col-md-8" id="content">
-      <div class="jumbotron">
+
+@media (min-width: 38rem){
+.container {
+    max-width: 37rem;
+    margin-left: 6rem;
+ }
+}
+
+@media (min-width: 56rem){
+.container {
+    max-width: 54rem;
+}
+.page {
+  margin-right: 15rem;
+}
+}
+
+@media (min-width: 60rem){
+.outline .toc{
+  display: block;
+  padding-left: 2em;
+  position: fixed;
+  right: 1em;
+  top: 1em;
+  width: 18em;
+  background-color: white;
+  border: solid 1px #f0f0f0;
+}
+.outline .toc li.active a.chapter h4{
+  font-size: larger;
+  font-style: italic;
+}
+
+.outline .toc li .section{
+  display: none;
+}
+
+.outline .toc li.active .section{
+  display: inherit;
+}
+
+.outline .toc li.active a.active.chapter h4{
+  text-decoration: underline;
+}
+
+.outline .toc li.active a.active.section h5{
+  text-decoration: underline;
+}
+}
+
+
+@media (min-width: 70rem){
+.container {
+    max-width: 66rem;
+}}
+  /*
+
+Original highlight.js style (c) Ivan Sagalaev <maniac@softwaremaniacs.org>
+
+*/
+
+.hljs {
+  display: block;
+  overflow-x: auto;
+  padding: 0.5em;
+}
+
+
+/* Base color: saturation 0; */
+
+.hljs,
+.hljs-subst {
+  color: #444;
+}
+
+.hljs-comment {
+  color: #888888;
+}
+
+.hljs-keyword,
+.hljs-attribute,
+.hljs-selector-tag,
+.hljs-meta-keyword,
+.hljs-doctag,
+.hljs-name {
+  font-weight: bold;
+}
+
+
+/* User color: hue: 0 */
+
+.hljs-type,
+.hljs-string,
+.hljs-number,
+.hljs-selector-id,
+.hljs-selector-class,
+.hljs-quote,
+.hljs-template-tag,
+.hljs-deletion {
+  color: #880000;
+}
+
+.hljs-title,
+.hljs-section {
+  color: #880000;
+  font-weight: bold;
+}
+
+.hljs-regexp,
+.hljs-symbol,
+.hljs-variable,
+.hljs-template-variable,
+.hljs-link,
+.hljs-selector-attr,
+.hljs-selector-pseudo {
+  color: #BC6060;
+}
+
+
+/* Language color: hue: 90; */
+
+.hljs-literal {
+  color: #78A960;
+}
+
+.hljs-built_in,
+.hljs-bullet,
+.hljs-code,
+.hljs-addition {
+  color: #397300;
+}
+
+
+/* Meta color: hue: 200 */
+
+.hljs-meta {
+  color: #1f7199;
+}
+
+.hljs-meta-string {
+  color: #4d99bf;
+}
+
+
+/* Misc effects */
+
+.hljs-emphasis {
+  font-style: italic;
+}
+
+.hljs-strong {
+  font-weight: bold;
+}
+  </style>
+  <!-- Icons -->
+</head>
+
+
+  <body class="theme-base-08">
+    <span id="page-top"></span>
+
+    <!-- Target for toggling the sidebar `.sidebar-checkbox` is for regular
+     styles, `#sidebar-checkbox` for behavior. -->
+<input type="checkbox" class="sidebar-checkbox" id="sidebar-checkbox">
+
+<!-- Toggleable sidebar -->
+<div class="sidebar" id="sidebar">
+  <nav class="sidebar-nav">
+    <a class="sidebar-nav-item header" href="index.html"><img src="img/logo-white.png"/></a>
+    <span>&nbsp;</span>
+    <a class="sidebar-nav-item" href="hara-class.html">class</a><a class="sidebar-nav-item" href="hara-common.html">common</a><a class="sidebar-nav-item" href="hara-component.html">component</a><a class="sidebar-nav-item" href="hara-concurrent.html">concurrent</a><a class="sidebar-nav-item" href="hara-concurrent-ova.html">concurrent.ova</a><a class="sidebar-nav-item" href="hara-concurrent-procedure.html">concurrent.procedure</a><a class="sidebar-nav-item active" href="hara-data.html">data</a><a class="sidebar-nav-item" href="hara-event.html">event</a><a class="sidebar-nav-item" href="hara-expression.html">expression</a><a class="sidebar-nav-item" href="hara-extend.html">extend</a><a class="sidebar-nav-item" href="hara-function.html">function</a><a class="sidebar-nav-item" href="hara-group.html">group</a><a class="sidebar-nav-item" href="hara-io.html">io</a><a class="sidebar-nav-item" href="hara-io-file.html">io.file</a><a class="sidebar-nav-item" href="hara-io-scheduler.html">io.scheduler</a><a class="sidebar-nav-item" href="hara-io-watch.html">io.watch</a><a class="sidebar-nav-item" href="hara-namespace.html">namespace</a><a class="sidebar-nav-item" href="hara-object.html">object</a><a class="sidebar-nav-item" href="hara-reflect.html">reflect</a><a class="sidebar-nav-item" href="hara-sort.html">sort</a><a class="sidebar-nav-item" href="hara-string.html">string</a><a class="sidebar-nav-item" href="hara-test.html">test</a><a class="sidebar-nav-item" href="hara-time.html">time</a><a class="sidebar-nav-item" href="hara-zip.html">zip</a>
+    <span class="sidebar-nav-item">&nbsp;</span>
+    <span class="sidebar-nav-item">&nbsp;</span>
+  </nav>
+</div>
+
+
+    <!-- Wrap is the content to shift when toggling the sidebar. We wrap the
+         content to avoid any CSS collisions with our real content. -->
+    <div class="wrap">
+      <div class="masthead">
         <div class="container">
-          <h1>data</h1>
-          <h4>manipulation of maps and representations of data</h4>
+          <h3 class="masthead-title">
+            <a href="/" title="Home">hara.data</a>
+            <small>manipulation of maps and representations of data</small>
+          </h3>
         </div>
       </div>
-      <section class="chapter" id="introduction"><h2 class="chapter">1  &nbsp;&nbsp; Introduction</h2><div class="group"><div class="paragraph"><p><a href='https://github.com/zcaudate/hara/blob/master/src/hara/data.clj'>hara.data</a> are a set of functions that act on clojure hash-maps and map-like representations of data. The level of complexity needed for working with data increases as it becomes nested and then relational. The functions of <code>hara.data</code> get increasingly sophisticated, with the <code>hara.data.complex</code> namespace built specifically for working with datomic data structures.</p></div></div><section class="section" id="installation"><h3 class="section">1.1  &nbsp;&nbsp; Installation</h3><div class="paragraph"><p>Add to <code>project.clj</code> dependencies:</p><pre><code>&#91;im.chit/hara.data &quot;2.4.4&quot;&#93;
-</code></pre><p>Individual namespaces can be added seperately:</p><pre><code>&#91;im.chit/hara.data.map &quot;2.4.4&quot;&#93;
-&#91;im.chit/hara.data.nested &quot;2.4.4&quot;&#93;
-&#91;im.chit/hara.data.diff &quot;2.4.4&quot;&#93;
-&#91;im.chit/hara.data.combine &quot;2.4.4&quot;&#93;
-&#91;im.chit/hara.data.complex &quot;2.4.4&quot;&#93;
-&#91;im.chit/hara.data.record &quot;2.4.4&quot;&#93;
-&#91;im.chit/hara.data.path &quot;2.4.4&quot;&#93;
-&#91;im.chit/hara.data.seq &quot;2.4.4&quot;&#93;
-</code></pre></div></section></section><section class="chapter" id="api---map"><h2 class="chapter">2  &nbsp;&nbsp; API - map</h2><div class="group"><div class="paragraph"><p><a href='https://github.com/zcaudate/hara/blob/master/src/hara/data/map.clj'>hara.data.map</a> contains functions for updating hashmaps.</p></div><div class="api"><hr /><div><a name="api-hara-data-map"></a><h4><i>API</i></h4><a href="#api-hara-data-map--assoc-if">assoc-if</a>&nbsp;&nbsp;<a href="#api-hara-data-map--assoc-in-if">assoc-in-if</a>&nbsp;&nbsp;<a href="#api-hara-data-map--assoc-in-nil">assoc-in-nil</a>&nbsp;&nbsp;<a href="#api-hara-data-map--assoc-nil">assoc-nil</a>&nbsp;&nbsp;<a href="#api-hara-data-map--dissoc-in">dissoc-in</a>&nbsp;&nbsp;<a href="#api-hara-data-map--into-if">into-if</a>&nbsp;&nbsp;<a href="#api-hara-data-map--merge-if">merge-if</a>&nbsp;&nbsp;<a href="#api-hara-data-map--merge-nil">merge-nil</a>&nbsp;&nbsp;<a href="#api-hara-data-map--select-keys-if">select-keys-if</a>&nbsp;&nbsp;<a href="#api-hara-data-map--unique">unique</a>&nbsp;&nbsp;<a href="#api-hara-data-map--update-in-if">update-in-if</a>&nbsp;&nbsp;</div><hr /><div><div><a name="api-hara-data-map--assoc-if"></a><h4>assoc-if <a href="#api-hara-data-map">&#9652;</a></h4><div hljs="hljs" language="clojure" no-escape="no-escape">&quot;assoc key/value pairs to the map only on non-nil values&quot;
 
-(assoc-if {} :a 1)
-=&gt; {:a 1}
+      <div class="container content">
+        <div class="page">
+          <div class="heading">
+            <div>
+              <h5>Author: Chris Zheng&nbsp;&nbsp;<a href="mailto:z@caudate.me">(z@caudate.me)</a></h5>
+              <h5>Date: 03 October 2016</h5>
+              <h5>Repository: <a href="https://github.com/zcaudate/hara">https://github.com/zcaudate/hara</a></h5>
+              <h5>Version: 2.4.5</h5></div></div>
+          <hr/>
+          <div class="outline">
+            <div class="toc">
+              <nav data-gumshoe-header>
+                <ul data-gumshoe>
+                  <a data-scroll class="top" href="#page-top">TOP</a>
+                  <li><a class="chapter" data-scroll="" href="#data-map"><h4>1 &nbsp; data.map</h4></a><a class="section" data-scroll="" href="#entry__hara_data_map__assoc_if"><h5><i>assoc-if</i></h5></a><a class="section" data-scroll="" href="#entry__hara_data_map__assoc_in_if"><h5><i>assoc-in-if</i></h5></a><a class="section" data-scroll="" href="#entry__hara_data_map__assoc_in_nil"><h5><i>assoc-in-nil</i></h5></a><a class="section" data-scroll="" href="#entry__hara_data_map__assoc_nil"><h5><i>assoc-nil</i></h5></a><a class="section" data-scroll="" href="#entry__hara_data_map__dissoc_in"><h5><i>dissoc-in</i></h5></a><a class="section" data-scroll="" href="#entry__hara_data_map__into_if"><h5><i>into-if</i></h5></a><a class="section" data-scroll="" href="#entry__hara_data_map__merge_if"><h5><i>merge-if</i></h5></a><a class="section" data-scroll="" href="#entry__hara_data_map__merge_nil"><h5><i>merge-nil</i></h5></a><a class="section" data-scroll="" href="#entry__hara_data_map__retract_in"><h5><i>retract-in</i></h5></a><a class="section" data-scroll="" href="#entry__hara_data_map__select_keys_if"><h5><i>select-keys-if</i></h5></a><a class="section" data-scroll="" href="#entry__hara_data_map__transform_in"><h5><i>transform-in</i></h5></a><a class="section" data-scroll="" href="#entry__hara_data_map__unique"><h5><i>unique</i></h5></a><a class="section" data-scroll="" href="#entry__hara_data_map__update_in_if"><h5><i>update-in-if</i></h5></a></li><li><a class="chapter" data-scroll="" href="#data-seq"><h4>2 &nbsp; data.seq</h4></a></li><li><a class="chapter" data-scroll="" href="#data-nested"><h4>3 &nbsp; data.nested</h4></a><a class="section" data-scroll="" href="#entry__hara_data_nested__clean_nested"><h5><i>clean-nested</i></h5></a><a class="section" data-scroll="" href="#entry__hara_data_nested__dissoc_nested"><h5><i>dissoc-nested</i></h5></a><a class="section" data-scroll="" href="#entry__hara_data_nested__key_paths"><h5><i>key-paths</i></h5></a><a class="section" data-scroll="" href="#entry__hara_data_nested__keys_nested"><h5><i>keys-nested</i></h5></a><a class="section" data-scroll="" href="#entry__hara_data_nested__merge_nested"><h5><i>merge-nested</i></h5></a><a class="section" data-scroll="" href="#entry__hara_data_nested__merge_nil_nested"><h5><i>merge-nil-nested</i></h5></a><a class="section" data-scroll="" href="#entry__hara_data_nested__unique_nested"><h5><i>unique-nested</i></h5></a><a class="section" data-scroll="" href="#entry__hara_data_nested__update_keys_in"><h5><i>update-keys-in</i></h5></a><a class="section" data-scroll="" href="#entry__hara_data_nested__update_vals_in"><h5><i>update-vals-in</i></h5></a></li><li><a class="chapter" data-scroll="" href="#data-diff"><h4>4 &nbsp; data.diff</h4></a><a class="section" data-scroll="" href="#entry__hara_data_diff__diff"><h5><i>diff</i></h5></a><a class="section" data-scroll="" href="#entry__hara_data_diff__diff_changes"><h5><i>diff-changes</i></h5></a><a class="section" data-scroll="" href="#entry__hara_data_diff__diff_new"><h5><i>diff-new</i></h5></a><a class="section" data-scroll="" href="#entry__hara_data_diff__patch"><h5><i>patch</i></h5></a><a class="section" data-scroll="" href="#entry__hara_data_diff__unpatch"><h5><i>unpatch</i></h5></a></li><li><a class="chapter" data-scroll="" href="#data-combine"><h4>5 &nbsp; data.combine</h4></a><a class="section" data-scroll="" href="#entry__hara_data_combine__combine"><h5><i>combine</i></h5></a><a class="section" data-scroll="" href="#entry__hara_data_combine__combine_internal"><h5><i>combine-internal</i></h5></a><a class="section" data-scroll="" href="#entry__hara_data_combine__combine_select"><h5><i>combine-select</i></h5></a><a class="section" data-scroll="" href="#entry__hara_data_combine__combine_set"><h5><i>combine-set</i></h5></a><a class="section" data-scroll="" href="#entry__hara_data_combine__combine_value"><h5><i>combine-value</i></h5></a><a class="section" data-scroll="" href="#entry__hara_data_combine__decombine"><h5><i>decombine</i></h5></a></li><li><a class="chapter" data-scroll="" href="#data-complex"><h4>6 &nbsp; data.complex</h4></a><a class="section" data-scroll="" href="#entry__hara_data_complex__assocs"><h5><i>assocs</i></h5></a><a class="section" data-scroll="" href="#entry__hara_data_complex__assocs_in"><h5><i>assocs-in</i></h5></a><a class="section" data-scroll="" href="#entry__hara_data_complex__dissocs"><h5><i>dissocs</i></h5></a><a class="section" data-scroll="" href="#entry__hara_data_complex__dissocs_in"><h5><i>dissocs-in</i></h5></a><a class="section" data-scroll="" href="#entry__hara_data_complex__gets"><h5><i>gets</i></h5></a><a class="section" data-scroll="" href="#entry__hara_data_complex__gets_in"><h5><i>gets-in</i></h5></a><a class="section" data-scroll="" href="#entry__hara_data_complex__merges"><h5><i>merges</i></h5></a><a class="section" data-scroll="" href="#entry__hara_data_complex__merges_nested"><h5><i>merges-nested</i></h5></a><a class="section" data-scroll="" href="#entry__hara_data_complex__merges_nested_STAR_"><h5><i>merges-nested*</i></h5></a></li><li><a class="chapter" data-scroll="" href="#data-record"><h4>7 &nbsp; data.record</h4></a><a class="section" data-scroll="" href="#entry__hara_data_record__empty"><h5><i>empty</i></h5></a></li><li><a class="chapter" data-scroll="" href="#data-path"><h4>8 &nbsp; data.path</h4></a><a class="section" data-scroll="" href="#entry__hara_data_path__contains_ns_key_QMARK_"><h5><i>contains-ns-key?</i></h5></a><a class="section" data-scroll="" href="#entry__hara_data_path__flatten_keys"><h5><i>flatten-keys</i></h5></a><a class="section" data-scroll="" href="#entry__hara_data_path__flatten_keys_nested"><h5><i>flatten-keys-nested</i></h5></a><a class="section" data-scroll="" href="#entry__hara_data_path__group_by_set"><h5><i>group-by-set</i></h5></a><a class="section" data-scroll="" href="#entry__hara_data_path__group_keys"><h5><i>group-keys</i></h5></a><a class="section" data-scroll="" href="#entry__hara_data_path__list_ns_keys"><h5><i>list-ns-keys</i></h5></a><a class="section" data-scroll="" href="#entry__hara_data_path__nest_keys"><h5><i>nest-keys</i></h5></a><a class="section" data-scroll="" href="#entry__hara_data_path__pathify_keys_nested"><h5><i>pathify-keys-nested</i></h5></a><a class="section" data-scroll="" href="#entry__hara_data_path__treeify_keys"><h5><i>treeify-keys</i></h5></a><a class="section" data-scroll="" href="#entry__hara_data_path__treeify_keys_nested"><h5><i>treeify-keys-nested</i></h5></a><a class="section" data-scroll="" href="#entry__hara_data_path__unnest_keys"><h5><i>unnest-keys</i></h5></a></li>
+                </ul>
+              </nav>
+            </div>
+          </div>
+
+          <div class="toc">
+              <nav>
+                <ul>
+                  <li><a class="chapter" data-scroll="" href="#data-map"><h4>1 &nbsp; data.map</h4></a><a class="section" data-scroll="" href="#entry__hara_data_map__assoc_if"><h5><i>assoc-if</i></h5></a><a class="section" data-scroll="" href="#entry__hara_data_map__assoc_in_if"><h5><i>assoc-in-if</i></h5></a><a class="section" data-scroll="" href="#entry__hara_data_map__assoc_in_nil"><h5><i>assoc-in-nil</i></h5></a><a class="section" data-scroll="" href="#entry__hara_data_map__assoc_nil"><h5><i>assoc-nil</i></h5></a><a class="section" data-scroll="" href="#entry__hara_data_map__dissoc_in"><h5><i>dissoc-in</i></h5></a><a class="section" data-scroll="" href="#entry__hara_data_map__into_if"><h5><i>into-if</i></h5></a><a class="section" data-scroll="" href="#entry__hara_data_map__merge_if"><h5><i>merge-if</i></h5></a><a class="section" data-scroll="" href="#entry__hara_data_map__merge_nil"><h5><i>merge-nil</i></h5></a><a class="section" data-scroll="" href="#entry__hara_data_map__retract_in"><h5><i>retract-in</i></h5></a><a class="section" data-scroll="" href="#entry__hara_data_map__select_keys_if"><h5><i>select-keys-if</i></h5></a><a class="section" data-scroll="" href="#entry__hara_data_map__transform_in"><h5><i>transform-in</i></h5></a><a class="section" data-scroll="" href="#entry__hara_data_map__unique"><h5><i>unique</i></h5></a><a class="section" data-scroll="" href="#entry__hara_data_map__update_in_if"><h5><i>update-in-if</i></h5></a></li><li><a class="chapter" data-scroll="" href="#data-seq"><h4>2 &nbsp; data.seq</h4></a></li><li><a class="chapter" data-scroll="" href="#data-nested"><h4>3 &nbsp; data.nested</h4></a><a class="section" data-scroll="" href="#entry__hara_data_nested__clean_nested"><h5><i>clean-nested</i></h5></a><a class="section" data-scroll="" href="#entry__hara_data_nested__dissoc_nested"><h5><i>dissoc-nested</i></h5></a><a class="section" data-scroll="" href="#entry__hara_data_nested__key_paths"><h5><i>key-paths</i></h5></a><a class="section" data-scroll="" href="#entry__hara_data_nested__keys_nested"><h5><i>keys-nested</i></h5></a><a class="section" data-scroll="" href="#entry__hara_data_nested__merge_nested"><h5><i>merge-nested</i></h5></a><a class="section" data-scroll="" href="#entry__hara_data_nested__merge_nil_nested"><h5><i>merge-nil-nested</i></h5></a><a class="section" data-scroll="" href="#entry__hara_data_nested__unique_nested"><h5><i>unique-nested</i></h5></a><a class="section" data-scroll="" href="#entry__hara_data_nested__update_keys_in"><h5><i>update-keys-in</i></h5></a><a class="section" data-scroll="" href="#entry__hara_data_nested__update_vals_in"><h5><i>update-vals-in</i></h5></a></li><li><a class="chapter" data-scroll="" href="#data-diff"><h4>4 &nbsp; data.diff</h4></a><a class="section" data-scroll="" href="#entry__hara_data_diff__diff"><h5><i>diff</i></h5></a><a class="section" data-scroll="" href="#entry__hara_data_diff__diff_changes"><h5><i>diff-changes</i></h5></a><a class="section" data-scroll="" href="#entry__hara_data_diff__diff_new"><h5><i>diff-new</i></h5></a><a class="section" data-scroll="" href="#entry__hara_data_diff__patch"><h5><i>patch</i></h5></a><a class="section" data-scroll="" href="#entry__hara_data_diff__unpatch"><h5><i>unpatch</i></h5></a></li><li><a class="chapter" data-scroll="" href="#data-combine"><h4>5 &nbsp; data.combine</h4></a><a class="section" data-scroll="" href="#entry__hara_data_combine__combine"><h5><i>combine</i></h5></a><a class="section" data-scroll="" href="#entry__hara_data_combine__combine_internal"><h5><i>combine-internal</i></h5></a><a class="section" data-scroll="" href="#entry__hara_data_combine__combine_select"><h5><i>combine-select</i></h5></a><a class="section" data-scroll="" href="#entry__hara_data_combine__combine_set"><h5><i>combine-set</i></h5></a><a class="section" data-scroll="" href="#entry__hara_data_combine__combine_value"><h5><i>combine-value</i></h5></a><a class="section" data-scroll="" href="#entry__hara_data_combine__decombine"><h5><i>decombine</i></h5></a></li><li><a class="chapter" data-scroll="" href="#data-complex"><h4>6 &nbsp; data.complex</h4></a><a class="section" data-scroll="" href="#entry__hara_data_complex__assocs"><h5><i>assocs</i></h5></a><a class="section" data-scroll="" href="#entry__hara_data_complex__assocs_in"><h5><i>assocs-in</i></h5></a><a class="section" data-scroll="" href="#entry__hara_data_complex__dissocs"><h5><i>dissocs</i></h5></a><a class="section" data-scroll="" href="#entry__hara_data_complex__dissocs_in"><h5><i>dissocs-in</i></h5></a><a class="section" data-scroll="" href="#entry__hara_data_complex__gets"><h5><i>gets</i></h5></a><a class="section" data-scroll="" href="#entry__hara_data_complex__gets_in"><h5><i>gets-in</i></h5></a><a class="section" data-scroll="" href="#entry__hara_data_complex__merges"><h5><i>merges</i></h5></a><a class="section" data-scroll="" href="#entry__hara_data_complex__merges_nested"><h5><i>merges-nested</i></h5></a><a class="section" data-scroll="" href="#entry__hara_data_complex__merges_nested_STAR_"><h5><i>merges-nested*</i></h5></a></li><li><a class="chapter" data-scroll="" href="#data-record"><h4>7 &nbsp; data.record</h4></a><a class="section" data-scroll="" href="#entry__hara_data_record__empty"><h5><i>empty</i></h5></a></li><li><a class="chapter" data-scroll="" href="#data-path"><h4>8 &nbsp; data.path</h4></a><a class="section" data-scroll="" href="#entry__hara_data_path__contains_ns_key_QMARK_"><h5><i>contains-ns-key?</i></h5></a><a class="section" data-scroll="" href="#entry__hara_data_path__flatten_keys"><h5><i>flatten-keys</i></h5></a><a class="section" data-scroll="" href="#entry__hara_data_path__flatten_keys_nested"><h5><i>flatten-keys-nested</i></h5></a><a class="section" data-scroll="" href="#entry__hara_data_path__group_by_set"><h5><i>group-by-set</i></h5></a><a class="section" data-scroll="" href="#entry__hara_data_path__group_keys"><h5><i>group-keys</i></h5></a><a class="section" data-scroll="" href="#entry__hara_data_path__list_ns_keys"><h5><i>list-ns-keys</i></h5></a><a class="section" data-scroll="" href="#entry__hara_data_path__nest_keys"><h5><i>nest-keys</i></h5></a><a class="section" data-scroll="" href="#entry__hara_data_path__pathify_keys_nested"><h5><i>pathify-keys-nested</i></h5></a><a class="section" data-scroll="" href="#entry__hara_data_path__treeify_keys"><h5><i>treeify-keys</i></h5></a><a class="section" data-scroll="" href="#entry__hara_data_path__treeify_keys_nested"><h5><i>treeify-keys-nested</i></h5></a><a class="section" data-scroll="" href="#entry__hara_data_path__unnest_keys"><h5><i>unnest-keys</i></h5></a></li>
+                </ul>
+              </nav>
+          </div>
+          <div><p><strong>hara.data</strong> consists of utility functions that act on clojure hash-maps and map-like representations of data. The level of complexity needed for working with data increases as it becomes nested and then relational.</p></div><div><span id="data-map" name="data-map"></span><h2><b>1 &nbsp;&nbsp; data.map</b></h2></div><div><p>Add to <code>project.clj</code> dependencies:</p><pre><code>&#91;im.chit/hara.data.map &quot;2.4.5&quot;&#93;</code></pre><p><strong>hara.data.map</strong> contain functions for clojure maps</p></div><div class="api"><span id="entry__hara_data_map__"></span><hr /><div><ul><li><a data-scroll="" href="#entry__hara_data_map__assoc_if">assoc-if</a></li><li><a data-scroll="" href="#entry__hara_data_map__assoc_in_if">assoc-in-if</a></li><li><a data-scroll="" href="#entry__hara_data_map__assoc_in_nil">assoc-in-nil</a></li><li><a data-scroll="" href="#entry__hara_data_map__assoc_nil">assoc-nil</a></li><li><a data-scroll="" href="#entry__hara_data_map__dissoc_in">dissoc-in</a></li><li><a data-scroll="" href="#entry__hara_data_map__into_if">into-if</a></li><li><a data-scroll="" href="#entry__hara_data_map__merge_if">merge-if</a></li><li><a data-scroll="" href="#entry__hara_data_map__merge_nil">merge-nil</a></li><li><a data-scroll="" href="#entry__hara_data_map__retract_in">retract-in</a></li><li><a data-scroll="" href="#entry__hara_data_map__select_keys_if">select-keys-if</a></li><li><a data-scroll="" href="#entry__hara_data_map__transform_in">transform-in</a></li><li><a data-scroll="" href="#entry__hara_data_map__unique">unique</a></li><li><a data-scroll="" href="#entry__hara_data_map__update_in_if">update-in-if</a></li></ul><hr style="margin-bottom: 0" /><div><div class="entry"><span id="entry__hara_data_map__assoc_if"></span><div class="entry-description"><h4><b>assoc-if&nbsp<a data-scroll="" href="#entry__hara_data_map__">^</a></b></h4><p><i>assoc key/value pairs to the map only on non-nil values</i></p></div><div class="entry-option"><h6><a href="https://github.com/zcaudate/hara/blob/master/src/hara/data/map.clj#L47-L59" target="_blank">v&nbsp;2.1</a>&nbsp;&nbsp;args: <i class="args">[m k v] [m k v & more]</i>&nbsp;&nbsp;&nbsp;</h6><div><input class="source-toggle" id="entry__pre_hara_data_map__assoc_if" type="checkbox" /><label class="source-toggle" for="entry__pre_hara_data_map__assoc_if"></label><pre class="source"><code class="clojure">(defn assoc-if
+  ([m k v]
+     (if (not (nil? v)) (assoc m k v) m))
+  ([m k v & more]
+     (apply assoc-if (assoc-if m k v) more)))</code></pre></div></div><pre><h6><i><a href="https://github.com/zcaudate/hara/blob/master/test/hara/data/map_test.clj#L33-L39" target="_blank">link</a></i></h6><code class="clojure">(assoc-if {} :a 1)
+=> {:a 1}
 
 (assoc-if {} :a 1 :b nil)
-=&gt; {:a 1}</div></div><div><a name="api-hara-data-map--assoc-in-if"></a><h4>assoc-in-if <a href="#api-hara-data-map">&#9652;</a></h4><div hljs="hljs" language="clojure" no-escape="no-escape">&quot;assoc-in a nested key/value pair to a map only on non-nil values&quot;
-
-(assoc-in-if {} [:a :b] 1)
-=&gt; {:a {:b 1}}
+=> {:a 1}</code></pre></div><div class="entry"><span id="entry__hara_data_map__assoc_in_if"></span><div class="entry-description"><h4><b>assoc-in-if&nbsp<a data-scroll="" href="#entry__hara_data_map__">^</a></b></h4><p><i>assoc-in a nested key/value pair to a map only on non-nil values</i></p></div><div class="entry-option"><h6><a href="https://github.com/zcaudate/hara/blob/master/src/hara/data/map.clj#L61-L71" target="_blank">v&nbsp;2.1</a>&nbsp;&nbsp;args: <i class="args">[m arr v]</i>&nbsp;&nbsp;&nbsp;</h6><div><input class="source-toggle" id="entry__pre_hara_data_map__assoc_in_if" type="checkbox" /><label class="source-toggle" for="entry__pre_hara_data_map__assoc_in_if"></label><pre class="source"><code class="clojure">(defn assoc-in-if
+  [m arr v]
+  (if (not (nil? v)) (assoc-in m arr v) m))</code></pre></div></div><pre><h6><i><a href="https://github.com/zcaudate/hara/blob/master/test/hara/data/map_test.clj#L42-L48" target="_blank">link</a></i></h6><code class="clojure">(assoc-in-if {} [:a :b] 1)
+=> {:a {:b 1}}
 
 (assoc-in-if {} [:a :b] nil)
-=&gt; {}</div></div><div><a name="api-hara-data-map--assoc-in-nil"></a><h4>assoc-in-nil <a href="#api-hara-data-map">&#9652;</a></h4><div hljs="hljs" language="clojure" no-escape="no-escape">&quot;only assoc-in if the value in the original map is nil&quot;
-
-(assoc-in-nil {} [:a :b] 2)
-=&gt; {:a {:b 2}}
+=> {}</code></pre></div><div class="entry"><span id="entry__hara_data_map__assoc_in_nil"></span><div class="entry-description"><h4><b>assoc-in-nil&nbsp<a data-scroll="" href="#entry__hara_data_map__">^</a></b></h4><p><i>only assoc-in if the value in the original map is nil</i></p></div><div class="entry-option"><h6><a href="https://github.com/zcaudate/hara/blob/master/src/hara/data/map.clj#L181-L191" target="_blank">v&nbsp;2.1</a>&nbsp;&nbsp;args: <i class="args">[m ks v]</i>&nbsp;&nbsp;&nbsp;</h6><div><input class="source-toggle" id="entry__pre_hara_data_map__assoc_in_nil" type="checkbox" /><label class="source-toggle" for="entry__pre_hara_data_map__assoc_in_nil"></label><pre class="source"><code class="clojure">(defn assoc-in-nil
+  [m ks v]
+  (if (not (nil? (get-in m ks))) m (assoc-in m ks v)))</code></pre></div></div><pre><h6><i><a href="https://github.com/zcaudate/hara/blob/master/test/hara/data/map_test.clj#L110-L116" target="_blank">link</a></i></h6><code class="clojure">(assoc-in-nil {} [:a :b] 2)
+=> {:a {:b 2}}
 
 (assoc-in-nil {:a {:b 1}} [:a :b] 2)
-=&gt; {:a {:b 1}}</div></div><div><a name="api-hara-data-map--assoc-nil"></a><h4>assoc-nil <a href="#api-hara-data-map">&#9652;</a></h4><div hljs="hljs" language="clojure" no-escape="no-escape">&quot;only assoc if the value in the original map is nil&quot;
-
-(assoc-nil {:a 1} :b 2)
-=&gt; {:a 1 :b 2}
+=> {:a {:b 1}}</code></pre></div><div class="entry"><span id="entry__hara_data_map__assoc_nil"></span><div class="entry-description"><h4><b>assoc-nil&nbsp<a data-scroll="" href="#entry__hara_data_map__">^</a></b></h4><p><i>only assoc if the value in the original map is nil</i></p></div><div class="entry-option"><h6><a href="https://github.com/zcaudate/hara/blob/master/src/hara/data/map.clj#L167-L179" target="_blank">v&nbsp;2.1</a>&nbsp;&nbsp;args: <i class="args">[m k v] [m k v & more]</i>&nbsp;&nbsp;&nbsp;</h6><div><input class="source-toggle" id="entry__pre_hara_data_map__assoc_nil" type="checkbox" /><label class="source-toggle" for="entry__pre_hara_data_map__assoc_nil"></label><pre class="source"><code class="clojure">(defn assoc-nil
+  ([m k v]
+     (if (not (nil? (get m k))) m (assoc m k v)))
+  ([m k v & more]
+     (apply assoc-nil (assoc-nil m k v) more)))</code></pre></div></div><pre><h6><i><a href="https://github.com/zcaudate/hara/blob/master/test/hara/data/map_test.clj#L101-L107" target="_blank">link</a></i></h6><code class="clojure">(assoc-nil {:a 1} :b 2)
+=> {:a 1 :b 2}
 
 (assoc-nil {:a 1} :a 2 :b 2)
-=&gt; {:a 1 :b 2}</div></div><div><a name="api-hara-data-map--dissoc-in"></a><h4>dissoc-in <a href="#api-hara-data-map">&#9652;</a></h4><div hljs="hljs" language="clojure" no-escape="no-escape">&quot;disassociates keys from a nested map. Setting `keep` to `true` will
-not remove a empty map after dissoc&quot;
+=> {:a 1 :b 2}</code></pre></div><div class="entry"><span id="entry__hara_data_map__dissoc_in"></span><div class="entry-description"><h4><b>dissoc-in&nbsp<a data-scroll="" href="#entry__hara_data_map__">^</a></b></h4><p><i>disassociates keys from a nested map. Setting `keep` to `true` will
+  not remove a empty map after dissoc</i></p></div><div class="entry-option"><h6><a href="https://github.com/zcaudate/hara/blob/master/src/hara/data/map.clj#L3-L26" target="_blank">v&nbsp;2.1</a>&nbsp;&nbsp;args: <i class="args">[m [k & ks]] [m [k & ks] keep]</i>&nbsp;&nbsp;&nbsp;</h6><div><input class="source-toggle" id="entry__pre_hara_data_map__dissoc_in" type="checkbox" /><label class="source-toggle" for="entry__pre_hara_data_map__dissoc_in"></label><pre class="source"><code class="clojure">(defn dissoc-in
+  ([m [k & ks]]
+     (if-not ks
+       (dissoc m k)
+       (let [nm (dissoc-in (m k) ks)]
+         (cond (empty? nm) (dissoc m k)
+               :else (assoc m k nm)))))
 
-(dissoc-in {:a {:b 10 :c 20}} [:a :b])
-=&gt; {:a {:c 20}}
+  ([m [k & ks] keep]
+     (if-not ks
+       (dissoc m k)
+       (assoc m k (dissoc-in (m k) ks keep)))))</code></pre></div></div><pre><h6><i><a href="https://github.com/zcaudate/hara/blob/master/test/hara/data/map_test.clj#L7-L17" target="_blank">link</a></i></h6><code class="clojure">(dissoc-in {:a {:b 10 :c 20}} [:a :b])
+=> {:a {:c 20}}
 
 (dissoc-in {:a {:b 10}} [:a :b])
-=&gt; {}
+=> {}
 
 (dissoc-in {:a {:b 10}} [:a :b] true)
-=&gt; {:a {}}</div></div><div><a name="api-hara-data-map--into-if"></a><h4>into-if <a href="#api-hara-data-map">&#9652;</a></h4><div hljs="hljs" language="clojure" no-escape="no-escape">&quot;like into but filters nil values for both key/value pairs
-and sequences&quot;
-
-(into-if [] [1 nil 2 3])
-=&gt; [1 2 3]
+=> {:a {}}</code></pre></div><div class="entry"><span id="entry__hara_data_map__into_if"></span><div class="entry-description"><h4><b>into-if&nbsp<a data-scroll="" href="#entry__hara_data_map__">^</a></b></h4><p><i>like into but filters nil values for both key/value pairs
+  and sequences</i></p></div><div class="entry-option"><h6><a href="https://github.com/zcaudate/hara/blob/master/src/hara/data/map.clj#L112-L128" target="_blank">v&nbsp;2.1</a>&nbsp;&nbsp;args: <i class="args">[to from]</i>&nbsp;&nbsp;&nbsp;</h6><div><input class="source-toggle" id="entry__pre_hara_data_map__into_if" type="checkbox" /><label class="source-toggle" for="entry__pre_hara_data_map__into_if"></label><pre class="source"><code class="clojure">(defn into-if
+  [to from]
+  (reduce (fn [i e]
+            (if (or (and (coll? e) (not (nil? (second e))))
+                    (and (not (coll? e)) (not (nil? e))))
+              (conj i e)
+              i))
+          to from))</code></pre></div></div><pre><h6><i><a href="https://github.com/zcaudate/hara/blob/master/test/hara/data/map_test.clj#L73-L80" target="_blank">link</a></i></h6><code class="clojure">(into-if [] [1 nil 2 3])
+=> [1 2 3]
 
 (into-if {:a 1} {:b nil :c 2})
-=&gt; {:a 1 :c 2}</div></div><div><a name="api-hara-data-map--merge-if"></a><h4>merge-if <a href="#api-hara-data-map">&#9652;</a></h4><div hljs="hljs" language="clojure" no-escape="no-escape">&quot;merges key/value pairs into a single map only if the value exists&quot;
-
-(merge-if {:a nil :b 1})
-=&gt; {:b 1}
+=> {:a 1 :c 2}</code></pre></div><div class="entry"><span id="entry__hara_data_map__merge_if"></span><div class="entry-description"><h4><b>merge-if&nbsp<a data-scroll="" href="#entry__hara_data_map__">^</a></b></h4><p><i>merges key/value pairs into a single map only if the value exists</i></p></div><div class="entry-option"><h6><a href="https://github.com/zcaudate/hara/blob/master/src/hara/data/map.clj#L88-L110" target="_blank">v&nbsp;2.1</a>&nbsp;&nbsp;args: <i class="args">[] [m] [m1 m2] [m1 m2 & more]</i>&nbsp;&nbsp;&nbsp;</h6><div><input class="source-toggle" id="entry__pre_hara_data_map__merge_if" type="checkbox" /><label class="source-toggle" for="entry__pre_hara_data_map__merge_if"></label><pre class="source"><code class="clojure">(defn merge-if
+  ([] nil)
+  ([m]
+     (reduce (fn [i [k v]]
+               (if (not (nil? v)) (assoc i k v) i))
+             {} m))
+  ([m1 m2]
+     (reduce (fn [i [k v]]
+               (if (not (nil? v)) (assoc i k v) i))
+             (merge-if m1) m2))
+  ([m1 m2 & more]
+     (apply merge-if (merge-if m1 m2) more)))</code></pre></div></div><pre><h6><i><a href="https://github.com/zcaudate/hara/blob/master/test/hara/data/map_test.clj#L60-L69" target="_blank">link</a></i></h6><code class="clojure">(merge-if {:a nil :b 1})
+=> {:b 1}
 
 (merge-if {:a 1} {:b nil :c 2})
-=&gt; {:a 1 :c 2}
+=> {:a 1 :c 2}
 
 (merge-if {:a 1} {:b nil} {:c 2})
-=&gt; {:a 1 :c 2}</div></div><div><a name="api-hara-data-map--merge-nil"></a><h4>merge-nil <a href="#api-hara-data-map">&#9652;</a></h4><div hljs="hljs" language="clojure" no-escape="no-escape">&quot;only merge if the value in the original map is nil&quot;
-
-(merge-nil {:a 1} {:b 2})
-=&gt; {:a 1 :b 2}
+=> {:a 1 :c 2}</code></pre></div><div class="entry"><span id="entry__hara_data_map__merge_nil"></span><div class="entry-description"><h4><b>merge-nil&nbsp<a data-scroll="" href="#entry__hara_data_map__">^</a></b></h4><p><i>only merge if the value in the original map is nil</i></p></div><div class="entry-option"><h6><a href="https://github.com/zcaudate/hara/blob/master/src/hara/data/map.clj#L147-L165" target="_blank">v&nbsp;2.1</a>&nbsp;&nbsp;args: <i class="args">[] [m] [m1 m2] [m1 m2 & more]</i>&nbsp;&nbsp;&nbsp;</h6><div><input class="source-toggle" id="entry__pre_hara_data_map__merge_nil" type="checkbox" /><label class="source-toggle" for="entry__pre_hara_data_map__merge_nil"></label><pre class="source"><code class="clojure">(defn merge-nil
+  ([] nil)
+  ([m] m)
+  ([m1 m2]
+     (reduce (fn [i [k v]]
+               (if (not (nil? (get i k)))
+                 i
+                 (assoc i k v)))
+             m1 m2))
+  ([m1 m2 & more]
+     (apply merge-nil (merge-nil m1 m2) more)))</code></pre></div></div><pre><h6><i><a href="https://github.com/zcaudate/hara/blob/master/test/hara/data/map_test.clj#L92-L98" target="_blank">link</a></i></h6><code class="clojure">(merge-nil {:a 1} {:b 2})
+=> {:a 1 :b 2}
 
 (merge-nil {:a 1} {:a 2})
-=&gt; {:a 1}</div></div><div><a name="api-hara-data-map--select-keys-if"></a><h4>select-keys-if <a href="#api-hara-data-map">&#9652;</a></h4><div hljs="hljs" language="clojure" no-escape="no-escape">&quot;selects only the non-nil key/value pairs from a map&quot;
-
-(select-keys-if {:a 1 :b nil} [:a :b])
-=&gt; {:a 1}
+=> {:a 1}</code></pre></div><div class="entry"><span id="entry__hara_data_map__retract_in"></span><div class="entry-description"><h4><b>retract-in&nbsp<a data-scroll="" href="#entry__hara_data_map__">^</a></b></h4><p><i>reversed the changes by transform-in</i></p></div><div class="entry-option"><h6><a href="https://github.com/zcaudate/hara/blob/master/src/hara/data/map.clj#L203-L211" target="_blank">v&nbsp;2.1</a>&nbsp;&nbsp;args: <i class="args">[m rels]</i>&nbsp;&nbsp;&nbsp;</h6><div><input class="source-toggle" id="entry__pre_hara_data_map__retract_in" type="checkbox" /><label class="source-toggle" for="entry__pre_hara_data_map__retract_in"></label><pre class="source"><code class="clojure">(defn retract-in
+  [m rels]
+  (reduce (fn [out [to from]]
+            (let [v (get-in m to)]
+              (-> out
+                  (assoc-in-if from v)
+                  (dissoc-in to))))
+          m
+          (reverse rels)))</code></pre></div></div><pre><h6><i><a href="https://github.com/zcaudate/hara/blob/master/test/hara/data/map_test.clj#L126-L130" target="_blank">link</a></i></h6><code class="clojure">(retract-in {:b 2, :c {:d 1}}
+            {[:c :d] [:a]})
+=> {:a 1 :b 2}</code></pre></div><div class="entry"><span id="entry__hara_data_map__select_keys_if"></span><div class="entry-description"><h4><b>select-keys-if&nbsp<a data-scroll="" href="#entry__hara_data_map__">^</a></b></h4><p><i>selects only the non-nil key/value pairs from a map</i></p></div><div class="entry-option"><h6><a href="https://github.com/zcaudate/hara/blob/master/src/hara/data/map.clj#L130-L145" target="_blank">v&nbsp;2.1</a>&nbsp;&nbsp;args: <i class="args">[m ks]</i>&nbsp;&nbsp;&nbsp;</h6><div><input class="source-toggle" id="entry__pre_hara_data_map__select_keys_if" type="checkbox" /><label class="source-toggle" for="entry__pre_hara_data_map__select_keys_if"></label><pre class="source"><code class="clojure">(defn select-keys-if
+  [m ks]
+  (reduce (fn [i k]
+            (let [v (get m k)]
+              (if (not (nil? v))
+                (assoc i k v)
+                i)))
+          nil ks))</code></pre></div></div><pre><h6><i><a href="https://github.com/zcaudate/hara/blob/master/test/hara/data/map_test.clj#L83-L89" target="_blank">link</a></i></h6><code class="clojure">(select-keys-if {:a 1 :b nil} [:a :b])
+=> {:a 1}
 
 (select-keys-if {:a 1 :b nil :c 2} [:a :b :c])
-=&gt; {:a 1 :c 2}</div></div><div><a name="api-hara-data-map--unique"></a><h4>unique <a href="#api-hara-data-map">&#9652;</a></h4><div hljs="hljs" language="clojure" no-escape="no-escape">&quot;returns a map of all key/value pairs that differ from a second map&quot;
-
-(unique {:a 1} {:a 2})
-=&gt; {:a 1}
+=> {:a 1 :c 2}</code></pre></div><div class="entry"><span id="entry__hara_data_map__transform_in"></span><div class="entry-description"><h4><b>transform-in&nbsp<a data-scroll="" href="#entry__hara_data_map__">^</a></b></h4><p><i>moves values around in a map according to a table</i></p></div><div class="entry-option"><h6><a href="https://github.com/zcaudate/hara/blob/master/src/hara/data/map.clj#L193-L201" target="_blank">v&nbsp;2.1</a>&nbsp;&nbsp;args: <i class="args">[m rels]</i>&nbsp;&nbsp;&nbsp;</h6><div><input class="source-toggle" id="entry__pre_hara_data_map__transform_in" type="checkbox" /><label class="source-toggle" for="entry__pre_hara_data_map__transform_in"></label><pre class="source"><code class="clojure">(defn transform-in
+  [m rels]
+  (reduce (fn [out [to from]]
+            (let [v (get-in m from)]
+              (-> out
+                  (assoc-in-if to v)
+                  (dissoc-in from))))
+          m
+          rels))</code></pre></div></div><pre><h6><i><a href="https://github.com/zcaudate/hara/blob/master/test/hara/data/map_test.clj#L119-L123" target="_blank">link</a></i></h6><code class="clojure">(transform-in {:a 1 :b 2}
+              {[:c :d] [:a]})
+=> {:b 2, :c {:d 1}}</code></pre></div><div class="entry"><span id="entry__hara_data_map__unique"></span><div class="entry-description"><h4><b>unique&nbsp<a data-scroll="" href="#entry__hara_data_map__">^</a></b></h4><p><i>returns a map of all key/value pairs that differ from a second map</i></p></div><div class="entry-option"><h6><a href="https://github.com/zcaudate/hara/blob/master/src/hara/data/map.clj#L28-L45" target="_blank">v&nbsp;2.1</a>&nbsp;&nbsp;args: <i class="args">[m1 m2]</i>&nbsp;&nbsp;&nbsp;</h6><div><input class="source-toggle" id="entry__pre_hara_data_map__unique" type="checkbox" /><label class="source-toggle" for="entry__pre_hara_data_map__unique"></label><pre class="source"><code class="clojure">(defn unique
+  [m1 m2]
+  (reduce (fn [i [k v]]
+            (if (not= v (get m2 k))
+              (assoc i k v)
+              i))
+          nil m1))</code></pre></div></div><pre><h6><i><a href="https://github.com/zcaudate/hara/blob/master/test/hara/data/map_test.clj#L21-L30" target="_blank">link</a></i></h6><code class="clojure">(unique {:a 1} {:a 2})
+=> {:a 1}
 
 (unique {:a 1 :b 2} {:b 2})
-=&gt; {:a 1}
+=> {:a 1}
 
 (unique {:b 2} {:b 2 :a 1})
-=&gt; nil</div></div><div><a name="api-hara-data-map--update-in-if"></a><h4>update-in-if <a href="#api-hara-data-map">&#9652;</a></h4><div hljs="hljs" language="clojure" no-escape="no-escape">&quot;update-in a nested key/value pair only if the value exists&quot;
-
-(update-in-if {:a {:b 1}} [:a :b] inc)
-=&gt; {:a {:b 2}}
+=> nil</code></pre></div><div class="entry"><span id="entry__hara_data_map__update_in_if"></span><div class="entry-description"><h4><b>update-in-if&nbsp<a data-scroll="" href="#entry__hara_data_map__">^</a></b></h4><p><i>update-in a nested key/value pair only if the value exists</i></p></div><div class="entry-option"><h6><a href="https://github.com/zcaudate/hara/blob/master/src/hara/data/map.clj#L73-L86" target="_blank">v&nbsp;2.1</a>&nbsp;&nbsp;args: <i class="args">[m arr f & args]</i>&nbsp;&nbsp;&nbsp;</h6><div><input class="source-toggle" id="entry__pre_hara_data_map__update_in_if" type="checkbox" /><label class="source-toggle" for="entry__pre_hara_data_map__update_in_if"></label><pre class="source"><code class="clojure">(defn update-in-if
+  [m arr f & args]
+  (let [v (get-in m arr)]
+    (if (not (nil? v))
+      (assoc-in m arr (apply f v args))
+      m)))</code></pre></div></div><pre><h6><i><a href="https://github.com/zcaudate/hara/blob/master/test/hara/data/map_test.clj#L51-L57" target="_blank">link</a></i></h6><code class="clojure">(update-in-if {:a {:b 1}} [:a :b] inc)
+=> {:a {:b 2}}
 
 (update-in-if {} [:a :b] inc)
-=&gt; {}</div></div></div></div></div></section><section class="chapter" id="api---nested"><h2 class="chapter">3  &nbsp;&nbsp; API - nested</h2><div class="group"><div class="paragraph"><p><a href='https://github.com/zcaudate/hara/blob/master/src/hara/data/nested.clj'>hara.data.nested</a> contains functions for updating nested hashmaps.</p></div><div class="api"><hr /><div><a name="api-hara-data-nested"></a><h4><i>API</i></h4><a href="#api-hara-data-nested--clean-nested">clean-nested</a>&nbsp;&nbsp;<a href="#api-hara-data-nested--dissoc-nested">dissoc-nested</a>&nbsp;&nbsp;<a href="#api-hara-data-nested--key-paths">key-paths</a>&nbsp;&nbsp;<a href="#api-hara-data-nested--keys-nested">keys-nested</a>&nbsp;&nbsp;<a href="#api-hara-data-nested--merge-nested">merge-nested</a>&nbsp;&nbsp;<a href="#api-hara-data-nested--merge-nil-nested">merge-nil-nested</a>&nbsp;&nbsp;<a href="#api-hara-data-nested--unique-nested">unique-nested</a>&nbsp;&nbsp;<a href="#api-hara-data-nested--update-keys-in">update-keys-in</a>&nbsp;&nbsp;<a href="#api-hara-data-nested--update-vals-in">update-vals-in</a>&nbsp;&nbsp;</div><hr /><div><div><a name="api-hara-data-nested--clean-nested"></a><h4>clean-nested <a href="#api-hara-data-nested">&#9652;</a></h4><div hljs="hljs" language="clojure" no-escape="no-escape">&quot;Returns a associative with nils and empty hash-maps removed.&quot;
+=> {}</code></pre></div></div></div></div><div><span id="data-seq" name="data-seq"></span><h2><b>2 &nbsp;&nbsp; data.seq</b></h2></div><div><p>Add to <code>project.clj</code> dependencies:</p><pre><code>&#91;im.chit/hara.data.seq &quot;2.4.5&quot;&#93;</code></pre><p><strong>hara.data.seq</strong> contain functions for sequences and arrays</p></div><div class="api"><span id="entry__hara_data_seq__"></span><hr /><div><ul><li><a data-scroll="" href="#entry__hara_data_seq__positions">positions</a></li><li><a data-scroll="" href="#entry__hara_data_seq__remove_index">remove-index</a></li></ul><hr style="margin-bottom: 0" /><div><div class="entry"><span id="entry__hara_data_seq__positions"></span><div class="entry-description"><h4><b>positions&nbsp<a data-scroll="" href="#entry__hara_data_seq__">^</a></b></h4><p><i>find positions of elements matching the predicate</i></p></div><div class="entry-option"><h6><a href="https://github.com/zcaudate/hara/blob/master/src/hara/data/seq.clj#L3-L8" target="_blank">v&nbsp;2.2</a>&nbsp;&nbsp;args: <i class="args">[pred coll]</i>&nbsp;&nbsp;&nbsp;</h6><div><input class="source-toggle" id="entry__pre_hara_data_seq__positions" type="checkbox" /><label class="source-toggle" for="entry__pre_hara_data_seq__positions"></label><pre class="source"><code class="clojure">(defn positions
+  [pred coll]
+  (keep-indexed (fn [idx x]
+                  (when (pred x)
+                    idx))
+                coll))</code></pre></div></div><pre><h6><i><a href="https://github.com/zcaudate/hara/blob/master/test/hara/data/seq_test.clj#L6-L8" target="_blank">link</a></i></h6><code class="clojure">(positions even? [5 5 4 4 3 3 2 2])
+=> [2 3 6 7]</code></pre></div><div class="entry"><span id="entry__hara_data_seq__remove_index"></span><div class="entry-description"><h4><b>remove-index&nbsp<a data-scroll="" href="#entry__hara_data_seq__">^</a></b></h4><p><i>removes element at the specified index</i></p></div><div class="entry-option"><h6><a href="https://github.com/zcaudate/hara/blob/master/src/hara/data/seq.clj#L10-L18" target="_blank">v&nbsp;2.2</a>&nbsp;&nbsp;args: <i class="args">[coll i]</i>&nbsp;&nbsp;&nbsp;</h6><div><input class="source-toggle" id="entry__pre_hara_data_seq__remove_index" type="checkbox" /><label class="source-toggle" for="entry__pre_hara_data_seq__remove_index"></label><pre class="source"><code class="clojure">(defn remove-index
+  [coll i]
+  (cond (vector? coll)
+        (reduce conj
+                (subvec coll 0 i)
+                (subvec coll (inc i) (count coll)))
 
- (clean-nested {:a {:b {:c {}}}})
- =&gt; {}
+        :else
+        (keep-indexed #(if (not= %1 i) %2) coll)))</code></pre></div></div><pre><h6><i><a href="https://github.com/zcaudate/hara/blob/master/test/hara/data/seq_test.clj#L11-L13" target="_blank">link</a></i></h6><code class="clojure">(remove-index [:a :b :c :d] 2)
+=> [:a :b :d]</code></pre></div></div></div></div><div><span id="data-nested" name="data-nested"></span><h2><b>3 &nbsp;&nbsp; data.nested</b></h2></div><div><p>Add to <code>project.clj</code> dependencies:</p><pre><code>&#91;im.chit/hara.data.nested &quot;2.4.5&quot;&#93;</code></pre><p><strong>hara.data.nested</strong> contain functions for updating nested hashmaps.</p></div><div class="api"><span id="entry__hara_data_nested__"></span><hr /><div><ul><li><a data-scroll="" href="#entry__hara_data_nested__clean_nested">clean-nested</a></li><li><a data-scroll="" href="#entry__hara_data_nested__dissoc_nested">dissoc-nested</a></li><li><a data-scroll="" href="#entry__hara_data_nested__key_paths">key-paths</a></li><li><a data-scroll="" href="#entry__hara_data_nested__keys_nested">keys-nested</a></li><li><a data-scroll="" href="#entry__hara_data_nested__merge_nested">merge-nested</a></li><li><a data-scroll="" href="#entry__hara_data_nested__merge_nil_nested">merge-nil-nested</a></li><li><a data-scroll="" href="#entry__hara_data_nested__unique_nested">unique-nested</a></li><li><a data-scroll="" href="#entry__hara_data_nested__update_keys_in">update-keys-in</a></li><li><a data-scroll="" href="#entry__hara_data_nested__update_vals_in">update-vals-in</a></li></ul><hr style="margin-bottom: 0" /><div><div class="entry"><span id="entry__hara_data_nested__clean_nested"></span><div class="entry-description"><h4><b>clean-nested&nbsp<a data-scroll="" href="#entry__hara_data_nested__">^</a></b></h4><p><i>returns a associative with nils and empty hash-maps removed.</i></p></div><div class="entry-option"><h6><a href="https://github.com/zcaudate/hara/blob/master/src/hara/data/nested.clj#L216-L241" target="_blank">v&nbsp;2.1</a>&nbsp;&nbsp;args: <i class="args">[m] [m prchk]</i>&nbsp;&nbsp;&nbsp;</h6><div><input class="source-toggle" id="entry__pre_hara_data_nested__clean_nested" type="checkbox" /><label class="source-toggle" for="entry__pre_hara_data_nested__clean_nested"></label><pre class="source"><code class="clojure">(defn clean-nested
+  ([m] (clean-nested m (constantly false)))
+  ([m prchk]
+   (reduce-kv (fn [out k v]
+                (cond (or (nil? v)
+                          (suppress (expr/check-> m prchk)))
+                      out
+
+                      (hash-map? v)
+                      (let [subv (clean-nested v prchk)]
+                        (if (empty? subv)
+                          out
+                          (assoc out k subv)))
+
+                      :else
+                      (assoc out k v)))
+              {}
+              m)))</code></pre></div></div><pre><h6><i><a href="https://github.com/zcaudate/hara/blob/master/test/hara/data/nested_test.clj#L82-L88" target="_blank">link</a></i></h6><code class="clojure">(clean-nested {:a {:b {:c {}}}})
+ => {}
 
  (clean-nested {:a {:b {:c {} :d 1 :e nil}}})
- =&gt; {:a {:b {:d 1}}}</div></div><div><a name="api-hara-data-nested--dissoc-nested"></a><h4>dissoc-nested <a href="#api-hara-data-nested">&#9652;</a></h4><div hljs="hljs" language="clojure" no-escape="no-escape">&quot;Returns `m` without all nested keys in `ks`.&quot;
+ => {:a {:b {:d 1}}}</code></pre></div><div class="entry"><span id="entry__hara_data_nested__dissoc_nested"></span><div class="entry-description"><h4><b>dissoc-nested&nbsp<a data-scroll="" href="#entry__hara_data_nested__">^</a></b></h4><p><i>returns `m` without all nested keys in `ks`.</i></p></div><div class="entry-option"><h6><a href="https://github.com/zcaudate/hara/blob/master/src/hara/data/nested.clj#L165-L182" target="_blank">v&nbsp;2.1</a>&nbsp;&nbsp;args: <i class="args">[m ks]</i>&nbsp;&nbsp;&nbsp;</h6><div><input class="source-toggle" id="entry__pre_hara_data_nested__dissoc_nested" type="checkbox" /><label class="source-toggle" for="entry__pre_hara_data_nested__dissoc_nested"></label><pre class="source"><code class="clojure">(defn dissoc-nested
+  [m ks]
+  (let [ks (if (set? ks) ks (set ks))]
+    (reduce-kv (fn [out k v]
+                 (cond (get ks k)
+                       out
 
-(dissoc-nested {:a {:b 1 :c {:b 1}}} [:b])
-=&gt; {:a {:c {}}}</div></div><div><a name="api-hara-data-nested--key-paths"></a><h4>key-paths <a href="#api-hara-data-nested">&#9652;</a></h4><div hljs="hljs" language="clojure" no-escape="no-escape">&quot;The set of all paths in a map, governed by a max level of nesting&quot;
+                       (hash-map? v)
+                       (assoc out k (dissoc-nested v ks))
 
-(key-paths {:a {:b 1} :c {:d 1}})
-=&gt; (contains [[:c :d] [:a :b]] :in-any-order)
+                       :else (assoc out k v)))
+               {}
+               m)))</code></pre></div></div><pre><h6><i><a href="https://github.com/zcaudate/hara/blob/master/test/hara/data/nested_test.clj#L65-L68" target="_blank">link</a></i></h6><code class="clojure">(dissoc-nested {:a {:b 1 :c {:b 1}}} [:b])
+=> {:a {:c {}}}</code></pre></div><div class="entry"><span id="entry__hara_data_nested__key_paths"></span><div class="entry-description"><h4><b>key-paths&nbsp<a data-scroll="" href="#entry__hara_data_nested__">^</a></b></h4><p><i>the set of all paths in a map, governed by a max level of nesting</i></p></div><div class="entry-option"><h6><a href="https://github.com/zcaudate/hara/blob/master/src/hara/data/nested.clj#L20-L39" target="_blank">v&nbsp;2.1</a>&nbsp;&nbsp;args: <i class="args">[m] [m max] [m max arr]</i>&nbsp;&nbsp;&nbsp;</h6><div><input class="source-toggle" id="entry__pre_hara_data_nested__key_paths" type="checkbox" /><label class="source-toggle" for="entry__pre_hara_data_nested__key_paths"></label><pre class="source"><code class="clojure">(defn key-paths
+  ([m] (key-paths m -1 []))
+  ([m max] (key-paths m max []))
+  ([m max arr]
+   (reduce-kv (fn [out k v]
+                (cond (and (not= max 1)
+                           (hash-map? v))
+                      (vec (concat out (key-paths v (dec max) (conj arr k))))
+
+                      :else (conj out (conj arr k))))
+              []
+              m)))</code></pre></div></div><pre><h6><i><a href="https://github.com/zcaudate/hara/blob/master/test/hara/data/nested_test.clj#L13-L19" target="_blank">link</a></i></h6><code class="clojure">(key-paths {:a {:b 1} :c {:d 1}})
+=> (contains [[:c :d] [:a :b]] :in-any-order)
 
 (key-paths {:a {:b 1} :c {:d 1}} 1)
-=&gt; (contains [[:c] [:a]] :in-any-order)</div></div><div><a name="api-hara-data-nested--keys-nested"></a><h4>keys-nested <a href="#api-hara-data-nested">&#9652;</a></h4><div hljs="hljs" language="clojure" no-escape="no-escape">&quot;The set of all nested keys in a map&quot;
+=> (contains [[:c] [:a]] :in-any-order)</code></pre></div><div class="entry"><span id="entry__hara_data_nested__keys_nested"></span><div class="entry-description"><h4><b>keys-nested&nbsp<a data-scroll="" href="#entry__hara_data_nested__">^</a></b></h4><p><i>the set of all nested keys in a map</i></p></div><div class="entry-option"><h6><a href="https://github.com/zcaudate/hara/blob/master/src/hara/data/nested.clj#L7-L18" target="_blank">v&nbsp;2.1</a>&nbsp;&nbsp;args: <i class="args">[m]</i>&nbsp;&nbsp;&nbsp;</h6><div><input class="source-toggle" id="entry__pre_hara_data_nested__keys_nested" type="checkbox" /><label class="source-toggle" for="entry__pre_hara_data_nested__keys_nested"></label><pre class="source"><code class="clojure">(defn keys-nested
+  ([m] (reduce-kv (fn [s k v]
+                    (if (hash-map? v)
+                      (set/union (conj s k) (keys-nested v))
+                      (conj s k)))
+                  #{}
+                  m)))</code></pre></div></div><pre><h6><i><a href="https://github.com/zcaudate/hara/blob/master/test/hara/data/nested_test.clj#L7-L10" target="_blank">link</a></i></h6><code class="clojure">(keys-nested {:a {:b 1 :c {:d 1}}})
+=> #{:a :b :c :d}</code></pre></div><div class="entry"><span id="entry__hara_data_nested__merge_nested"></span><div class="entry-description"><h4><b>merge-nested&nbsp<a data-scroll="" href="#entry__hara_data_nested__">^</a></b></h4><p><i>merges nested values from left to right.</i></p></div><div class="entry-option"><h6><a href="https://github.com/zcaudate/hara/blob/master/src/hara/data/nested.clj#L108-L137" target="_blank">v&nbsp;2.1</a>&nbsp;&nbsp;args: <i class="args">[] [m] [m1 m2] [m1 m2 & ms]</i>&nbsp;&nbsp;&nbsp;</h6><div><input class="source-toggle" id="entry__pre_hara_data_nested__merge_nested" type="checkbox" /><label class="source-toggle" for="entry__pre_hara_data_nested__merge_nested"></label><pre class="source"><code class="clojure">(defn merge-nested
+  ([] nil)
+  ([m] m)
+  ([m1 m2]
+   (reduce-kv (fn [out k v]
+                (let [v1 (get out k)]
+                  (cond (nil? v1)
+                        (assoc out k v)
 
-(keys-nested {:a {:b 1 :c {:d 1}}})
-=&gt; #{:a :b :c :d}</div></div><div><a name="api-hara-data-nested--merge-nested"></a><h4>merge-nested <a href="#api-hara-data-nested">&#9652;</a></h4><div hljs="hljs" language="clojure" no-escape="no-escape">&quot;Merges nested values from left to right.&quot;
+                        (and (hash-map? v) (hash-map? v1))
+                        (assoc out k (merge-nested v1 v))
 
-(merge-nested {:a {:b {:c 3}}} {:a {:b 3}})
-=&gt; {:a {:b 3}}
+                        (= v v1)
+                        out
+
+                        :else
+                        (assoc out k v))))
+              m1
+              m2))
+  ([m1 m2 & ms]
+     (apply merge-nested (merge-nested m1 m2) ms)))</code></pre></div></div><pre><h6><i><a href="https://github.com/zcaudate/hara/blob/master/test/hara/data/nested_test.clj#L46-L53" target="_blank">link</a></i></h6><code class="clojure">(merge-nested {:a {:b {:c 3}}} {:a {:b 3}})
+=> {:a {:b 3}}
 
 (merge-nested {:a {:b {:c 1 :d 2}}}
               {:a {:b {:c 3}}})
-=&gt; {:a {:b {:c 3 :d 2}}}</div></div><div><a name="api-hara-data-nested--merge-nil-nested"></a><h4>merge-nil-nested <a href="#api-hara-data-nested">&#9652;</a></h4><div hljs="hljs" language="clojure" no-escape="no-escape">&quot;Merges nested values from left to right, provided the merged value does not exist&quot;
+=> {:a {:b {:c 3 :d 2}}}</code></pre></div><div class="entry"><span id="entry__hara_data_nested__merge_nil_nested"></span><div class="entry-description"><h4><b>merge-nil-nested&nbsp<a data-scroll="" href="#entry__hara_data_nested__">^</a></b></h4><p><i>merges nested values from left to right, provided the merged value does not exist</i></p></div><div class="entry-option"><h6><a href="https://github.com/zcaudate/hara/blob/master/src/hara/data/nested.clj#L139-L163" target="_blank">v&nbsp;2.1</a>&nbsp;&nbsp;args: <i class="args">[] [m] [m1 m2] [m1 m2 & more]</i>&nbsp;&nbsp;&nbsp;</h6><div><input class="source-toggle" id="entry__pre_hara_data_nested__merge_nil_nested" type="checkbox" /><label class="source-toggle" for="entry__pre_hara_data_nested__merge_nil_nested"></label><pre class="source"><code class="clojure">(defn merge-nil-nested
+  ([] nil)
+  ([m] m)
+  ([m1 m2]
+   (reduce-kv (fn [out k v]
+                (let [v1 (get out k)]
+                  (cond (nil? v1)
+                        (assoc out k v)
 
-(merge-nil-nested {:a {:b 2}} {:a {:c 2}})
-=&gt; {:a {:b 2 :c 2}}
+                        (and (hash-map? v) (hash-map? v1))
+                        (assoc out k (merge-nil-nested v1 v))
+
+                        :else
+                        out)))
+              m1 m2))
+  ([m1 m2 & more]
+     (apply merge-nil-nested (merge-nil-nested m1 m2) more)))</code></pre></div></div><pre><h6><i><a href="https://github.com/zcaudate/hara/blob/master/test/hara/data/nested_test.clj#L56-L62" target="_blank">link</a></i></h6><code class="clojure">(merge-nil-nested {:a {:b 2}} {:a {:c 2}})
+=> {:a {:b 2 :c 2}}
 
 (merge-nil-nested {:b {:c :old}} {:b {:c :new}})
-=&gt; {:b {:c :old}}</div></div><div><a name="api-hara-data-nested--unique-nested"></a><h4>unique-nested <a href="#api-hara-data-nested">&#9652;</a></h4><div hljs="hljs" language="clojure" no-escape="no-escape">&quot;All nested values in `m1` that are unique to those in `m2`.&quot;
+=> {:b {:c :old}}</code></pre></div><div class="entry"><span id="entry__hara_data_nested__unique_nested"></span><div class="entry-description"><h4><b>unique-nested&nbsp<a data-scroll="" href="#entry__hara_data_nested__">^</a></b></h4><p><i>all nested values in `m1` that are unique to those in `m2`.</i></p></div><div class="entry-option"><h6><a href="https://github.com/zcaudate/hara/blob/master/src/hara/data/nested.clj#L184-L214" target="_blank">v&nbsp;2.1</a>&nbsp;&nbsp;args: <i class="args">[m1 m2]</i>&nbsp;&nbsp;&nbsp;</h6><div><input class="source-toggle" id="entry__pre_hara_data_nested__unique_nested" type="checkbox" /><label class="source-toggle" for="entry__pre_hara_data_nested__unique_nested"></label><pre class="source"><code class="clojure">(defn unique-nested
+  [m1 m2]
+  (reduce-kv (fn [out k v]
+               (let [v2 (get m2 k)]
+                 (cond (nil? v2)
+                       (assoc out k v)
 
-(unique-nested {:a {:b 1}}
+                       (and (hash-map? v) (hash-map? v2))
+                       (let [subv (unique-nested v v2)]
+                         (if (empty? subv)
+                           out
+                           (assoc out k subv)))
+
+
+                       (= v v2)
+                       out
+
+                       :else
+                       (assoc out k v))))
+             {}
+             m1))</code></pre></div></div><pre><h6><i><a href="https://github.com/zcaudate/hara/blob/master/test/hara/data/nested_test.clj#L71-L79" target="_blank">link</a></i></h6><code class="clojure">(unique-nested {:a {:b 1}}
              {:a {:b 1 :c 1}})
-=&gt; {}
+=> {}
 
 (unique-nested {:a {:b 1 :c 1}}
              {:a {:b 1}})
-=&gt; {:a {:c 1}}</div></div><div><a name="api-hara-data-nested--update-keys-in"></a><h4>update-keys-in <a href="#api-hara-data-nested">&#9652;</a></h4><div hljs="hljs" language="clojure" no-escape="no-escape">&quot;updates all keys in a map with given function&quot;
+=> {:a {:c 1}}</code></pre></div><div class="entry"><span id="entry__hara_data_nested__update_keys_in"></span><div class="entry-description"><h4><b>update-keys-in&nbsp<a data-scroll="" href="#entry__hara_data_nested__">^</a></b></h4><p><i>updates all keys in a map with given function</i></p></div><div class="entry-option"><h6><a href="https://github.com/zcaudate/hara/blob/master/src/hara/data/nested.clj#L41-L69" target="_blank">v&nbsp;2.1</a>&nbsp;&nbsp;args: <i class="args">[m arr f & args]</i>&nbsp;&nbsp;&nbsp;</h6><div><input class="source-toggle" id="entry__pre_hara_data_nested__update_keys_in" type="checkbox" /><label class="source-toggle" for="entry__pre_hara_data_nested__update_keys_in"></label><pre class="source"><code class="clojure">(defn update-keys-in
+  [m arr f & args]
+  (let [key-fn (fn [m]
+                 (reduce-kv (fn [m k v]
+                              (assoc m (apply f k args) v))
+                            {}
+                            m))]
+    (cond (sequential? arr)
+          (if (empty? arr)
+            (key-fn m)
+            (update-in m arr key-fn))
 
-(update-keys-in {:x {[&quot;a&quot; &quot;b&quot;] 1 [&quot;c&quot; &quot;d&quot;] 2}} [:x] string/join)
-=&gt; {:x {&quot;ab&quot; 1 &quot;cd&quot; 2}}
+          (number? arr)
+          (if (= 1 arr)
+            (key-fn m)
+            (reduce (fn [out kpath]
+                      (update-in out kpath key-fn))
+                    m
+                    (key-paths m (dec arr))))
+
+          :else (throw (Exception. (str "`arr` has to be a seq or a number not " arr))))))</code></pre></div></div><pre><h6><i><a href="https://github.com/zcaudate/hara/blob/master/test/hara/data/nested_test.clj#L22-L28" target="_blank">link</a></i></h6><code class="clojure">(update-keys-in {:x {["a" "b"] 1 ["c" "d"] 2}} [:x] string/join)
+=> {:x {"ab" 1 "cd" 2}}
 
 (update-keys-in {:a {:c 1} :b {:d 2}} 2 name)
-=&gt; {:b {&quot;d&quot; 2}, :a {&quot;c&quot; 1}}</div></div><div><a name="api-hara-data-nested--update-vals-in"></a><h4>update-vals-in <a href="#api-hara-data-nested">&#9652;</a></h4><div hljs="hljs" language="clojure" no-escape="no-escape">&quot;updates all values in a map with given function&quot;
+=> {:b {"d" 2}, :a {"c" 1}}</code></pre></div><div class="entry"><span id="entry__hara_data_nested__update_vals_in"></span><div class="entry-description"><h4><b>update-vals-in&nbsp<a data-scroll="" href="#entry__hara_data_nested__">^</a></b></h4><p><i>updates all values in a map with given function</i></p></div><div class="entry-option"><h6><a href="https://github.com/zcaudate/hara/blob/master/src/hara/data/nested.clj#L71-L105" target="_blank">v&nbsp;2.1</a>&nbsp;&nbsp;args: <i class="args">[m arr f & args]</i>&nbsp;&nbsp;&nbsp;</h6><div><input class="source-toggle" id="entry__pre_hara_data_nested__update_vals_in" type="checkbox" /><label class="source-toggle" for="entry__pre_hara_data_nested__update_vals_in"></label><pre class="source"><code class="clojure">(defn update-vals-in
+  [m arr f & args]
+  (let [val-fn (fn [m]
+                 (reduce-kv (fn [m k v]
+                              (assoc m k (apply f v args)))
+                            {}
+                            m))]
+    (cond (sequential? arr)
+          (if (empty? arr)
+            (val-fn m)
+            (update-in m arr val-fn))
 
-(update-vals-in {:a 1 :b 2} [] inc)
-=&gt; {:a 2 :b 3}
+          (number? arr)
+          (if (= 1 arr)
+            (val-fn m)
+            (reduce (fn [out kpath]
+                      (update-in out kpath val-fn))
+                    m
+                    (key-paths m (dec arr))))
+
+          :else (throw (Exception. (str "`arr` has to be a seq or a number not " arr))))))</code></pre></div></div><pre><h6><i><a href="https://github.com/zcaudate/hara/blob/master/test/hara/data/nested_test.clj#L31-L43" target="_blank">link</a></i></h6><code class="clojure">(update-vals-in {:a 1 :b 2} [] inc)
+=> {:a 2 :b 3}
 
 (update-vals-in {:a {:c 1} :b 2} [:a] inc)
-=&gt; {:a {:c 2} :b 2}
+=> {:a {:c 2} :b 2}
 
 (update-vals-in {:a {:c 1} :b {:d 2}} 2 inc)
-=&gt; {:a {:c 2} :b {:d 3}}
+=> {:a {:c 2} :b {:d 3}}
 
 (update-vals-in {:a 1 :b 2} 1 inc)
-=&gt; {:a 2, :b 3}</div></div></div></div></div></section><section class="chapter" id="api---diff"><h2 class="chapter">4  &nbsp;&nbsp; API - diff</h2><div class="group"><div class="paragraph"><p><a href='https://github.com/zcaudate/hara/blob/master/src/hara/data/diff.clj'>hara.data.diff</a> contains functions for comparing maps, as well as functions to patch changes.</p></div><div class="api"><hr /><div><a name="api-hara-data-diff"></a><h4><i>API</i></h4><a href="#api-hara-data-diff--diff">diff</a>&nbsp;&nbsp;<a href="#api-hara-data-diff--diff-changes">diff-changes</a>&nbsp;&nbsp;<a href="#api-hara-data-diff--diff-new">diff-new</a>&nbsp;&nbsp;<a href="#api-hara-data-diff--patch">patch</a>&nbsp;&nbsp;<a href="#api-hara-data-diff--unpatch">unpatch</a>&nbsp;&nbsp;</div><hr /><div><div><a name="api-hara-data-diff--diff"></a><h4>diff <a href="#api-hara-data-diff">&#9652;</a></h4><div hljs="hljs" language="clojure" no-escape="no-escape">&quot;Finds the difference between two maps&quot;
-
-(diff {:a 2} {:a 1})
-=&gt; {:+ {} :- {} :&gt; {[:a] 2}}
+=> {:a 2, :b 3}</code></pre></div></div></div></div><div><span id="data-diff" name="data-diff"></span><h2><b>4 &nbsp;&nbsp; data.diff</b></h2></div><div><p>Add to <code>project.clj</code> dependencies:</p><pre><code>&#91;im.chit/hara.data.diff &quot;2.4.5&quot;&#93;</code></pre><p><strong>hara.data.diff</strong> contain functions for comparing maps, as well as functions to patch changes.</p></div><div class="api"><span id="entry__hara_data_diff__"></span><hr /><div><ul><li><a data-scroll="" href="#entry__hara_data_diff__diff">diff</a></li><li><a data-scroll="" href="#entry__hara_data_diff__diff_changes">diff-changes</a></li><li><a data-scroll="" href="#entry__hara_data_diff__diff_new">diff-new</a></li><li><a data-scroll="" href="#entry__hara_data_diff__patch">patch</a></li><li><a data-scroll="" href="#entry__hara_data_diff__unpatch">unpatch</a></li></ul><hr style="margin-bottom: 0" /><div><div class="entry"><span id="entry__hara_data_diff__diff"></span><div class="entry-description"><h4><b>diff&nbsp<a data-scroll="" href="#entry__hara_data_diff__">^</a></b></h4><p><i>finds the difference between two maps</i></p></div><div class="entry-option"><h6><a href="https://github.com/zcaudate/hara/blob/master/src/hara/data/diff.clj#L61-L80" target="_blank">v&nbsp;2.1</a>&nbsp;&nbsp;args: <i class="args">[m1 m2] [m1 m2 reversible]</i>&nbsp;&nbsp;&nbsp;</h6><div><input class="source-toggle" id="entry__pre_hara_data_diff__diff" type="checkbox" /><label class="source-toggle" for="entry__pre_hara_data_diff__diff"></label><pre class="source"><code class="clojure">(defn diff
+  ([m1 m2] (diff m1 m2 false))
+  ([m1 m2 reversible]
+   (let [diff (hash-map :+ (diff-new m1 m2)
+                        :- (diff-new m2 m1)
+                        :> (diff-changes m1 m2))]
+     (if reversible
+       (assoc diff :< (diff-changes m2 m1))
+       diff))))</code></pre></div></div><pre><h6><i><a href="https://github.com/zcaudate/hara/blob/master/test/hara/data/diff_test.clj#L53-L62" target="_blank">link</a></i></h6><code class="clojure">(diff {:a 2} {:a 1})
+=> {:+ {} :- {} :> {[:a] 2}}
 
 (diff {:a {:b 1 :d 3}} {:a {:c 2 :d 4}} true)
-=&gt; {:+ {[:a :b] 1}
+=> {:+ {[:a :b] 1}
     :- {[:a :c] 2}
-    :&gt; {[:a :d] 3}
-    :&lt; {[:a :d] 4}}</div></div><div><a name="api-hara-data-diff--diff-changes"></a><h4>diff-changes <a href="#api-hara-data-diff">&#9652;</a></h4><div hljs="hljs" language="clojure" no-escape="no-escape">&quot;Finds changes in nested maps, does not consider new elements&quot;
+    :> {[:a :d] 3}
+    :< {[:a :d] 4}}</code></pre></div><div class="entry"><span id="entry__hara_data_diff__diff_changes"></span><div class="entry-description"><h4><b>diff-changes&nbsp<a data-scroll="" href="#entry__hara_data_diff__">^</a></b></h4><p><i>finds changes in nested maps, does not consider new elements</i></p></div><div class="entry-option"><h6><a href="https://github.com/zcaudate/hara/blob/master/src/hara/data/diff.clj#L6-L33" target="_blank">v&nbsp;2.1</a>&nbsp;&nbsp;args: <i class="args">[m1 m2] [m1 m2 arr]</i>&nbsp;&nbsp;&nbsp;</h6><div><input class="source-toggle" id="entry__pre_hara_data_diff__diff_changes" type="checkbox" /><label class="source-toggle" for="entry__pre_hara_data_diff__diff_changes"></label><pre class="source"><code class="clojure">(defn diff-changes
+  ([m1 m2]
+   (diff-changes m1 m2 []))
+  ([m1 m2 arr]
+   (reduce-kv (fn [out k1 v1]
+                (if (contains? m2 k1)
+                  (let [v2 (get m2 k1)]
+                    (cond (and (hash-map? v1) (hash-map? v2))
+                          (merge out (diff-changes v1 v2 (conj arr k1)))
 
-(diff-changes {:a 2} {:a 1})
-=&gt; {[:a] 2}
+                          (= v1 v2)
+                          out
+
+                          :else
+                          (assoc out (conj arr k1) v1)))
+                  out))
+              {}
+              m1)))</code></pre></div></div><pre><h6><i><a href="https://github.com/zcaudate/hara/blob/master/test/hara/data/diff_test.clj#L6-L31" target="_blank">link</a></i></h6><code class="clojure">(diff-changes {:a 2} {:a 1})
+=> {[:a] 2}
 
 (diff-changes {:a {:b 1 :c 2}} {:a {:b 1 :c 3}})
-=&gt; {[:a :c] 2}</div></div><div><a name="api-hara-data-diff--diff-new"></a><h4>diff-new <a href="#api-hara-data-diff">&#9652;</a></h4><div hljs="hljs" language="clojure" no-escape="no-escape">&quot;Finds new elements in nested maps, does not consider changes&quot;
+=> {[:a :c] 2}</code></pre></div><div class="entry"><span id="entry__hara_data_diff__diff_new"></span><div class="entry-description"><h4><b>diff-new&nbsp<a data-scroll="" href="#entry__hara_data_diff__">^</a></b></h4><p><i>finds new elements in nested maps, does not consider changes</i></p></div><div class="entry-option"><h6><a href="https://github.com/zcaudate/hara/blob/master/src/hara/data/diff.clj#L35-L59" target="_blank">v&nbsp;2.1</a>&nbsp;&nbsp;args: <i class="args">[m1 m2] [m1 m2 arr]</i>&nbsp;&nbsp;&nbsp;</h6><div><input class="source-toggle" id="entry__pre_hara_data_diff__diff_new" type="checkbox" /><label class="source-toggle" for="entry__pre_hara_data_diff__diff_new"></label><pre class="source"><code class="clojure">(defn diff-new
+  ([m1 m2]
+   (diff-new m1 m2 []))
+  ([m1 m2 arr]
+   (reduce-kv (fn [out k1 v1]
+                 (let [v2 (get m2 k1)]
+                   (cond (and (hash-map? v1) (hash-map? v2))
+                         (merge out (diff-new v1 v2 (conj arr k1)))
 
-(diff-new {:a 2} {:a 1})
-=&gt; {}
+                         (not (contains? m2 k1))
+                         (assoc out (conj arr k1) v1)
+
+                         :else out)))
+              {}
+              m1)))</code></pre></div></div><pre><h6><i><a href="https://github.com/zcaudate/hara/blob/master/test/hara/data/diff_test.clj#L34-L50" target="_blank">link</a></i></h6><code class="clojure">(diff-new {:a 2} {:a 1})
+=> {}
 
 (diff-new {:a {:b 1}} {:a {:c 2}})
-=&gt; {[:a :b] 1}</div></div><div><a name="api-hara-data-diff--patch"></a><h4>patch <a href="#api-hara-data-diff">&#9652;</a></h4><div hljs="hljs" language="clojure" no-escape="no-escape">&quot;Use the diff to convert one map to another in the forward
-direction based upon changes between the two.&quot;
-
-(let [m1  {:a {:b 1 :d 3}}
+=> {[:a :b] 1}</code></pre></div><div class="entry"><span id="entry__hara_data_diff__patch"></span><div class="entry-description"><h4><b>patch&nbsp<a data-scroll="" href="#entry__hara_data_diff__">^</a></b></h4><p><i>use the diff to convert one map to another in the forward
+  direction based upon changes between the two.</i></p></div><div class="entry-option"><h6><a href="https://github.com/zcaudate/hara/blob/master/src/hara/data/diff.clj#L91-L110" target="_blank">v&nbsp;2.1</a>&nbsp;&nbsp;args: <i class="args">[m diff]</i>&nbsp;&nbsp;&nbsp;</h6><div><input class="source-toggle" id="entry__pre_hara_data_diff__patch" type="checkbox" /><label class="source-toggle" for="entry__pre_hara_data_diff__patch"></label><pre class="source"><code class="clojure">(defn patch
+  [m diff]
+  (->> m
+       (#(reduce-kv (fn [m arr v]
+                       (update-in m arr merge-or-replace v))
+                    %
+                    (merge (:+ diff) (:> diff))))
+       (#(reduce (fn [m arr]
+                   (map/dissoc-in m arr))
+                    %
+                    (keys (:- diff))))))</code></pre></div></div><pre><h6><i><a href="https://github.com/zcaudate/hara/blob/master/test/hara/data/diff_test.clj#L65-L72" target="_blank">link</a></i></h6><code class="clojure">(let [m1  {:a {:b 1 :d 3}}
       m2  {:a {:c 2 :d 4}}
       df  (diff m2 m1)]
   (patch m1 df))
-=&gt; {:a {:c 2 :d 4}}</div></div><div><a name="api-hara-data-diff--unpatch"></a><h4>unpatch <a href="#api-hara-data-diff">&#9652;</a></h4><div hljs="hljs" language="clojure" no-escape="no-escape">&quot;Use the diff to convert one map to another in the reverse
-direction based upon changes between the two.&quot;
-
-(let [m1  {:a {:b 1 :d 3}}
+=> {:a {:c 2 :d 4}}</code></pre></div><div class="entry"><span id="entry__hara_data_diff__unpatch"></span><div class="entry-description"><h4><b>unpatch&nbsp<a data-scroll="" href="#entry__hara_data_diff__">^</a></b></h4><p><i>use the diff to convert one map to another in the reverse
+  direction based upon changes between the two.</i></p></div><div class="entry-option"><h6><a href="https://github.com/zcaudate/hara/blob/master/src/hara/data/diff.clj#L112-L131" target="_blank">v&nbsp;2.1</a>&nbsp;&nbsp;args: <i class="args">[m diff]</i>&nbsp;&nbsp;&nbsp;</h6><div><input class="source-toggle" id="entry__pre_hara_data_diff__unpatch" type="checkbox" /><label class="source-toggle" for="entry__pre_hara_data_diff__unpatch"></label><pre class="source"><code class="clojure">(defn unpatch
+  [m diff]
+  (->> m
+       (#(reduce-kv (fn [m arr v]
+                       (update-in m arr merge-or-replace v))
+                    %
+                    (merge (:- diff) (:< diff))))
+       (#(reduce (fn [m arr]
+                   (map/dissoc-in m arr))
+                    %
+                    (keys (:+ diff))))))</code></pre></div></div><pre><h6><i><a href="https://github.com/zcaudate/hara/blob/master/test/hara/data/diff_test.clj#L76-L83" target="_blank">link</a></i></h6><code class="clojure">(let [m1  {:a {:b 1 :d 3}}
       m2  {:a {:c 2 :d 4}}
       df  (diff m2 m1 true)]
   (unpatch m2 df))
-=&gt; {:a {:b 1 :d 3}}</div></div></div></div></div></section><section class="chapter" id="api---combine"><h2 class="chapter">5  &nbsp;&nbsp; API - combine</h2><div class="group"><div class="paragraph"><p><a href='https://github.com/zcaudate/hara/blob/master/src/hara/data/combine.clj'>hara.data.combine</a> contains functions for working with sets of data.</p></div><div class="api"><hr /><div><a name="api-hara-data-combine"></a><h4><i>API</i></h4><a href="#api-hara-data-combine--combine">combine</a>&nbsp;&nbsp;<a href="#api-hara-data-combine--combine-internal">combine-internal</a>&nbsp;&nbsp;<a href="#api-hara-data-combine--combine-select">combine-select</a>&nbsp;&nbsp;<a href="#api-hara-data-combine--combine-set">combine-set</a>&nbsp;&nbsp;<a href="#api-hara-data-combine--combine-value">combine-value</a>&nbsp;&nbsp;<a href="#api-hara-data-combine--decombine">decombine</a>&nbsp;&nbsp;</div><hr /><div><div><a name="api-hara-data-combine--combine"></a><h4>combine <a href="#api-hara-data-combine">&#9652;</a></h4><div hljs="hljs" language="clojure" no-escape="no-escape">&quot;takes `v1` and `v2`, which can be either
-values or sets of values and merges them into a new set.&quot;
+=> {:a {:b 1 :d 3}}</code></pre></div></div></div></div><div><span id="data-combine" name="data-combine"></span><h2><b>5 &nbsp;&nbsp; data.combine</b></h2></div><div><p>Add to <code>project.clj</code> dependencies:</p><pre><code>&#91;im.chit/hara.data.combine &quot;2.4.5&quot;&#93;</code></pre><p><strong>hara.data.combine</strong> contains functions for working with sets of data.</p></div><div class="api"><span id="entry__hara_data_combine__"></span><hr /><div><ul><li><a data-scroll="" href="#entry__hara_data_combine__combine">combine</a></li><li><a data-scroll="" href="#entry__hara_data_combine__combine_internal">combine-internal</a></li><li><a data-scroll="" href="#entry__hara_data_combine__combine_select">combine-select</a></li><li><a data-scroll="" href="#entry__hara_data_combine__combine_set">combine-set</a></li><li><a data-scroll="" href="#entry__hara_data_combine__combine_value">combine-value</a></li><li><a data-scroll="" href="#entry__hara_data_combine__decombine">decombine</a></li></ul><hr style="margin-bottom: 0" /><div><div class="entry"><span id="entry__hara_data_combine__combine"></span><div class="entry-description"><h4><b>combine&nbsp<a data-scroll="" href="#entry__hara_data_combine__">^</a></b></h4><p><i>takes `v1` and `v2`, which can be either
+  values or sets of values and merges them into a new set.</i></p></div><div class="entry-option"><h6><a href="https://github.com/zcaudate/hara/blob/master/src/hara/data/combine.clj#L66-L114" target="_blank">v&nbsp;2.1</a>&nbsp;&nbsp;args: <i class="args">[] [m] [v1 v2] [v1 v2 sel func]</i>&nbsp;&nbsp;&nbsp;</h6><div><input class="source-toggle" id="entry__pre_hara_data_combine__combine" type="checkbox" /><label class="source-toggle" for="entry__pre_hara_data_combine__combine"></label><pre class="source"><code class="clojure">(defn combine
+  ([] nil)
+  ([m] m)
+  ([v1 v2]
+     (cond (nil? v2) v1
+           (nil? v1) v2
 
-(combine 1 2) =&gt; #{1 2}
+           (set? v1)
+           (cond (set? v2)
+                 (set/union v1 v2)
+                 :else (conj v1 v2))
 
-(combine #{1} 1) =&gt; #{1}
+           :else
+           (cond (set? v2)
+                 (conj v2 v1)
+
+                 (= v1 v2) v1
+                 :else #{v1 v2})))
+
+  ([v1 v2 sel func]
+     (-> (cond (nil? v2) v1
+               (nil? v1) v2
+               (set? v1)
+               (cond (set? v2)
+                     (combine-set v1 v2 sel func)
+
+                     :else (combine-value v1 v2 sel func))
+               :else
+               (cond (set? v2)
+                     (combine-value v2 v1 sel func)
+
+                     (eq-> v1 v2 sel)
+                     (func v1 v2)
+
+                     (= v1 v2) v1
+                     :else #{v1 v2}))
+         (combine-internal sel func))))</code></pre></div></div><pre><h6><i><a href="https://github.com/zcaudate/hara/blob/master/test/hara/data/combine_test.clj#L46-L56" target="_blank">link</a></i></h6><code class="clojure">(combine 1 2) => #{1 2}
+
+(combine #{1} 1) => #{1}
 
 (combine #{{:id 1} {:id 2}}
          #{{:id 1 :val 1} {:id 2 :val 2}}
          :id merge)
-=&gt; #{{:id 1 :val 1} {:id 2 :val 2}}</div></div><div><a name="api-hara-data-combine--combine-internal"></a><h4>combine-internal <a href="#api-hara-data-combine">&#9652;</a></h4><div hljs="hljs" language="clojure" no-escape="no-escape">&quot;Combines all elements in a single using sel and func&quot;
-
- (combine-internal #{{:id 1} {:id 2} {:id 1 :val 1} {:id 2 :val 2}}
+=> #{{:id 1 :val 1} {:id 2 :val 2}}</code></pre></div><div class="entry"><span id="entry__hara_data_combine__combine_internal"></span><div class="entry-description"><h4><b>combine-internal&nbsp<a data-scroll="" href="#entry__hara_data_combine__">^</a></b></h4><p><i>combines all elements in a single using sel and func</i></p></div><div class="entry-option"><h6><a href="https://github.com/zcaudate/hara/blob/master/src/hara/data/combine.clj#L55-L64" target="_blank">v&nbsp;2.1</a>&nbsp;&nbsp;args: <i class="args">[set sel rd]</i>&nbsp;&nbsp;&nbsp;</h6><div><input class="source-toggle" id="entry__pre_hara_data_combine__combine_internal" type="checkbox" /><label class="source-toggle" for="entry__pre_hara_data_combine__combine_internal"></label><pre class="source"><code class="clojure">(defn combine-internal
+  [set sel rd]
+  (if-not (set? set) set
+          (combine-set #{} set sel rd)))</code></pre></div></div><pre><h6><i><a href="https://github.com/zcaudate/hara/blob/master/test/hara/data/combine_test.clj#L39-L43" target="_blank">link</a></i></h6><code class="clojure">(combine-internal #{{:id 1} {:id 2} {:id 1 :val 1} {:id 2 :val 2}}
                     :id merge)
- =&gt; #{{:id 1 :val 1} {:id 2 :val 2}}</div></div><div><a name="api-hara-data-combine--combine-select"></a><h4>combine-select <a href="#api-hara-data-combine">&#9652;</a></h4><div hljs="hljs" language="clojure" no-escape="no-escape">&quot;selects an element out of the set that matches sel when it is applied&quot;
-
-(combine-select #{1 2 3} 2 identity)
-=&gt; 2
+ => #{{:id 1 :val 1} {:id 2 :val 2}}</code></pre></div><div class="entry"><span id="entry__hara_data_combine__combine_select"></span><div class="entry-description"><h4><b>combine-select&nbsp<a data-scroll="" href="#entry__hara_data_combine__">^</a></b></h4><p><i>selects an element out of the set that matches sel when it is applied</i></p></div><div class="entry-option"><h6><a href="https://github.com/zcaudate/hara/blob/master/src/hara/data/combine.clj#L7-L20" target="_blank">v&nbsp;2.1</a>&nbsp;&nbsp;args: <i class="args">[set val sel]</i>&nbsp;&nbsp;&nbsp;</h6><div><input class="source-toggle" id="entry__pre_hara_data_combine__combine_select" type="checkbox" /><label class="source-toggle" for="entry__pre_hara_data_combine__combine_select"></label><pre class="source"><code class="clojure">(defn combine-select
+  [set val sel]
+  (->> set
+       (filter (fn [v]
+                 (eq-> v val sel)))
+       first))</code></pre></div></div><pre><h6><i><a href="https://github.com/zcaudate/hara/blob/master/test/hara/data/combine_test.clj#L6-L12" target="_blank">link</a></i></h6><code class="clojure">(combine-select #{1 2 3} 2 identity)
+=> 2
 
 (combine-select #{{:id 1 :val 2} {:id 2 :val 2}} {:id 1 :val 1} :id)
-=&gt; {:id 1 :val 2}</div></div><div><a name="api-hara-data-combine--combine-set"></a><h4>combine-set <a href="#api-hara-data-combine">&#9652;</a></h4><div hljs="hljs" language="clojure" no-escape="no-escape">&quot;Returns the combined set of `s1` and `s2` using sel for item
-comparison and func as the combine function&quot;
-
-(combine-set #{{:id 1 :val 0} {:id 2 :a 0}}
+=> {:id 1 :val 2}</code></pre></div><div class="entry"><span id="entry__hara_data_combine__combine_set"></span><div class="entry-description"><h4><b>combine-set&nbsp<a data-scroll="" href="#entry__hara_data_combine__">^</a></b></h4><p><i>returns the combined set of `s1` and `s2` using sel for item
+  comparison and func as the combine function</i></p></div><div class="entry-option"><h6><a href="https://github.com/zcaudate/hara/blob/master/src/hara/data/combine.clj#L41-L53" target="_blank">v&nbsp;2.1</a>&nbsp;&nbsp;args: <i class="args">[s1 s2 sel func]</i>&nbsp;&nbsp;&nbsp;</h6><div><input class="source-toggle" id="entry__pre_hara_data_combine__combine_set" type="checkbox" /><label class="source-toggle" for="entry__pre_hara_data_combine__combine_set"></label><pre class="source"><code class="clojure">(defn combine-set
+  [s1 s2 sel func]
+  (reduce (fn [out v]
+            (combine-value out v sel func))
+   s1 s2))</code></pre></div></div><pre><h6><i><a href="https://github.com/zcaudate/hara/blob/master/test/hara/data/combine_test.clj#L30-L36" target="_blank">link</a></i></h6><code class="clojure">(combine-set #{{:id 1 :val 0} {:id 2 :a 0}}
               #{{:id 1 :val 1} {:id 2 :val 2}}
               :id merge)
-=&gt; #{{:id 1 :val 1} {:id 2 :val 2 :a 0}}</div></div><div><a name="api-hara-data-combine--combine-value"></a><h4>combine-value <a href="#api-hara-data-combine">&#9652;</a></h4><div hljs="hljs" language="clojure" no-escape="no-escape">&quot;returns a single set, sel is used for item comparison while func
-is used as the combine function&quot;
-
-(combine-value #{{:id 1 :a 1} {:id 2 :a 2}}
+=> #{{:id 1 :val 1} {:id 2 :val 2 :a 0}}</code></pre></div><div class="entry"><span id="entry__hara_data_combine__combine_value"></span><div class="entry-description"><h4><b>combine-value&nbsp<a data-scroll="" href="#entry__hara_data_combine__">^</a></b></h4><p><i>returns a single set, sel is used for item comparison while func
+  is used as the combine function</i></p></div><div class="entry-option"><h6><a href="https://github.com/zcaudate/hara/blob/master/src/hara/data/combine.clj#L22-L39" target="_blank">v&nbsp;2.1</a>&nbsp;&nbsp;args: <i class="args">[set val sel func]</i>&nbsp;&nbsp;&nbsp;</h6><div><input class="source-toggle" id="entry__pre_hara_data_combine__combine_value" type="checkbox" /><label class="source-toggle" for="entry__pre_hara_data_combine__combine_value"></label><pre class="source"><code class="clojure">(defn combine-value
+  [set val sel func]
+  (if-let [sv (combine-select set val sel)]
+    (conj (disj set sv) (func sv val))
+    (conj set val)))</code></pre></div></div><pre><h6><i><a href="https://github.com/zcaudate/hara/blob/master/test/hara/data/combine_test.clj#L16-L27" target="_blank">link</a></i></h6><code class="clojure">(combine-value #{{:id 1 :a 1} {:id 2 :a 2}}
                  {:id 3 :b 3}
                  :id merge)
-=&gt; #{{:id 1, :a 1} {:id 2, :a 2} {:id 3, :b 3}}
+=> #{{:id 1, :a 1} {:id 2, :a 2} {:id 3, :b 3}}
 
 (combine-value #{{:id 1 :a 1} {:id 2 :a 2}}
                  {:id 1 :b 3}
                  :id merge)
-=&gt; #{{:id 1 :a 1 :b 3} {:id 2 :a 2}}</div></div><div><a name="api-hara-data-combine--decombine"></a><h4>decombine <a href="#api-hara-data-combine">&#9652;</a></h4><div hljs="hljs" language="clojure" no-escape="no-escape">&quot;takes set or value `v` and returns a set with
-elements matching sel removed&quot;
+=> #{{:id 1 :a 1 :b 3} {:id 2 :a 2}}</code></pre></div><div class="entry"><span id="entry__hara_data_combine__decombine"></span><div class="entry-description"><h4><b>decombine&nbsp<a data-scroll="" href="#entry__hara_data_combine__">^</a></b></h4><p><i>takes set or value `v` and returns a set with
+  elements matching sel removed</i></p></div><div class="entry-option"><h6><a href="https://github.com/zcaudate/hara/blob/master/src/hara/data/combine.clj#L116-L141" target="_blank">v&nbsp;2.1</a>&nbsp;&nbsp;args: <i class="args">[v dv]</i>&nbsp;&nbsp;&nbsp;</h6><div><input class="source-toggle" id="entry__pre_hara_data_combine__decombine" type="checkbox" /><label class="source-toggle" for="entry__pre_hara_data_combine__decombine"></label><pre class="source"><code class="clojure">(defn decombine
+  [v dv]
+  (cond (set? v)
+        (let [res (cond (set? dv)
+                        (set/difference v dv)
 
-(decombine 1 1) =&gt; nil
+                        (ifn? dv)
+                        (set (filter (complement dv) v))
 
-(decombine 1 2) =&gt; 1
+                        :else (disj v dv))]
+          (if-not (empty? res) res))
+        :else
+        (if-not (check-> v dv) v)))</code></pre></div></div><pre><h6><i><a href="https://github.com/zcaudate/hara/blob/master/test/hara/data/combine_test.clj#L59-L70" target="_blank">link</a></i></h6><code class="clojure">(decombine 1 1) => nil
 
-(decombine #{1} 1) =&gt; nil
+(decombine 1 2) => 1
 
-(decombine #{1 2 3 4} #{1 2}) =&gt; #{3 4}
+(decombine #{1} 1) => nil
 
-(decombine #{1 2 3 4} even?) =&gt; #{1 3}</div></div></div></div></div></section><section class="chapter" id="api---complex"><h2 class="chapter">6  &nbsp;&nbsp; API - complex</h2><div class="group"><div class="paragraph"><p><a href='https://github.com/zcaudate/hara/blob/master/src/hara/data/complex.clj'>hara.data.complex</a> combine functions for working with relational data such as that coming out from datomic.</p></div><div class="api"><hr /><div><a name="api-hara-data-complex"></a><h4><i>API</i></h4><a href="#api-hara-data-complex--assocs">assocs</a>&nbsp;&nbsp;<a href="#api-hara-data-complex--assocs-in">assocs-in</a>&nbsp;&nbsp;<a href="#api-hara-data-complex--dissocs">dissocs</a>&nbsp;&nbsp;<a href="#api-hara-data-complex--dissocs-in">dissocs-in</a>&nbsp;&nbsp;<a href="#api-hara-data-complex--gets">gets</a>&nbsp;&nbsp;<a href="#api-hara-data-complex--gets-in">gets-in</a>&nbsp;&nbsp;<a href="#api-hara-data-complex--merges">merges</a>&nbsp;&nbsp;<a href="#api-hara-data-complex--merges-nested">merges-nested</a>&nbsp;&nbsp;<a href="#api-hara-data-complex--merges-nested*">merges-nested*</a>&nbsp;&nbsp;</div><hr /><div><div><a name="api-hara-data-complex--assocs"></a><h4>assocs <a href="#api-hara-data-complex">&#9652;</a></h4><div hljs="hljs" language="clojure" no-escape="no-escape">&quot;Similar to `assoc` but conditions of association is specified
-through `sel` (default: `identity`) and well as merging specified
-through `func` (default: `combine`).&quot;
-(assocs {:a #{1}} :a #{2 3 4})
-=&gt; {:a #{1 2 3 4}}
+(decombine #{1 2 3 4} #{1 2}) => #{3 4}
+
+(decombine #{1 2 3 4} even?) => #{1 3}</code></pre></div></div></div></div><div><span id="data-complex" name="data-complex"></span><h2><b>6 &nbsp;&nbsp; data.complex</b></h2></div><div><p>Add to <code>project.clj</code> dependencies:</p><pre><code>&#91;im.chit/hara.data.complex &quot;2.4.5&quot;&#93;</code></pre><p><strong>hara.data.complex</strong> contain functions for working with relational data such as that coming out from datomic.</p></div><div class="api"><span id="entry__hara_data_complex__"></span><hr /><div><ul><li><a data-scroll="" href="#entry__hara_data_complex__assocs">assocs</a></li><li><a data-scroll="" href="#entry__hara_data_complex__assocs_in">assocs-in</a></li><li><a data-scroll="" href="#entry__hara_data_complex__dissocs">dissocs</a></li><li><a data-scroll="" href="#entry__hara_data_complex__dissocs_in">dissocs-in</a></li><li><a data-scroll="" href="#entry__hara_data_complex__gets">gets</a></li><li><a data-scroll="" href="#entry__hara_data_complex__gets_in">gets-in</a></li><li><a data-scroll="" href="#entry__hara_data_complex__merges">merges</a></li><li><a data-scroll="" href="#entry__hara_data_complex__merges_nested">merges-nested</a></li><li><a data-scroll="" href="#entry__hara_data_complex__merges_nested_STAR_">merges-nested*</a></li></ul><hr style="margin-bottom: 0" /><div><div class="entry"><span id="entry__hara_data_complex__assocs"></span><div class="entry-description"><h4><b>assocs&nbsp<a data-scroll="" href="#entry__hara_data_complex__">^</a></b></h4><p><i>similar to `assoc` but conditions of association is specified
+  through `sel` (default: `identity`) and well as merging specified
+  through `func` (default: `combine`).</i></p></div><div class="entry-option"><h6><a href="https://github.com/zcaudate/hara/blob/master/src/hara/data/complex.clj#L8-L27" target="_blank">v&nbsp;2.1</a>&nbsp;&nbsp;args: <i class="args">[m k v] [m k v sel func]</i>&nbsp;&nbsp;&nbsp;</h6><div><input class="source-toggle" id="entry__pre_hara_data_complex__assocs" type="checkbox" /><label class="source-toggle" for="entry__pre_hara_data_complex__assocs"></label><pre class="source"><code class="clojure">(defn assocs
+  ([m k v] (assocs m k v identity combine))
+  ([m k v sel func]
+   (let [z (get m k)]
+     (cond (nil? z) (assoc m k v)
+           :else
+           (assoc m k (combine z v sel func))))))</code></pre></div></div><pre><h6><i><a href="https://github.com/zcaudate/hara/blob/master/test/hara/data/complex_test.clj#L7-L18" target="_blank">link</a></i></h6><code class="clojure">(assocs {:a #{1}} :a #{2 3 4})
+=> {:a #{1 2 3 4}}
 
 (assocs {:a {:id 1}} :a {:id 1 :val 1} :id merge)
-=&gt; {:a {:val 1, :id 1}}
+=> {:a {:val 1, :id 1}}
 
 (assocs {:a #{{:id 1 :val 2}
               {:id 1 :val 3}}} :a {:id 1 :val 4} :id merges)
-=&gt; {:a #{{:id 1 :val #{2 3 4}}}}</div></div><div><a name="api-hara-data-complex--assocs-in"></a><h4>assocs-in <a href="#api-hara-data-complex">&#9652;</a></h4><div hljs="hljs" language="clojure" no-escape="no-escape">&quot;Similar to assoc-in but can move through sets&quot;
+=> {:a #{{:id 1 :val #{2 3 4}}}}</code></pre></div><div class="entry"><span id="entry__hara_data_complex__assocs_in"></span><div class="entry-description"><h4><b>assocs-in&nbsp<a data-scroll="" href="#entry__hara_data_complex__">^</a></b></h4><p><i>similar to assoc-in but can move through sets</i></p></div><div class="entry-option"><h6><a href="https://github.com/zcaudate/hara/blob/master/src/hara/data/complex.clj#L198-L226" target="_blank">v&nbsp;2.1</a>&nbsp;&nbsp;args: <i class="args">[m all-ks v] [m [k & ks :as all-ks] v sel func]</i>&nbsp;&nbsp;&nbsp;</h6><div><input class="source-toggle" id="entry__pre_hara_data_complex__assocs_in" type="checkbox" /><label class="source-toggle" for="entry__pre_hara_data_complex__assocs_in"></label><pre class="source"><code class="clojure">(defn assocs-in
+  ([m all-ks v] (assocs-in m all-ks v identity combine))
+  ([m [k & ks :as all-ks] v sel func]
+     (cond (nil? ks)
+           (cond (vector? k) (error "cannot allow vector-form on last key " k)
+                 (or (nil? m) (hash-map? m)) (assocs m k v sel func)
+                 (nil? k) (combine m v sel func)
+                 :else (error m " is not an associative map"))
 
-(assocs-in {:a {:b 1}} [:a :b] 2)
-=&gt; {:a {:b #{1 2}}}
+           (or (nil? m) (hash-map? m))
+           (cond (vector? k) (assocs-in-filtered m all-ks v sel func)
+                 :else
+                 (let [val (get m k)]
+                   (cond (set? val)
+                         (assoc m k (set (map #(assocs-in % ks v sel func) val)))
+                         :else (assoc m k (assocs-in val ks v sel func)))))
+           :else (error m " is required to be a map"))))</code></pre></div></div><pre><h6><i><a href="https://github.com/zcaudate/hara/blob/master/test/hara/data/complex_test.clj#L91-L101" target="_blank">link</a></i></h6><code class="clojure">(assocs-in {:a {:b 1}} [:a :b] 2)
+=> {:a {:b #{1 2}}}
 
 (assocs-in {:a #{{:b 1}}} [:a :b] 2)
-=&gt; {:a #{{:b #{1 2}}}}
+=> {:a #{{:b #{1 2}}}}
 
 (assocs-in {:a #{{:b {:id 1}} {:b {:id 2}}}}
            [:a [:b [:id 1]] :c] 2)
-=&gt; {:a #{{:b {:id 1 :c 2}} {:b {:id 2}}}}</div></div><div><a name="api-hara-data-complex--dissocs"></a><h4>dissocs <a href="#api-hara-data-complex">&#9652;</a></h4><div hljs="hljs" language="clojure" no-escape="no-escape">&quot;Similar to `dissoc` but allows dissassociation of sets of values from a map.&quot;
-
-(dissocs {:a 1} :a)
-=&gt; {}
+=> {:a #{{:b {:id 1 :c 2}} {:b {:id 2}}}}</code></pre></div><div class="entry"><span id="entry__hara_data_complex__dissocs"></span><div class="entry-description"><h4><b>dissocs&nbsp<a data-scroll="" href="#entry__hara_data_complex__">^</a></b></h4><p><i>similar to `dissoc` but allows dissassociation of sets of values from a map.</i></p></div><div class="entry-option"><h6><a href="https://github.com/zcaudate/hara/blob/master/src/hara/data/complex.clj#L29-L50" target="_blank">v&nbsp;2.1</a>&nbsp;&nbsp;args: <i class="args">[m k]</i>&nbsp;&nbsp;&nbsp;</h6><div><input class="source-toggle" id="entry__pre_hara_data_complex__dissocs" type="checkbox" /><label class="source-toggle" for="entry__pre_hara_data_complex__dissocs"></label><pre class="source"><code class="clojure">(defn dissocs
+  [m k]
+  (cond (vector? k)
+        (let [[k v] k
+              z (get m k)
+              res (decombine z v)]
+          (if (nil? res)
+            (dissoc m k)
+            (assoc m k res)))
+        :else
+        (dissoc m k)))</code></pre></div></div><pre><h6><i><a href="https://github.com/zcaudate/hara/blob/master/test/hara/data/complex_test.clj#L21-L30" target="_blank">link</a></i></h6><code class="clojure">(dissocs {:a 1} :a)
+=> {}
 
 (dissocs {:a #{1 2}} [:a #{0 1}])
-=&gt; {:a #{2}}
+=> {:a #{2}}
 
 (dissocs {:a #{1 2}} [:a #{1 2}])
-=&gt; {}</div></div><div><a name="api-hara-data-complex--dissocs-in"></a><h4>dissocs-in <a href="#api-hara-data-complex">&#9652;</a></h4><div hljs="hljs" language="clojure" no-escape="no-escape">&quot;Similiar to `dissoc-in` but can move through sets.&quot;
+=> {}</code></pre></div><div class="entry"><span id="entry__hara_data_complex__dissocs_in"></span><div class="entry-description"><h4><b>dissocs-in&nbsp<a data-scroll="" href="#entry__hara_data_complex__">^</a></b></h4><p><i>similiar to `dissoc-in` but can move through sets.</i></p></div><div class="entry-option"><h6><a href="https://github.com/zcaudate/hara/blob/master/src/hara/data/complex.clj#L248-L269" target="_blank">v&nbsp;2.1</a>&nbsp;&nbsp;args: <i class="args">[m [k & ks :as all-ks]]</i>&nbsp;&nbsp;&nbsp;</h6><div><input class="source-toggle" id="entry__pre_hara_data_complex__dissocs_in" type="checkbox" /><label class="source-toggle" for="entry__pre_hara_data_complex__dissocs_in"></label><pre class="source"><code class="clojure">(defn dissocs-in
+  [m [k & ks :as all-ks]]
+  (cond (nil? ks) (dissocs m k)
 
- (dissocs-in {:a #{{:b 1 :c 1} {:b 2 :c 2}}}
+        (vector? k) (dissocs-in-filtered m all-ks)
+
+        :else
+        (let [val (get m k)]
+          (cond (set? val)
+                (assoc m k (set (map #(dissocs-in % ks) val)))
+                :else (assoc m k (dissocs-in m ks))))))</code></pre></div></div><pre><h6><i><a href="https://github.com/zcaudate/hara/blob/master/test/hara/data/complex_test.clj#L104-L113" target="_blank">link</a></i></h6><code class="clojure">(dissocs-in {:a #{{:b 1 :c 1} {:b 2 :c 2}}}
               [:a :b])
- =&gt; {:a #{{:c 1} {:c 2}}}
+ => {:a #{{:c 1} {:c 2}}}
 
  (dissocs-in {:a #{{:b #{1 2 3} :c 1}
                    {:b #{1 2 3} :c 2}}}
              [[:a [:c 1]] [:b 1]])
- =&gt; {:a #{{:b #{2 3} :c 1} {:b #{1 2 3} :c 2}}}</div></div><div><a name="api-hara-data-complex--gets"></a><h4>gets <a href="#api-hara-data-complex">&#9652;</a></h4><div hljs="hljs" language="clojure" no-escape="no-escape">&quot;Returns the associated values either specified by a key or a key and predicate pair.&quot;
+ => {:a #{{:b #{2 3} :c 1} {:b #{1 2 3} :c 2}}}</code></pre></div><div class="entry"><span id="entry__hara_data_complex__gets"></span><div class="entry-description"><h4><b>gets&nbsp<a data-scroll="" href="#entry__hara_data_complex__">^</a></b></h4><p><i>returns the associated values either specified by a key or a key and predicate pair.</i></p></div><div class="entry-option"><h6><a href="https://github.com/zcaudate/hara/blob/master/src/hara/data/complex.clj#L52-L67" target="_blank">v&nbsp;2.1</a>&nbsp;&nbsp;args: <i class="args">[m k]</i>&nbsp;&nbsp;&nbsp;</h6><div><input class="source-toggle" id="entry__pre_hara_data_complex__gets" type="checkbox" /><label class="source-toggle" for="entry__pre_hara_data_complex__gets"></label><pre class="source"><code class="clojure">(defn gets
+  [m k]
+  (if-not (vector? k)
+    (get m k)
+    (let [[k prchk] k
+          val (get m k)]
+      (if-not (set? val) val
+              (-> (filter #(check?-> % prchk) val) set)))))</code></pre></div></div><pre><h6><i><a href="https://github.com/zcaudate/hara/blob/master/test/hara/data/complex_test.clj#L33-L39" target="_blank">link</a></i></h6><code class="clojure">(gets {:a 1} :a) => 1
 
-(gets {:a 1} :a) =&gt; 1
+(gets {:a #{0 1}} [:a zero?]) => #{0}
 
-(gets {:a #{0 1}} [:a zero?]) =&gt; #{0}
+(gets {:a #{{:b 1} {}}} [:a :b]) => #{{:b 1}}</code></pre></div><div class="entry"><span id="entry__hara_data_complex__gets_in"></span><div class="entry-description"><h4><b>gets-in&nbsp<a data-scroll="" href="#entry__hara_data_complex__">^</a></b></h4><p><i>similar in style to `get-in` with operations on sets. returns a set of values.</i></p></div><div class="entry-option"><h6><a href="https://github.com/zcaudate/hara/blob/master/src/hara/data/complex.clj#L164-L174" target="_blank">v&nbsp;2.1</a>&nbsp;&nbsp;args: <i class="args">[m ks]</i>&nbsp;&nbsp;&nbsp;</h6><div><input class="source-toggle" id="entry__pre_hara_data_complex__gets_in" type="checkbox" /><label class="source-toggle" for="entry__pre_hara_data_complex__gets_in"></label><pre class="source"><code class="clojure">(defn gets-in
+  [m ks]
+  (-> (gets-in-loop m ks) set (disj nil)))</code></pre></div></div><pre><h6><i><a href="https://github.com/zcaudate/hara/blob/master/test/hara/data/complex_test.clj#L82-L88" target="_blank">link</a></i></h6><code class="clojure">(gets-in {:a 1} [:a]) => #{1}
 
-(gets {:a #{{:b 1} {}}} [:a :b]) =&gt; #{{:b 1}}</div></div><div><a name="api-hara-data-complex--gets-in"></a><h4>gets-in <a href="#api-hara-data-complex">&#9652;</a></h4><div hljs="hljs" language="clojure" no-escape="no-escape">&quot;Similar in style to `get-in` with operations on sets. returns a set of values.&quot;
+(gets-in {:a 1} [:b]) => #{}
 
-(gets-in {:a 1} [:a]) =&gt; #{1}
-
-(gets-in {:a 1} [:b]) =&gt; #{}
-
-(gets-in {:a #{{:b 1} {:b 2}}} [:a :b]) =&gt; #{1 2}</div></div><div><a name="api-hara-data-complex--merges"></a><h4>merges <a href="#api-hara-data-complex">&#9652;</a></h4><div hljs="hljs" language="clojure" no-escape="no-escape">&quot;Like `merge` but works across sets and will also
-combine duplicate key/value pairs together into sets of values.&quot;
-
- (merges {:a 1} {:a 2})
- =&gt; {:a #{1 2}}
+(gets-in {:a #{{:b 1} {:b 2}}} [:a :b]) => #{1 2}</code></pre></div><div class="entry"><span id="entry__hara_data_complex__merges"></span><div class="entry-description"><h4><b>merges&nbsp<a data-scroll="" href="#entry__hara_data_complex__">^</a></b></h4><p><i>like `merge` but works across sets and will also
+   combine duplicate key/value pairs together into sets of values.</i></p></div><div class="entry-option"><h6><a href="https://github.com/zcaudate/hara/blob/master/src/hara/data/complex.clj#L69-L87" target="_blank">v&nbsp;2.1</a>&nbsp;&nbsp;args: <i class="args">[m1 m2] [m1 m2 sel] [m1 m2 sel func]</i>&nbsp;&nbsp;&nbsp;</h6><div><input class="source-toggle" id="entry__pre_hara_data_complex__merges" type="checkbox" /><label class="source-toggle" for="entry__pre_hara_data_complex__merges"></label><pre class="source"><code class="clojure">(defn merges
+  ([m1 m2] (merges m1 m2 identity combine))
+  ([m1 m2 sel] (merges m1 m2 sel combine))
+  ([m1 m2 sel func]
+   (reduce-kv (fn [out k v]
+                (assoc out k (combine (get out k) v sel func)))
+              m1
+              m2)))</code></pre></div></div><pre><h6><i><a href="https://github.com/zcaudate/hara/blob/master/test/hara/data/complex_test.clj#L42-L51" target="_blank">link</a></i></h6><code class="clojure">(merges {:a 1} {:a 2})
+ => {:a #{1 2}}
 
  (merges {:a #{{:id 1 :val 1}}}
          {:a {:id 1 :val 2}}
          :id merges)
- =&gt; {:a #{{:id 1 :val #{1 2}}}}</div></div><div><a name="api-hara-data-complex--merges-nested"></a><h4>merges-nested <a href="#api-hara-data-complex">&#9652;</a></h4><div hljs="hljs" language="clojure" no-escape="no-escape">&quot;Like `merges` but works on nested maps&quot;
+ => {:a #{{:id 1 :val #{1 2}}}}</code></pre></div><div class="entry"><span id="entry__hara_data_complex__merges_nested"></span><div class="entry-description"><h4><b>merges-nested&nbsp<a data-scroll="" href="#entry__hara_data_complex__">^</a></b></h4><p><i>like `merges` but works on nested maps</i></p></div><div class="entry-option"><h6><a href="https://github.com/zcaudate/hara/blob/master/src/hara/data/complex.clj#L89-L115" target="_blank">v&nbsp;2.1</a>&nbsp;&nbsp;args: <i class="args">[] [m] [m1 m2] [m1 m2 sel] [m1 m2 sel func]</i>&nbsp;&nbsp;&nbsp;</h6><div><input class="source-toggle" id="entry__pre_hara_data_complex__merges_nested" type="checkbox" /><label class="source-toggle" for="entry__pre_hara_data_complex__merges_nested"></label><pre class="source"><code class="clojure">(defn merges-nested
+  ([] nil)
+  ([m] m)
+  ([m1 m2] (merges-nested m1 m2 identity combine))
+  ([m1 m2 sel] (merges-nested m1 m2 sel combine))
+  ([m1 m2 sel func]
+   (reduce-kv (fn [out k v]
+                (let [v1 (get out k)]
+                  (cond (not (and (hash-map? v1) (hash-map? v)))
+                        (assoc out k (combine v1 v sel func))
 
- (merges-nested {:a {:b 1}} {:a {:b 2}})
- =&gt; {:a {:b #{1 2}}}
+                        :else
+                        (assoc out k (merges-nested v1 v sel func)))))
+              m1
+              m2)))</code></pre></div></div><pre><h6><i><a href="https://github.com/zcaudate/hara/blob/master/test/hara/data/complex_test.clj#L54-L64" target="_blank">link</a></i></h6><code class="clojure">(merges-nested {:a {:b 1}} {:a {:b 2}})
+ => {:a {:b #{1 2}}}
 
  (merges-nested {:a #{{:foo #{{:bar #{{:baz 1}}}}}}}
             {:a #{{:foo #{{:bar #{{:baz 2}}}}}}}
             hash-map?
             merges-nested)
- =&gt; {:a #{{:foo #{{:bar #{{:baz 2}}}
-                  {:bar #{{:baz 1}}}}}}}</div></div><div><a name="api-hara-data-complex--merges-nested*"></a><h4>merges-nested* <a href="#api-hara-data-complex">&#9652;</a></h4><div hljs="hljs" language="clojure" no-escape="no-escape">&quot;Like `merges-nested but can recursively merge nested sets and values&quot;
+ => {:a #{{:foo #{{:bar #{{:baz 2}}}
+                  {:bar #{{:baz 1}}}}}}}</code></pre></div><div class="entry"><span id="entry__hara_data_complex__merges_nested_STAR_"></span><div class="entry-description"><h4><b>merges-nested*&nbsp<a data-scroll="" href="#entry__hara_data_complex__">^</a></b></h4><p><i>like `merges-nested but can recursively merge nested sets and values</i></p></div><div class="entry-option"><h6><a href="https://github.com/zcaudate/hara/blob/master/src/hara/data/complex.clj#L117-L148" target="_blank">v&nbsp;2.1</a>&nbsp;&nbsp;args: <i class="args">[] [m] [m1 m2] [m1 m2 sel] [m1 m2 sel func]</i>&nbsp;&nbsp;&nbsp;</h6><div><input class="source-toggle" id="entry__pre_hara_data_complex__merges_nested_STAR_" type="checkbox" /><label class="source-toggle" for="entry__pre_hara_data_complex__merges_nested_STAR_"></label><pre class="source"><code class="clojure">(defn merges-nested*
+  ([] nil)
+  ([m] m)
+  ([m1 m2] (merges-nested* m1 m2 hash-map? combine))
+  ([m1 m2 sel] (merges-nested* m1 m2 sel combine))
+  ([m1 m2 sel func]
+   (reduce-kv (fn [out k v]
+                (let [v1 (get out k)]
+                  (cond (and (hash-map? v1) (hash-map? v))
+                        (assoc out k (merges-nested* v1 v sel func))
 
-(merges-nested* {:a #{{:id 1 :foo
+                        (or (set? v1) (set? v))
+                        (assoc out k (combine v1 v sel #(merges-nested* %1 %2 sel func)))
+
+                        :else
+                        (assoc out k (func v1 v)))))
+              m1
+              m2)))</code></pre></div></div><pre><h6><i><a href="https://github.com/zcaudate/hara/blob/master/test/hara/data/complex_test.clj#L67-L79" target="_blank">link</a></i></h6><code class="clojure">(merges-nested* {:a #{{:id 1 :foo
                        #{{:id 2 :bar
                           #{{:id 3 :baz 1}}}}}}}
                 {:a {:id 1 :foo
@@ -412,116 +1142,175 @@ combine duplicate key/value pairs together into sets of values.&quot;
                       {:id 3 :baz 2}}}}
                 :id)
 
-=&gt; {:a #{{:id 1 :foo
+=> {:a #{{:id 1 :foo
           #{{:id 2 :bar
-             #{{:id 3 :baz #{1 2}}}}}}}}</div></div></div></div></div></section><section class="chapter" id="api---record"><h2 class="chapter">7  &nbsp;&nbsp; API - record</h2><div class="group"><div class="paragraph"><p><a href='https://github.com/zcaudate/hara/blob/master/src/hara/data/record.clj'>hara.data.record</a> contains functions for working with clojure records</p></div><div class="api"><hr /><div><a name="api-hara-data-record"></a><h4><i>API</i></h4><a href="#api-hara-data-record--empty-record">empty-record</a>&nbsp;&nbsp;</div><hr /><div><div><a name="api-hara-data-record--empty-record"></a><h4>empty-record <a href="#api-hara-data-record">&#9652;</a></h4><div hljs="hljs" language="clojure" no-escape="no-escape">&quot;creates an empty record from an existing one&quot;
-
-(empty-record (Database. &quot;localhost&quot; 8080))
-=&gt; (just {:host nil :port nil})</div></div></div></div></div></section><section class="chapter" id="api---path"><h2 class="chapter">8  &nbsp;&nbsp; API - path</h2><div class="group"><div class="paragraph"><p><a href='https://github.com/zcaudate/hara/blob/master/src/hara/data/path.clj'>hara.data.path</a> concerns itself with the translation between data contained in a nested versus data contained in a single map with paths as keys.</p></div><div class="api"><hr /><div><a name="api-hara-data-path"></a><h4><i>API</i></h4><a href="#api-hara-data-path--contains-ns-key?">contains-ns-key?</a>&nbsp;&nbsp;<a href="#api-hara-data-path--flatten-keys">flatten-keys</a>&nbsp;&nbsp;<a href="#api-hara-data-path--flatten-keys-nested">flatten-keys-nested</a>&nbsp;&nbsp;<a href="#api-hara-data-path--group-by-set">group-by-set</a>&nbsp;&nbsp;<a href="#api-hara-data-path--group-keys">group-keys</a>&nbsp;&nbsp;<a href="#api-hara-data-path--list-ns-keys">list-ns-keys</a>&nbsp;&nbsp;<a href="#api-hara-data-path--nest-keys">nest-keys</a>&nbsp;&nbsp;<a href="#api-hara-data-path--treeify-keys">treeify-keys</a>&nbsp;&nbsp;<a href="#api-hara-data-path--treeify-keys-nested">treeify-keys-nested</a>&nbsp;&nbsp;<a href="#api-hara-data-path--unnest-keys">unnest-keys</a>&nbsp;&nbsp;</div><hr /><div><div><a name="api-hara-data-path--contains-ns-key?"></a><h4>contains-ns-key? <a href="#api-hara-data-path">&#9652;</a></h4><div hljs="hljs" language="clojure" no-escape="no-escape">&quot;Returns `true` if any key in map contains a namespace value&quot;
-
-(contains-ns-key? {:hello/a 1 :hello/b 2
+             #{{:id 3 :baz #{1 2}}}}}}}}</code></pre></div></div></div></div><div><span id="data-record" name="data-record"></span><h2><b>7 &nbsp;&nbsp; data.record</b></h2></div><div><p>Add to <code>project.clj</code> dependencies:</p><pre><code>&#91;im.chit/hara.data.record &quot;2.4.5&quot;&#93;</code></pre><p><strong>hara.data.record</strong> contain functions for working with clojure records</p></div><div class="api"><span id="entry__hara_data_record__"></span><hr /><div><ul><li><a data-scroll="" href="#entry__hara_data_record__empty">empty</a></li></ul><hr style="margin-bottom: 0" /><div><div class="entry"><span id="entry__hara_data_record__empty"></span><div class="entry-description"><h4><b>empty&nbsp<a data-scroll="" href="#entry__hara_data_record__">^</a></b></h4><p><i>creates an empty record from an existing one</i></p></div><div class="entry-option"><h6><a href="https://github.com/zcaudate/hara/blob/master/src/hara/data/record.clj#L4-L17" target="_blank">v&nbsp;2.1</a>&nbsp;&nbsp;args: <i class="args">[v]</i>&nbsp;&nbsp;&nbsp;</h6><div><input class="source-toggle" id="entry__pre_hara_data_record__empty" type="checkbox" /><label class="source-toggle" for="entry__pre_hara_data_record__empty"></label><pre class="source"><code class="clojure">(defn empty
+  [v]
+  (.invoke ^java.lang.reflect.Method
+           (.getMethod ^Class (type v) "create"
+                       (into-array Class [clojure.lang.IPersistentMap]))
+           nil
+           (object-array [{}])))</code></pre></div></div><pre><h6><i><a href="https://github.com/zcaudate/hara/blob/master/test/hara/data/record_test.clj#L6-L11" target="_blank">link</a></i></h6><code class="clojure">(defrecord Database [host port])
+  
+(record/empty (Database. "localhost" 8080))
+=> (just {:host nil :port nil})</code></pre></div></div></div></div><div><span id="data-path" name="data-path"></span><h2><b>8 &nbsp;&nbsp; data.path</b></h2></div><div><p>Add to <code>project.clj</code> dependencies:</p><pre><code>&#91;im.chit/hara.data.path &quot;2.4.5&quot;&#93;</code></pre><p><strong>hara.data.path</strong>concerns itself with the translation between data contained in a nested versus data contained in a single map with paths as keys.</p></div><div class="api"><span id="entry__hara_data_path__"></span><div><h2>hara.data.path</h2></div><hr /><div><ul><li><a data-scroll="" href="#entry__hara_data_path__contains_ns_key_QMARK_">contains-ns-key?</a></li><li><a data-scroll="" href="#entry__hara_data_path__flatten_keys">flatten-keys</a></li><li><a data-scroll="" href="#entry__hara_data_path__flatten_keys_nested">flatten-keys-nested</a></li><li><a data-scroll="" href="#entry__hara_data_path__group_by_set">group-by-set</a></li><li><a data-scroll="" href="#entry__hara_data_path__group_keys">group-keys</a></li><li><a data-scroll="" href="#entry__hara_data_path__list_ns_keys">list-ns-keys</a></li><li><a data-scroll="" href="#entry__hara_data_path__nest_keys">nest-keys</a></li><li><a data-scroll="" href="#entry__hara_data_path__pathify_keys_nested">pathify-keys-nested</a></li><li><a data-scroll="" href="#entry__hara_data_path__treeify_keys">treeify-keys</a></li><li><a data-scroll="" href="#entry__hara_data_path__treeify_keys_nested">treeify-keys-nested</a></li><li><a data-scroll="" href="#entry__hara_data_path__unnest_keys">unnest-keys</a></li></ul><hr style="margin-bottom: 0" /><div><div class="entry"><span id="entry__hara_data_path__contains_ns_key_QMARK_"></span><div class="entry-description"><h4><b>contains-ns-key?&nbsp<a data-scroll="" href="#entry__hara_data_path__">^</a></b></h4><p><i>returns `true` if any key in map contains a namespace value</i></p></div><div class="entry-option"><h6><a href="https://github.com/zcaudate/hara/blob/master/src/hara/data/path.clj#L19-L27" target="_blank">v&nbsp;2.1</a>&nbsp;&nbsp;args: <i class="args">[fm ns]</i>&nbsp;&nbsp;&nbsp;</h6><div><input class="source-toggle" id="entry__pre_hara_data_path__contains_ns_key_QMARK_" type="checkbox" /><label class="source-toggle" for="entry__pre_hara_data_path__contains_ns_key_QMARK_"></label><pre class="source"><code class="clojure">(defn contains-ns-key?
+  [fm ns]
+  (some #(path/path-ns? % ns) (keys fm)))</code></pre></div></div><pre><h6><i><a href="https://github.com/zcaudate/hara/blob/master/test/hara/data/path_test.clj#L13-L17" target="_blank">link</a></i></h6><code class="clojure">(contains-ns-key? {:hello/a 1 :hello/b 2
                    :there/a 3 :there/b 4} :hello)
-=&gt; true</div></div><div><a name="api-hara-data-path--flatten-keys"></a><h4>flatten-keys <a href="#api-hara-data-path">&#9652;</a></h4><div hljs="hljs" language="clojure" no-escape="no-escape">&quot;takes map `m` and flattens the first nested layer onto the root layer.&quot;
-
-(flatten-keys {:a {:b 2 :c 3} :e 4})
-=&gt; {:a/b 2 :a/c 3 :e 4}
+=> true</code></pre></div><div class="entry"><span id="entry__hara_data_path__flatten_keys"></span><div class="entry-description"><h4><b>flatten-keys&nbsp<a data-scroll="" href="#entry__hara_data_path__">^</a></b></h4><p><i>takes map `m` and flattens the first nested layer onto the root layer.</i></p></div><div class="entry-option"><h6><a href="https://github.com/zcaudate/hara/blob/master/src/hara/data/path.clj#L64-L85" target="_blank">v&nbsp;2.1</a>&nbsp;&nbsp;args: <i class="args">[m]</i>&nbsp;&nbsp;&nbsp;</h6><div><input class="source-toggle" id="entry__pre_hara_data_path__flatten_keys" type="checkbox" /><label class="source-toggle" for="entry__pre_hara_data_path__flatten_keys"></label><pre class="source"><code class="clojure">(defn flatten-keys
+  ([m]
+   (reduce-kv (fn [m k v]
+                (if (hash-map? v)
+                  (reduce-kv (fn [m sk sv]
+                               (assoc m (path/join [k sk]) sv))
+                             m
+                             v)
+                  (assoc m k v)))
+              {}
+              m)))</code></pre></div></div><pre><h6><i><a href="https://github.com/zcaudate/hara/blob/master/test/hara/data/path_test.clj#L39-L48" target="_blank">link</a></i></h6><code class="clojure">(flatten-keys {:a {:b 2 :c 3} :e 4})
+=> {:a/b 2 :a/c 3 :e 4}
 
 (flatten-keys {:a {:b {:c 3 :d 4}
                    :e {:f 5 :g 6}}
                :h {:i 7}
                :j 8})
-=&gt; {:a/b {:c 3 :d 4} :a/e {:f 5 :g 6} :h/i 7 :j 8}</div></div><div><a name="api-hara-data-path--flatten-keys-nested"></a><h4>flatten-keys-nested <a href="#api-hara-data-path">&#9652;</a></h4><div hljs="hljs" language="clojure" no-escape="no-escape">&quot;Returns a single associative map with all of the nested
-keys of `m` flattened. If `keep` is added, it preserves all the
-empty sets&quot;
+=> {:a/b {:c 3 :d 4} :a/e {:f 5 :g 6} :h/i 7 :j 8}</code></pre></div><div class="entry"><span id="entry__hara_data_path__flatten_keys_nested"></span><div class="entry-description"><h4><b>flatten-keys-nested&nbsp<a data-scroll="" href="#entry__hara_data_path__">^</a></b></h4><p><i>returns a single associative map with all of the nested
+   keys of `m` flattened. If `keep` is added, it preserves all the
+   empty sets</i></p></div><div class="entry-option"><h6><a href="https://github.com/zcaudate/hara/blob/master/src/hara/data/path.clj#L103-L122" target="_blank">v&nbsp;2.1</a>&nbsp;&nbsp;args: <i class="args">[m] [m max keep-empty]</i>&nbsp;&nbsp;&nbsp;</h6><div><input class="source-toggle" id="entry__pre_hara_data_path__flatten_keys_nested" type="checkbox" /><label class="source-toggle" for="entry__pre_hara_data_path__flatten_keys_nested"></label><pre class="source"><code class="clojure">(defn flatten-keys-nested
+  ([m] (flatten-keys-nested m -1 false))
+  ([m max keep-empty]
+   (-> (pathify-keys-nested m max keep-empty)
+       (nested/update-keys-in [] path/join))))</code></pre></div></div><pre><h6><i><a href="https://github.com/zcaudate/hara/blob/master/test/hara/data/path_test.clj#L51-L64" target="_blank">link</a></i></h6><code class="clojure">(flatten-keys-nested {"a" {"b" {"c" 3 "d" 4}
+                             "e" {"f" 5 "g" 6}}
+                        "h" {"i" {}}})
+=> {"a/b/c" 3 "a/b/d" 4 "a/e/f" 5 "a/e/g" 6}
 
-(flatten-keys-nested {&quot;a&quot; {&quot;b&quot; {&quot;c&quot; 3 &quot;d&quot; 4}
-                             &quot;e&quot; {&quot;f&quot; 5 &quot;g&quot; 6}}
-                        &quot;h&quot; {&quot;i&quot; {}}})
-=&gt; {&quot;a/b/c&quot; 3 &quot;a/b/d&quot; 4 &quot;a/e/f&quot; 5 &quot;a/e/g&quot; 6}
-
-(flatten-keys-nested {&quot;a&quot; {&quot;b&quot; {&quot;c&quot; 3 &quot;d&quot; 4}
-                             &quot;e&quot; {&quot;f&quot; 5 &quot;g&quot; 6}}
-                        &quot;h&quot; {&quot;i&quot; {}}}
+(flatten-keys-nested {"a" {"b" {"c" 3 "d" 4}
+                             "e" {"f" 5 "g" 6}}
+                        "h" {"i" {}}}
                      -1 true)
-=&gt; {&quot;a/b/c&quot; 3 &quot;a/b/d&quot; 4 &quot;a/e/f&quot; 5 &quot;a/e/g&quot; 6 &quot;h/i&quot; {}}</div></div><div><a name="api-hara-data-path--group-by-set"></a><h4>group-by-set <a href="#api-hara-data-path">&#9652;</a></h4><div hljs="hljs" language="clojure" no-escape="no-escape">&quot;Returns a map of the elements of coll keyed by the result of
-f on each element. The value at each key will be a set of the
-corresponding elements, in the order they appeared in coll.&quot;
-
-(group-by-set even? [1 2 3 4 5])
-=&gt; {false #{1 3 5}, true #{2 4}}</div></div><div><a name="api-hara-data-path--group-keys"></a><h4>group-keys <a href="#api-hara-data-path">&#9652;</a></h4><div hljs="hljs" language="clojure" no-escape="no-escape">&quot;Returns the set of keys in `fm` that has keyword namespace
-of `ns`&quot;
-(group-keys {:hello/a 1 :hello/b 2
+=> {"a/b/c" 3 "a/b/d" 4 "a/e/f" 5 "a/e/g" 6 "h/i" {}}</code></pre></div><div class="entry"><span id="entry__hara_data_path__group_by_set"></span><div class="entry-description"><h4><b>group-by-set&nbsp<a data-scroll="" href="#entry__hara_data_path__">^</a></b></h4><p><i>returns a map of the elements of coll keyed by the result of
+  f on each element. The value at each key will be a set of the
+  corresponding elements, in the order they appeared in coll.</i></p></div><div class="entry-option"><h6><a href="https://github.com/zcaudate/hara/blob/master/src/hara/data/path.clj#L29-L43" target="_blank">v&nbsp;2.1</a>&nbsp;&nbsp;args: <i class="args">[f coll]</i>&nbsp;&nbsp;&nbsp;</h6><div><input class="source-toggle" id="entry__pre_hara_data_path__group_by_set" type="checkbox" /><label class="source-toggle" for="entry__pre_hara_data_path__group_by_set"></label><pre class="source"><code class="clojure">(defn group-by-set
+  [f coll]
+  (persistent!
+   (reduce
+    (fn [ret x]
+      (let [k (f x)]
+        (assoc! ret k (conj (get ret k #{}) x))))
+    (transient {}) coll)))</code></pre></div></div><pre><h6><i><a href="https://github.com/zcaudate/hara/blob/master/test/hara/data/path_test.clj#L20-L25" target="_blank">link</a></i></h6><code class="clojure">(group-by-set even? [1 2 3 4 5])
+=> {false #{1 3 5}, true #{2 4}}</code></pre></div><div class="entry"><span id="entry__hara_data_path__group_keys"></span><div class="entry-description"><h4><b>group-keys&nbsp<a data-scroll="" href="#entry__hara_data_path__">^</a></b></h4><p><i>returns the set of keys in `fm` that has keyword namespace
+  of `ns`</i></p></div><div class="entry-option"><h6><a href="https://github.com/zcaudate/hara/blob/master/src/hara/data/path.clj#L45-L62" target="_blank">v&nbsp;2.1</a>&nbsp;&nbsp;args: <i class="args">[fm] [fm ns]</i>&nbsp;&nbsp;&nbsp;</h6><div><input class="source-toggle" id="entry__pre_hara_data_path__group_keys" type="checkbox" /><label class="source-toggle" for="entry__pre_hara_data_path__group_keys"></label><pre class="source"><code class="clojure">(defn group-keys
+  ([fm] (let [ks (keys fm)]
+          (group-by-set #(path/path-ns %) ks)))
+  ([fm ns]
+     (let [ks (keys fm)]
+       (->> ks
+            (filter #(= ns (path/path-ns %)))
+            set))))</code></pre></div></div><pre><h6><i><a href="https://github.com/zcaudate/hara/blob/master/test/hara/data/path_test.clj#L28-L36" target="_blank">link</a></i></h6><code class="clojure">(group-keys {:hello/a 1 :hello/b 2
              :there/a 3 :there/b 4})
-=&gt; {:there #{:there/a :there/b}, :hello #{:hello/b :hello/a}}
+=> {:there #{:there/a :there/b}, :hello #{:hello/b :hello/a}}
 
 (group-keys {:hello/a 1 :hello/b 2
              :there/a 3 :there/b 4} :hello)
-=&gt; #{:hello/a :hello/b}</div></div><div><a name="api-hara-data-path--list-ns-keys"></a><h4>list-ns-keys <a href="#api-hara-data-path">&#9652;</a></h4><div hljs="hljs" language="clojure" no-escape="no-escape">&quot;Returns the set of keyword namespaces within a map&quot;
-
-(list-ns-keys {:hello/a 1 :hello/b 2
+=> #{:hello/a :hello/b}</code></pre></div><div class="entry"><span id="entry__hara_data_path__list_ns_keys"></span><div class="entry-description"><h4><b>list-ns-keys&nbsp<a data-scroll="" href="#entry__hara_data_path__">^</a></b></h4><p><i>returns the set of keyword namespaces within a map</i></p></div><div class="entry-option"><h6><a href="https://github.com/zcaudate/hara/blob/master/src/hara/data/path.clj#L8-L17" target="_blank">v&nbsp;2.1</a>&nbsp;&nbsp;args: <i class="args">[fm]</i>&nbsp;&nbsp;&nbsp;</h6><div><input class="source-toggle" id="entry__pre_hara_data_path__list_ns_keys" type="checkbox" /><label class="source-toggle" for="entry__pre_hara_data_path__list_ns_keys"></label><pre class="source"><code class="clojure">(defn list-ns-keys
+  [fm]
+  (let [ks (keys fm)]
+    (set (map path/path-ns ks))))</code></pre></div></div><pre><h6><i><a href="https://github.com/zcaudate/hara/blob/master/test/hara/data/path_test.clj#L6-L10" target="_blank">link</a></i></h6><code class="clojure">(list-ns-keys {:hello/a 1 :hello/b 2
                :there/a 3 :there/b 4})
-=&gt; #{:hello :there}</div></div><div><a name="api-hara-data-path--nest-keys"></a><h4>nest-keys <a href="#api-hara-data-path">&#9652;</a></h4><div hljs="hljs" language="clojure" no-escape="no-escape">&quot;Returns a map that takes `m` and extends all keys with the
-`nskv` vector. `ex` is the list of keys that are not extended.&quot;
-
-(nest-keys {:a 1 :b 2} [:hello :there])
- =&gt; {:hello {:there {:a 1 :b 2}}}
+=> #{:hello :there}</code></pre></div><div class="entry"><span id="entry__hara_data_path__nest_keys"></span><div class="entry-description"><h4><b>nest-keys&nbsp<a data-scroll="" href="#entry__hara_data_path__">^</a></b></h4><p><i>returns a map that takes `m` and extends all keys with the
+  `nskv` vector. `ex` is the list of keys that are not extended.</i></p></div><div class="entry-option"><h6><a href="https://github.com/zcaudate/hara/blob/master/src/hara/data/path.clj#L160-L176" target="_blank">v&nbsp;2.1</a>&nbsp;&nbsp;args: <i class="args">[m nskv] [m nskv ex]</i>&nbsp;&nbsp;&nbsp;</h6><div><input class="source-toggle" id="entry__pre_hara_data_path__nest_keys" type="checkbox" /><label class="source-toggle" for="entry__pre_hara_data_path__nest_keys"></label><pre class="source"><code class="clojure">(defn nest-keys
+  ([m nskv] (nest-keys m nskv []))
+  ([m nskv ex]
+    (let [e-map (select-keys m ex)
+          x-map (apply dissoc m ex)]
+      (merge e-map (if (empty? nskv)
+                     x-map
+                     (assoc-in {} nskv x-map))))))</code></pre></div></div><pre><h6><i><a href="https://github.com/zcaudate/hara/blob/master/test/hara/data/path_test.clj#L89-L96" target="_blank">link</a></i></h6><code class="clojure">(nest-keys {:a 1 :b 2} [:hello :there])
+ => {:hello {:there {:a 1 :b 2}}}
 
  (nest-keys {:there 1 :b 2} [:hello] [:there])
- =&gt; {:hello {:b 2} :there 1}</div></div><div><a name="api-hara-data-path--treeify-keys"></a><h4>treeify-keys <a href="#api-hara-data-path">&#9652;</a></h4><div hljs="hljs" language="clojure" no-escape="no-escape">&quot;Returns a nested map, expanding out the first
-level of keys into additional hash-maps.&quot;
+ => {:hello {:b 2} :there 1}</code></pre></div><div class="entry"><span id="entry__hara_data_path__pathify_keys_nested"></span><div class="entry-description"><h4><b>pathify-keys-nested&nbsp<a data-scroll="" href="#entry__hara_data_path__">^</a></b></h4><p><i>converts a nested map structure into a flat map structure</i></p></div><div class="entry-option"><h6><a href="https://github.com/zcaudate/hara/blob/master/src/hara/data/path.clj#L87-L101" target="_blank">v&nbsp;2.1</a>&nbsp;&nbsp;args: <i class="args">[m] [m max] [m max keep-empty] [m max keep-empty arr]</i>&nbsp;&nbsp;&nbsp;</h6><div><input class="source-toggle" id="entry__pre_hara_data_path__pathify_keys_nested" type="checkbox" /><label class="source-toggle" for="entry__pre_hara_data_path__pathify_keys_nested"></label><pre class="source"><code class="clojure">(defn pathify-keys-nested
+  ([m] (pathify-keys-nested m -1 false []))
+  ([m max] (pathify-keys-nested m max false []))
+  ([m max keep-empty] (pathify-keys-nested m max keep-empty []))
+  ([m max keep-empty arr]
+   (reduce-kv (fn [m k v]
+                (if (or (and (not (> 0 max))
+                             (<= max 1))
+                        (not (hash-map? v))
+                        (and keep-empty
+                             (empty? v)))
+                  (assoc m (conj arr k) v)
+                  (merge m (pathify-keys-nested v (dec max) keep-empty (conj arr k)))))
+              {}
+              m)))</code></pre></div></div><pre><h6><i><a href="https://github.com/zcaudate/hara/blob/master/test/hara/data/path_test.clj#L115-L127" target="_blank">link</a></i></h6><code class="clojure">(pathify-keys-nested {:a {:b {:c 1}}})
+=> {[:a :b :c] 1}
 
-(treeify-keys {:a/b 2 :a/c 3})
-=&gt; {:a {:b 2 :c 3}}
+(pathify-keys-nested {:a {:b {:c 1}}} 2)
+=> {[:a :b] {:c 1}}
+
+(pathify-keys-nested {:a {:b {:c 1
+                              :d 3
+                              :e {}}}}
+                     -1 true)
+=> {[:a :b :c] 1, [:a :b :d] 3, [:a :b :e] {}}</code></pre></div><div class="entry"><span id="entry__hara_data_path__treeify_keys"></span><div class="entry-description"><h4><b>treeify-keys&nbsp<a data-scroll="" href="#entry__hara_data_path__">^</a></b></h4><p><i>returns a nested map, expanding out the first
+   level of keys into additional hash-maps.</i></p></div><div class="entry-option"><h6><a href="https://github.com/zcaudate/hara/blob/master/src/hara/data/path.clj#L124-L139" target="_blank">v&nbsp;2.1</a>&nbsp;&nbsp;args: <i class="args">[m]</i>&nbsp;&nbsp;&nbsp;</h6><div><input class="source-toggle" id="entry__pre_hara_data_path__treeify_keys" type="checkbox" /><label class="source-toggle" for="entry__pre_hara_data_path__treeify_keys"></label><pre class="source"><code class="clojure">(defn treeify-keys
+  [m]
+  (reduce-kv (fn [m k v]
+               (assoc-in m (path/split k) v))
+             {}
+             m))</code></pre></div></div><pre><h6><i><a href="https://github.com/zcaudate/hara/blob/master/test/hara/data/path_test.clj#L67-L75" target="_blank">link</a></i></h6><code class="clojure">(treeify-keys {:a/b 2 :a/c 3})
+=> {:a {:b 2 :c 3}}
 
 (treeify-keys {:a/b {:e/f 1} :a/c {:g/h 1}})
-=&gt; {:a {:b {:e/f 1}
-        :c {:g/h 1}}}</div></div><div><a name="api-hara-data-path--treeify-keys-nested"></a><h4>treeify-keys-nested <a href="#api-hara-data-path">&#9652;</a></h4><div hljs="hljs" language="clojure" no-escape="no-escape">&quot;Returns a nested map, expanding out all
-levels of keys into additional hash-maps.&quot;
-
-(treeify-keys-nested {:a/b 2 :a/c 3})
-=&gt; {:a {:b 2 :c 3}}
+=> {:a {:b {:e/f 1}
+        :c {:g/h 1}}}</code></pre></div><div class="entry"><span id="entry__hara_data_path__treeify_keys_nested"></span><div class="entry-description"><h4><b>treeify-keys-nested&nbsp<a data-scroll="" href="#entry__hara_data_path__">^</a></b></h4><p><i>returns a nested map, expanding out all
+ levels of keys into additional hash-maps.</i></p></div><div class="entry-option"><h6><a href="https://github.com/zcaudate/hara/blob/master/src/hara/data/path.clj#L141-L158" target="_blank">v&nbsp;2.1</a>&nbsp;&nbsp;args: <i class="args">[m]</i>&nbsp;&nbsp;&nbsp;</h6><div><input class="source-toggle" id="entry__pre_hara_data_path__treeify_keys_nested" type="checkbox" /><label class="source-toggle" for="entry__pre_hara_data_path__treeify_keys_nested"></label><pre class="source"><code class="clojure">(defn treeify-keys-nested
+  [m]
+  (reduce-kv (fn [m k v]
+               (if (and (hash-map? v) (not (empty? v)))
+                 (update-in m (path/split k) nested/merge-nested (treeify-keys-nested v))
+                 (assoc-in m (path/split k) v)))
+             {}
+             m))</code></pre></div></div><pre><h6><i><a href="https://github.com/zcaudate/hara/blob/master/test/hara/data/path_test.clj#L78-L86" target="_blank">link</a></i></h6><code class="clojure">(treeify-keys-nested {:a/b 2 :a/c 3})
+=> {:a {:b 2 :c 3}}
 
 (treeify-keys-nested {:a/b {:e/f 1} :a/c {:g/h 1}})
-=&gt; {:a {:b {:e {:f 1}}
-        :c {:g {:h 1}}}}</div></div><div><a name="api-hara-data-path--unnest-keys"></a><h4>unnest-keys <a href="#api-hara-data-path">&#9652;</a></h4><div hljs="hljs" language="clojure" no-escape="no-escape">&quot;The reverse of `nest-keys`. Takes `m` and returns a map
-with all keys with a `keyword-nsvec` of `nskv` being 'unnested'&quot;
-
-(unnest-keys {:hello/a 1
+=> {:a {:b {:e {:f 1}}
+        :c {:g {:h 1}}}}</code></pre></div><div class="entry"><span id="entry__hara_data_path__unnest_keys"></span><div class="entry-description"><h4><b>unnest-keys&nbsp<a data-scroll="" href="#entry__hara_data_path__">^</a></b></h4><p><i>the reverse of `nest-keys`. Takes `m` and returns a map
+  with all keys with a `keyword-nsvec` of `nskv` being 'unnested'</i></p></div><div class="entry-option"><h6><a href="https://github.com/zcaudate/hara/blob/master/src/hara/data/path.clj#L178-L201" target="_blank">v&nbsp;2.1</a>&nbsp;&nbsp;args: <i class="args">[m nskv] [m nskv ex]</i>&nbsp;&nbsp;&nbsp;</h6><div><input class="source-toggle" id="entry__pre_hara_data_path__unnest_keys" type="checkbox" /><label class="source-toggle" for="entry__pre_hara_data_path__unnest_keys"></label><pre class="source"><code class="clojure">(defn unnest-keys
+  ([m nskv] (unnest-keys m nskv []))
+  ([m nskv ex]
+   (let [tm     (treeify-keys-nested m)
+         c-map  (get-in tm nskv)
+         x-map  (map/dissoc-in tm nskv)]
+    (merge c-map (if (empty? ex)
+                   x-map
+                   (assoc-in {} ex x-map))))))</code></pre></div></div><pre><h6><i><a href="https://github.com/zcaudate/hara/blob/master/test/hara/data/path_test.clj#L99-L112" target="_blank">link</a></i></h6><code class="clojure">(unnest-keys {:hello/a 1
               :hello/b 2
               :there/a 3
               :there/b 4} [:hello])
-=&gt; {:a 1 :b 2
+=> {:a 1 :b 2
     :there {:a 3 :b 4}}
 
 (unnest-keys {:hello {:there {:a 1 :b 2}}
               :again {:c 3 :d 4}} [:hello :there] [:+] )
-=&gt; {:a 1 :b 2
-    :+ {:again {:c 3 :d 4}}}</div></div></div></div></div></section><section class="chapter" id="api---seq"><h2 class="chapter">9  &nbsp;&nbsp; API - seq</h2><div class="group"><div class="paragraph"><p><a href='https://github.com/zcaudate/hara/blob/master/src/hara/data/seq.clj'>hara.data.seq</a> is a support namespace used internally</p></div><div class="api"><hr /><div><a name="api-hara-data-seq"></a><h4><i>API</i></h4><a href="#api-hara-data-seq--positions">positions</a>&nbsp;&nbsp;<a href="#api-hara-data-seq--remove-index">remove-index</a>&nbsp;&nbsp;</div><hr /><div><div><a name="api-hara-data-seq--positions"></a><h4>positions <a href="#api-hara-data-seq">&#9652;</a></h4><div hljs="hljs" language="clojure" no-escape="no-escape">&quot;find positions of elements matching the predicate&quot;
-(positions even? [5 5 4 4 3 3 2 2])
-=&gt; [2 3 6 7]</div></div><div><a name="api-hara-data-seq--remove-index"></a><h4>remove-index <a href="#api-hara-data-seq">&#9652;</a></h4><div hljs="hljs" language="clojure" no-escape="no-escape">&quot;removes element at the specified index&quot;
-(remove-index [:a :b :c :d] 2)
-=&gt; [:a :b :d]</div></div></div></div></div></section>
+=> {:a 1 :b 2
+    :+ {:again {:c 3 :d 4}}}</code></pre></div></div></div></div>
+        </div>
+      </div>
     </div>
-</div><!--end of .container-->
 
-  <section class="application">
-    
-  </section>
-</body>
+    <label for="sidebar-checkbox" class="sidebar-toggle"></label>
 
-<script>
-  $('#nav').affix({
-    offset: {
-        top: $('#nav').offset().top,
-        bottom: $('footer').outerHeight(true) + $('.application').outerHeight(true) + 40
-    }});
-</script>
+  </body>
 
-
-<script>
-  if (document.location.search.match(/type=embed/gi)) {
-    window.parent.postMessage("resize", "*");
-  }
-</script>
-</body>
+  <script type="text/javascript">
+    smoothScroll.init();
+    gumshoe.init({});
+  
+    hljs.registerLanguage("clojure",function(e){var t={"builtin-name":"def defonce cond apply if-not if-let if not not= = < > <= >= == + / * - rem quot neg? pos? delay? symbol? keyword? true? false? integer? empty? coll? list? set? ifn? fn? associative? sequential? sorted? counted? reversible? number? decimal? class? distinct? isa? float? rational? reduced? ratio? odd? even? char? seq? vector? string? map? nil? contains? zero? instance? not-every? not-any? libspec? -> ->> .. . inc compare do dotimes mapcat take remove take-while drop letfn drop-last take-last drop-while while intern condp case reduced cycle split-at split-with repeat replicate iterate range merge zipmap declare line-seq sort comparator sort-by dorun doall nthnext nthrest partition eval doseq await await-for let agent atom send send-off release-pending-sends add-watch mapv filterv remove-watch agent-error restart-agent set-error-handler error-handler set-error-mode! error-mode shutdown-agents quote var fn loop recur throw try monitor-enter monitor-exit defmacro defn defn- macroexpand macroexpand-1 for dosync and or when when-not when-let comp juxt partial sequence memoize constantly complement identity assert peek pop doto proxy defstruct first rest cons defprotocol cast coll deftype defrecord last butlast sigs reify second ffirst fnext nfirst nnext defmulti defmethod meta with-meta ns in-ns create-ns import refer keys select-keys vals key val rseq name namespace promise into transient persistent! conj! assoc! dissoc! pop! disj! use class type num float double short byte boolean bigint biginteger bigdec print-method print-dup throw-if printf format load compile get-in update-in pr pr-on newline flush read slurp read-line subvec with-open memfn time re-find re-groups rand-int rand mod locking assert-valid-fdecl alias resolve ref deref refset swap! reset! set-validator! compare-and-set! alter-meta! reset-meta! commute get-validator alter ref-set ref-history-count ref-min-history ref-max-history ensure sync io! new next conj set! to-array future future-call into-array aset gen-class reduce map filter find empty hash-map hash-set sorted-map sorted-map-by sorted-set sorted-set-by vec vector seq flatten reverse assoc dissoc list disj get union difference intersection extend extend-type extend-protocol int nth delay count concat chunk chunk-buffer chunk-append chunk-first chunk-rest max min dec unchecked-inc-int unchecked-inc unchecked-dec-inc unchecked-dec unchecked-negate unchecked-add-int unchecked-add unchecked-subtract-int unchecked-subtract chunk-next chunk-cons chunked-seq? prn vary-meta lazy-seq spread list* str find-keyword keyword symbol gensym force rationalize"},r="a-zA-Z_\\-!.?+*=<>&#'",n="["+r+"]["+r+"0-9/;:]*",a="[-+]?\\d+(\\.\\d+)?",o={b:n,r:0},s={cN:"number",b:a,r:0},i=e.inherit(e.QSM,{i:null}),c=e.C(";","$",{r:0}),d={cN:"literal",b:/\b(true|false|nil)\b/},l={b:"[\\[\\{]",e:"[\\]\\}]"},m={cN:"comment",b:"\\^"+n},p=e.C("\\^\\{","\\}"),u={cN:"symbol",b:"[:]{1,2}"+n},f={b:"\\(",e:"\\)"},h={eW:!0,r:0},y={k:t,l:n,cN:"name",b:n,starts:h},b=[f,i,m,p,c,u,l,s,d,o];return f.c=[e.C("comment",""),y,h],h.c=b,l.c=b,{aliases:["clj"],i:/\S/,c:[f,i,m,p,c,u,l,s,d]}});
+    hljs.initHighlightingOnLoad();
+  </script>
 </html>

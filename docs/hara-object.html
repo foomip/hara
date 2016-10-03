@@ -1,159 +1,641 @@
 
-
 <!DOCTYPE html>
-<html >
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en-us">
+
   <head>
-    <meta charset="UTF-8">
-    <meta name="google" value="notranslate">
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+
+  <!-- Enable responsiveness on mobile devices-->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+  <link rel="shortcut icon" href="favicon.ico">
+  <title>hara.object - think data, escape encapsulation</title>
+  <script src="js/highlight.min.js"></script>
+  <script src="js/gumshoe.min.js"></script>
+  <script src="js/smooth-scroll.min.js"></script>
+  
+  <!-- CSS -->
+  <link rel="stylesheet" href="css/poole.css">
+  <link rel="stylesheet" href="css/syntax.css">
+  <link rel="stylesheet" href="css/lanyon.css">
+  <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=PT+Serif:400,400italic,700|PT+Sans:400">
+  
+  <style>
+  .error {
+  font-weight: bold;
+}
+
+.error.version {
+  color: #ac4142;
+  text-decoration: line-through;
+}
+
+.api .entry pre.error {
+  background-color: #ac4142;
+}
+.api .entry pre.error h6 {
+  color: white;
+  float: left;
+}
+
+.api .entry-description
+{
+ display: block;
+ }
+ 
+.api ul
+{
+  list-style-type: none;
+  padding-left: 5px;
+}
+
+.api .entry-description h4
+{
+  height 30px;
+  margin-top: 2rem;
+  font-size: larger;
+ }
+
+.api .entry-description p
+{
+ margin-bottom: 0px;
+ margin-top: 0px;
+ }
+
+.api .entry-option h6
+{
+ padding-right:5px;
+ padding-top: 0.6em;
+ margin-top: 0;
+ }
+
+.api .entry-option .args
+{
+ font-weight: lighter;
+ }
+ 
+.api .entry pre
+ {
+   width: 100%;
+}
+  
+.api pre h6
+{
+ float: right;
+ font-size: small;
+ margin-top: 0;
+ }
+ 
+ pre.source {
+  position: absolute;
+  visibility: hidden;
+  opacity: 0;
+  height: 0px;
+  transition: visibility 0s, opacity 1s linear;
+ }
+
+.api input.source-toggle{
+  display: none;
+}
+
+.api label.source-toggle {
+  position: relative;
+  float: right;
+  top: -1.9em;
+  right: 2em;
+  color: #ac4142;
+  font-style: italic;
+  cursor: pointer;
+}
+
+.api input[type="checkbox"] + label:after {
+  content: "show";
+}
+.api input[type="checkbox"]:checked + label:after {
+  content: "hide";
+}
+
+.api input[type="checkbox"]:checked ~ pre.source {
+  position: relative;
+  height: auto;
+  visibility: visible;
+  opacity: 1;
+}
+ 
+ 
+ 
+  html {
+  font-size: 15px;
+}
+
+h2 {
+  margin-top: 2.5rem;
+  font-size: 1.5rem;
+  margin-bottom: 1rem;
+}
+
+h3 {
+  margin-top: 2.5rem;
+}
+
+.top {
+  margin-top: 0.5em;
+  display: block;
+  font-size: 1.4em;
+  font-style: italic;
+}
+
+.top.active {
+  text-decoration: underline;
+}
+
+.heading {
+  display: flex;
+  padding-bottom: 1em;
+}
+.heading h5 {
+  font-size: 0.8rem; 
+  margin-top: 0.2em;
+  margin-bottom: 0.2em
+}
+
+.toc ul{
+  list-style-type: none;
+  padding-left: 0;
+}
+
+.toc a h4 {
+  color: #ac4142;
+}
+
+.toc a h5 {
+  color: #ac4142;
+  font-size: 0.8rem;
+  margin-top: 0.1em;
+  margin-bottom: 0.2em;
+  padding-left: 0.8em;
+}
+
+.outline .toc{
+  display: none;
+}
+
+.sidebar {
+  font-size: 0.9rem;
+  line-height: 1.3;
+}
+
+.sidebar-nav-item {
+    display: block;
+    padding-top: 0rem;
+    padding-bottom: 0rem; 
+    border-top: none;
+}
+
+.sidebar-nav {
+    border-bottom: none;
+}
+
+pre{
+  border: solid 1px;
+  border-color: #f0f0f0;
+  background-color: white;
+}
 
 
-    <title>object - think data, escape encapsulation</title>
+.code .failed
+{
+  background-color:#ac4142; 
+  padding: 10px;
+  font-size: large;
+}
 
-    
-  <link href='http://fonts.googleapis.com/css?family=Raleway:300' rel='stylesheet' type='text/css'>
-  <link rel="stylesheet" type="text/css" href="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.5/css/bootstrap.min.css">
-  <link rel="stylesheet" type="text/css" href="//cdnjs.cloudflare.com/ajax/libs/font-awesome/4.3.0/css/font-awesome.min.css">
+.code .failed h5
+{
+  color: white;
+  margin-top: 0;
+  margin-botton: 0;
+  font-size: small;
+}
 
-  <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.6/highlight.min.js"></script>
-  <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.6/languages/clojure.min.js"></script>
-  <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.6/styles/magula.min.css">
+.code .failed h4
+{  
+  color: white;
+  font-style: italic;
+}
 
-  <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
-  <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.5/js/bootstrap.min.js"></script>
-  <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/angular.js/1.4.2/angular.min.js"></script>
-  <script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/angularjs/1.4.2/angular-cookies.min.js"></script>
-  <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/angular-ui-bootstrap/0.13.0/ui-bootstrap-tpls.min.js"></script>
-  <script type="text/javascript" src="js/angular-highlightjs.min.js"></script>
+.code .failed hr
+{
+  margin-top: 15px;
+  margin-bottom: 0px;
+}
 
-  <link rel="stylesheet" type="text/css" href="css/rdash.min.css">
-  <link rel="stylesheet" type="text/css" href="css/scrollspy.css">
+.masthead a
+{
+  font-size: 1.8em;
+}
 
+@media (max-width: 48rem){
+.masthead-title {
+    text-align: left;
+}}
 
-  <script>
-    window.console = window.console || function(t) {};
-    window.open = function(){ console.log("window.open is disabled."); };
-    window.print   = function(){ console.log("window.print is disabled."); };
-  </script>
-
-  <script>
-    var app = angular.module('app', ['hljs']);
-  </script>
-  </head>
-
-  <body ng-app="app" data-spy="scroll" data-target=".scrollspy">
-  <!-- Fixed navbar -->
-    <nav class="navbar navbar-fixed-top">
-      <div class="container">
-        <div class="navbar-header">
-          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
-            <span class="sr-only">Toggle navigation</span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-          </button>
-          <a class="navbar-brand" href="index.html"><img src="img/logo.png"></a>
-        </div>
-        <div id="navbar" class="navbar-collapse collapse">
-          <ul class="nav navbar-nav">
-            <li class="dropdown">
-              <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Guides <span class="caret"></span></a>
-              <ul class="dropdown-menu">
-                <li><a href="hara-class.html">class</a></li>
-                <li><a href="hara-common.html">common</a></li>
-                <li><a href="hara-component.html">component</a></li>
-                <li><a href="hara-concurrent.html">concurrent</a></li>
-                <li><a href="hara-concurrent-ova.html">concurrent.ova</a></li>
-                <li><a href="hara-concurrent-procedure.html">concurrent.procedure</a></li>
-                <li><a href="hara-data.html">data</a></li>
-                <li><a href="hara-event.html">event</a></li>
-                <li><a href="hara-expression.html">expression</a></li>
-                <li><a href="hara-extend.html">extend</a></li>
-                <li><a href="hara-function.html">function</a></li>
-                <li><a href="hara-group.html">group</a></li>
-                <li><a href="hara-io-environment.html">io.environment</a></li>
-                <li><a href="hara-io-file.html">io.file</a></li>
-                <li><a href="hara-io-scheduler.html">io.scheduler</a></li>
-                <li><a href="hara-io-watch.html">io.watch</a></li>
-                <li><a href="hara-namespace.html">namespace</a></li>
-                <li><a href="hara-object.html">object</a></li>
-                <li><a href="hara-reflect.html">reflect</a></li>
-                <li><a href="hara-sort.html">sort</a></li>
-                <li><a href="hara-string.html">string</a></li>
-                <li><a href="hara-test.html">test</a></li>
-                <li><a href="hara-time.html">time</a></li>
-            </ul>
-            </li>
-            <li>
-              <a href="https://github.com/zcaudate/hara" target="_blank">Github</a></li>
-            <li>
-              <a href="http://gitter.im/zcaudate/hara" target="_blank">Gitter</a></li>
-          </ul>
-        </div><!--/.nav-collapse -->
-      </div>
-    </nav>
+@media (max-width: 40rem){
+.masthead-title {
+    text-align: center;
+}
+.masthead a
+{
+  font-size: x-large;
+}
+}
 
 
-  <div class="container row">
-    <div class="col-md-4 scrollspy pull-right">
-      <ul id="nav" class="nav hidden-xs hidden-sm" data-spy="affix">
-        <li><a href="#introduction">1  &nbsp;&nbsp; Introduction</a><ul class="nav"><li><a href="#installation">1.1  &nbsp;&nbsp; Installation</a></li><li><a href="#motivation">1.2  &nbsp;&nbsp; Motivation</a></li></ul></li><li><a href="#philosophy">2  &nbsp;&nbsp; Philosophy</a></li><li><a href="#string-like">3  &nbsp;&nbsp; string-like</a><ul class="nav"><li><a href="#file">3.1  &nbsp;&nbsp; File</a></li><li><a href="#repository">3.2  &nbsp;&nbsp; Repository</a></li><li><a href="#enums">3.3  &nbsp;&nbsp; Enums</a></li></ul></li><li><a href="#vector-like">4  &nbsp;&nbsp; vector-like</a></li><li><a href="#map-like">5  &nbsp;&nbsp; map-like</a><ul class="nav"><li><a href="#primitives">5.1  &nbsp;&nbsp; Primitives</a></li><li><a href="#map-like-0">5.2  &nbsp;&nbsp; map-like</a></li><li><a href="#extension">5.3  &nbsp;&nbsp; extension</a></li></ul></li>
-      </ul>
-    </div>
-    <div class="col-md-8" id="content">
-      <div class="jumbotron">
+
+@media (min-width: 38rem){
+.container {
+    max-width: 37rem;
+    margin-left: 6rem;
+ }
+}
+
+@media (min-width: 56rem){
+.container {
+    max-width: 54rem;
+}
+.page {
+  margin-right: 15rem;
+}
+}
+
+@media (min-width: 60rem){
+.outline .toc{
+  display: block;
+  padding-left: 2em;
+  position: fixed;
+  right: 1em;
+  top: 1em;
+  width: 18em;
+  background-color: white;
+  border: solid 1px #f0f0f0;
+}
+.outline .toc li.active a.chapter h4{
+  font-size: larger;
+  font-style: italic;
+}
+
+.outline .toc li .section{
+  display: none;
+}
+
+.outline .toc li.active .section{
+  display: inherit;
+}
+
+.outline .toc li.active a.active.chapter h4{
+  text-decoration: underline;
+}
+
+.outline .toc li.active a.active.section h5{
+  text-decoration: underline;
+}
+}
+
+
+@media (min-width: 70rem){
+.container {
+    max-width: 66rem;
+}}
+  /*
+
+Original highlight.js style (c) Ivan Sagalaev <maniac@softwaremaniacs.org>
+
+*/
+
+.hljs {
+  display: block;
+  overflow-x: auto;
+  padding: 0.5em;
+}
+
+
+/* Base color: saturation 0; */
+
+.hljs,
+.hljs-subst {
+  color: #444;
+}
+
+.hljs-comment {
+  color: #888888;
+}
+
+.hljs-keyword,
+.hljs-attribute,
+.hljs-selector-tag,
+.hljs-meta-keyword,
+.hljs-doctag,
+.hljs-name {
+  font-weight: bold;
+}
+
+
+/* User color: hue: 0 */
+
+.hljs-type,
+.hljs-string,
+.hljs-number,
+.hljs-selector-id,
+.hljs-selector-class,
+.hljs-quote,
+.hljs-template-tag,
+.hljs-deletion {
+  color: #880000;
+}
+
+.hljs-title,
+.hljs-section {
+  color: #880000;
+  font-weight: bold;
+}
+
+.hljs-regexp,
+.hljs-symbol,
+.hljs-variable,
+.hljs-template-variable,
+.hljs-link,
+.hljs-selector-attr,
+.hljs-selector-pseudo {
+  color: #BC6060;
+}
+
+
+/* Language color: hue: 90; */
+
+.hljs-literal {
+  color: #78A960;
+}
+
+.hljs-built_in,
+.hljs-bullet,
+.hljs-code,
+.hljs-addition {
+  color: #397300;
+}
+
+
+/* Meta color: hue: 200 */
+
+.hljs-meta {
+  color: #1f7199;
+}
+
+.hljs-meta-string {
+  color: #4d99bf;
+}
+
+
+/* Misc effects */
+
+.hljs-emphasis {
+  font-style: italic;
+}
+
+.hljs-strong {
+  font-weight: bold;
+}
+  </style>
+  <!-- Icons -->
+</head>
+
+
+  <body class="theme-base-08">
+    <span id="page-top"></span>
+
+    <!-- Target for toggling the sidebar `.sidebar-checkbox` is for regular
+     styles, `#sidebar-checkbox` for behavior. -->
+<input type="checkbox" class="sidebar-checkbox" id="sidebar-checkbox">
+
+<!-- Toggleable sidebar -->
+<div class="sidebar" id="sidebar">
+  <nav class="sidebar-nav">
+    <a class="sidebar-nav-item header" href="index.html"><img src="img/logo-white.png"/></a>
+    <span>&nbsp;</span>
+    <a class="sidebar-nav-item" href="hara-class.html">class</a><a class="sidebar-nav-item" href="hara-common.html">common</a><a class="sidebar-nav-item" href="hara-component.html">component</a><a class="sidebar-nav-item" href="hara-concurrent.html">concurrent</a><a class="sidebar-nav-item" href="hara-concurrent-ova.html">concurrent.ova</a><a class="sidebar-nav-item" href="hara-concurrent-procedure.html">concurrent.procedure</a><a class="sidebar-nav-item" href="hara-data.html">data</a><a class="sidebar-nav-item" href="hara-event.html">event</a><a class="sidebar-nav-item" href="hara-expression.html">expression</a><a class="sidebar-nav-item" href="hara-extend.html">extend</a><a class="sidebar-nav-item" href="hara-function.html">function</a><a class="sidebar-nav-item" href="hara-group.html">group</a><a class="sidebar-nav-item" href="hara-io.html">io</a><a class="sidebar-nav-item" href="hara-io-file.html">io.file</a><a class="sidebar-nav-item" href="hara-io-scheduler.html">io.scheduler</a><a class="sidebar-nav-item" href="hara-io-watch.html">io.watch</a><a class="sidebar-nav-item" href="hara-namespace.html">namespace</a><a class="sidebar-nav-item active" href="hara-object.html">object</a><a class="sidebar-nav-item" href="hara-reflect.html">reflect</a><a class="sidebar-nav-item" href="hara-sort.html">sort</a><a class="sidebar-nav-item" href="hara-string.html">string</a><a class="sidebar-nav-item" href="hara-test.html">test</a><a class="sidebar-nav-item" href="hara-time.html">time</a><a class="sidebar-nav-item" href="hara-zip.html">zip</a>
+    <span class="sidebar-nav-item">&nbsp;</span>
+    <span class="sidebar-nav-item">&nbsp;</span>
+  </nav>
+</div>
+
+
+    <!-- Wrap is the content to shift when toggling the sidebar. We wrap the
+         content to avoid any CSS collisions with our real content. -->
+    <div class="wrap">
+      <div class="masthead">
         <div class="container">
-          <h1>object</h1>
-          <h4>think data, escape encapsulation</h4>
+          <h3 class="masthead-title">
+            <a href="/" title="Home">hara.object</a>
+            <small>think data, escape encapsulation</small>
+          </h3>
         </div>
       </div>
-      <section class="chapter" id="introduction"><h2 class="chapter">1  &nbsp;&nbsp; Introduction</h2><div class="group"><div class="paragraph"><p><a href='https://github.com/zcaudate/hara/blob/master/src/hara/object.clj'>hara.object</a> is a library for converting java classes into clojure data types. It is somewhat like the <code>bean</code> command but enables more control and customisation of the output.</p></div></div><section class="section" id="installation"><h3 class="section">1.1  &nbsp;&nbsp; Installation</h3><div class="paragraph"><p>Add to <code>project.clj</code> dependencies:</p><pre><code>&#91;im.chit/hara.object &quot;2.4.4&quot;&#93;
-</code></pre></div><div class="paragraph"><p>All functionality is found contained in the <code>hara.object</code> namespace</p></div><div class="code"><div hljs="hljs" language="clojure" no-escape="no-escape">(require '[hara.object :as object])</div></div></section><section class="section" id="motivation"><h3 class="section">1.2  &nbsp;&nbsp; Motivation</h3><div class="paragraph"><p>Quoting Wikipedia:</p><blockquote><p> Object-oriented programming (OOP) is a programming paradigm based on the concept of objects, which are structures that contain data, in the form of fields, often known as attributes; and code, in the form of procedures, often known as methods. </p></blockquote><p>Clojure is tightly bounded to Java and so cannot escape from the world of objects. Objects provide data encapsulation, meaning that it is very difficult to access data within an object except through custom interfaces. Encapsulation run counter to the openess of Clojure's philosophy where all data can be represented as a map.</p><p>Reflection provides a way around this problem. The general technique is to query the object for the names and values of it's fields and return them as a map. <a href='https://www.github.com/zcaudate/hara'>hara.object</a> does just that. We cannot represent all fields in all objects as a datastructure (especially when there are circular references). However, in most cases, we just need to grab the most critical information from an object in order to make sense of what is going on and to then decide on a course of action; <a href='https://www.github.com/zcaudate/hara'>hara.object</a> has been built for this approach, allowing customization of what fields to return and exclude.</p></div><div class="paragraph"><p><a href='https://github.com/zcaudate/hara/blob/master/src/hara/object.clj'>hara.object</a> has been extracted out from <a href='https://github.com/zcaudate/gita'>gita</a> where it was used to analyse the <a href='https://wiki.eclipse.org/JGit/User&#95;Guide#Porcelain&#95;API'>jgit porcelain</a> api and to reflectively generate an interface for git. A similar technique was used to recursively access cassandra datastructures in <a href='https://github.com/mypost/cassius'>cassius</a> though it was done through protocols and not in such a generic fashion.</p><p>The reason one may wish to use such a library would be to quickly visualize the structure of a class as well as to customize how the class looks in the repl. It can also be used to wrap java apis. The library is very similar in concept to the <code>def-map-type</code> and <code>def-derived-type</code> in <a href='https://github.com/ztellman/potemkin'>potemkin</a> but instead of defining a wrapper to the class, data with the class is accessed directly through reflection. Currently the implementation is not optimised though it has an extremely broad use cases.</p><p>Libraries that rely on <code>hara.object</code> for exposing functionality:</p><ul><li><a href='https://github.com/zcaudate/gita'>gita</a></li><li><a href='https://github.com/helpshift/gulfstream'>gulfstream</a></li></ul></div></section></section><section class="chapter" id="philosophy"><h2 class="chapter">2  &nbsp;&nbsp; Philosophy</h2><div class="group"><div class="paragraph"><p><code>hara.object</code> works at the level of meta-programming. As explained in the previous section, there is a correspondence between a class and the data with the class. Below shows a simple example of the concept of <code>Dog</code> as an <code>Object</code> and as data:</p></div><div class="figure"><a name="class-as-data"></a><div class="img"><img src="img/hara_object/dog.png" width="600px" /></div><h4><i>fig.1  &nbsp;-&nbsp; Class as Data</i></h4></div><div class="paragraph"><p>There are advantages of using pure data for the representation of the <code>Dog</code> concept.</p><ul><li>generic methods con be used to manipulate the data</li><li>the entire structure is transparent is better for reasoning</li><li>simpler representation (though at the cost of Type Correctness)</li></ul><p>In this way, many objects can be turned into maps/data for consumption by clojure methods. This makes working with many big java libraries much easier before.</p></div></div></section><section class="chapter" id="string-like"><h2 class="chapter">3  &nbsp;&nbsp; string-like</h2><div class="group"><div class="paragraph"><p>It is best to look at a real world example of how to use such a library.</p><p><a href='https://www.github.com/zcaudate/gita'>gita</a> is a wrapper around the popular <a href='https://eclipse.org/jgit/'>jgit</a> project. Due to the enormous amount of functionality around <a href='http://www.git.org'>git</a>, it is very difficult to manually write a wrapper around the entire suite. The novelty of <a href='https://www.github.com/zcaudate/gita'>gita</a> is that it uses <a href='https://www.github.com/zcaudate/hara'>hara.object</a> for customisation of the wrapper interface in such a way that the entire functionality of the main <code>org.eclipse.jgit.api.Git</code> class is accessible and usable in a clojure compatible convention.</p></div><div class="paragraph"><p><code>hara.object</code> is based on a very simple idea of treating objects as being <code>string-like</code> or a <code>map-like</code> . What is meant by <code>string-like</code> is that the object can be represented into a string. The reverse, that the object can be constructed from a string is not always true but there are very few exceptions.</p></div></div><section class="section" id="file"><h3 class="section">3.1  &nbsp;&nbsp; File</h3><div class="paragraph"><p>An example is shown below when we use the <code>string-like</code> macro to extend the functionality to <code>java.io.File</code>.</p></div><div class="code"><div hljs="hljs" language="clojure" no-escape="no-escape">(object/string-like
+
+      <div class="container content">
+        <div class="page">
+          <div class="heading">
+            <div>
+              <h5>Author: Chris Zheng&nbsp;&nbsp;<a href="mailto:z@caudate.me">(z@caudate.me)</a></h5>
+              <h5>Date: 03 October 2016</h5>
+              <h5>Repository: <a href="https://github.com/zcaudate/hara">https://github.com/zcaudate/hara</a></h5>
+              <h5>Version: 2.4.5</h5></div></div>
+          <hr/>
+          <div class="outline">
+            <div class="toc">
+              <nav data-gumshoe-header>
+                <ul data-gumshoe>
+                  <a data-scroll class="top" href="#page-top">TOP</a>
+                  <li><a class="chapter" data-scroll="" href="#introduction"><h4>1 &nbsp; Introduction</h4></a><a class="section" data-scroll="" href="#installation"><h5><i>1.1 &nbsp; Installation</i></h5></a></li><li><a class="chapter" data-scroll="" href="#api"><h4>2 &nbsp; API</h4></a><a class="section" data-scroll="" href="#entry__hara_object__from_data"><h5><i>from-data</i></h5></a><a class="section" data-scroll="" href="#entry__hara_object__map_like"><h5><i>map-like</i></h5></a><a class="section" data-scroll="" href="#entry__hara_object__meta_read"><h5><i>meta-read</i></h5></a><a class="section" data-scroll="" href="#entry__hara_object__meta_write"><h5><i>meta-write</i></h5></a><a class="section" data-scroll="" href="#entry__hara_object__read_getters"><h5><i>read-getters</i></h5></a><a class="section" data-scroll="" href="#entry__hara_object__read_reflect_fields"><h5><i>read-reflect-fields</i></h5></a><a class="section" data-scroll="" href="#entry__hara_object__string_like"><h5><i>string-like</i></h5></a><a class="section" data-scroll="" href="#entry__hara_object__to_data"><h5><i>to-data</i></h5></a><a class="section" data-scroll="" href="#entry__hara_object__vector_like"><h5><i>vector-like</i></h5></a><a class="section" data-scroll="" href="#entry__hara_object__write_reflect_fields"><h5><i>write-reflect-fields</i></h5></a><a class="section" data-scroll="" href="#entry__hara_object__write_setters"><h5><i>write-setters</i></h5></a></li><li><a class="chapter" data-scroll="" href="#philosophy"><h4>3 &nbsp; Philosophy</h4></a></li><li><a class="chapter" data-scroll="" href="#string-like"><h4>4 &nbsp; string-like</h4></a><a class="section" data-scroll="" href="#file"><h5><i>4.1 &nbsp; File</i></h5></a><a class="section" data-scroll="" href="#repository"><h5><i>4.2 &nbsp; Repository</i></h5></a><a class="section" data-scroll="" href="#enums"><h5><i>4.3 &nbsp; Enums</i></h5></a></li><li><a class="chapter" data-scroll="" href="#vector-like"><h4>5 &nbsp; vector-like</h4></a></li><li><a class="chapter" data-scroll="" href="#map-like"><h4>6 &nbsp; map-like</h4></a><a class="section" data-scroll="" href="#primitives"><h5><i>6.1 &nbsp; Primitives</i></h5></a><a class="section" data-scroll="" href="#map-like-0"><h5><i>6.2 &nbsp; map-like</i></h5></a><a class="section" data-scroll="" href="#extension"><h5><i>6.3 &nbsp; extension</i></h5></a></li>
+                </ul>
+              </nav>
+            </div>
+          </div>
+
+          <div class="toc">
+              <nav>
+                <ul>
+                  <li><a class="chapter" data-scroll="" href="#introduction"><h4>1 &nbsp; Introduction</h4></a><a class="section" data-scroll="" href="#installation"><h5><i>1.1 &nbsp; Installation</i></h5></a></li><li><a class="chapter" data-scroll="" href="#api"><h4>2 &nbsp; API</h4></a><a class="section" data-scroll="" href="#entry__hara_object__from_data"><h5><i>from-data</i></h5></a><a class="section" data-scroll="" href="#entry__hara_object__map_like"><h5><i>map-like</i></h5></a><a class="section" data-scroll="" href="#entry__hara_object__meta_read"><h5><i>meta-read</i></h5></a><a class="section" data-scroll="" href="#entry__hara_object__meta_write"><h5><i>meta-write</i></h5></a><a class="section" data-scroll="" href="#entry__hara_object__read_getters"><h5><i>read-getters</i></h5></a><a class="section" data-scroll="" href="#entry__hara_object__read_reflect_fields"><h5><i>read-reflect-fields</i></h5></a><a class="section" data-scroll="" href="#entry__hara_object__string_like"><h5><i>string-like</i></h5></a><a class="section" data-scroll="" href="#entry__hara_object__to_data"><h5><i>to-data</i></h5></a><a class="section" data-scroll="" href="#entry__hara_object__vector_like"><h5><i>vector-like</i></h5></a><a class="section" data-scroll="" href="#entry__hara_object__write_reflect_fields"><h5><i>write-reflect-fields</i></h5></a><a class="section" data-scroll="" href="#entry__hara_object__write_setters"><h5><i>write-setters</i></h5></a></li><li><a class="chapter" data-scroll="" href="#philosophy"><h4>3 &nbsp; Philosophy</h4></a></li><li><a class="chapter" data-scroll="" href="#string-like"><h4>4 &nbsp; string-like</h4></a><a class="section" data-scroll="" href="#file"><h5><i>4.1 &nbsp; File</i></h5></a><a class="section" data-scroll="" href="#repository"><h5><i>4.2 &nbsp; Repository</i></h5></a><a class="section" data-scroll="" href="#enums"><h5><i>4.3 &nbsp; Enums</i></h5></a></li><li><a class="chapter" data-scroll="" href="#vector-like"><h4>5 &nbsp; vector-like</h4></a></li><li><a class="chapter" data-scroll="" href="#map-like"><h4>6 &nbsp; map-like</h4></a><a class="section" data-scroll="" href="#primitives"><h5><i>6.1 &nbsp; Primitives</i></h5></a><a class="section" data-scroll="" href="#map-like-0"><h5><i>6.2 &nbsp; map-like</i></h5></a><a class="section" data-scroll="" href="#extension"><h5><i>6.3 &nbsp; extension</i></h5></a></li>
+                </ul>
+              </nav>
+          </div>
+          <div><span id="introduction" name="introduction"></span><h2><b>1 &nbsp;&nbsp; Introduction</b></h2></div><div><p><a href='https://github.com/zcaudate/hara/blob/master/src/hara/object.clj'>hara.object</a> is a library for converting java classes into clojure data types. It is somewhat like the <code>bean</code> command but enables more control and customisation of the output.</p></div><div><p>Libraries that rely on <code>hara.object</code> for exposing functionality:</p><ul><li><a href='https://github.com/zcaudate/gita'>gita</a></li><li><a href='https://github.com/helpshift/gulfstream'>gulfstream</a></li></ul></div><div><span id="installation" name="installation"></span><h3>1.1 &nbsp;&nbsp; Installation</h3></div><div><p>Add to <code>project.clj</code> dependencies:</p><pre><code>&#91;im.chit/hara.object &quot;2.4.5&quot;&#93;</code></pre></div><div><p>All functionality is found contained in the <code>hara.object</code> namespace</p></div><div class="code"><pre><code class="clojure">(require '[hara.object :as object])</code></pre></div><div><span id="api" name="api"></span><h2><b>2 &nbsp;&nbsp; API</b></h2></div><div class="api"><span id="entry__hara_object__"></span><hr /><div><ul><li><a data-scroll="" href="#entry__hara_object__from_data">from-data</a></li><li><a data-scroll="" href="#entry__hara_object__map_like">map-like</a></li><li><a data-scroll="" href="#entry__hara_object__meta_read">meta-read</a></li><li><a data-scroll="" href="#entry__hara_object__meta_write">meta-write</a></li><li><a data-scroll="" href="#entry__hara_object__read_getters">read-getters</a></li><li><a data-scroll="" href="#entry__hara_object__read_reflect_fields">read-reflect-fields</a></li><li><a data-scroll="" href="#entry__hara_object__string_like">string-like</a></li><li><a data-scroll="" href="#entry__hara_object__to_data">to-data</a></li><li><a data-scroll="" href="#entry__hara_object__vector_like">vector-like</a></li><li><a data-scroll="" href="#entry__hara_object__write_reflect_fields">write-reflect-fields</a></li><li><a data-scroll="" href="#entry__hara_object__write_setters">write-setters</a></li></ul><hr style="margin-bottom: 0" /><div><div class="entry"><span id="entry__hara_object__from_data"></span><div class="entry-description"><h4><b>from-data&nbsp<a data-scroll="" href="#entry__hara_object__">^</a></b></h4><p><i></i></p></div><div class="entry-option"><h6><i class="error version">NONE</i>&nbsp;&nbsp;args: <i class="args">[arg cls]</i>&nbsp;&nbsp;&nbsp;</h6><div><input class="source-toggle" id="entry__pre_hara_object__from_data" type="checkbox" /><label class="source-toggle" for="entry__pre_hara_object__from_data"></label><pre class="source"><code class="clojure">(defn from-data
+  [arg ^Class cls]
+  (let [^Class targ (type arg)]
+    (cond
+      ;; If there is a direct match
+      (reflect-util/param-arg-match cls targ)
+      arg
+
+      ;; If there is a vector
+      (and (vector? arg)
+           (.isArray cls))
+      (let [cls (.getComponentType cls)]
+        (->> arg
+             (map #(from-data % cls))
+             (into-array cls)))
+
+      :else
+      (let [{:keys [from-clojure from-string from-vector] :as mobj} (meta-write cls)]
+        (cond
+
+          from-clojure (from-clojure arg)
+
+          ;; If input is a string and there is a from-string method
+          (and (string? arg) from-string)
+          (from-string arg)
+
+          ;; If input is a string and there is a from-string method
+          (and (vector? arg) from-vector)
+          (from-vector arg)
+
+          ;; If the input is a map
+          (map? arg)
+          (from-map arg cls)
+
+          :else
+          (throw (Exception. (format "Problem converting %s to %s" arg targ))))))))</code></pre></div></div><pre class="error"><h6>example not found</h6><code></code></pre></div><div class="entry"><span id="entry__hara_object__map_like"></span><div class="entry-description"><h4><b>map-like&nbsp<a data-scroll="" href="#entry__hara_object__">^</a></b></h4><p><i></i></p></div><div class="entry-option"><h6><i class="error version">NONE</i>&nbsp;&nbsp;args: <i class="args">[& {:as classes}]</i>&nbsp;&nbsp;&nbsp;</h6><div><input class="source-toggle" id="entry__pre_hara_object__map_like" type="checkbox" /><label class="source-toggle" for="entry__pre_hara_object__map_like"></label><pre class="source"><code class="clojure">(defmacro map-like [& {:as classes}]
+  `(vector ~@(map (fn [[cls opts]]
+                    `(map-like/extend-map-like ~cls ~opts))
+                  classes)))</code></pre></div></div><pre class="error"><h6>example not found</h6><code></code></pre></div><div class="entry"><span id="entry__hara_object__meta_read"></span><div class="entry-description"><h4><b>meta-read&nbsp<a data-scroll="" href="#entry__hara_object__">^</a></b></h4><p><i></i></p></div><div class="entry-option"><h6><i class="error version">NONE</i>&nbsp;&nbsp;args: <i class="args">[cls]</i>&nbsp;&nbsp;&nbsp;</h6><div><input class="source-toggle" id="entry__pre_hara_object__meta_read" type="checkbox" /><label class="source-toggle" for="entry__pre_hara_object__meta_read"></label><pre class="source"><code class="clojure">(defn meta-read
+  [^Class cls]
+  (assoc (object/-meta-read cls) :class cls))</code></pre></div></div><pre class="error"><h6>example not found</h6><code></code></pre></div><div class="entry"><span id="entry__hara_object__meta_write"></span><div class="entry-description"><h4><b>meta-write&nbsp<a data-scroll="" href="#entry__hara_object__">^</a></b></h4><p><i></i></p></div><div class="entry-option"><h6><i class="error version">NONE</i>&nbsp;&nbsp;args: <i class="args">[cls]</i>&nbsp;&nbsp;&nbsp;</h6><div><input class="source-toggle" id="entry__pre_hara_object__meta_write" type="checkbox" /><label class="source-toggle" for="entry__pre_hara_object__meta_write"></label><pre class="source"><code class="clojure">(defn meta-write
+  [^Class cls]
+  (assoc (object/-meta-write cls) :class cls))</code></pre></div></div><pre class="error"><h6>example not found</h6><code></code></pre></div><div class="entry"><span id="entry__hara_object__read_getters"></span><div class="entry-description"><h4><b>read-getters&nbsp<a data-scroll="" href="#entry__hara_object__">^</a></b></h4><p><i></i></p></div><div class="entry-option"><h6><i class="error version">NONE</i>&nbsp;&nbsp;args: <i class="args">[cls] [cls {:keys [prefix template extra]}]</i>&nbsp;&nbsp;&nbsp;</h6><div><input class="source-toggle" id="entry__pre_hara_object__read_getters" type="checkbox" /><label class="source-toggle" for="entry__pre_hara_object__read_getters"></label><pre class="source"><code class="clojure">(defn read-getters
+  ([cls] (read-getters cls +read-get-template+))
+  ([cls {:keys [prefix template extra]}]
+   (->> [:method :instance :public (re-pattern (str "^" prefix ".+")) 1]
+        (reflect/query-class cls)
+        (reduce (fn [out ele]
+                  (assoc out
+                         (-> (:name ele)
+                             (subs (count prefix))
+                             case/spear-case
+                             (str (or extra ""))
+                             keyword)
+                         (eval (walk/postwalk-replace {'<method> (symbol (:name ele))}
+                                                      template))))
+                {}))))</code></pre></div></div><pre class="error"><h6>example not found</h6><code></code></pre></div><div class="entry"><span id="entry__hara_object__read_reflect_fields"></span><div class="entry-description"><h4><b>read-reflect-fields&nbsp<a data-scroll="" href="#entry__hara_object__">^</a></b></h4><p><i></i></p></div><div class="entry-option"><h6><i class="error version">NONE</i>&nbsp;&nbsp;args: <i class="args">[cls]</i>&nbsp;&nbsp;&nbsp;</h6><div><input class="source-toggle" id="entry__pre_hara_object__read_reflect_fields" type="checkbox" /><label class="source-toggle" for="entry__pre_hara_object__read_reflect_fields"></label><pre class="source"><code class="clojure">(defn read-reflect-fields
+  [cls]
+  (->> (reflect/query-class cls [:field])
+       (map (juxt (comp keyword case/spear-case :name)
+                  identity))
+       (into {})))</code></pre></div></div><pre class="error"><h6>example not found</h6><code></code></pre></div><div class="entry"><span id="entry__hara_object__string_like"></span><div class="entry-description"><h4><b>string-like&nbsp<a data-scroll="" href="#entry__hara_object__">^</a></b></h4><p><i></i></p></div><div class="entry-option"><h6><i class="error version">NONE</i>&nbsp;&nbsp;args: <i class="args">[& {:as classes}]</i>&nbsp;&nbsp;&nbsp;</h6><div><input class="source-toggle" id="entry__pre_hara_object__string_like" type="checkbox" /><label class="source-toggle" for="entry__pre_hara_object__string_like"></label><pre class="source"><code class="clojure">(defmacro string-like [& {:as classes}]
+  `(vector ~@(map (fn [[cls opts]]
+                    `(string-like/extend-string-like ~cls ~opts))
+                  classes)))</code></pre></div></div><pre class="error"><h6>example not found</h6><code></code></pre></div><div class="entry"><span id="entry__hara_object__to_data"></span><div class="entry-description"><h4><b>to-data&nbsp<a data-scroll="" href="#entry__hara_object__">^</a></b></h4><p><i></i></p></div><div class="entry-option"><h6><i class="error version">NONE</i>&nbsp;&nbsp;args: <i class="args">[obj]</i>&nbsp;&nbsp;&nbsp;</h6><div><input class="source-toggle" id="entry__pre_hara_object__to_data" type="checkbox" /><label class="source-toggle" for="entry__pre_hara_object__to_data"></label><pre class="source"><code class="clojure">(defn to-data
+  [obj]
+  (let [cls (type obj)
+        {:keys [to-clojure to-string to-map to-vector methods]} (meta-read cls)]
+    (cond (nil? obj) nil
+
+          (instance? java.util.Map obj)
+          obj
+
+          to-clojure (to-clojure obj)
+
+          to-string (to-string obj)
+
+          to-map (to-map obj)
+
+          to-vector (to-vector obj)
+
+          methods (reduce-kv (fn [out k func]
+                               (if-let [v (func obj)]
+                                 (assoc out k (to-data v))
+                                 out))
+                             {}
+                             methods)
+
+          (.isArray ^Class cls)
+          (->> (seq obj)
+               (mapv to-data))
+
+          (instance? java.lang.Iterable obj)
+          (mapv to-data obj)
+
+          (instance? java.util.Iterator obj)
+          (->> obj iterator-seq (mapv to-data))
+
+          (instance? java.util.AbstractCollection obj)
+          (to-data (.iterator ^java.util.AbstractCollection obj))
+
+          :else obj)))</code></pre></div></div><pre class="error"><h6>example not found</h6><code></code></pre></div><div class="entry"><span id="entry__hara_object__vector_like"></span><div class="entry-description"><h4><b>vector-like&nbsp<a data-scroll="" href="#entry__hara_object__">^</a></b></h4><p><i></i></p></div><div class="entry-option"><h6><i class="error version">NONE</i>&nbsp;&nbsp;args: <i class="args">[& {:as classes}]</i>&nbsp;&nbsp;&nbsp;</h6><div><input class="source-toggle" id="entry__pre_hara_object__vector_like" type="checkbox" /><label class="source-toggle" for="entry__pre_hara_object__vector_like"></label><pre class="source"><code class="clojure">(defmacro vector-like [& {:as classes}]
+  `(vector ~@(map (fn [[cls opts]]
+                    `(vector-like/extend-vector-like ~cls ~opts))
+                  classes)))</code></pre></div></div><pre class="error"><h6>example not found</h6><code></code></pre></div><div class="entry"><span id="entry__hara_object__write_reflect_fields"></span><div class="entry-description"><h4><b>write-reflect-fields&nbsp<a data-scroll="" href="#entry__hara_object__">^</a></b></h4><p><i></i></p></div><div class="entry-option"><h6><i class="error version">NONE</i>&nbsp;&nbsp;args: <i class="args">[cls]</i>&nbsp;&nbsp;&nbsp;</h6><div><input class="source-toggle" id="entry__pre_hara_object__write_reflect_fields" type="checkbox" /><label class="source-toggle" for="entry__pre_hara_object__write_reflect_fields"></label><pre class="source"><code class="clojure">(defn write-reflect-fields
+  [cls]
+  (->> (reflect/query-class cls [:field])
+       (reduce (fn [out ele]
+                 (let [k (-> ele :name case/spear-case keyword)
+                       cls (.getType (get-in ele [:all :delegate]))]
+                   (assoc out k {:type cls :fn ele})))
+               {})))</code></pre></div></div><pre class="error"><h6>example not found</h6><code></code></pre></div><div class="entry"><span id="entry__hara_object__write_setters"></span><div class="entry-description"><h4><b>write-setters&nbsp<a data-scroll="" href="#entry__hara_object__">^</a></b></h4><p><i></i></p></div><div class="entry-option"><h6><i class="error version">NONE</i>&nbsp;&nbsp;args: <i class="args">[cls] [cls {:keys [prefix template]}]</i>&nbsp;&nbsp;&nbsp;</h6><div><input class="source-toggle" id="entry__pre_hara_object__write_setters" type="checkbox" /><label class="source-toggle" for="entry__pre_hara_object__write_setters"></label><pre class="source"><code class="clojure">(defn write-setters
+  ([cls] (write-setters cls {:prefix "set"
+                             :template '(fn <method> [obj val]
+                                          (. obj (<method> val))
+                                          obj)}))
+  ([cls {:keys [prefix template]}]
+   (->> [:method :instance (re-pattern (str "^" prefix ".+")) 2]
+        (reflect/query-class cls)
+        (reduce (fn [out ele]
+                  (assoc out
+                         (-> (:name ele) (subs (count prefix)) case/spear-case keyword)
+                         {:type (-> ele :params second)
+                          :fn (eval (walk/postwalk-replace {'<method> (symbol (:name ele))}
+                                                                template))}))
+                {}))))</code></pre></div></div><pre class="error"><h6>example not found</h6><code></code></pre></div></div></div></div><div><span id="philosophy" name="philosophy"></span><h2><b>3 &nbsp;&nbsp; Philosophy</b></h2></div><div><p><code>hara.object</code> works at the level of meta-programming. As explained in the previous section, there is a correspondence between a class and the data with the class. Below shows a simple example of the concept of <code>Dog</code> as an <code>Object</code> and as data:</p></div><div class="figure"><a id="class-as-data" name="class-as-data"></a><h4><i>fig.1  &nbsp;-&nbsp; Class as Data</i></h4><div class="img"><img line="{:row 38, :col 1, :end-row 38, :end-col 82}" src="img/hara_object/dog.png" title="Class as Data" width="600px" /></div><p></p></div><div><p>There are advantages of using pure data for the representation of the <code>Dog</code> concept.</p><ul><li>generic methods con be used to manipulate the data</li><li>the entire structure is transparent is better for reasoning</li><li>simpler representation (though at the cost of Type Correctness)</li></ul><p>In this way, many objects can be turned into maps/data for consumption by clojure methods. This makes working with many big java libraries much easier before.</p></div><div><span id="string-like" name="string-like"></span><h2><b>4 &nbsp;&nbsp; string-like</b></h2></div><div><p>It is best to look at a real world example of how to use such a library.</p><p><a href='https://www.github.com/zcaudate/gita'>gita</a> is a wrapper around the popular <a href='https://eclipse.org/jgit/'>jgit</a> project. Due to the enormous amount of functionality around <a href='http://www.git.org'>git</a>, it is very difficult to manually write a wrapper around the entire suite. The novelty of <a href='https://www.github.com/zcaudate/gita'>gita</a> is that it uses <a href='https://www.github.com/zcaudate/hara'>hara.object</a> for customisation of the wrapper interface in such a way that the entire functionality of the main <code>org.eclipse.jgit.api.Git</code> class is accessible and usable in a clojure compatible convention.</p></div><div><p><code>hara.object</code> is based on a very simple idea of treating objects as being <code>string-like</code> or a <code>map-like</code> . What is meant by <code>string-like</code> is that the object can be represented into a string. The reverse, that the object can be constructed from a string is not always true but there are very few exceptions.</p></div><div><span id="file" name="file"></span><h3>4.1 &nbsp;&nbsp; File</h3></div><div><p>An example is shown below when we use the <code>string-like</code> macro to extend the functionality to <code>java.io.File</code>.</p></div><div class="code"><pre><code class="clojure">(object/string-like
  java.io.File
  {:tag &quot;path&quot;
   :read (fn [f] (.getPath f))
-  :write (fn [^String path] (java.io.File. path))})</div></div><div class="paragraph"><p>The three keys that are important in the map are:</p><ul><li><code>:tag</code> identifying the type of data</li><li><code>:to</code> which converts the object to string</li><li><code>:from</code>, a function taking two paramters that constructs the object out of a string</li></ul><p>Constructing a File object, notice that the output is different from before:</p></div><div class="code"><div hljs="hljs" language="clojure" no-escape="no-escape">(java.io.File. &quot;/home&quot;) ;;=&gt; #path &quot;/home&quot;</div></div><div class="paragraph"><p>Now that stringlike has been extended to <code>java.io.File</code>, generic data conversion methods can be used. <code>to-data</code> converts the object to a string:</p></div><div class="code"><div hljs="hljs" language="clojure" no-escape="no-escape">(object/to-data (java.io.File. &quot;/home&quot;)) ;;=&gt; &quot;/home&quot;</div></div><div class="paragraph"><p><code>from-data</code> converts a string back into an instance of a <code>File</code>.</p></div><div class="code"><div hljs="hljs" language="clojure" no-escape="no-escape">(object/from-data &quot;/home&quot; java.io.File)  ;;=&gt; #path &quot;/home&quot;</div></div></section><section class="section" id="repository"><h3 class="section">3.2  &nbsp;&nbsp; Repository</h3><div class="paragraph"><p><code>string-like</code> is implementated for <code>jgit</code> classes in <a href='https://github.com/zcaudate/gita/src/gita/interop/string&#95;like.clj'>gita</a>. The example below shows the <code>Repository</code> object:</p></div><div class="code"><div hljs="hljs" language="clojure" no-escape="no-escape">(object/string-like
+  :write (fn [^String path] (java.io.File. path))})</code></pre></div><div><p>The three keys that are important in the map are:</p><ul><li><code>:tag</code> identifying the type of data</li><li><code>:to</code> which converts the object to string</li><li><code>:from</code>, a function taking two paramters that constructs the object out of a string</li></ul><p>Constructing a File object, notice that the output is different from before:</p></div><div class="code"><pre><code class="clojure">(java.io.File. &quot;/home&quot;) ;;=&gt; #path &quot;/home&quot;</code></pre></div><div><p>Now that stringlike has been extended to <code>java.io.File</code>, generic data conversion methods can be used. <code>to-data</code> converts the object to a string:</p></div><div class="code"><pre><code class="clojure">(object/to-data (java.io.File. &quot;/home&quot;)) ;;=&gt; &quot;/home&quot;</code></pre></div><div><p><code>from-data</code> converts a string back into an instance of a <code>File</code>.</p></div><div class="code"><pre><code class="clojure">(object/from-data &quot;/home&quot; java.io.File)  ;;=&gt; #path &quot;/home&quot;</code></pre></div><div><span id="repository" name="repository"></span><h3>4.2 &nbsp;&nbsp; Repository</h3></div><div><p><code>string-like</code> is implementated for <code>jgit</code> classes in <a href='https://github.com/zcaudate/gita/src/gita/interop/string_like.clj'>gita</a>. The example below shows the <code>Repository</code> object:</p></div><div class="code"><pre><code class="clojure">(object/string-like
  org.eclipse.jgit.lib.Repository
  {:tag   &quot;repo&quot;
   :read     (fn [^org.eclipse.jgit.lib.Repository repo]
               (-&gt; repo (.getDirectory) object/to-data))
   :write    (fn [^String path]
-              (org.eclipse.jgit.internal.storage.file.FileRepository. path))})</div></div><div class="paragraph"><p>It's usage can be seen:</p></div><div class="code"><div hljs="hljs" language="clojure" no-escape="no-escape">(object/from-data &quot;/home&quot; org.eclipse.jgit.lib.Repository) ;;=&gt; #repo &quot;/home&quot;</div></div><div class="paragraph"><p>What this allows is for back and forth coercion of similar types of objects using a very generic framework. We see the back and forth conversion of a string to a File and Repository object below:</p></div><div class="code"><div hljs="hljs" language="clojure" no-escape="no-escape">(-&gt; &quot;/home&quot;
+              (org.eclipse.jgit.internal.storage.file.FileRepository. path))})</code></pre></div><div><p>It's usage can be seen:</p></div><div class="code"><pre><code class="clojure">(object/from-data &quot;/home&quot; org.eclipse.jgit.lib.Repository) ;;=&gt; #repo &quot;/home&quot;</code></pre></div><div><p>What this allows is for back and forth coercion of similar types of objects using a very generic framework. We see the back and forth conversion of a string to a File and Repository object below:</p></div><div class="code"><pre><code class="clojure">(-&gt; &quot;/home&quot;
     (object/from-data java.io.File)
     (object/to-data)
     (object/from-data org.eclipse.jgit.lib.Repository)
     (object/to-data))
-;;=&gt; &quot;/home&quot;</div></div></section><section class="section" id="enums"><h3 class="section">3.3  &nbsp;&nbsp; Enums</h3><div class="paragraph"><p>Enumerations are considered to be stringlike. Therefore <code>to-data</code> is used to convert a enum constants to a string represention</p></div><div class="code"><div hljs="hljs" language="clojure" no-escape="no-escape">(object/to-data java.lang.Thread$State/NEW)
-;;=&gt; &quot;NEW&quot;</div></div><div class="paragraph"><p><code>from-data</code> is used to convert a string back into the enum represention</p></div><div class="code"><div hljs="hljs" language="clojure" no-escape="no-escape">(object/from-data &quot;NEW&quot; java.lang.Thread$State)
-;;=&gt; #enum[java.lang.Thread$State NEW]</div></div><div class="paragraph"><p>All enumeration values can be obtained using <code>enum-values</code></p></div><div class="code"><div hljs="hljs" language="clojure" no-escape="no-escape">(-&gt;&gt; (object/enum-values java.lang.Thread$State)
-     (map object/to-data)
-     (sort))
-;;=&gt; (&quot;BLOCKED&quot; &quot;NEW&quot; &quot;RUNNABLE&quot; &quot;TERMINATED&quot; &quot;TIMED_WAITING&quot; &quot;WAITING&quot;)</div></div></section></section><section class="chapter" id="vector-like"><h2 class="chapter">4  &nbsp;&nbsp; vector-like</h2><div class="group"><div class="paragraph"><p>Classes that behave like lists and collections can be extended with the <code>vector-like</code> attribute. Note that class arrays, <code>java.lang.Iterable</code>, <code>java.util.Iterator</code> and <code>java.util.AbstractCollection</code> are automatically converted to a vector of things:</p></div><div class="code"><div hljs="hljs" language="clojure" no-escape="no-escape">(object/vector-like
+;;=&gt; &quot;/home&quot;</code></pre></div><div><span id="enums" name="enums"></span><h3>4.3 &nbsp;&nbsp; Enums</h3></div><div><p>Enumerations are considered to be stringlike. Therefore <code>to-data</code> is used to convert a enum constants to a string represention</p></div><div class="code"><pre><code class="clojure">(object/to-data java.lang.Thread$State/NEW)
+;;=&gt; &quot;NEW&quot;</code></pre></div><div><p><code>from-data</code> is used to convert a string back into the enum represention</p></div><div class="code"><pre><code class="clojure">(object/from-data &quot;NEW&quot; java.lang.Thread$State)
+;;=&gt; #enum[java.lang.Thread$State NEW]</code></pre></div><div class="code"><pre><code class="clojure">(object/from-data &quot;NON-EXISTENT&quot; java.lang.Thread$State)
+=&gt; (throws)</code></pre></div><div><span id="vector-like" name="vector-like"></span><h2><b>5 &nbsp;&nbsp; vector-like</b></h2></div><div><p>Classes that behave like lists and collections can be extended with the <code>vector-like</code> attribute. Note that class arrays, <code>java.lang.Iterable</code>, <code>java.util.Iterator</code> and <code>java.util.AbstractCollection</code> are automatically converted to a vector of things:</p></div><div class="code"><pre><code class="clojure">(object/vector-like
  org.eclipse.jgit.revwalk.RevWalk
  {:tag &quot;commits&quot;
   :read (fn [^org.eclipse.jgit.revwalk.RevWalk walk]
-          (-&gt;&gt; walk (.iterator) object/to-data))})</div></div></div></section><section class="chapter" id="map-like"><h2 class="chapter">5  &nbsp;&nbsp; map-like</h2><div class="group"><div class="paragraph"><p>Classes are containers of fields and methods. Therefore, they can be considered map-like because instances of the class contain fields that hold data about its state. <a href='hara-reflect.html'>hara.reflect</a> allows access of fields through the <a href='hara-reflect.html#delegate'>delegate</a> function. However, it has been found that this is a little too overpowered and a more subtle way would be to use the <code>getter</code> and <code>setter</code> methods.</p></div></div><section class="section" id="primitives"><h3 class="section">5.1  &nbsp;&nbsp; Primitives</h3><div class="paragraph"><p><code>hara.object</code> accesses class information through the class getters:</p></div><div class="code"><div hljs="hljs" language="clojure" no-escape="no-escape">(-&gt; (object/read-getters org.eclipse.jgit.api.Status)
+          (-&gt;&gt; walk (.iterator) object/to-data))})</code></pre></div><div><span id="map-like" name="map-like"></span><h2><b>6 &nbsp;&nbsp; map-like</b></h2></div><div><p>Classes are containers of fields and methods. Therefore, they can be considered map-like because instances of the class contain fields that hold data about its state. <a href='hara-reflect.html'>hara.reflect</a> allows access of fields through the <a href='hara-reflect.html#delegate'>delegate</a> function. However, it has been found that this is a little too overpowered and a more subtle way would be to use the <code>getter</code> and <code>setter</code> methods.</p></div><div><span id="primitives" name="primitives"></span><h3>6.1 &nbsp;&nbsp; Primitives</h3></div><div><p><code>hara.object</code> accesses class information through the class getters:</p></div><div class="code"><pre><code class="clojure">(-&gt; (object/read-getters org.eclipse.jgit.api.Status)
     (keys)
     (sort))
-;;=&gt; (:added :changed :class :clean? :conflicting :conflicting-stage-state :ignored-not-in-index :missing :modified :removed :uncommitted-changes :uncommitted-changes! :untracked :untracked-folders)</div></div><div class="paragraph"><p>And sets data through class setters. In the case for <code>Status</code>, because it is readonly, there are no setters to show</p></div><div class="code"><div hljs="hljs" language="clojure" no-escape="no-escape">(-&gt; (object/write-setters org.eclipse.jgit.api.Status)
+;;=&gt; (:added :changed :class :clean? :conflicting :conflicting-stage-state :ignored-not-in-index :missing :modified :removed :uncommitted-changes :uncommitted-changes! :untracked :untracked-folders)</code></pre></div><div><p>And sets data through class setters. In the case for <code>Status</code>, because it is readonly, there are no setters to show</p></div><div class="code"><pre><code class="clojure">(-&gt; (object/write-setters org.eclipse.jgit.api.Status)
     (keys)
     (sort))
-;;=&gt; ()</div></div><div class="paragraph"><p><code>read-getters</code> and <code>read-reflect-fields</code> can be used on any object:</p></div><div class="code"><div hljs="hljs" language="clojure" no-escape="no-escape">(-&gt; (object/read-reflect-fields &quot;abc&quot;)
+;;=&gt; ()</code></pre></div><div><p><code>read-getters</code> and <code>read-reflect-fields</code> can be used on any object:</p></div><div class="code"><pre><code class="clojure">(-&gt; (object/read-reflect-fields &quot;abc&quot;)
     (keys)
     (sort))
-;=&gt; (:case-insensitive-order :hash :serial-persistent-fields :serial-version-uid :value)</div></div></section><section class="section" id="map-like-0"><h3 class="section">5.2  &nbsp;&nbsp; map-like</h3><div class="paragraph"><p>As for stringlike classes, maplike classes can also be seen to be extended in <a href='https://github.com/zcaudate/gita/src/gita/interop/map&#95;like.clj'>gita</a>. Below are examples of classes that have been extended:</p></div><div class="code"><div hljs="hljs" language="clojure" no-escape="no-escape">(object/map-like
+;=&gt; (:case-insensitive-order :hash :serial-persistent-fields :serial-version-uid :value)</code></pre></div><div><span id="map-like-0" name="map-like-0"></span><h3>6.2 &nbsp;&nbsp; map-like</h3></div><div><p>As for stringlike classes, maplike classes can also be seen to be extended in <a href='https://github.com/zcaudate/gita/src/gita/interop/map_like.clj'>gita</a>. Below are examples of classes that have been extended:</p></div><div class="code"><pre><code class="clojure">(object/map-like
  org.eclipse.jgit.revwalk.RevCommit
  {:tag &quot;commit&quot;
-  :include [:commit-time :name :author-ident :full-message]})</div></div><div class="paragraph"><p>Important keys are <code>:tag</code> and either <code>:include</code> which only includes tha getter keys listed or <code>:exclude</code>, which includes all the keys except those listed. For the extension of <code>RevCommit</code>, only four keys are chosen. The <code>:author-ident</code> key is a <code>Personident</code> object and also needs to be extended:</p></div><div class="code"><div hljs="hljs" language="clojure" no-escape="no-escape">(object/map-like
+  :include [:commit-time :name :author-ident :full-message]})</code></pre></div><div><p>Important keys are <code>:tag</code> and either <code>:include</code> which only includes tha getter keys listed or <code>:exclude</code>, which includes all the keys except those listed. For the extension of <code>RevCommit</code>, only four keys are chosen. The <code>:author-ident</code> key is a <code>Personident</code> object and also needs to be extended:</p></div><div class="code"><pre><code class="clojure">(object/map-like
  org.eclipse.jgit.lib.PersonIdent
  {:tag &quot;person&quot;
-  :exclude [:time-zone]})</div></div><div class="paragraph"><p>Once classes have been extended, the typical usage would be to wrap a function returning the object wtih a <code>to-data</code> call. An example of this can be seen <a href='https://github.com/zcaudate/gita#working-locally---add-commit-log-and-rm'>here</a>, where a call to <code>git :commit</code> returns a <code>RevCommit</code> object which then is converted into a hashmap via the <code>to-data</code> wrapper:</p></div><div class="code"><div hljs="hljs" language="clojure" no-escape="no-escape">(git :commit :message &quot;Added Hello.txt&quot;)
+  :exclude [:time-zone]})</code></pre></div><div><p>Once classes have been extended, the typical usage would be to wrap a function returning the object wtih a <code>to-data</code> call. An example of this can be seen <a href='https://github.com/zcaudate/gita#working-locally&mdash;add-commit-log-and-rm'>here</a>, where a call to <code>git :commit</code> returns a <code>RevCommit</code> object which then is converted into a hashmap via the <code>to-data</code> wrapper:</p></div><div class="code"><pre><code class="clojure">(git :commit :message &quot;Added Hello.txt&quot;)
 ;;=&gt; {:commit-time 1425683330,
 ;;    :name &quot;9f1177ad928d7dea2afedd58b1fb7192b3523a6c&quot;,
 ;;    :author-ident {:email-address &quot;z@caudate.me&quot;,
 ;;                   :name &quot;Chris Zheng&quot;,
 ;;                   :time-zone-offset 330,
 ;;                   :when #inst &quot;2015-03-06T23:08:50.000-00:00&quot;},
-;;    :full-message &quot;Added Hello.txt&quot;}</div></div><div class="paragraph"><p>Notice that the datastructure is nested. Both <code>RevCommit</code> and <code>PersonIdent</code> have been turned into generic clojure maps in the format specified through <code>extend-maplike</code>. Most of <a href='https://github.com/zcaudate/gita'>gita</a> has been implementated in this way.</p></div></section><section class="section" id="extension"><h3 class="section">5.3  &nbsp;&nbsp; extension</h3><div class="paragraph"><p>For more flexibility of output, classes extend <code>hara.protocol.object/-meta-read</code> and <code>hara.protocol.object/-meta-write</code>. The use would the same method name without prefix <code>-</code> in the <code>hara.object</code> namespace. An example of this is found <a href='https://github.com/zcaudate/gita/blob/master/src/gita/interop/status.clj'>here</a> where the <code>org.eclipse.jgit.api.Status</code> is extended:</p></div><div class="code"><div hljs="hljs" language="clojure" no-escape="no-escape">(ns gita.interop.status
+;;    :full-message &quot;Added Hello.txt&quot;}</code></pre></div><div><p>Notice that the datastructure is nested. Both <code>RevCommit</code> and <code>PersonIdent</code> have been turned into generic clojure maps in the format specified through <code>extend-maplike</code>. Most of <a href='https://github.com/zcaudate/gita'>gita</a> has been implementated in this way.</p></div><div><span id="extension" name="extension"></span><h3>6.3 &nbsp;&nbsp; extension</h3></div><div><p>For more flexibility of output, classes extend <code>hara.protocol.object/-meta-read</code> and <code>hara.protocol.object/-meta-write</code>. The use would the same method name without prefix <code>-</code> in the <code>hara.object</code> namespace. An example of this is found <a href='https://github.com/zcaudate/gita/blob/master/src/gita/interop/status.clj'>here</a> where the <code>org.eclipse.jgit.api.Status</code> is extended:</p></div><div class="code"><pre><code class="clojure">(ns gita.interop.status
   (:require [hara.object :as object])
   (:import org.eclipse.jgit.api.Status))
 
@@ -168,29 +650,21 @@
                             out
                             (assoc out k v)))
                         {}
-                        m))})</div></div><div class="paragraph"><p>An example of how is is used can be seen in the <code>gita</code> readme:</p></div><div class="code"><div hljs="hljs" language="clojure" no-escape="no-escape">(git :status)
-=&gt; {:clean? false, :uncommitted-changes! false, :untracked #{&quot;hello.txt&quot;}}</div></div></section></section>
+                        m))})</code></pre></div><div><p>An example of how is is used can be seen in the <code>gita</code> readme:</p></div><div class="code"><pre><code class="clojure">(git :status)
+=&gt; {:clean? false, :uncommitted-changes! false, :untracked #{&quot;hello.txt&quot;}}</code></pre></div>
+        </div>
+      </div>
     </div>
-</div><!--end of .container-->
 
-  <section class="application">
-    
-  </section>
-</body>
+    <label for="sidebar-checkbox" class="sidebar-toggle"></label>
 
-<script>
-  $('#nav').affix({
-    offset: {
-        top: $('#nav').offset().top,
-        bottom: $('footer').outerHeight(true) + $('.application').outerHeight(true) + 40
-    }});
-</script>
+  </body>
 
-
-<script>
-  if (document.location.search.match(/type=embed/gi)) {
-    window.parent.postMessage("resize", "*");
-  }
-</script>
-</body>
+  <script type="text/javascript">
+    smoothScroll.init();
+    gumshoe.init({});
+  
+    hljs.registerLanguage("clojure",function(e){var t={"builtin-name":"def defonce cond apply if-not if-let if not not= = < > <= >= == + / * - rem quot neg? pos? delay? symbol? keyword? true? false? integer? empty? coll? list? set? ifn? fn? associative? sequential? sorted? counted? reversible? number? decimal? class? distinct? isa? float? rational? reduced? ratio? odd? even? char? seq? vector? string? map? nil? contains? zero? instance? not-every? not-any? libspec? -> ->> .. . inc compare do dotimes mapcat take remove take-while drop letfn drop-last take-last drop-while while intern condp case reduced cycle split-at split-with repeat replicate iterate range merge zipmap declare line-seq sort comparator sort-by dorun doall nthnext nthrest partition eval doseq await await-for let agent atom send send-off release-pending-sends add-watch mapv filterv remove-watch agent-error restart-agent set-error-handler error-handler set-error-mode! error-mode shutdown-agents quote var fn loop recur throw try monitor-enter monitor-exit defmacro defn defn- macroexpand macroexpand-1 for dosync and or when when-not when-let comp juxt partial sequence memoize constantly complement identity assert peek pop doto proxy defstruct first rest cons defprotocol cast coll deftype defrecord last butlast sigs reify second ffirst fnext nfirst nnext defmulti defmethod meta with-meta ns in-ns create-ns import refer keys select-keys vals key val rseq name namespace promise into transient persistent! conj! assoc! dissoc! pop! disj! use class type num float double short byte boolean bigint biginteger bigdec print-method print-dup throw-if printf format load compile get-in update-in pr pr-on newline flush read slurp read-line subvec with-open memfn time re-find re-groups rand-int rand mod locking assert-valid-fdecl alias resolve ref deref refset swap! reset! set-validator! compare-and-set! alter-meta! reset-meta! commute get-validator alter ref-set ref-history-count ref-min-history ref-max-history ensure sync io! new next conj set! to-array future future-call into-array aset gen-class reduce map filter find empty hash-map hash-set sorted-map sorted-map-by sorted-set sorted-set-by vec vector seq flatten reverse assoc dissoc list disj get union difference intersection extend extend-type extend-protocol int nth delay count concat chunk chunk-buffer chunk-append chunk-first chunk-rest max min dec unchecked-inc-int unchecked-inc unchecked-dec-inc unchecked-dec unchecked-negate unchecked-add-int unchecked-add unchecked-subtract-int unchecked-subtract chunk-next chunk-cons chunked-seq? prn vary-meta lazy-seq spread list* str find-keyword keyword symbol gensym force rationalize"},r="a-zA-Z_\\-!.?+*=<>&#'",n="["+r+"]["+r+"0-9/;:]*",a="[-+]?\\d+(\\.\\d+)?",o={b:n,r:0},s={cN:"number",b:a,r:0},i=e.inherit(e.QSM,{i:null}),c=e.C(";","$",{r:0}),d={cN:"literal",b:/\b(true|false|nil)\b/},l={b:"[\\[\\{]",e:"[\\]\\}]"},m={cN:"comment",b:"\\^"+n},p=e.C("\\^\\{","\\}"),u={cN:"symbol",b:"[:]{1,2}"+n},f={b:"\\(",e:"\\)"},h={eW:!0,r:0},y={k:t,l:n,cN:"name",b:n,starts:h},b=[f,i,m,p,c,u,l,s,d,o];return f.c=[e.C("comment",""),y,h],h.c=b,l.c=b,{aliases:["clj"],i:/\S/,c:[f,i,m,p,c,u,l,s,d]}});
+    hljs.initHighlightingOnLoad();
+  </script>
 </html>

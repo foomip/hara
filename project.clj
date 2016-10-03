@@ -11,25 +11,15 @@
                                   [org.eclipse.jgit "4.0.1.201506240215-r"]]
                    :plugins [[lein-repack "0.2.10"]
                              [lein-hydrox "0.1.17"]]}}
-  :publish {:site   "hara"
-            :output "docs"
-            :description "patterns and utilities"
-            :tracking "UA-31320512-2"
-            :owners [{:name    "Chris Zheng"
-                      :email   "z@caudate.me"
-                      :website "http://z.caudate.me"}]
-            :template {:path "template"
-                       :copy ["assets"]
-                       :defaults {:template "article-basic.html"
-                                  :navbar  [:file "partials/navbar.html"]
-                                  :sidebar [:file "partials/sidebar.html"]
-                                  :footer  [:file "partials/footer.html"]
-                                  :dependencies [:file "partials/deps-web.html"]
-                                  :contentbar  :navigation
-                                  :article     :article}}
-            :paths ["test/documentation"]
+  :publish {:theme  "bolton"
+  
+            :template {:author "Chris Zheng"
+                       :email  "z@caudate.me"
+                       :site   "hara"
+                       :tracking "UA-31320512-2"}
+            
             :files {"index"
-                    {:template "home.html"
+                    {:input "test/documentation/home_hara.clj"
                      :title "hara"
                      :subtitle "patterns and utilities"}
                     "hara-class"
@@ -84,10 +74,10 @@
                     {:input "test/documentation/hara_io_file.clj"
                      :title "io.file"
                      :subtitle "tools for the file system"}
-                    "hara-io-environment"
-                    {:input "test/documentation/hara_io_environment.clj"
-                     :title "io.environment"
-                     :subtitle "tools for versioning and environment"}
+                    "hara-io"
+                    {:input "test/documentation/hara_io.clj"
+                     :title "io"
+                     :subtitle "tools for files and io operations"}
                     "hara-io-scheduler"
                     {:input "test/documentation/hara_io_scheduler.clj"
                      :title "io.scheduler"
@@ -127,11 +117,7 @@
                     "hara-zip"
                     {:input "test/documentation/hara_zip.clj"
                      :title "zip"
-                     :subtitle "data traversal in style"}}
-          :html {:logo "hara.png"
-                 :home  "index"}
-          :link {:auto-tag    true
-                 :auto-number true}}
+                     :subtitle "data traversal in style"}}}
   :jvm-opts []
   :global-vars {*warn-on-reflection* true}
   :java-source-paths ["java"]

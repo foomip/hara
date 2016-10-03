@@ -36,6 +36,10 @@ Add to `project.clj` dependencies:
 
 [hara.io.file](https://github.com/zcaudate/hara/blob/master/src/hara/io/file.clj) written due to the belief that the `java.io` package was not consistent enough for file system operations. Furthermore, file system operations use the [FileVisitor](https://docs.oracle.com/javase/7/docs/api/java/nio/file/FileVisitor.html) pattern as it was easier to think about file and directory manipulation as bulk operations. If an operation can be done on a whole group of files, then that operation can also be readily done on a single file, thus making the codebase smaller and more robust."
 
+[[:chapter {:title "API" :link "hara.io.file"}]]
+
+[[:api {:namespace "hara.io.file"}]]
+
 [[:chapter {:title "Basics"}]]
 
 [[:section {:title "path"}]]
@@ -225,12 +229,10 @@ Add to `project.clj` dependencies:
 "Checks whether a path is a directory:"
 
 (comment
-  (directory? "src") => true)
+  (directory? "src") => true
 
-(comment  
-  (directory? "project.clj") => false)
-  
-(comment
+  (directory? "project.clj") => false
+
   (directory? "NON-EXISTENT") => false)
 
 [[:section {:title "executable?"}]]
@@ -238,12 +240,10 @@ Add to `project.clj` dependencies:
 "Checks whether a path is executable:"
 
 (comment
-  (executable? "src") => true)
+  (executable? "src") => true
 
-(comment  
-  (executable? "project.clj") => false)
+  (executable? "project.clj") => false
 
-(comment
   (executable? "NON-EXISTENT") => false)
 
 
@@ -252,22 +252,20 @@ Add to `project.clj` dependencies:
 "Checks whether a path exists:"
 
 (comment
-  (exists? "src") => true)
+  (exists? "src") => true
 
-(comment
   (exists? "NON-EXISTENT") => false)
+
 
 [[:section {:title "file?"}]]
 
 "Checks whether a path is a regular file:"
 
 (comment
-  (file? "src") => false)
+  (file? "src") => false
 
-(comment
-  (file? "project.clj") => true)
+  (file? "project.clj") => true
 
-(comment
   (file? "NON-EXISTENT") => false)
 
 [[:section {:title "hidden?"}]]
@@ -275,12 +273,10 @@ Add to `project.clj` dependencies:
 "Checks whether a path is hidden:"
 
 (comment
-  (hidden? ".git") => true)
+  (hidden? ".git") => true
 
-(comment
-  (hidden? "project.clj") => false)
+  (hidden? "project.clj") => false
 
-(comment
   (hidden? "NON-EXISTENT") => false)
 
 [[:section {:title "link?"}]]
@@ -288,9 +284,8 @@ Add to `project.clj` dependencies:
 "Checks whether a file is a link:"
 
 (comment
-  (link? "project.clj") => false)
+  (link? "project.clj") => false
 
-(comment
   (link? "/usr/local/bin/boot") => true)
 
 [[:section {:title "readable?"}]]
@@ -298,9 +293,8 @@ Add to `project.clj` dependencies:
 "Checks whether a file is readable:"
 
 (comment
-  (readable? "project.clj") => true)
+  (readable? "project.clj") => true
 
-(comment
   (readable? "NON-EXISTENT") => false)
 
 [[:section {:title "writable?"}]]
@@ -308,9 +302,8 @@ Add to `project.clj` dependencies:
 "Checks whether a file is readable:"
 
 (comment
-  (writable? "project.clj") => true)
+  (writable? "project.clj") => true
 
-(comment
   (writable? "/usr/local/bin/boot") => false)
 
 

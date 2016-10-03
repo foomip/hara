@@ -1,32 +1,33 @@
 (ns documentation.hara-string)
 
+"`hara.string` contain functions and utilities for strings."
 
-[[:chapter {:title "Introduction"}]]
+[[:chapter {:title "string.case" :link "hara.string.case"}]]
 
-"
-[hara.string](https://github.com/zcaudate/hara/blob/master/src/hara/string.clj) contain functions and utilities for strings."
-
-[[:section {:title "Installation"}]]
-
-"
-Add to `project.clj` dependencies:
-
-    [im.chit/hara.string \"{{PROJECT.version}}\"]
-
-Individual namespaces can be added seperately:
+"Add to `project.clj` dependencies:
 
     [im.chit/hara.string.case \"{{PROJECT.version}}\"]
+
+**hara.string.case** provides methods for changing case representation"
+
+[[:api {:namespace "hara.string.case" :title ""}]]
+
+[[:chapter {:title "string.path" :link "hara.string.path"}]]
+
+"Add to `project.clj` dependencies:
+
     [im.chit/hara.string.path \"{{PROJECT.version}}\"]
-"
 
-[[:chapter {:title "API - case"}]]
+**hara.string.path** provides methods for manipulating paths in string like objects"
 
-"[hara.string.case](https://github.com/zcaudate/hara/blob/master/src/hara/string/case.clj)"
+[[:api {:namespace "hara.string.path" :title ""}]]
 
-[[:api {:namespace "hara.string.case"}]]
+[[:chapter {:title "string.prose" :link "hara.string.prose"}]]
 
-[[:chapter {:title "API - path"}]]
+"Add to `project.clj` dependencies:
 
-"[hara.string.path](https://github.com/zcaudate/hara/blob/master/src/hara/string/path.clj)"
+    [im.chit/hara.string.path \"{{PROJECT.version}}\"]
 
-[[:api {:namespace "hara.string.path"}]]
+**hara.string.prose** provides methods for general manipulation of text"
+
+[[:api {:namespace "hara.string.prose" :title ""}]]

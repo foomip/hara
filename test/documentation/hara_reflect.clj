@@ -5,7 +5,7 @@
  [[:chapter {:title "Introduction"}]]
 
  "
- [hara.reflect](https://github.com/zcaudate/hara/blob/master/src/hara/reflect.clj) is a library for jvm reflection. It is designed to be used for testing, repl based development, and blantant hacks bypassing the jvm security mechanism. The library was originally developed as a seperate library - [iroh](https://github.com/zcaudate/iroh) but has been included as part of the larger [hara](https://github.com/zcaudate/hara) codebase."
+ `hara.reflect` contains methods for class reflection and method invocation."
 
  [[:section {:title "Installation"}]]
 
@@ -17,23 +17,9 @@
 
  (comment (use 'hara.reflect))
 
-[[:section {:title "Motivation"}]]
+[[:chapter {:title "API" :link "hara.reflect"}]]
 
-"
-When working and understanding encapsulated code, the best way is to expose everything first, then to test each piece of functionality in a controlled way. Finally only when all the pieces are known, then work out a strategy for code refactoring/rewriting.
-
-Although private and protected keywords have their uses in java, they may also be considered functionality obsfucators. They are complete hinderences when a developer attempts do something to the code base that the previous author had not intended - one of them being to understand what is going on underneath.
-
-If the previous author had taken shortcuts in design, those private keywords turn one of those over-protective parents that get in the way of the growth of their children. Taking inspiration from clj-wallhack, here are some primary use cases for the library:
-
-- To explore the members of classes as well as all instances within the repl
-- To be able to test methods and functions that are usually not testable, or very hard to test:
-- Make hidden class members visible by providing access to private methods and fields
-- Make immutable class members flexible by providing ability to change final members (So that initial states can be set up easily)
-- Extract out class members into documented and executable functions (including multi-argument functions)
-- Better understand jvm security and how to dodge it if needed
-- Better understand the java type system as well as clojure's own interface definitions
-- To make working with java fun again"
+[[:api {:namespace "hara.reflect" :title ""}]]
 
 [[:chapter {:title "Querying"}]]
 

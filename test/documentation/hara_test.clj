@@ -42,6 +42,10 @@ There are many test frameworks and test runners for clojure. Why write another o
 
   )
 
+[[:chapter {:title "API" :link "hara.test"}]]
+
+[[:api {:namespace "hara.test" :title ""}]]
+
 [[:chapter {:title "Basics"}]]
 
 [[:section {:title "fact"}]]

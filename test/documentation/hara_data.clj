@@ -1,73 +1,113 @@
 (ns documentation.hara-data)
-
-[[:chapter {:title "Introduction"}]]
-
 "
-[hara.data](https://github.com/zcaudate/hara/blob/master/src/hara/data.clj) are a set of functions that act on clojure hash-maps and map-like representations of data. The level of complexity needed for working with data increases as it becomes nested and then relational. The functions of `hara.data` get increasingly sophisticated, with the `hara.data.complex` namespace built specifically for working with datomic data structures."
+**hara.data** consists of utility functions that act on clojure hash-maps and map-like representations of data. The level of complexity needed for working with data increases as it becomes nested and then relational."
 
-[[:section {:title "Installation"}]]
 
-"
-Add to `project.clj` dependencies:
+[[:chapter {:title "data.map" :link "hara.data.map"}]]
 
-    [im.chit/hara.data \"{{PROJECT.version}}\"]
-
-Individual namespaces can be added seperately:
+"Add to `project.clj` dependencies:
 
     [im.chit/hara.data.map \"{{PROJECT.version}}\"]
-    [im.chit/hara.data.nested \"{{PROJECT.version}}\"]
-    [im.chit/hara.data.diff \"{{PROJECT.version}}\"]
-    [im.chit/hara.data.combine \"{{PROJECT.version}}\"]
-    [im.chit/hara.data.complex \"{{PROJECT.version}}\"]
-    [im.chit/hara.data.record \"{{PROJECT.version}}\"]
-    [im.chit/hara.data.path \"{{PROJECT.version}}\"]
+
+**hara.data.map** contain functions for clojure maps"
+
+[[:api {:namespace "hara.data.map" :title ""}]]
+
+
+
+
+[[:chapter {:title "data.seq"}]]
+
+"Add to `project.clj` dependencies:
+
     [im.chit/hara.data.seq \"{{PROJECT.version}}\"]
-"
 
-[[:chapter {:title "API - map"}]]
+**hara.data.seq** contain functions for sequences and arrays"
 
-"[hara.data.map](https://github.com/zcaudate/hara/blob/master/src/hara/data/map.clj) contains functions for updating hashmaps."
+[[:api {:namespace "hara.data.seq" :title ""}]]
 
-[[:api {:namespace "hara.data.map"}]]
 
-[[:chapter {:title "API - nested"}]]
 
-"[hara.data.nested](https://github.com/zcaudate/hara/blob/master/src/hara/data/nested.clj) contains functions for updating nested hashmaps."
 
-[[:api {:namespace "hara.data.nested"}]]
+[[:chapter {:title "data.nested" :link "hara.data.nested"}]]
 
-[[:chapter {:title "API - diff"}]]
+"Add to `project.clj` dependencies:
 
-"[hara.data.diff](https://github.com/zcaudate/hara/blob/master/src/hara/data/diff.clj) contains functions for comparing maps, as well as functions to patch changes."
+    [im.chit/hara.data.nested \"{{PROJECT.version}}\"]
 
-[[:api {:namespace "hara.data.diff"}]]
+**hara.data.nested** contain functions for updating nested hashmaps."
 
-[[:chapter {:title "API - combine"}]]
+[[:api {:namespace "hara.data.nested" :title ""}]]
 
-"[hara.data.combine](https://github.com/zcaudate/hara/blob/master/src/hara/data/combine.clj) contains functions for working with sets of data."
 
-[[:api {:namespace "hara.data.combine"}]]
 
-[[:chapter {:title "API - complex"}]]
 
-"[hara.data.complex](https://github.com/zcaudate/hara/blob/master/src/hara/data/complex.clj) combine functions for working with relational data such as that coming out from datomic."
+[[:chapter {:title "data.diff"
+            :link "hara.data.diff"
+            :exclude ["merge-or-replace"]}]]
 
-[[:api {:namespace "hara.data.complex"}]]
+"Add to `project.clj` dependencies:
 
-[[:chapter {:title "API - record"}]]
+    [im.chit/hara.data.diff \"{{PROJECT.version}}\"]
 
-"[hara.data.record](https://github.com/zcaudate/hara/blob/master/src/hara/data/record.clj) contains functions for working with clojure records"
+**hara.data.diff** contain functions for comparing maps, as well as functions to patch changes."
 
-[[:api {:namespace "hara.data.record"}]]
+[[:api {:namespace "hara.data.diff"
+        :title ""
+        :exclude ["merge-or-replace"]}]]
 
-[[:chapter {:title "API - path"}]]
 
-"[hara.data.path](https://github.com/zcaudate/hara/blob/master/src/hara/data/path.clj) concerns itself with the translation between data contained in a nested versus data contained in a single map with paths as keys."
 
-[[:api {:namespace "hara.data.path"}]]
 
-[[:chapter {:title "API - seq"}]]
+[[:chapter {:title "data.combine" :link "hara.data.combine"}]]
 
-"[hara.data.seq](https://github.com/zcaudate/hara/blob/master/src/hara/data/seq.clj) is a support namespace used internally"
+"Add to `project.clj` dependencies:
 
-[[:api {:namespace "hara.data.seq"}]]
+    [im.chit/hara.data.combine \"{{PROJECT.version}}\"]
+
+**hara.data.combine** contains functions for working with sets of data."
+
+[[:api {:namespace "hara.data.combine" :title ""}]]
+
+
+
+
+[[:chapter {:title "data.complex"
+            :link "hara.data.complex"
+            :exclude ["assocs-in-filtered"]}]]
+
+"Add to `project.clj` dependencies:
+
+    [im.chit/hara.data.complex \"{{PROJECT.version}}\"]
+
+**hara.data.complex** contain functions for working with relational data such as that coming out from datomic."
+
+[[:api {:namespace "hara.data.complex" :title ""
+        :exclude ["assocs-in-filtered"]}]]
+
+
+
+
+[[:chapter {:title "data.record" :link "hara.data.record"}]]
+
+"Add to `project.clj` dependencies:
+
+    [im.chit/hara.data.record \"{{PROJECT.version}}\"]
+
+**hara.data.record** contain functions for working with clojure records"
+
+[[:api {:namespace "hara.data.record" :title ""}]]
+
+
+
+
+[[:chapter {:title "data.path" :link "hara.data.path"}]]
+
+"Add to `project.clj` dependencies:
+
+    [im.chit/hara.data.path \"{{PROJECT.version}}\"]
+
+**hara.data.path**concerns itself with the translation between data contained in a nested versus data contained in a single map with paths as keys."
+
+[[:api {:namespace "hara.data.path" :link "hara.data.path"}]]
+

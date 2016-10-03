@@ -1,30 +1,32 @@
 (ns documentation.hara-extend)
 
-[[:chapter {:title "Introduction"}]]
-
 "
 [hara.extend](https://github.com/zcaudate/hara/blob/master/src/hara/extend.clj) provide additional functionality on top of `defrecord` and `defmulti`/`defmethod`."
 
-[[:section {:title "Installation"}]]
+[[:chapter {:title "extend.abstract"
+            :link "hara.extend.abstract"
+            :only ["extend-abstract" "extend-implementations"]}]]
 
 "Add to `project.clj` dependencies:
 
-    [im.chit/hara.extend \"{{PROJECT.version}}\"]
-
-Individual namespaces can be added seperately:
-
     [im.chit/hara.extend.abstract \"{{PROJECT.version}}\"]
-    [im.chit/hara.extend.all \"{{PROJECT.version}}\"]
+
+**hara.extend.abstract** provides the implementation for the [abstract container pattern](http://z.caudate.me/the-abstract-container-pattern/)"
+
+[[:api {:namespace "hara.extend.abstract"
+        :title ""
+        :only ["extend-abstract" "extend-implementations"]}]]
+
+[[:chapter {:title "extend.all"
+            :link "hara.extend.all"
+            :only ["extend-all"]}]]
+
 "
+Add to `project.clj` dependencies:
 
-[[:chapter {:title "API - abstract"}]]
+    [im.chit/hara.extend.all \"{{PROJECT.version}}\"]
 
-"[hara.extend.abstract](https://github.com/zcaudate/hara/blob/master/src/hara/extend/abstract.clj)"
+**hara.extend.all** promotes code reuse by providing a template for `extend-type`"
 
-[[:api {:namespace "hara.extend.abstract"}]]
-
-[[:chapter {:title "API - all"}]]
-
-"[hara.extend.all](https://github.com/zcaudate/hara/blob/master/src/hara/extend/all.clj)"
-
-[[:api {:namespace "hara.extend.all"}]]
+[[:api {:namespace "hara.extend.all"
+        :only ["extend-all"]}]]

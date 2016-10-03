@@ -1,116 +1,576 @@
 
-
 <!DOCTYPE html>
-<html >
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en-us">
+
   <head>
-    <meta charset="UTF-8">
-    <meta name="google" value="notranslate">
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+
+  <!-- Enable responsiveness on mobile devices-->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+  <link rel="shortcut icon" href="favicon.ico">
+  <title>hara.reflect - java reflection made easy</title>
+  <script src="js/highlight.min.js"></script>
+  <script src="js/gumshoe.min.js"></script>
+  <script src="js/smooth-scroll.min.js"></script>
+  
+  <!-- CSS -->
+  <link rel="stylesheet" href="css/poole.css">
+  <link rel="stylesheet" href="css/syntax.css">
+  <link rel="stylesheet" href="css/lanyon.css">
+  <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=PT+Serif:400,400italic,700|PT+Sans:400">
+  
+  <style>
+  .error {
+  font-weight: bold;
+}
+
+.error.version {
+  color: #ac4142;
+  text-decoration: line-through;
+}
+
+.api .entry pre.error {
+  background-color: #ac4142;
+}
+.api .entry pre.error h6 {
+  color: white;
+  float: left;
+}
+
+.api .entry-description
+{
+ display: block;
+ }
+ 
+.api ul
+{
+  list-style-type: none;
+  padding-left: 5px;
+}
+
+.api .entry-description h4
+{
+  height 30px;
+  margin-top: 2rem;
+  font-size: larger;
+ }
+
+.api .entry-description p
+{
+ margin-bottom: 0px;
+ margin-top: 0px;
+ }
+
+.api .entry-option h6
+{
+ padding-right:5px;
+ padding-top: 0.6em;
+ margin-top: 0;
+ }
+
+.api .entry-option .args
+{
+ font-weight: lighter;
+ }
+ 
+.api .entry pre
+ {
+   width: 100%;
+}
+  
+.api pre h6
+{
+ float: right;
+ font-size: small;
+ margin-top: 0;
+ }
+ 
+ pre.source {
+  position: absolute;
+  visibility: hidden;
+  opacity: 0;
+  height: 0px;
+  transition: visibility 0s, opacity 1s linear;
+ }
+
+.api input.source-toggle{
+  display: none;
+}
+
+.api label.source-toggle {
+  position: relative;
+  float: right;
+  top: -1.9em;
+  right: 2em;
+  color: #ac4142;
+  font-style: italic;
+  cursor: pointer;
+}
+
+.api input[type="checkbox"] + label:after {
+  content: "show";
+}
+.api input[type="checkbox"]:checked + label:after {
+  content: "hide";
+}
+
+.api input[type="checkbox"]:checked ~ pre.source {
+  position: relative;
+  height: auto;
+  visibility: visible;
+  opacity: 1;
+}
+ 
+ 
+ 
+  html {
+  font-size: 15px;
+}
+
+h2 {
+  margin-top: 2.5rem;
+  font-size: 1.5rem;
+  margin-bottom: 1rem;
+}
+
+h3 {
+  margin-top: 2.5rem;
+}
+
+.top {
+  margin-top: 0.5em;
+  display: block;
+  font-size: 1.4em;
+  font-style: italic;
+}
+
+.top.active {
+  text-decoration: underline;
+}
+
+.heading {
+  display: flex;
+  padding-bottom: 1em;
+}
+.heading h5 {
+  font-size: 0.8rem; 
+  margin-top: 0.2em;
+  margin-bottom: 0.2em
+}
+
+.toc ul{
+  list-style-type: none;
+  padding-left: 0;
+}
+
+.toc a h4 {
+  color: #ac4142;
+}
+
+.toc a h5 {
+  color: #ac4142;
+  font-size: 0.8rem;
+  margin-top: 0.1em;
+  margin-bottom: 0.2em;
+  padding-left: 0.8em;
+}
+
+.outline .toc{
+  display: none;
+}
+
+.sidebar {
+  font-size: 0.9rem;
+  line-height: 1.3;
+}
+
+.sidebar-nav-item {
+    display: block;
+    padding-top: 0rem;
+    padding-bottom: 0rem; 
+    border-top: none;
+}
+
+.sidebar-nav {
+    border-bottom: none;
+}
+
+pre{
+  border: solid 1px;
+  border-color: #f0f0f0;
+  background-color: white;
+}
 
 
-    <title>reflect - java reflection made easy</title>
+.code .failed
+{
+  background-color:#ac4142; 
+  padding: 10px;
+  font-size: large;
+}
 
-    
-  <link href='http://fonts.googleapis.com/css?family=Raleway:300' rel='stylesheet' type='text/css'>
-  <link rel="stylesheet" type="text/css" href="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.5/css/bootstrap.min.css">
-  <link rel="stylesheet" type="text/css" href="//cdnjs.cloudflare.com/ajax/libs/font-awesome/4.3.0/css/font-awesome.min.css">
+.code .failed h5
+{
+  color: white;
+  margin-top: 0;
+  margin-botton: 0;
+  font-size: small;
+}
 
-  <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.6/highlight.min.js"></script>
-  <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.6/languages/clojure.min.js"></script>
-  <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.6/styles/magula.min.css">
+.code .failed h4
+{  
+  color: white;
+  font-style: italic;
+}
 
-  <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
-  <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.5/js/bootstrap.min.js"></script>
-  <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/angular.js/1.4.2/angular.min.js"></script>
-  <script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/angularjs/1.4.2/angular-cookies.min.js"></script>
-  <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/angular-ui-bootstrap/0.13.0/ui-bootstrap-tpls.min.js"></script>
-  <script type="text/javascript" src="js/angular-highlightjs.min.js"></script>
+.code .failed hr
+{
+  margin-top: 15px;
+  margin-bottom: 0px;
+}
 
-  <link rel="stylesheet" type="text/css" href="css/rdash.min.css">
-  <link rel="stylesheet" type="text/css" href="css/scrollspy.css">
+.masthead a
+{
+  font-size: 1.8em;
+}
 
+@media (max-width: 48rem){
+.masthead-title {
+    text-align: left;
+}}
 
-  <script>
-    window.console = window.console || function(t) {};
-    window.open = function(){ console.log("window.open is disabled."); };
-    window.print   = function(){ console.log("window.print is disabled."); };
-  </script>
-
-  <script>
-    var app = angular.module('app', ['hljs']);
-  </script>
-  </head>
-
-  <body ng-app="app" data-spy="scroll" data-target=".scrollspy">
-  <!-- Fixed navbar -->
-    <nav class="navbar navbar-fixed-top">
-      <div class="container">
-        <div class="navbar-header">
-          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
-            <span class="sr-only">Toggle navigation</span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-          </button>
-          <a class="navbar-brand" href="index.html"><img src="img/logo.png"></a>
-        </div>
-        <div id="navbar" class="navbar-collapse collapse">
-          <ul class="nav navbar-nav">
-            <li class="dropdown">
-              <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Guides <span class="caret"></span></a>
-              <ul class="dropdown-menu">
-                <li><a href="hara-class.html">class</a></li>
-                <li><a href="hara-common.html">common</a></li>
-                <li><a href="hara-component.html">component</a></li>
-                <li><a href="hara-concurrent.html">concurrent</a></li>
-                <li><a href="hara-concurrent-ova.html">concurrent.ova</a></li>
-                <li><a href="hara-concurrent-procedure.html">concurrent.procedure</a></li>
-                <li><a href="hara-data.html">data</a></li>
-                <li><a href="hara-event.html">event</a></li>
-                <li><a href="hara-expression.html">expression</a></li>
-                <li><a href="hara-extend.html">extend</a></li>
-                <li><a href="hara-function.html">function</a></li>
-                <li><a href="hara-group.html">group</a></li>
-                <li><a href="hara-io-environment.html">io.environment</a></li>
-                <li><a href="hara-io-file.html">io.file</a></li>
-                <li><a href="hara-io-scheduler.html">io.scheduler</a></li>
-                <li><a href="hara-io-watch.html">io.watch</a></li>
-                <li><a href="hara-namespace.html">namespace</a></li>
-                <li><a href="hara-object.html">object</a></li>
-                <li><a href="hara-reflect.html">reflect</a></li>
-                <li><a href="hara-sort.html">sort</a></li>
-                <li><a href="hara-string.html">string</a></li>
-                <li><a href="hara-test.html">test</a></li>
-                <li><a href="hara-time.html">time</a></li>
-            </ul>
-            </li>
-            <li>
-              <a href="https://github.com/zcaudate/hara" target="_blank">Github</a></li>
-            <li>
-              <a href="http://gitter.im/zcaudate/hara" target="_blank">Gitter</a></li>
-          </ul>
-        </div><!--/.nav-collapse -->
-      </div>
-    </nav>
+@media (max-width: 40rem){
+.masthead-title {
+    text-align: center;
+}
+.masthead a
+{
+  font-size: x-large;
+}
+}
 
 
-  <div class="container row">
-    <div class="col-md-4 scrollspy pull-right">
-      <ul id="nav" class="nav hidden-xs hidden-sm" data-spy="affix">
-        <li><a href="#introduction">1  &nbsp;&nbsp; Introduction</a><ul class="nav"><li><a href="#installation">1.1  &nbsp;&nbsp; Installation</a></li><li><a href="#motivation">1.2  &nbsp;&nbsp; Motivation</a></li></ul></li><li><a href="#querying">2  &nbsp;&nbsp; Querying</a><ul class="nav"><li><a href="#query-basics">2.1  &nbsp;&nbsp; Basics</a></li><li><a href="#usage">2.2  &nbsp;&nbsp; Usage</a></li><li><a href="#options">2.3  &nbsp;&nbsp; Options</a></li><li><a href="#selectors">2.4  &nbsp;&nbsp; Selectors</a></li><li><a href="#name-filtering">2.5  &nbsp;&nbsp; Name Filtering</a></li><li><a href="#parameter-filtering">2.6  &nbsp;&nbsp; Parameter Filtering</a></li><li><a href="#modifier-filtering">2.7  &nbsp;&nbsp; Modifier Filtering</a></li><li><a href="#return-type-filtering">2.8  &nbsp;&nbsp; Return Type Filtering</a></li></ul></li><li><a href="#member-operations">3  &nbsp;&nbsp; Member Operations</a><ul class="nav"><li><a href="#apply-element">3.1  &nbsp;&nbsp; apply-element</a></li><li><a href="#delegate">3.2  &nbsp;&nbsp; delegate</a></li></ul></li><li><a href="#class-information">4  &nbsp;&nbsp; Class Information</a><ul class="nav"><li><a href="#class-info">4.1  &nbsp;&nbsp; class-info</a></li><li><a href="#class-hierarchy">4.2  &nbsp;&nbsp; class-hierarchy</a></li></ul></li><li><a href="#extraction">5  &nbsp;&nbsp; Extraction</a><ul class="nav"><li><a href="#extract-to-var">5.1  &nbsp;&nbsp; extract-to-var</a></li><li><a href="#extract-to-ns">5.2  &nbsp;&nbsp; extract-to-ns</a></li></ul></li><li><a href="#links-and-resources">6  &nbsp;&nbsp; Links and Resources</a></li>
-      </ul>
-    </div>
-    <div class="col-md-8" id="content">
-      <div class="jumbotron">
+
+@media (min-width: 38rem){
+.container {
+    max-width: 37rem;
+    margin-left: 6rem;
+ }
+}
+
+@media (min-width: 56rem){
+.container {
+    max-width: 54rem;
+}
+.page {
+  margin-right: 15rem;
+}
+}
+
+@media (min-width: 60rem){
+.outline .toc{
+  display: block;
+  padding-left: 2em;
+  position: fixed;
+  right: 1em;
+  top: 1em;
+  width: 18em;
+  background-color: white;
+  border: solid 1px #f0f0f0;
+}
+.outline .toc li.active a.chapter h4{
+  font-size: larger;
+  font-style: italic;
+}
+
+.outline .toc li .section{
+  display: none;
+}
+
+.outline .toc li.active .section{
+  display: inherit;
+}
+
+.outline .toc li.active a.active.chapter h4{
+  text-decoration: underline;
+}
+
+.outline .toc li.active a.active.section h5{
+  text-decoration: underline;
+}
+}
+
+
+@media (min-width: 70rem){
+.container {
+    max-width: 66rem;
+}}
+  /*
+
+Original highlight.js style (c) Ivan Sagalaev <maniac@softwaremaniacs.org>
+
+*/
+
+.hljs {
+  display: block;
+  overflow-x: auto;
+  padding: 0.5em;
+}
+
+
+/* Base color: saturation 0; */
+
+.hljs,
+.hljs-subst {
+  color: #444;
+}
+
+.hljs-comment {
+  color: #888888;
+}
+
+.hljs-keyword,
+.hljs-attribute,
+.hljs-selector-tag,
+.hljs-meta-keyword,
+.hljs-doctag,
+.hljs-name {
+  font-weight: bold;
+}
+
+
+/* User color: hue: 0 */
+
+.hljs-type,
+.hljs-string,
+.hljs-number,
+.hljs-selector-id,
+.hljs-selector-class,
+.hljs-quote,
+.hljs-template-tag,
+.hljs-deletion {
+  color: #880000;
+}
+
+.hljs-title,
+.hljs-section {
+  color: #880000;
+  font-weight: bold;
+}
+
+.hljs-regexp,
+.hljs-symbol,
+.hljs-variable,
+.hljs-template-variable,
+.hljs-link,
+.hljs-selector-attr,
+.hljs-selector-pseudo {
+  color: #BC6060;
+}
+
+
+/* Language color: hue: 90; */
+
+.hljs-literal {
+  color: #78A960;
+}
+
+.hljs-built_in,
+.hljs-bullet,
+.hljs-code,
+.hljs-addition {
+  color: #397300;
+}
+
+
+/* Meta color: hue: 200 */
+
+.hljs-meta {
+  color: #1f7199;
+}
+
+.hljs-meta-string {
+  color: #4d99bf;
+}
+
+
+/* Misc effects */
+
+.hljs-emphasis {
+  font-style: italic;
+}
+
+.hljs-strong {
+  font-weight: bold;
+}
+  </style>
+  <!-- Icons -->
+</head>
+
+
+  <body class="theme-base-08">
+    <span id="page-top"></span>
+
+    <!-- Target for toggling the sidebar `.sidebar-checkbox` is for regular
+     styles, `#sidebar-checkbox` for behavior. -->
+<input type="checkbox" class="sidebar-checkbox" id="sidebar-checkbox">
+
+<!-- Toggleable sidebar -->
+<div class="sidebar" id="sidebar">
+  <nav class="sidebar-nav">
+    <a class="sidebar-nav-item header" href="index.html"><img src="img/logo-white.png"/></a>
+    <span>&nbsp;</span>
+    <a class="sidebar-nav-item" href="hara-class.html">class</a><a class="sidebar-nav-item" href="hara-common.html">common</a><a class="sidebar-nav-item" href="hara-component.html">component</a><a class="sidebar-nav-item" href="hara-concurrent.html">concurrent</a><a class="sidebar-nav-item" href="hara-concurrent-ova.html">concurrent.ova</a><a class="sidebar-nav-item" href="hara-concurrent-procedure.html">concurrent.procedure</a><a class="sidebar-nav-item" href="hara-data.html">data</a><a class="sidebar-nav-item" href="hara-event.html">event</a><a class="sidebar-nav-item" href="hara-expression.html">expression</a><a class="sidebar-nav-item" href="hara-extend.html">extend</a><a class="sidebar-nav-item" href="hara-function.html">function</a><a class="sidebar-nav-item" href="hara-group.html">group</a><a class="sidebar-nav-item" href="hara-io.html">io</a><a class="sidebar-nav-item" href="hara-io-file.html">io.file</a><a class="sidebar-nav-item" href="hara-io-scheduler.html">io.scheduler</a><a class="sidebar-nav-item" href="hara-io-watch.html">io.watch</a><a class="sidebar-nav-item" href="hara-namespace.html">namespace</a><a class="sidebar-nav-item" href="hara-object.html">object</a><a class="sidebar-nav-item active" href="hara-reflect.html">reflect</a><a class="sidebar-nav-item" href="hara-sort.html">sort</a><a class="sidebar-nav-item" href="hara-string.html">string</a><a class="sidebar-nav-item" href="hara-test.html">test</a><a class="sidebar-nav-item" href="hara-time.html">time</a><a class="sidebar-nav-item" href="hara-zip.html">zip</a>
+    <span class="sidebar-nav-item">&nbsp;</span>
+    <span class="sidebar-nav-item">&nbsp;</span>
+  </nav>
+</div>
+
+
+    <!-- Wrap is the content to shift when toggling the sidebar. We wrap the
+         content to avoid any CSS collisions with our real content. -->
+    <div class="wrap">
+      <div class="masthead">
         <div class="container">
-          <h1>reflect</h1>
-          <h4>java reflection made easy</h4>
+          <h3 class="masthead-title">
+            <a href="/" title="Home">hara.reflect</a>
+            <small>java reflection made easy</small>
+          </h3>
         </div>
       </div>
-      <section class="chapter" id="introduction"><h2 class="chapter">1  &nbsp;&nbsp; Introduction</h2><div class="group"><div class="paragraph"><p> <a href='https://github.com/zcaudate/hara/blob/master/src/hara/reflect.clj'>hara.reflect</a> is a library for jvm reflection. It is designed to be used for testing, repl based development, and blantant hacks bypassing the jvm security mechanism. The library was originally developed as a seperate library - <a href='https://github.com/zcaudate/iroh'>iroh</a> but has been included as part of the larger <a href='https://github.com/zcaudate/hara'>hara</a> codebase.</p></div></div><section class="section" id="installation"><h3 class="section">1.1  &nbsp;&nbsp; Installation</h3><div class="paragraph"><p>Add to <code>project.clj</code> dependencies:</p><pre><code>  &#91;im.chit/hara.reflect &quot;2.4.4&quot;&#93;
-</code></pre></div><div class="paragraph"><p>All functionality is found contained in the <code>hara.reflect</code> namespace</p></div><div class="code"><div hljs="hljs" language="clojure" no-escape="no-escape">(use 'hara.reflect)</div></div></section><section class="section" id="motivation"><h3 class="section">1.2  &nbsp;&nbsp; Motivation</h3><div class="paragraph"><p>When working and understanding encapsulated code, the best way is to expose everything first, then to test each piece of functionality in a controlled way. Finally only when all the pieces are known, then work out a strategy for code refactoring/rewriting.</p><p>Although private and protected keywords have their uses in java, they may also be considered functionality obsfucators. They are complete hinderences when a developer attempts do something to the code base that the previous author had not intended - one of them being to understand what is going on underneath.</p><p>If the previous author had taken shortcuts in design, those private keywords turn one of those over-protective parents that get in the way of the growth of their children. Taking inspiration from clj-wallhack, here are some primary use cases for the library:</p><ul><li>To explore the members of classes as well as all instances within the repl</li><li>To be able to test methods and functions that are usually not testable, or very hard to test:</li><li>Make hidden class members visible by providing access to private methods and fields</li><li>Make immutable class members flexible by providing ability to change final members (So that initial states can be set up easily)</li><li>Extract out class members into documented and executable functions (including multi-argument functions)</li><li>Better understand jvm security and how to dodge it if needed</li><li>Better understand the java type system as well as clojure's own interface definitions</li><li>To make working with java fun again</li></ul></div></section></section><section class="chapter" id="querying"><h2 class="chapter">2  &nbsp;&nbsp; Querying</h2><section class="section" id="query-basics"><h3 class="section">2.1  &nbsp;&nbsp; Basics</h3><div class="paragraph"><p>There are two different calls for querying - <code>query-instance</code> and <code>query-class</code>. They have the same listing and filtering mechanisms but they do things a little differently. Both has the same structure, given as follows:</p></div><div class="code"><div hljs="hljs" language="clojure" no-escape="no-escape">(query-&lt;command&gt; &lt;obj&gt; [&lt;option&gt; ...])</div></div><div class="paragraph"></div><section class="subsection" id="query-class"><h4 class="subsection">2.1.1  &nbsp;&nbsp; query-class</h4><div class="paragraph"><p>Holds the java view of the Class declaration, staying true to the class and its members. It will show all methods and fields defined within a Class.</p></div><div class="code"><div hljs="hljs" language="clojure" no-escape="no-escape">(query-class 1 [:name])
-=&gt; '(&quot;MAX_VALUE&quot; &quot;MIN_VALUE&quot; &quot;SIZE&quot; &quot;TYPE&quot; &quot;bitCount&quot; &quot;byteValue&quot; &quot;compare&quot; &quot;compareTo&quot; &quot;decode&quot; &quot;doubleValue&quot; &quot;equals&quot; &quot;floatValue&quot; &quot;getChars&quot; &quot;getLong&quot; &quot;hashCode&quot; &quot;highestOneBit&quot; &quot;intValue&quot; &quot;longValue&quot; &quot;lowestOneBit&quot; &quot;new&quot; &quot;numberOfLeadingZeros&quot; &quot;numberOfTrailingZeros&quot; &quot;parseLong&quot; &quot;reverse&quot; &quot;reverseBytes&quot; &quot;rotateLeft&quot; &quot;rotateRight&quot; &quot;serialVersionUID&quot; &quot;shortValue&quot; &quot;signum&quot; &quot;stringSize&quot; &quot;toBinaryString&quot; &quot;toHexString&quot; &quot;toOctalString&quot; &quot;toString&quot; &quot;toUnsignedString&quot; &quot;value&quot; &quot;valueOf&quot;)</div></div></section><section class="subsection" id="query-instance"><h4 class="subsection">2.1.2  &nbsp;&nbsp; query-instance</h4><div class="paragraph"><p>Holds the runtime view of Objects and what methods could be applied to that instance. The method will also look up the inheritance tree of the instance to fill in additional functionality and therefore non-static methods of java.lang.Object will always be shown:</p></div><div class="code"><div hljs="hljs" language="clojure" no-escape="no-escape">(query-instance 1 [:name])
-=&gt; '(&quot;byteValue&quot; &quot;clone&quot; &quot;compareTo&quot; &quot;doubleValue&quot; &quot;equals&quot; &quot;finalize&quot; &quot;floatValue&quot; &quot;getClass&quot; &quot;hashCode&quot; &quot;intValue&quot; &quot;longValue&quot; &quot;notify&quot; &quot;notifyAll&quot; &quot;shortValue&quot; &quot;toString&quot; &quot;value&quot; &quot;wait&quot;)</div></div><div class="paragraph"><p>The reason that <code>static</code> fields and methods are not shown for the instance is that we want all the operations that can operate on an instantiated object. Static accessors and methods are strictly operations belonging to the class and so cannot operate on an instance of the class.</p></div></section></section><section class="section" id="usage"><h3 class="section">2.2  &nbsp;&nbsp; Usage</h3><div class="paragraph"><p>Lets see how reflection is used. We will do a search for <code>MIN&#95;VALUE</code> with a long</p></div><div class="code"><div hljs="hljs" language="clojure" no-escape="no-escape">(query-class 1 [&quot;MIN_VALUE&quot;])
-;;=&gt; (#[MIN_VALUE :: &lt;java.lang.Long&gt; | long])</div></div><div class="paragraph"><p>We can open up the returned result and take a look at the internals of the element itself</p></div><div class="code"><div hljs="hljs" language="clojure" no-escape="no-escape">(-&gt; (query-class 1 [&quot;MIN_VALUE&quot;])
+
+      <div class="container content">
+        <div class="page">
+          <div class="heading">
+            <div>
+              <h5>Author: Chris Zheng&nbsp;&nbsp;<a href="mailto:z@caudate.me">(z@caudate.me)</a></h5>
+              <h5>Date: 03 October 2016</h5>
+              <h5>Repository: <a href="https://github.com/zcaudate/hara">https://github.com/zcaudate/hara</a></h5>
+              <h5>Version: 2.4.5</h5></div></div>
+          <hr/>
+          <div class="outline">
+            <div class="toc">
+              <nav data-gumshoe-header>
+                <ul data-gumshoe>
+                  <a data-scroll class="top" href="#page-top">TOP</a>
+                  <li><a class="chapter" data-scroll="" href="#introduction"><h4>1 &nbsp; Introduction</h4></a><a class="section" data-scroll="" href="#installation"><h5><i>1.1 &nbsp; Installation</i></h5></a></li><li><a class="chapter" data-scroll="" href="#api"><h4>2 &nbsp; API</h4></a><a class="section" data-scroll="" href="#entry__hara_reflect__apply_element"><h5><i>apply-element</i></h5></a><a class="section" data-scroll="" href="#entry__hara_reflect__class_hierarchy"><h5><i>class-hierarchy</i></h5></a><a class="section" data-scroll="" href="#entry__hara_reflect__class_info"><h5><i>class-info</i></h5></a><a class="section" data-scroll="" href="#entry__hara_reflect__context_class"><h5><i>context-class</i></h5></a><a class="section" data-scroll="" href="#entry__hara_reflect__delegate"><h5><i>delegate</i></h5></a><a class="section" data-scroll="" href="#entry__hara_reflect__extract_to_ns"><h5><i>extract-to-ns</i></h5></a><a class="section" data-scroll="" href="#entry__hara_reflect__extract_to_var"><h5><i>extract-to-var</i></h5></a><a class="section" data-scroll="" href="#entry__hara_reflect__query_class"><h5><i>query-class</i></h5></a><a class="section" data-scroll="" href="#entry__hara_reflect__query_hierarchy"><h5><i>query-hierarchy</i></h5></a><a class="section" data-scroll="" href="#entry__hara_reflect__query_instance"><h5><i>query-instance</i></h5></a></li><li><a class="chapter" data-scroll="" href="#querying"><h4>3 &nbsp; Querying</h4></a><a class="section" data-scroll="" href="#query-basics"><h5><i>3.1 &nbsp; Basics</i></h5></a><a class="section" data-scroll="" href="#usage"><h5><i>3.2 &nbsp; Usage</i></h5></a><a class="section" data-scroll="" href="#options"><h5><i>3.3 &nbsp; Options</i></h5></a><a class="section" data-scroll="" href="#selectors"><h5><i>3.4 &nbsp; Selectors</i></h5></a><a class="section" data-scroll="" href="#name-filtering"><h5><i>3.5 &nbsp; Name Filtering</i></h5></a><a class="section" data-scroll="" href="#parameter-filtering"><h5><i>3.6 &nbsp; Parameter Filtering</i></h5></a><a class="section" data-scroll="" href="#modifier-filtering"><h5><i>3.7 &nbsp; Modifier Filtering</i></h5></a><a class="section" data-scroll="" href="#return-type-filtering"><h5><i>3.8 &nbsp; Return Type Filtering</i></h5></a></li><li><a class="chapter" data-scroll="" href="#member-operations"><h4>4 &nbsp; Member Operations</h4></a><a class="section" data-scroll="" href="#apply-element"><h5><i>4.1 &nbsp; apply-element</i></h5></a><a class="section" data-scroll="" href="#delegate"><h5><i>4.2 &nbsp; delegate</i></h5></a></li><li><a class="chapter" data-scroll="" href="#class-information"><h4>5 &nbsp; Class Information</h4></a><a class="section" data-scroll="" href="#class-info"><h5><i>5.1 &nbsp; class-info</i></h5></a><a class="section" data-scroll="" href="#class-hierarchy"><h5><i>5.2 &nbsp; class-hierarchy</i></h5></a></li><li><a class="chapter" data-scroll="" href="#extraction"><h4>6 &nbsp; Extraction</h4></a><a class="section" data-scroll="" href="#extract-to-var"><h5><i>6.1 &nbsp; extract-to-var</i></h5></a><a class="section" data-scroll="" href="#extract-to-ns"><h5><i>6.2 &nbsp; extract-to-ns</i></h5></a></li><li><a class="chapter" data-scroll="" href="#links-and-resources"><h4>7 &nbsp; Links and Resources</h4></a></li>
+                </ul>
+              </nav>
+            </div>
+          </div>
+
+          <div class="toc">
+              <nav>
+                <ul>
+                  <li><a class="chapter" data-scroll="" href="#introduction"><h4>1 &nbsp; Introduction</h4></a><a class="section" data-scroll="" href="#installation"><h5><i>1.1 &nbsp; Installation</i></h5></a></li><li><a class="chapter" data-scroll="" href="#api"><h4>2 &nbsp; API</h4></a><a class="section" data-scroll="" href="#entry__hara_reflect__apply_element"><h5><i>apply-element</i></h5></a><a class="section" data-scroll="" href="#entry__hara_reflect__class_hierarchy"><h5><i>class-hierarchy</i></h5></a><a class="section" data-scroll="" href="#entry__hara_reflect__class_info"><h5><i>class-info</i></h5></a><a class="section" data-scroll="" href="#entry__hara_reflect__context_class"><h5><i>context-class</i></h5></a><a class="section" data-scroll="" href="#entry__hara_reflect__delegate"><h5><i>delegate</i></h5></a><a class="section" data-scroll="" href="#entry__hara_reflect__extract_to_ns"><h5><i>extract-to-ns</i></h5></a><a class="section" data-scroll="" href="#entry__hara_reflect__extract_to_var"><h5><i>extract-to-var</i></h5></a><a class="section" data-scroll="" href="#entry__hara_reflect__query_class"><h5><i>query-class</i></h5></a><a class="section" data-scroll="" href="#entry__hara_reflect__query_hierarchy"><h5><i>query-hierarchy</i></h5></a><a class="section" data-scroll="" href="#entry__hara_reflect__query_instance"><h5><i>query-instance</i></h5></a></li><li><a class="chapter" data-scroll="" href="#querying"><h4>3 &nbsp; Querying</h4></a><a class="section" data-scroll="" href="#query-basics"><h5><i>3.1 &nbsp; Basics</i></h5></a><a class="section" data-scroll="" href="#usage"><h5><i>3.2 &nbsp; Usage</i></h5></a><a class="section" data-scroll="" href="#options"><h5><i>3.3 &nbsp; Options</i></h5></a><a class="section" data-scroll="" href="#selectors"><h5><i>3.4 &nbsp; Selectors</i></h5></a><a class="section" data-scroll="" href="#name-filtering"><h5><i>3.5 &nbsp; Name Filtering</i></h5></a><a class="section" data-scroll="" href="#parameter-filtering"><h5><i>3.6 &nbsp; Parameter Filtering</i></h5></a><a class="section" data-scroll="" href="#modifier-filtering"><h5><i>3.7 &nbsp; Modifier Filtering</i></h5></a><a class="section" data-scroll="" href="#return-type-filtering"><h5><i>3.8 &nbsp; Return Type Filtering</i></h5></a></li><li><a class="chapter" data-scroll="" href="#member-operations"><h4>4 &nbsp; Member Operations</h4></a><a class="section" data-scroll="" href="#apply-element"><h5><i>4.1 &nbsp; apply-element</i></h5></a><a class="section" data-scroll="" href="#delegate"><h5><i>4.2 &nbsp; delegate</i></h5></a></li><li><a class="chapter" data-scroll="" href="#class-information"><h4>5 &nbsp; Class Information</h4></a><a class="section" data-scroll="" href="#class-info"><h5><i>5.1 &nbsp; class-info</i></h5></a><a class="section" data-scroll="" href="#class-hierarchy"><h5><i>5.2 &nbsp; class-hierarchy</i></h5></a></li><li><a class="chapter" data-scroll="" href="#extraction"><h4>6 &nbsp; Extraction</h4></a><a class="section" data-scroll="" href="#extract-to-var"><h5><i>6.1 &nbsp; extract-to-var</i></h5></a><a class="section" data-scroll="" href="#extract-to-ns"><h5><i>6.2 &nbsp; extract-to-ns</i></h5></a></li><li><a class="chapter" data-scroll="" href="#links-and-resources"><h4>7 &nbsp; Links and Resources</h4></a></li>
+                </ul>
+              </nav>
+          </div>
+          <div><span id="introduction" name="introduction"></span><h2><b>1 &nbsp;&nbsp; Introduction</b></h2></div><div><p> <code>hara.reflect</code> contains methods for class reflection and method invocation.</p></div><div><span id="installation" name="installation"></span><h3>1.1 &nbsp;&nbsp; Installation</h3></div><div><p>Add to <code>project.clj</code> dependencies:</p><pre><code>  &#91;im.chit/hara.reflect &quot;2.4.5&quot;&#93;</code></pre></div><div><p>All functionality is found contained in the <code>hara.reflect</code> namespace</p></div><div class="code"><pre><code class="clojure">(use 'hara.reflect)</code></pre></div><div><span id="api" name="api"></span><h2><b>2 &nbsp;&nbsp; API</b></h2></div><div class="api"><span id="entry__hara_reflect__"></span><hr /><div><ul><li><a data-scroll="" href="#entry__hara_reflect__apply_element">apply-element</a></li><li><a data-scroll="" href="#entry__hara_reflect__class_hierarchy">class-hierarchy</a></li><li><a data-scroll="" href="#entry__hara_reflect__class_info">class-info</a></li><li><a data-scroll="" href="#entry__hara_reflect__context_class">context-class</a></li><li><a data-scroll="" href="#entry__hara_reflect__delegate">delegate</a></li><li><a data-scroll="" href="#entry__hara_reflect__extract_to_ns">extract-to-ns</a></li><li><a data-scroll="" href="#entry__hara_reflect__extract_to_var">extract-to-var</a></li><li><a data-scroll="" href="#entry__hara_reflect__query_class">query-class</a></li><li><a data-scroll="" href="#entry__hara_reflect__query_hierarchy">query-hierarchy</a></li><li><a data-scroll="" href="#entry__hara_reflect__query_instance">query-instance</a></li></ul><hr style="margin-bottom: 0" /><div><div class="entry"><span id="entry__hara_reflect__apply_element"></span><div class="entry-description"><h4><b>apply-element&nbsp<a data-scroll="" href="#entry__hara_reflect__">^</a></b></h4><p><i>apply the class element to arguments</i></p></div><div class="entry-option"><h6><a href="https://github.com/zcaudate/hara/blob/master/src/hara/reflect/core/apply.clj#L70-L87" target="_blank">v&nbsp;2.1</a>&nbsp;&nbsp;args: <i class="args">[obj method args]</i>&nbsp;&nbsp;&nbsp;</h6><div><input class="source-toggle" id="entry__pre_hara_reflect__apply_element" type="checkbox" /><label class="source-toggle" for="entry__pre_hara_reflect__apply_element"></label><pre class="source"><code class="clojure">(defn apply-element
+  [obj method args]
+  (let [lu (get-element-lookup obj)]
+    (if-let [ele (get lu method)]
+      (cond (-> ele :modifiers :field)
+            (apply ele obj args)
+
+            (:static ele)
+            (apply ele args)
+
+            :else
+            (apply ele obj args))
+      (throw (Exception. (format "Class member not Found for %s - `%s`" (common/context-class obj) method))))))</code></pre></div></div><pre><h6><i><a href="https://github.com/zcaudate/hara/blob/master/test/hara/reflect/core/apply_test.clj#L6-L9" target="_blank">link</a></i></h6><code class="clojure">(seq (apply-element "123" "value" []))
+=> [1 2 3]</code></pre></div><div class="entry"><span id="entry__hara_reflect__class_hierarchy"></span><div class="entry-description"><h4><b>class-hierarchy&nbsp<a data-scroll="" href="#entry__hara_reflect__">^</a></b></h4><p><i>lists the class and interface hierarchy for the class</i></p></div><div class="entry-option"><h6><a href="https://github.com/zcaudate/hara/blob/master/src/hara/reflect/core/class.clj#L18-L30" target="_blank">v&nbsp;2.1</a>&nbsp;&nbsp;args: <i class="args">[obj]</i>&nbsp;&nbsp;&nbsp;</h6><div><input class="source-toggle" id="entry__pre_hara_reflect__class_hierarchy" type="checkbox" /><label class="source-toggle" for="entry__pre_hara_reflect__class_hierarchy"></label><pre class="source"><code class="clojure">(defn class-hierarchy
+  [obj]
+  (let [t (common/context-class obj)]
+    (vec (cons t (inheritance/ancestor-tree t)))))</code></pre></div></div><pre><h6><i><a href="https://github.com/zcaudate/hara/blob/master/test/hara/reflect/core/class_test.clj#L14-L21" target="_blank">link</a></i></h6><code class="clojure">(class-hierarchy String)
+=> [java.lang.String
+    [java.lang.Object
+     #{java.io.Serializable
+       java.lang.Comparable
+       java.lang.CharSequence}]]</code></pre></div><div class="entry"><span id="entry__hara_reflect__class_info"></span><div class="entry-description"><h4><b>class-info&nbsp<a data-scroll="" href="#entry__hara_reflect__">^</a></b></h4><p><i>lists class information</i></p></div><div class="entry-option"><h6><a href="https://github.com/zcaudate/hara/blob/master/src/hara/reflect/core/class.clj#L6-L16" target="_blank">v&nbsp;2.1</a>&nbsp;&nbsp;args: <i class="args">[obj]</i>&nbsp;&nbsp;&nbsp;</h6><div><input class="source-toggle" id="entry__pre_hara_reflect__class_info" type="checkbox" /><label class="source-toggle" for="entry__pre_hara_reflect__class_info"></label><pre class="source"><code class="clojure">(defn class-info
+  [obj]
+  (select-keys (element/seed :class (common/context-class obj))
+               [:name :hash :modifiers]))</code></pre></div></div><pre><h6><i><a href="https://github.com/zcaudate/hara/blob/master/test/hara/reflect/core/class_test.clj#L6-L11" target="_blank">link</a></i></h6><code class="clojure">(class-info String)
+=> (contains {:name "java.lang.String"
+              :hash anything
+              :modifiers #{:instance :class :public :final}})</code></pre></div><div class="entry"><span id="entry__hara_reflect__context_class"></span><div class="entry-description"><h4><b>context-class&nbsp<a data-scroll="" href="#entry__hara_reflect__">^</a></b></h4><p><i>if x is a class, return x otherwise return the class of x</i></p></div><div class="entry-option"><h6><a href="https://github.com/zcaudate/hara/blob/master/src/hara/reflect/common.clj#L6-L16" target="_blank">v&nbsp;2.1</a>&nbsp;&nbsp;args: <i class="args">[obj]</i>&nbsp;&nbsp;&nbsp;</h6><div><input class="source-toggle" id="entry__pre_hara_reflect__context_class" type="checkbox" /><label class="source-toggle" for="entry__pre_hara_reflect__context_class"></label><pre class="source"><code class="clojure">(defn context-class
+  [obj]
+  (if (class? obj) obj (type obj)))</code></pre></div></div><pre><h6><i><a href="https://github.com/zcaudate/hara/blob/master/test/hara/reflect/common_test.clj#L6-L12" target="_blank">link</a></i></h6><code class="clojure">(context-class String)
+=> String
+
+(context-class "")
+=> String</code></pre></div><div class="entry"><span id="entry__hara_reflect__delegate"></span><div class="entry-description"><h4><b>delegate&nbsp<a data-scroll="" href="#entry__hara_reflect__">^</a></b></h4><p><i>allow transparent field access and manipulation to the underlying object.</i></p></div><div class="entry-option"><h6><a href="https://github.com/zcaudate/hara/blob/master/src/hara/reflect/core/delegate.clj#L42-L56" target="_blank">v&nbsp;2.1</a>&nbsp;&nbsp;args: <i class="args">[obj]</i>&nbsp;&nbsp;&nbsp;</h6><div><input class="source-toggle" id="entry__pre_hara_reflect__delegate" type="checkbox" /><label class="source-toggle" for="entry__pre_hara_reflect__delegate"></label><pre class="source"><code class="clojure">(defn delegate
+  [obj]
+  (let [fields (->> (map (juxt (comp keyword :name) identity) (q/query-instance obj [:field]))
+                    (into {}))]
+    (Delegate. obj fields)))</code></pre></div></div><pre><h6><i><a href="https://github.com/zcaudate/hara/blob/master/test/hara/reflect/core/delegate_test.clj#L6-L14" target="_blank">link</a></i></h6><code class="clojure">(def a "hello")
+(def >a  (delegate a))
+
+(seq (>a :value)) => [h e l l o]
+
+(>a :value (char-array "world"))
+a => "world"</code></pre></div><div class="entry"><span id="entry__hara_reflect__extract_to_ns"></span><div class="entry-description"><h4><b>extract-to-ns&nbsp<a data-scroll="" href="#entry__hara_reflect__">^</a></b></h4><p><i>extracts all class methods into its own namespace.</i></p></div><div class="entry-option"><h6><a href="https://github.com/zcaudate/hara/blob/master/src/hara/reflect/core/extract.clj#L64-L80" target="_blank">v&nbsp;2.1</a>&nbsp;&nbsp;args: <i class="args">[class] [nssym class] [nssym class selectors]</i>&nbsp;&nbsp;&nbsp;</h6><div><input class="source-toggle" id="entry__pre_hara_reflect__extract_to_ns" type="checkbox" /><label class="source-toggle" for="entry__pre_hara_reflect__extract_to_ns"></label><pre class="source"><code class="clojure">(defn extract-to-ns
+  ([class]
+   (extract-to-ns (symbol (.getName *ns*)) class []))
+  ([nssym class]
+   (extract-to-ns nssym class []))
+  ([nssym class selectors]
+   (let [eles (q/list-class-elements class selectors)
+         methods (distinct (map :name eles))]
+     (create-ns nssym)
+     (doall (for [method methods]
+              (extract-to-var nssym (symbol method) class method selectors))))))</code></pre></div></div><pre><h6><i><a href="https://github.com/zcaudate/hara/blob/master/test/hara/reflect/core/extract_test.clj#L24-L28" target="_blank">link</a></i></h6><code class="clojure">(map #(.sym %)
+     (extract-to-ns 'test.string String [:private #"serial"]))
+=> '[serialPersistentFields serialVersionUID]</code></pre></div><div class="entry"><span id="entry__hara_reflect__extract_to_var"></span><div class="entry-description"><h4><b>extract-to-var&nbsp<a data-scroll="" href="#entry__hara_reflect__">^</a></b></h4><p><i>extracts a class method into a namespace.</i></p></div><div class="entry-option"><h6><a href="https://github.com/zcaudate/hara/blob/master/src/hara/reflect/core/extract.clj#L32-L62" target="_blank">v&nbsp;2.1</a>&nbsp;&nbsp;args: <i class="args">[varsym class method] [varsym class method selectors] [nssym varsym class method selectors]</i>&nbsp;&nbsp;&nbsp;</h6><div><input class="source-toggle" id="entry__pre_hara_reflect__extract_to_var" type="checkbox" /><label class="source-toggle" for="entry__pre_hara_reflect__extract_to_var"></label><pre class="source"><code class="clojure">(defn extract-to-var
+  ([varsym class method]
+   (extract-to-var varsym class method []))
+  ([varsym class method selectors]
+   (let [[nssym varsym] (if-let [nsstr (.getNamespace ^clojure.lang.Symbol varsym)]
+                          [(let [nssym (symbol nsstr)
+                                  _  (create-ns nssym)]
+                             nssym)
+                           (symbol (name varsym))]
+                          [(.getName *ns*) varsym])]
+     (extract-to-var nssym varsym class method selectors)))
+  ([nssym varsym class method selectors]
+   (let [v  (intern nssym varsym (q/query-class class (cons (str method) (cons :# selectors))))]
+      (alter-meta! v (fn [m] (merge m (element-meta @v))))
+      v)))</code></pre></div></div><pre><h6><i><a href="https://github.com/zcaudate/hara/blob/master/test/hara/reflect/core/extract_test.clj#L7-L21" target="_blank">link</a></i></h6><code class="clojure">(extract-to-var 'hash-without clojure.lang.IPersistentMap 'without [])
+
+(with-out-str (eval '(clojure.repl/doc hash-without)))
+=> (str "-------------------------n"
+        "hara.reflect.core.extract-test/hash-withoutn"
+        "[[clojure.lang.IPersistentMap java.lang.Object]]n"
+        "  n"
+        "member: clojure.lang.IPersistentMap/withoutn"
+        "type: clojure.lang.IPersistentMapn"
+        "modifiers: instance, method, public, abstractn")
+
+(eval '(hash-without {:a 1 :b 2} :a))
+=> {:b 2}</code></pre></div><div class="entry"><span id="entry__hara_reflect__query_class"></span><div class="entry-description"><h4><b>query-class&nbsp<a data-scroll="" href="#entry__hara_reflect__">^</a></b></h4><p><i>queries the java view of the class declaration</i></p></div><div class="entry-option"><h6><a href="https://github.com/zcaudate/hara/blob/master/src/hara/reflect/core/query.clj#L25-L34" target="_blank">v&nbsp;2.1</a>&nbsp;&nbsp;args: <i class="args">[obj selectors]</i>&nbsp;&nbsp;&nbsp;</h6><div><input class="source-toggle" id="entry__pre_hara_reflect__query_class" type="checkbox" /><label class="source-toggle" for="entry__pre_hara_reflect__query_class"></label><pre class="source"><code class="clojure">(defn query-class
+  [obj selectors]
+  (list-class-elements (common/context-class obj) selectors))</code></pre></div></div><pre><h6><i><a href="https://github.com/zcaudate/hara/blob/master/test/hara/reflect/core/query_test.clj#L6-L11" target="_blank">link</a></i></h6><code class="clojure">(query-class String  [#"^c" :name])
+=> ["charAt" "checkBounds" "codePointAt" "codePointBefore"
+    "codePointCount" "compareTo" "compareToIgnoreCase"
+    "concat" "contains" "contentEquals" "copyValueOf"]</code></pre></div><div class="entry"><span id="entry__hara_reflect__query_hierarchy"></span><div class="entry-description"><h4><b>query-hierarchy&nbsp<a data-scroll="" href="#entry__hara_reflect__">^</a></b></h4><p><i>lists what methods could be applied to a particular instance</i></p></div><div class="entry-option"><h6><a href="https://github.com/zcaudate/hara/blob/master/src/hara/reflect/core/query.clj#L59-L64" target="_blank">v&nbsp;2.1</a>&nbsp;&nbsp;args: <i class="args">[obj selectors]</i>&nbsp;&nbsp;&nbsp;</h6><div><input class="source-toggle" id="entry__pre_hara_reflect__query_hierarchy" type="checkbox" /><label class="source-toggle" for="entry__pre_hara_reflect__query_hierarchy"></label><pre class="source"><code class="clojure">(defn query-hierarchy
+  [obj selectors]
+  (let [grp (args/args-group selectors)
+        tcls  (common/context-class obj)]
+    (->> (all-instance-elements tcls nil)
+         (display/display grp))))</code></pre></div></div><pre><h6><i><a href="https://github.com/zcaudate/hara/blob/master/test/hara/reflect/core/query_test.clj#L14-L17" target="_blank">link</a></i></h6><code class="clojure">(query-hierarchy String [:name #"^to"])
+=> ["toCharArray" "toLowerCase" "toString" "toUpperCase"]</code></pre></div><div class="entry"><span id="entry__hara_reflect__query_instance"></span><div class="entry-description"><h4><b>query-instance&nbsp<a data-scroll="" href="#entry__hara_reflect__">^</a></b></h4><p><i>lists what methods could be applied to a particular instance</i></p></div><div class="entry-option"><h6><a href="https://github.com/zcaudate/hara/blob/master/src/hara/reflect/core/query.clj#L44-L57" target="_blank">v&nbsp;2.1</a>&nbsp;&nbsp;args: <i class="args">[obj selectors]</i>&nbsp;&nbsp;&nbsp;</h6><div><input class="source-toggle" id="entry__pre_hara_reflect__query_instance" type="checkbox" /><label class="source-toggle" for="entry__pre_hara_reflect__query_instance"></label><pre class="source"><code class="clojure">(defn query-instance
+  [obj selectors]
+  (let [grp (args/args-group selectors)
+        tcls (type obj)]
+    (->> (all-instance-elements tcls (if (class? obj) obj))
+         (display/display grp))))</code></pre></div></div><pre><h6><i><a href="https://github.com/zcaudate/hara/blob/master/test/hara/reflect/core/query_test.clj#L20-L26" target="_blank">link</a></i></h6><code class="clojure">(query-instance "abc" [:name #"^to"])
+=> ["toCharArray" "toLowerCase" "toString" "toUpperCase"]
+
+(query-instance String [:name #"^to"])
+=> (contains ["toString"])</code></pre></div></div></div></div><div><span id="querying" name="querying"></span><h2><b>3 &nbsp;&nbsp; Querying</b></h2></div><div><span id="query-basics" name="query-basics"></span><h3>3.1 &nbsp;&nbsp; Basics</h3></div><div><p>There are two different calls for querying - <code>query-instance</code> and <code>query-class</code>. They have the same listing and filtering mechanisms but they do things a little differently. Both has the same structure, given as follows:</p></div><div class="code"><pre><code class="clojure">(query-&lt;command&gt; &lt;obj&gt; [&lt;option&gt; ...])</code></pre></div><div></div><div><span id="query-class" name="query-class"></span><h3><i>3.1.1 &nbsp;&nbsp; query-class</i></h3></div><div><p>Holds the java view of the Class declaration, staying true to the class and its members. It will show all methods and fields defined within a Class.</p></div><div class="code"><pre><code class="clojure">(query-class 1 [:name])
+=&gt; '(&quot;MAX_VALUE&quot; &quot;MIN_VALUE&quot; &quot;SIZE&quot; &quot;TYPE&quot; &quot;bitCount&quot; &quot;byteValue&quot; &quot;compare&quot; &quot;compareTo&quot; &quot;decode&quot; &quot;doubleValue&quot; &quot;equals&quot; &quot;floatValue&quot; &quot;getChars&quot; &quot;getLong&quot; &quot;hashCode&quot; &quot;highestOneBit&quot; &quot;intValue&quot; &quot;longValue&quot; &quot;lowestOneBit&quot; &quot;new&quot; &quot;numberOfLeadingZeros&quot; &quot;numberOfTrailingZeros&quot; &quot;parseLong&quot; &quot;reverse&quot; &quot;reverseBytes&quot; &quot;rotateLeft&quot; &quot;rotateRight&quot; &quot;serialVersionUID&quot; &quot;shortValue&quot; &quot;signum&quot; &quot;stringSize&quot; &quot;toBinaryString&quot; &quot;toHexString&quot; &quot;toOctalString&quot; &quot;toString&quot; &quot;toUnsignedString&quot; &quot;value&quot; &quot;valueOf&quot;)</code></pre></div><div><span id="query-instance" name="query-instance"></span><h3><i>3.1.2 &nbsp;&nbsp; query-instance</i></h3></div><div><p>Holds the runtime view of Objects and what methods could be applied to that instance. The method will also look up the inheritance tree of the instance to fill in additional functionality and therefore non-static methods of java.lang.Object will always be shown:</p></div><div class="code"><pre><code class="clojure">(query-instance 1 [:name])
+=&gt; '(&quot;byteValue&quot; &quot;clone&quot; &quot;compareTo&quot; &quot;doubleValue&quot; &quot;equals&quot; &quot;finalize&quot; &quot;floatValue&quot; &quot;getClass&quot; &quot;hashCode&quot; &quot;intValue&quot; &quot;longValue&quot; &quot;notify&quot; &quot;notifyAll&quot; &quot;shortValue&quot; &quot;toString&quot; &quot;value&quot; &quot;wait&quot;)</code></pre></div><div><p>The reason that <code>static</code> fields and methods are not shown for the instance is that we want all the operations that can operate on an instantiated object. Static accessors and methods are strictly operations belonging to the class and so cannot operate on an instance of the class.</p></div><div><span id="usage" name="usage"></span><h3>3.2 &nbsp;&nbsp; Usage</h3></div><div><p>Lets see how reflection is used. We will do a search for <code>MIN&#95;VALUE</code> with a long</p></div><div class="code"><pre><code class="clojure">(query-class 1 [&quot;MIN_VALUE&quot;])
+;;=&gt; (#[MIN_VALUE :: &lt;java.lang.Long&gt; | long])</code></pre></div><div><p>We can open up the returned result and take a look at the internals of the element itself</p></div><div class="code"><pre><code class="clojure">(-&gt; (query-class 1 [&quot;MIN_VALUE&quot;])
     first
     :all)
 =&gt; (contains {:origins [java.lang.Long]
@@ -122,8 +582,8 @@
               :type Long/TYPE
               :modifiers #{:public :static :field :final},
               :container java.lang.Long,
-              :tag :field})</div></div><div class="paragraph"><p>There is a bunch of meta information regarding the reflected field. This is used for searching and filtering. We don't actually need to know too much about the internals to use it. Instead of using <code>first</code>, we can use <code>:#</code> to grab the first element in the search results:</p></div><div class="code"><div hljs="hljs" language="clojure" no-escape="no-escape">(def min-value (query-class 1 [&quot;MIN_VALUE&quot; :#]))</div></div><div class="paragraph"><p>Now we can use as if it is any other function:</p></div><div class="code"><div hljs="hljs" language="clojure" no-escape="no-escape">(min-value Long)
-=&gt; -9223372036854775808</div></div><section class="subsection" id="multiarity"><h4 class="subsection">2.2.1  &nbsp;&nbsp; Multiarity</h4><div class="paragraph"><p>Another cool feature of <code>:#</code> is that it will automatically merge functions into one taking multiple arities and types. For instance, if <code>valueOf</code> is queried for in String, it will have 8 different types of inputs:</p></div><div class="code"><div hljs="hljs" language="clojure" no-escape="no-escape">(query-class String [&quot;valueOf&quot; :#])
+              :tag :field})</code></pre></div><div><p>There is a bunch of meta information regarding the reflected field. This is used for searching and filtering. We don't actually need to know too much about the internals to use it. Instead of using <code>first</code>, we can use <code>:#</code> to grab the first element in the search results:</p></div><div class="code"><pre><code class="clojure">(def min-value (query-class 1 [&quot;MIN_VALUE&quot; :#]))</code></pre></div><div><p>Now we can use as if it is any other function:</p></div><div class="code"><pre><code class="clojure">(min-value Long)
+=&gt; -9223372036854775808</code></pre></div><div><span id="multiarity" name="multiarity"></span><h3><i>3.2.1 &nbsp;&nbsp; Multiarity</i></h3></div><div><p>Another cool feature of <code>:#</code> is that it will automatically merge functions into one taking multiple arities and types. For instance, if <code>valueOf</code> is queried for in String, it will have 8 different types of inputs:</p></div><div class="code"><pre><code class="clojure">(query-class String [&quot;valueOf&quot; :#])
 ;;=&gt; #[valueOf :: ([char]),
 ;;                ([java.lang.Object]),
 ;;                ([boolean]),
@@ -132,7 +592,7 @@
 ;;                ([long]),
 ;;                ([float]),
 ;;                ([int]),
-;;                ([double])]</div></div><div class="paragraph"><p>We can capture the method and use it with a variety of inputs:</p></div><div class="code"><div hljs="hljs" language="clojure" no-escape="no-escape">(def value-of (query-class String [&quot;valueOf&quot; :#]))</div></div><div class="code"><div hljs="hljs" language="clojure" no-escape="no-escape">(value-of &#92;c)  =&gt; &quot;c&quot;   ; char
+;;                ([double])]</code></pre></div><div><p>We can capture the method and use it with a variety of inputs:</p></div><div class="code"><pre><code class="clojure">(def value-of (query-class String [&quot;valueOf&quot; :#]))</code></pre></div><div class="code"><pre><code class="clojure">(value-of &#92;c)  =&gt; &quot;c&quot;   ; char
 (value-of 100) =&gt; &quot;100&quot; ; long
 (value-of 3.9) =&gt; &quot;3.9&quot; ; double
 
@@ -141,24 +601,24 @@
                       (aset arr i v))
                     [&#92;h &#92;e &#92;l &#92;l &#92;o]))
 (value-of arr) =&gt; &quot;hello&quot;    ; char []
-(value-of arr 0 2) =&gt; &quot;he&quot;   ; char[], int, int</div></div></section></section><section class="section" id="options"><h3 class="section">2.3  &nbsp;&nbsp; Options</h3><div class="paragraph"><p>The option array takes selectors and filters can be used to customise the results returned by the two query calls.</p><ul><li>attribute selection</li><li>name filtering</li><li>parameter filtering</li><li>modifier filtering</li><li>return type filtering</li></ul></div></section><section class="section" id="selectors"><h3 class="section">2.4  &nbsp;&nbsp; Selectors</h3><div class="paragraph"><p>They can be in the form of selector keywords:</p></div><div class="code"><div hljs="hljs" language="clojure" no-escape="no-escape">(query-class Long [:name &quot;MIN_VALUE&quot; :#])
+(value-of arr 0 2) =&gt; &quot;he&quot;   ; char[], int, int</code></pre></div><div><span id="options" name="options"></span><h3>3.3 &nbsp;&nbsp; Options</h3></div><div><p>The option array takes selectors and filters can be used to customise the results returned by the two query calls.</p><ul><li>attribute selection</li><li>name filtering</li><li>parameter filtering</li><li>modifier filtering</li><li>return type filtering</li></ul></div><div><span id="selectors" name="selectors"></span><h3>3.4 &nbsp;&nbsp; Selectors</h3></div><div><p>They can be in the form of selector keywords:</p></div><div class="code"><pre><code class="clojure">(query-class Long [:name &quot;MIN_VALUE&quot; :#])
 =&gt; &quot;MIN_VALUE&quot;
 
 (query-class Long [:params &quot;MIN_VALUE&quot; :#])
 =&gt; [java.lang.Class]
 
 (query-class Long [:params :name &quot;MIN_VALUE&quot; :#])
-=&gt; {:name &quot;MIN_VALUE&quot;, :params [java.lang.Class]}</div></div><div class="paragraph"><p>Additional selector keywords include <code>:container</code>, <code>:hash</code>, <code>:delegate</code>, <code>:origins</code>, <code>:name</code>, <code>:modifiers</code>, <code>:tag</code> and <code>:type</code> and used as follows:</p></div><div class="code"><div hljs="hljs" language="clojure" no-escape="no-escape">(query-class Long [:params :name :modifiers &quot;MIN_VALUE&quot; :#])
+=&gt; {:name &quot;MIN_VALUE&quot;, :params [java.lang.Class]}</code></pre></div><div><p>Additional selector keywords include <code>:container</code>, <code>:hash</code>, <code>:delegate</code>, <code>:origins</code>, <code>:name</code>, <code>:modifiers</code>, <code>:tag</code> and <code>:type</code> and used as follows:</p></div><div class="code"><pre><code class="clojure">(query-class Long [:params :name :modifiers &quot;MIN_VALUE&quot; :#])
 =&gt; {:modifiers #{:public :static :field :final},
     :name &quot;MIN_VALUE&quot;,
-    :params [java.lang.Class]}</div></div></section><section class="section" id="name-filtering"><h3 class="section">2.5  &nbsp;&nbsp; Name Filtering</h3><div class="paragraph"><p>We can filter on the name of the class member using two methods - exact matches using strings and regex matchesusing regexs:</p></div><div class="code"><div hljs="hljs" language="clojure" no-escape="no-escape">(query-class Long [:name &quot;value&quot;])
+    :params [java.lang.Class]}</code></pre></div><div><span id="name-filtering" name="name-filtering"></span><h3>3.5 &nbsp;&nbsp; Name Filtering</h3></div><div><p>We can filter on the name of the class member using two methods - exact matches using strings and regex matchesusing regexs:</p></div><div class="code"><pre><code class="clojure">(query-class Long [:name &quot;value&quot;])
 =&gt; '(&quot;value&quot;)
 
 (query-class Long [:name #&quot;value&quot;])
 =&gt; '(&quot;value&quot; &quot;valueOf&quot;)
 
 (query-class Long [:name #&quot;VALUE&quot;])
-=&gt; '(&quot;MAX_VALUE&quot; &quot;MIN_VALUE&quot;)</div></div></section><section class="section" id="parameter-filtering"><h3 class="section">2.6  &nbsp;&nbsp; Parameter Filtering</h3><section class="subsection" id="number-of-inputs"><h4 class="subsection">2.6.1  &nbsp;&nbsp; Number of Inputs</h4><div class="paragraph"><p>Input parameters can be filtered through specifying the number of inputs:</p></div><div class="code"><div hljs="hljs" language="clojure" no-escape="no-escape">(query-class Long [:name :params 2])
+=&gt; '(&quot;MAX_VALUE&quot; &quot;MIN_VALUE&quot;)</code></pre></div><div><span id="parameter-filtering" name="parameter-filtering"></span><h3>3.6 &nbsp;&nbsp; Parameter Filtering</h3></div><div><span id="number-of-inputs" name="number-of-inputs"></span><h3><i>3.6.1 &nbsp;&nbsp; Number of Inputs</i></h3></div><div><p>Input parameters can be filtered through specifying the number of inputs:</p></div><div class="code"><pre><code class="clojure">(query-class Long [:name :params 2])
 =&gt; [{:name &quot;compare&quot;, :params [Long/TYPE Long/TYPE]}
     {:name &quot;compareTo&quot;, :params [Long Long]}
     {:name &quot;compareTo&quot;, :params [Long Object]}
@@ -170,7 +630,7 @@
     {:name &quot;rotateRight&quot;, :params [Long/TYPE Integer/TYPE]}
     {:name &quot;toString&quot;, :params [Long/TYPE Integer/TYPE]}
     {:name &quot;toUnsignedString&quot;, :params [Long/TYPE Integer/TYPE]}
-    {:name &quot;valueOf&quot;, :params [String Integer/TYPE]}]</div></div></section><section class="subsection" id="exact-inputs"><h4 class="subsection">2.6.2  &nbsp;&nbsp; Exact Inputs</h4><div class="paragraph"><p>Exact inputs can be specified by using a vector with input types:</p></div><div class="code"><div hljs="hljs" language="clojure" no-escape="no-escape">(query-class Long [:name :params [Long/TYPE]])
+    {:name &quot;valueOf&quot;, :params [String Integer/TYPE]}]</code></pre></div><div><span id="exact-inputs" name="exact-inputs"></span><h3><i>3.6.2 &nbsp;&nbsp; Exact Inputs</i></h3></div><div><p>Exact inputs can be specified by using a vector with input types:</p></div><div class="code"><pre><code class="clojure">(query-class Long [:name :params [Long/TYPE]])
 =&gt; [{:name &quot;bitCount&quot;, :params [Long/TYPE]}
     {:name &quot;highestOneBit&quot;, :params [Long/TYPE]}
     {:name &quot;lowestOneBit&quot;, :params [Long/TYPE]}
@@ -185,9 +645,9 @@
     {:name &quot;toHexString&quot;, :params [Long/TYPE]}
     {:name &quot;toOctalString&quot;, :params [Long/TYPE]}
     {:name &quot;toString&quot;, :params [Long/TYPE]}
-    {:name &quot;valueOf&quot;, :params [Long/TYPE]}]</div></div></section><section class="subsection" id="partial-inputs"><h4 class="subsection">2.6.3  &nbsp;&nbsp; Partial Inputs</h4><div class="paragraph"><p>Using a vector with <code>:any</code> as the first input will output all functions with any of the types as input arguments</p></div><div class="code"><div hljs="hljs" language="clojure" no-escape="no-escape">(query-class Long [:name [:any String Long]])
-=&gt; [&quot;bitCount&quot; &quot;compare&quot; &quot;decode&quot; &quot;getChars&quot; &quot;getLong&quot; &quot;highestOneBit&quot; &quot;lowestOneBit&quot; &quot;new&quot; &quot;numberOfLeadingZeros&quot; &quot;numberOfTrailingZeros&quot; &quot;parseLong&quot; &quot;reverse&quot; &quot;reverseBytes&quot; &quot;rotateLeft&quot; &quot;rotateRight&quot; &quot;signum&quot; &quot;stringSize&quot; &quot;toBinaryString&quot; &quot;toHexString&quot; &quot;toOctalString&quot; &quot;toString&quot; &quot;toUnsignedString&quot; &quot;valueOf&quot;]</div></div><div class="paragraph"><p>Using a vector with <code>:all</code> as the first input will output all functions having all of the types as input arguments</p></div><div class="code"><div hljs="hljs" language="clojure" no-escape="no-escape">(query-class Long [:name :params [:all String Long]])
-=&gt; [{:name &quot;getLong&quot;, :params [String Long/TYPE]}]</div></div></section></section><section class="section" id="modifier-filtering"><h3 class="section">2.7  &nbsp;&nbsp; Modifier Filtering</h3><div class="paragraph"><p>The following are all the modifier keywords that can be used for filtering, most are directly related to flags, four have been defined for completeness of filtering:</p></div><div class="code"><div hljs="hljs" language="clojure" no-escape="no-escape">:public         1      ;; java.lang.reflect.Modifier/PUBLIC
+    {:name &quot;valueOf&quot;, :params [Long/TYPE]}]</code></pre></div><div><span id="partial-inputs" name="partial-inputs"></span><h3><i>3.6.3 &nbsp;&nbsp; Partial Inputs</i></h3></div><div><p>Using a vector with <code>:any</code> as the first input will output all functions with any of the types as input arguments</p></div><div class="code"><pre><code class="clojure">(query-class Long [:name [:any String Long]])
+=&gt; [&quot;bitCount&quot; &quot;compare&quot; &quot;decode&quot; &quot;getChars&quot; &quot;getLong&quot; &quot;highestOneBit&quot; &quot;lowestOneBit&quot; &quot;new&quot; &quot;numberOfLeadingZeros&quot; &quot;numberOfTrailingZeros&quot; &quot;parseLong&quot; &quot;reverse&quot; &quot;reverseBytes&quot; &quot;rotateLeft&quot; &quot;rotateRight&quot; &quot;signum&quot; &quot;stringSize&quot; &quot;toBinaryString&quot; &quot;toHexString&quot; &quot;toOctalString&quot; &quot;toString&quot; &quot;toUnsignedString&quot; &quot;valueOf&quot;]</code></pre></div><div><p>Using a vector with <code>:all</code> as the first input will output all functions having all of the types as input arguments</p></div><div class="code"><pre><code class="clojure">(query-class Long [:name :params [:all String Long]])
+=&gt; [{:name &quot;getLong&quot;, :params [String Long/TYPE]}]</code></pre></div><div><span id="modifier-filtering" name="modifier-filtering"></span><h3>3.7 &nbsp;&nbsp; Modifier Filtering</h3></div><div><p>The following are all the modifier keywords that can be used for filtering, most are directly related to flags, four have been defined for completeness of filtering:</p></div><div class="code"><pre><code class="clojure">:public         1      ;; java.lang.reflect.Modifier/PUBLIC
 :private        2      ;; java.lang.reflect.Modifier/PRIVATE
 :protected      4      ;; java.lang.reflect.Modifier/PROTECTED
 :static         8      ;; java.lang.reflect.Modifier/STATIC
@@ -208,16 +668,16 @@
 :plain          0      ;; not :public, :private or :protected
 :instance       0      ;; not :static
 :field          0      ;; is field
-:method         0      ;; is method</div></div><section class="subsection" id="modifier-examples"><h4 class="subsection">2.7.1  &nbsp;&nbsp; Modifier Examples</h4><div class="paragraph"><p>Find all the fields in <code>java.lang.Long</code>:</p></div><div class="code"><div hljs="hljs" language="clojure" no-escape="no-escape">(query-class Long [:name :field])
-=&gt; [&quot;MAX_VALUE&quot; &quot;MIN_VALUE&quot; &quot;SIZE&quot; &quot;TYPE&quot; &quot;serialVersionUID&quot; &quot;value&quot;]</div></div><div class="paragraph"><p>Find all the static fields in <code>java.lang.Long</code>:</p></div><div class="code"><div hljs="hljs" language="clojure" no-escape="no-escape">(query-class Long [:name :static :field])
-=&gt; [&quot;MAX_VALUE&quot; &quot;MIN_VALUE&quot; &quot;SIZE&quot; &quot;TYPE&quot; &quot;serialVersionUID&quot;]</div></div><div class="paragraph"><p>Find all the non-static fields in <code>java.lang.Long</code>:</p></div><div class="code"><div hljs="hljs" language="clojure" no-escape="no-escape">(query-class Long [:name :instance :field])
-=&gt; [&quot;value&quot;]</div></div><div class="paragraph"><p>Find all public fields in <code>java.lang.Long</code>:</p></div><div class="code"><div hljs="hljs" language="clojure" no-escape="no-escape">(query-class Long [:name :public :field])
-=&gt; [&quot;MAX_VALUE&quot; &quot;MIN_VALUE&quot; &quot;SIZE&quot; &quot;TYPE&quot;]</div></div><div class="paragraph"><p>Find all private members in <code>java.lang.Long</code>:</p></div><div class="code"><div hljs="hljs" language="clojure" no-escape="no-escape">(query-class Long [:name :private])
-=&gt; [&quot;serialVersionUID&quot; &quot;toUnsignedString&quot; &quot;value&quot;]</div></div><div class="paragraph"><p>Find all private fields in <code>java.lang.Long</code>:</p></div><div class="code"><div hljs="hljs" language="clojure" no-escape="no-escape">(query-class Long [:name :private :field])
-=&gt; [&quot;serialVersionUID&quot; &quot;value&quot;]</div></div><div class="paragraph"><p>Find all private methods in <code>java.lang.Long</code>:</p></div><div class="code"><div hljs="hljs" language="clojure" no-escape="no-escape">(query-class Long [:name :private :method])
-=&gt; [&quot;toUnsignedString&quot;]</div></div><div class="paragraph"><p>Find all protected members in <code>java.lang.Long</code>:</p></div><div class="code"><div hljs="hljs" language="clojure" no-escape="no-escape">(query-class Long [:name :protected])
-=&gt; []</div></div><div class="paragraph"><p>Find all members in <code>java.lang.Long</code> with no security attribute:</p></div><div class="code"><div hljs="hljs" language="clojure" no-escape="no-escape">(query-class Long [:name :plain])
-=&gt; [&quot;getChars&quot; &quot;stringSize&quot;]</div></div></section></section><section class="section" id="return-type-filtering"><h3 class="section">2.8  &nbsp;&nbsp; Return Type Filtering</h3><div class="paragraph"><p>Return types signatures can be filtered by giving a class in the options, again all filters can be mixed and matched as needed. In the following example, we query for the name of all methods having a return type of <code>Long/TYPE</code>:</p></div><div class="code"><div hljs="hljs" language="clojure" no-escape="no-escape">(query-class Long [:name :type :method Long/TYPE])
+:method         0      ;; is method</code></pre></div><div><span id="modifier-examples" name="modifier-examples"></span><h3><i>3.7.1 &nbsp;&nbsp; Modifier Examples</i></h3></div><div><p>Find all the fields in <code>java.lang.Long</code>:</p></div><div class="code"><pre><code class="clojure">(query-class Long [:name :field])
+=&gt; [&quot;MAX_VALUE&quot; &quot;MIN_VALUE&quot; &quot;SIZE&quot; &quot;TYPE&quot; &quot;serialVersionUID&quot; &quot;value&quot;]</code></pre></div><div><p>Find all the static fields in <code>java.lang.Long</code>:</p></div><div class="code"><pre><code class="clojure">(query-class Long [:name :static :field])
+=&gt; [&quot;MAX_VALUE&quot; &quot;MIN_VALUE&quot; &quot;SIZE&quot; &quot;TYPE&quot; &quot;serialVersionUID&quot;]</code></pre></div><div><p>Find all the non-static fields in <code>java.lang.Long</code>:</p></div><div class="code"><pre><code class="clojure">(query-class Long [:name :instance :field])
+=&gt; [&quot;value&quot;]</code></pre></div><div><p>Find all public fields in <code>java.lang.Long</code>:</p></div><div class="code"><pre><code class="clojure">(query-class Long [:name :public :field])
+=&gt; [&quot;MAX_VALUE&quot; &quot;MIN_VALUE&quot; &quot;SIZE&quot; &quot;TYPE&quot;]</code></pre></div><div><p>Find all private members in <code>java.lang.Long</code>:</p></div><div class="code"><pre><code class="clojure">(query-class Long [:name :private])
+=&gt; [&quot;serialVersionUID&quot; &quot;toUnsignedString&quot; &quot;value&quot;]</code></pre></div><div><p>Find all private fields in <code>java.lang.Long</code>:</p></div><div class="code"><pre><code class="clojure">(query-class Long [:name :private :field])
+=&gt; [&quot;serialVersionUID&quot; &quot;value&quot;]</code></pre></div><div><p>Find all private methods in <code>java.lang.Long</code>:</p></div><div class="code"><pre><code class="clojure">(query-class Long [:name :private :method])
+=&gt; [&quot;toUnsignedString&quot;]</code></pre></div><div><p>Find all protected members in <code>java.lang.Long</code>:</p></div><div class="code"><pre><code class="clojure">(query-class Long [:name :protected])
+=&gt; []</code></pre></div><div><p>Find all members in <code>java.lang.Long</code> with no security attribute:</p></div><div class="code"><pre><code class="clojure">(query-class Long [:name :plain])
+=&gt; [&quot;getChars&quot; &quot;stringSize&quot;]</code></pre></div><div><span id="return-type-filtering" name="return-type-filtering"></span><h3>3.8 &nbsp;&nbsp; Return Type Filtering</h3></div><div><p>Return types signatures can be filtered by giving a class in the options, again all filters can be mixed and matched as needed. In the following example, we query for the name of all methods having a return type of <code>Long/TYPE</code>:</p></div><div class="code"><pre><code class="clojure">(query-class Long [:name :type :method Long/TYPE])
 =&gt; [{:name &quot;highestOneBit&quot;, :type Long/TYPE}
     {:name &quot;longValue&quot;, :type Long/TYPE}
     {:name &quot;lowestOneBit&quot;, :type Long/TYPE}
@@ -226,11 +686,11 @@
     {:name &quot;reverse&quot;, :type Long/TYPE}
     {:name &quot;reverseBytes&quot;, :type Long/TYPE}
     {:name &quot;rotateLeft&quot;, :type Long/TYPE}
-    {:name &quot;rotateRight&quot;, :type Long/TYPE}]</div></div></section></section><section class="chapter" id="member-operations"><h2 class="chapter">3  &nbsp;&nbsp; Member Operations</h2><section class="section" id="apply-element"><h3 class="section">3.1  &nbsp;&nbsp; apply-element</h3><div class="paragraph"><p><code>apply-element</code> is for function invocation of an object. It uses <code>query-instance</code> underneath the hood to figure what to call but is faster when used more than once because the reflected member is cached.</p></div><div class="code"><div hljs="hljs" language="clojure" no-escape="no-escape">(apply-element &quot;HELLO&quot; &quot;charAt&quot; [0])
+    {:name &quot;rotateRight&quot;, :type Long/TYPE}]</code></pre></div><div><span id="member-operations" name="member-operations"></span><h2><b>4 &nbsp;&nbsp; Member Operations</b></h2></div><div><span id="apply-element" name="apply-element"></span><h3>4.1 &nbsp;&nbsp; apply-element</h3></div><div><p><code>apply-element</code> is for function invocation of an object. It uses <code>query-instance</code> underneath the hood to figure what to call but is faster when used more than once because the reflected member is cached.</p></div><div class="code"><pre><code class="clojure">(apply-element &quot;HELLO&quot; &quot;charAt&quot; [0])
 =&gt; &#92;H
 
 (seq (apply-element &quot;HELLO&quot; &quot;value&quot; []))
-=&gt; [&#92;H &#92;E &#92;L &#92;L &#92;O]</div></div></section><section class="section" id="delegate"><h3 class="section">3.2  &nbsp;&nbsp; delegate</h3><div class="paragraph"><p><code>delegate</code> does what <code>bean</code> does but instead of manipulating fields through accessor functions, it directly gives field access to the underlying object. This way, one can set and get values from any object, regardless of permission model. <code>delegate</code> is used most often to look at the entire state of an object as well as to set the fields of an object to a particular initial state for testing. In the following example, we will change the value of a normally immutable string</p></div><div class="code"><div hljs="hljs" language="clojure" no-escape="no-escape">(def a &quot;hello&quot;)
+=&gt; [&#92;H &#92;E &#92;L &#92;L &#92;O]</code></pre></div><div><span id="delegate" name="delegate"></span><h3>4.2 &nbsp;&nbsp; delegate</h3></div><div><p><code>delegate</code> does what <code>bean</code> does but instead of manipulating fields through accessor functions, it directly gives field access to the underlying object. This way, one can set and get values from any object, regardless of permission model. <code>delegate</code> is used most often to look at the entire state of an object as well as to set the fields of an object to a particular initial state for testing. In the following example, we will change the value of a normally immutable string</p></div><div class="code"><pre><code class="clojure">(def a &quot;hello&quot;)
 a =&gt; &quot;hello&quot;
 
 (def a* (delegate a))
@@ -246,10 +706,10 @@ a =&gt; &quot;hello&quot;
 =&gt; [&#92;h &#92;e &#92;l &#92;l &#92;o]
 
 (a* :value (char-array &quot;world&quot;))   ; setter call
-a =&gt; &quot;world&quot; ; oh look! we have secretly changed an immutable object</div></div></section></section><section class="chapter" id="class-information"><h2 class="chapter">4  &nbsp;&nbsp; Class Information</h2><section class="section" id="class-info"><h3 class="section">4.1  &nbsp;&nbsp; class-info</h3><div class="paragraph"><p>Information about a class can be accessed using <code>class-info</code>. Either a class or an instance can be passed it. The contextual class will be determined automatically:</p></div><div class="code"><div hljs="hljs" language="clojure" no-escape="no-escape">(class-info Long)
+a =&gt; &quot;world&quot; ; oh look! we have secretly changed an immutable object</code></pre></div><div><span id="class-information" name="class-information"></span><h2><b>5 &nbsp;&nbsp; Class Information</b></h2></div><div><span id="class-info" name="class-info"></span><h3>5.1 &nbsp;&nbsp; class-info</h3></div><div><p>Information about a class can be accessed using <code>class-info</code>. Either a class or an instance can be passed it. The contextual class will be determined automatically:</p></div><div class="code"><pre><code class="clojure">(class-info Long)
 =&gt; (contains {:name &quot;java.lang.Long&quot;
               :hash number?
-              :modifiers #{:instance :public :final :class}})</div></div><div class="paragraph"><p>It is interesting to be able explore the underlying implementation of clojure itself. For example, if there are nine elements passed to a zipmap, the type is an <code>PersistentArrayMap</code> whereas is ten elements are passed to the zipmap, the object becomes a <code>PersistentHashMap</code>:</p></div><div class="code"><div hljs="hljs" language="clojure" no-escape="no-escape">(class-info (zipmap (range 9) (range 9)))
+              :modifiers #{:instance :public :final :class}})</code></pre></div><div><p>It is interesting to be able explore the underlying implementation of clojure itself. For example, if there are nine elements passed to a zipmap, the type is an <code>PersistentArrayMap</code> whereas is ten elements are passed to the zipmap, the object becomes a <code>PersistentHashMap</code>:</p></div><div class="code"><pre><code class="clojure">(class-info (zipmap (range 9) (range 9)))
 =&gt; (contains {:name &quot;clojure.lang.PersistentArrayMap&quot;
               :hash number?
               :modifiers #{:instance :public :class}})
@@ -257,11 +717,11 @@ a =&gt; &quot;world&quot; ; oh look! we have secretly changed an immutable objec
 (class-info (zipmap (range 10) (range 10)))
 =&gt; (contains {:name &quot;clojure.lang.PersistentHashMap&quot;,
               :hash number?
-              :modifiers #{:instance :public :class}})</div></div></section><section class="section" id="class-hierarchy"><h3 class="section">4.2  &nbsp;&nbsp; class-hierarchy</h3><div class="paragraph"><p>The class hierarchy can be readily viewed. It is given in the form of a vector. The first element is always the class itself, the subsequent elements are split into the base/super class as well as all extended interfaces:</p></div><div class="code"><div hljs="hljs" language="clojure" no-escape="no-escape">(class-hierarchy String)
+              :modifiers #{:instance :public :class}})</code></pre></div><div><span id="class-hierarchy" name="class-hierarchy"></span><h3>5.2 &nbsp;&nbsp; class-hierarchy</h3></div><div><p>The class hierarchy can be readily viewed. It is given in the form of a vector. The first element is always the class itself, the subsequent elements are split into the base/super class as well as all extended interfaces:</p></div><div class="code"><pre><code class="clojure">(class-hierarchy String)
 =&gt; [java.lang.String [java.lang.Object ; base class
                       #{java.io.Serializable ;interfaces
                         java.lang.CharSequence
-                        java.lang.Comparable}]]</div></div><div class="paragraph"><p>Here is the type hierarchy of a <code>PersistentHashMap</code>:</p></div><div class="code"><div hljs="hljs" language="clojure" no-escape="no-escape">(class-hierarchy clojure.lang.PersistentHashMap)
+                        java.lang.Comparable}]]</code></pre></div><div><p>Here is the type hierarchy of a <code>PersistentHashMap</code>:</p></div><div class="code"><pre><code class="clojure">(class-hierarchy clojure.lang.PersistentHashMap)
 =&gt; [clojure.lang.PersistentHashMap
 
     [clojure.lang.APersistentMap
@@ -278,10 +738,10 @@ a =&gt; &quot;world&quot; ; oh look! we have secretly changed an immutable objec
        clojure.lang.MapEquivalence}]
 
     [java.lang.Object
-     #{clojure.lang.IFn}]]</div></div></section></section><section class="chapter" id="extraction"><h2 class="chapter">5  &nbsp;&nbsp; Extraction</h2><section class="section" id="extract-to-var"><h3 class="section">5.1  &nbsp;&nbsp; extract-to-var</h3><div class="paragraph"><p>Often, we need to extract out one or all elements of a class for use. <code>extract-to-var</code> and <code>extract-to-ns</code> allows for this. We see how extract-to-var works:</p></div><div class="code"><div hljs="hljs" language="clojure" no-escape="no-escape">(extract-to-var 'char-at String &quot;charAt&quot;)
+     #{clojure.lang.IFn}]]</code></pre></div><div><span id="extraction" name="extraction"></span><h2><b>6 &nbsp;&nbsp; Extraction</b></h2></div><div><span id="extract-to-var" name="extract-to-var"></span><h3>6.1 &nbsp;&nbsp; extract-to-var</h3></div><div><p>Often, we need to extract out one or all elements of a class for use. <code>extract-to-var</code> and <code>extract-to-ns</code> allows for this. We see how extract-to-var works:</p></div><div class="code"><pre><code class="clojure">(extract-to-var 'char-at String &quot;charAt&quot;)
 
 (mapv #(char-at &quot;Hello&quot; %) (range 5))
-=&gt; [&#92;H &#92;e &#92;l &#92;l &#92;o]</div></div><div class="paragraph"><p>The function can also take a fully qualified symbol as well as create meta-information regarding the var itself. </p></div><div class="code"><div hljs="hljs" language="clojure" no-escape="no-escape">(extract-to-var 'hello/char-at String &quot;charAt&quot;)
+=&gt; [&#92;H &#92;e &#92;l &#92;l &#92;o]</code></pre></div><div><p>The function can also take a fully qualified symbol as well as create meta-information regarding the var itself. </p></div><div class="code"><pre><code class="clojure">(extract-to-var 'hello/char-at String &quot;charAt&quot;)
 
 (hello/char-at &quot;Hello&quot; 4)
 =&gt; &#92;o
@@ -290,7 +750,7 @@ a =&gt; &quot;world&quot; ; oh look! we have secretly changed an immutable objec
 =&gt; (contains {:ns #(instance? clojure.lang.Namespace %)
               :name 'char-at
               :arglists '[[java.lang.String int]]
-              :doc &quot;&#92;nmember: java.lang.String/charAt&#92;ntype: char&#92;nmodifiers: instance, method, public&quot;})</div></div></section><section class="section" id="extract-to-ns"><h3 class="section">5.2  &nbsp;&nbsp; extract-to-ns</h3><div class="paragraph"><p><code>extract-to-ns</code> takes a class and extracts out all methods to a particular namespace, filters can be applied as seen in the <a href='#selectors'>selectors</a> section:</p></div><div class="code"><div hljs="hljs" language="clojure" no-escape="no-escape">(extract-to-ns 'test.string String [:private])
+              :doc &quot;&#92;nmember: java.lang.String/charAt&#92;ntype: char&#92;nmodifiers: instance, method, public&quot;})</code></pre></div><div><span id="extract-to-ns" name="extract-to-ns"></span><h3>6.2 &nbsp;&nbsp; extract-to-ns</h3></div><div><p><code>extract-to-ns</code> takes a class and extracts out all methods to a particular namespace, filters can be applied as seen in the <a href='#selectors'>selectors</a> section:</p></div><div class="code"><pre><code class="clojure">(extract-to-ns 'test.string String [:private])
 =&gt; [#'test.string/HASHING_SEED
     #'test.string/checkBounds
     #'test.string/hash
@@ -302,7 +762,7 @@ a =&gt; &quot;world&quot; ; oh look! we have secretly changed an immutable objec
     #'test.string/value]
 
 (seq (test.string/value &quot;hello&quot;))
-=&gt; [&#92;h &#92;e &#92;l &#92;l &#92;o]</div></div><div class="paragraph"><p>If just the class is passed in, it will dump all methods of the class into the current namespace. This is very useful for quickly getting information about the internal structure of a class when exploring a new package. It is not the best idea to do this in production, but having the ability to do so whilst developing is great. We can see the <code>valueOf</code> function being called after all members in <code>java.lang.Long</code> have been extracted:</p></div><div class="code"><div hljs="hljs" language="clojure" no-escape="no-escape">(extract-to-ns Long)
+=&gt; [&#92;h &#92;e &#92;l &#92;l &#92;o]</code></pre></div><div><p>If just the class is passed in, it will dump all methods of the class into the current namespace. This is very useful for quickly getting information about the internal structure of a class when exploring a new package. It is not the best idea to do this in production, but having the ability to do so whilst developing is great. We can see the <code>valueOf</code> function being called after all members in <code>java.lang.Long</code> have been extracted:</p></div><div class="code"><pre><code class="clojure">(extract-to-ns Long)
 
 (clojure.repl/doc valueOf)
 ;;   -------------------------
@@ -313,28 +773,20 @@ a =&gt; &quot;world&quot; ; oh look! we have secretly changed an immutable objec
 =&gt; 72
 
 (valueOf &quot;72&quot; 16)
-=&gt; 114</div></div></section></section><section class="chapter" id="links-and-resources"><h2 class="chapter">6  &nbsp;&nbsp; Links and Resources</h2><div class="group"><div class="paragraph"><p>Projects using <code>hara.reflect</code>:</p><ul><li><a href='https://github.com/cloxp'>cloxp</a> - smalltalk like environment for clojure</li><li><a href='https://github.com/zcaudate/gita'>gita</a> - introspective wrapper for jgit</li><li><a href='https://github.com/venantius/ultra'>ultra</a> - plugin for a superior development environment</li></ul></div></div></section>
+=&gt; 114</code></pre></div><div><span id="links-and-resources" name="links-and-resources"></span><h2><b>7 &nbsp;&nbsp; Links and Resources</b></h2></div><div><p>Projects using <code>hara.reflect</code>:</p><ul><li><a href='https://github.com/cloxp'>cloxp</a> - smalltalk like environment for clojure</li><li><a href='https://github.com/zcaudate/gita'>gita</a> - introspective wrapper for jgit</li><li><a href='https://github.com/venantius/ultra'>ultra</a> - plugin for a superior development environment</li></ul></div>
+        </div>
+      </div>
     </div>
-</div><!--end of .container-->
 
-  <section class="application">
-    
-  </section>
-</body>
+    <label for="sidebar-checkbox" class="sidebar-toggle"></label>
 
-<script>
-  $('#nav').affix({
-    offset: {
-        top: $('#nav').offset().top,
-        bottom: $('footer').outerHeight(true) + $('.application').outerHeight(true) + 40
-    }});
-</script>
+  </body>
 
-
-<script>
-  if (document.location.search.match(/type=embed/gi)) {
-    window.parent.postMessage("resize", "*");
-  }
-</script>
-</body>
+  <script type="text/javascript">
+    smoothScroll.init();
+    gumshoe.init({});
+  
+    hljs.registerLanguage("clojure",function(e){var t={"builtin-name":"def defonce cond apply if-not if-let if not not= = < > <= >= == + / * - rem quot neg? pos? delay? symbol? keyword? true? false? integer? empty? coll? list? set? ifn? fn? associative? sequential? sorted? counted? reversible? number? decimal? class? distinct? isa? float? rational? reduced? ratio? odd? even? char? seq? vector? string? map? nil? contains? zero? instance? not-every? not-any? libspec? -> ->> .. . inc compare do dotimes mapcat take remove take-while drop letfn drop-last take-last drop-while while intern condp case reduced cycle split-at split-with repeat replicate iterate range merge zipmap declare line-seq sort comparator sort-by dorun doall nthnext nthrest partition eval doseq await await-for let agent atom send send-off release-pending-sends add-watch mapv filterv remove-watch agent-error restart-agent set-error-handler error-handler set-error-mode! error-mode shutdown-agents quote var fn loop recur throw try monitor-enter monitor-exit defmacro defn defn- macroexpand macroexpand-1 for dosync and or when when-not when-let comp juxt partial sequence memoize constantly complement identity assert peek pop doto proxy defstruct first rest cons defprotocol cast coll deftype defrecord last butlast sigs reify second ffirst fnext nfirst nnext defmulti defmethod meta with-meta ns in-ns create-ns import refer keys select-keys vals key val rseq name namespace promise into transient persistent! conj! assoc! dissoc! pop! disj! use class type num float double short byte boolean bigint biginteger bigdec print-method print-dup throw-if printf format load compile get-in update-in pr pr-on newline flush read slurp read-line subvec with-open memfn time re-find re-groups rand-int rand mod locking assert-valid-fdecl alias resolve ref deref refset swap! reset! set-validator! compare-and-set! alter-meta! reset-meta! commute get-validator alter ref-set ref-history-count ref-min-history ref-max-history ensure sync io! new next conj set! to-array future future-call into-array aset gen-class reduce map filter find empty hash-map hash-set sorted-map sorted-map-by sorted-set sorted-set-by vec vector seq flatten reverse assoc dissoc list disj get union difference intersection extend extend-type extend-protocol int nth delay count concat chunk chunk-buffer chunk-append chunk-first chunk-rest max min dec unchecked-inc-int unchecked-inc unchecked-dec-inc unchecked-dec unchecked-negate unchecked-add-int unchecked-add unchecked-subtract-int unchecked-subtract chunk-next chunk-cons chunked-seq? prn vary-meta lazy-seq spread list* str find-keyword keyword symbol gensym force rationalize"},r="a-zA-Z_\\-!.?+*=<>&#'",n="["+r+"]["+r+"0-9/;:]*",a="[-+]?\\d+(\\.\\d+)?",o={b:n,r:0},s={cN:"number",b:a,r:0},i=e.inherit(e.QSM,{i:null}),c=e.C(";","$",{r:0}),d={cN:"literal",b:/\b(true|false|nil)\b/},l={b:"[\\[\\{]",e:"[\\]\\}]"},m={cN:"comment",b:"\\^"+n},p=e.C("\\^\\{","\\}"),u={cN:"symbol",b:"[:]{1,2}"+n},f={b:"\\(",e:"\\)"},h={eW:!0,r:0},y={k:t,l:n,cN:"name",b:n,starts:h},b=[f,i,m,p,c,u,l,s,d,o];return f.c=[e.C("comment",""),y,h],h.c=b,l.c=b,{aliases:["clj"],i:/\S/,c:[f,i,m,p,c,u,l,s,d]}});
+    hljs.initHighlightingOnLoad();
+  </script>
 </html>

@@ -114,3 +114,17 @@
 
   (assoc-in-nil {:a {:b 1}} [:a :b] 2)
   => {:a {:b 1}})
+
+^{:refer hara.data.map/transform-in :added "2.1"}
+(fact "moves values around in a map according to a table"
+
+  (transform-in {:a 1 :b 2}
+                {[:c :d] [:a]})
+  => {:b 2, :c {:d 1}})
+
+^{:refer hara.data.map/retract-in :added "2.1"}
+(fact "reversed the changes by transform-in"
+  
+  (retract-in {:b 2, :c {:d 1}}
+              {[:c :d] [:a]})
+  => {:a 1 :b 2})

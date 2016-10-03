@@ -1,4 +1,4 @@
-(ns hara.display.ansii
+(ns hara.io.ansii
   (:require [clojure.string :as string]))
 
 (defonce colors
@@ -44,7 +44,7 @@
 (defn style [text modifiers]
   (str (string/join (map encode modifiers)) text (encode :reset)))
 
-(defn ansii-form [modifier]
+(defn- ansii-form [modifier]
   (let [prefix (encode modifier)
         func  (-> modifier name symbol)]
     `(defn ~func [& ~'args]
@@ -53,7 +53,7 @@
                 (string/join))
            (str ~(encode :reset))))))
 
-(defn define-ansii-forms []
+(defn- define-ansii-forms []
   (->> (dissoc lookup :reset)
        (keys)
        (mapv (comp eval ansii-form))))

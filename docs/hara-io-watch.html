@@ -1,114 +1,473 @@
 
-
 <!DOCTYPE html>
-<html >
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en-us">
+
   <head>
-    <meta charset="UTF-8">
-    <meta name="google" value="notranslate">
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+
+  <!-- Enable responsiveness on mobile devices-->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+  <link rel="shortcut icon" href="favicon.ico">
+  <title>hara.io.watch - watch for filesystem changes</title>
+  <script src="js/highlight.min.js"></script>
+  <script src="js/gumshoe.min.js"></script>
+  <script src="js/smooth-scroll.min.js"></script>
+  
+  <!-- CSS -->
+  <link rel="stylesheet" href="css/poole.css">
+  <link rel="stylesheet" href="css/syntax.css">
+  <link rel="stylesheet" href="css/lanyon.css">
+  <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=PT+Serif:400,400italic,700|PT+Sans:400">
+  
+  <style>
+  .error {
+  font-weight: bold;
+}
+
+.error.version {
+  color: #ac4142;
+  text-decoration: line-through;
+}
+
+.api .entry pre.error {
+  background-color: #ac4142;
+}
+.api .entry pre.error h6 {
+  color: white;
+  float: left;
+}
+
+.api .entry-description
+{
+ display: block;
+ }
+ 
+.api ul
+{
+  list-style-type: none;
+  padding-left: 5px;
+}
+
+.api .entry-description h4
+{
+  height 30px;
+  margin-top: 2rem;
+  font-size: larger;
+ }
+
+.api .entry-description p
+{
+ margin-bottom: 0px;
+ margin-top: 0px;
+ }
+
+.api .entry-option h6
+{
+ padding-right:5px;
+ padding-top: 0.6em;
+ margin-top: 0;
+ }
+
+.api .entry-option .args
+{
+ font-weight: lighter;
+ }
+ 
+.api .entry pre
+ {
+   width: 100%;
+}
+  
+.api pre h6
+{
+ float: right;
+ font-size: small;
+ margin-top: 0;
+ }
+ 
+ pre.source {
+  position: absolute;
+  visibility: hidden;
+  opacity: 0;
+  height: 0px;
+  transition: visibility 0s, opacity 1s linear;
+ }
+
+.api input.source-toggle{
+  display: none;
+}
+
+.api label.source-toggle {
+  position: relative;
+  float: right;
+  top: -1.9em;
+  right: 2em;
+  color: #ac4142;
+  font-style: italic;
+  cursor: pointer;
+}
+
+.api input[type="checkbox"] + label:after {
+  content: "show";
+}
+.api input[type="checkbox"]:checked + label:after {
+  content: "hide";
+}
+
+.api input[type="checkbox"]:checked ~ pre.source {
+  position: relative;
+  height: auto;
+  visibility: visible;
+  opacity: 1;
+}
+ 
+ 
+ 
+  html {
+  font-size: 15px;
+}
+
+h2 {
+  margin-top: 2.5rem;
+  font-size: 1.5rem;
+  margin-bottom: 1rem;
+}
+
+h3 {
+  margin-top: 2.5rem;
+}
+
+.top {
+  margin-top: 0.5em;
+  display: block;
+  font-size: 1.4em;
+  font-style: italic;
+}
+
+.top.active {
+  text-decoration: underline;
+}
+
+.heading {
+  display: flex;
+  padding-bottom: 1em;
+}
+.heading h5 {
+  font-size: 0.8rem; 
+  margin-top: 0.2em;
+  margin-bottom: 0.2em
+}
+
+.toc ul{
+  list-style-type: none;
+  padding-left: 0;
+}
+
+.toc a h4 {
+  color: #ac4142;
+}
+
+.toc a h5 {
+  color: #ac4142;
+  font-size: 0.8rem;
+  margin-top: 0.1em;
+  margin-bottom: 0.2em;
+  padding-left: 0.8em;
+}
+
+.outline .toc{
+  display: none;
+}
+
+.sidebar {
+  font-size: 0.9rem;
+  line-height: 1.3;
+}
+
+.sidebar-nav-item {
+    display: block;
+    padding-top: 0rem;
+    padding-bottom: 0rem; 
+    border-top: none;
+}
+
+.sidebar-nav {
+    border-bottom: none;
+}
+
+pre{
+  border: solid 1px;
+  border-color: #f0f0f0;
+  background-color: white;
+}
 
 
-    <title>io.watch - watch for filesystem changes</title>
+.code .failed
+{
+  background-color:#ac4142; 
+  padding: 10px;
+  font-size: large;
+}
 
-    
-  <link href='http://fonts.googleapis.com/css?family=Raleway:300' rel='stylesheet' type='text/css'>
-  <link rel="stylesheet" type="text/css" href="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.5/css/bootstrap.min.css">
-  <link rel="stylesheet" type="text/css" href="//cdnjs.cloudflare.com/ajax/libs/font-awesome/4.3.0/css/font-awesome.min.css">
+.code .failed h5
+{
+  color: white;
+  margin-top: 0;
+  margin-botton: 0;
+  font-size: small;
+}
 
-  <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.6/highlight.min.js"></script>
-  <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.6/languages/clojure.min.js"></script>
-  <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.6/styles/magula.min.css">
+.code .failed h4
+{  
+  color: white;
+  font-style: italic;
+}
 
-  <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
-  <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.5/js/bootstrap.min.js"></script>
-  <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/angular.js/1.4.2/angular.min.js"></script>
-  <script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/angularjs/1.4.2/angular-cookies.min.js"></script>
-  <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/angular-ui-bootstrap/0.13.0/ui-bootstrap-tpls.min.js"></script>
-  <script type="text/javascript" src="js/angular-highlightjs.min.js"></script>
+.code .failed hr
+{
+  margin-top: 15px;
+  margin-bottom: 0px;
+}
 
-  <link rel="stylesheet" type="text/css" href="css/rdash.min.css">
-  <link rel="stylesheet" type="text/css" href="css/scrollspy.css">
+.masthead a
+{
+  font-size: 1.8em;
+}
 
+@media (max-width: 48rem){
+.masthead-title {
+    text-align: left;
+}}
 
-  <script>
-    window.console = window.console || function(t) {};
-    window.open = function(){ console.log("window.open is disabled."); };
-    window.print   = function(){ console.log("window.print is disabled."); };
-  </script>
-
-  <script>
-    var app = angular.module('app', ['hljs']);
-  </script>
-  </head>
-
-  <body ng-app="app" data-spy="scroll" data-target=".scrollspy">
-  <!-- Fixed navbar -->
-    <nav class="navbar navbar-fixed-top">
-      <div class="container">
-        <div class="navbar-header">
-          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
-            <span class="sr-only">Toggle navigation</span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-          </button>
-          <a class="navbar-brand" href="index.html"><img src="img/logo.png"></a>
-        </div>
-        <div id="navbar" class="navbar-collapse collapse">
-          <ul class="nav navbar-nav">
-            <li class="dropdown">
-              <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Guides <span class="caret"></span></a>
-              <ul class="dropdown-menu">
-                <li><a href="hara-class.html">class</a></li>
-                <li><a href="hara-common.html">common</a></li>
-                <li><a href="hara-component.html">component</a></li>
-                <li><a href="hara-concurrent.html">concurrent</a></li>
-                <li><a href="hara-concurrent-ova.html">concurrent.ova</a></li>
-                <li><a href="hara-concurrent-procedure.html">concurrent.procedure</a></li>
-                <li><a href="hara-data.html">data</a></li>
-                <li><a href="hara-event.html">event</a></li>
-                <li><a href="hara-expression.html">expression</a></li>
-                <li><a href="hara-extend.html">extend</a></li>
-                <li><a href="hara-function.html">function</a></li>
-                <li><a href="hara-group.html">group</a></li>
-                <li><a href="hara-io-environment.html">io.environment</a></li>
-                <li><a href="hara-io-file.html">io.file</a></li>
-                <li><a href="hara-io-scheduler.html">io.scheduler</a></li>
-                <li><a href="hara-io-watch.html">io.watch</a></li>
-                <li><a href="hara-namespace.html">namespace</a></li>
-                <li><a href="hara-object.html">object</a></li>
-                <li><a href="hara-reflect.html">reflect</a></li>
-                <li><a href="hara-sort.html">sort</a></li>
-                <li><a href="hara-string.html">string</a></li>
-                <li><a href="hara-test.html">test</a></li>
-                <li><a href="hara-time.html">time</a></li>
-            </ul>
-            </li>
-            <li>
-              <a href="https://github.com/zcaudate/hara" target="_blank">Github</a></li>
-            <li>
-              <a href="http://gitter.im/zcaudate/hara" target="_blank">Gitter</a></li>
-          </ul>
-        </div><!--/.nav-collapse -->
-      </div>
-    </nav>
+@media (max-width: 40rem){
+.masthead-title {
+    text-align: center;
+}
+.masthead a
+{
+  font-size: x-large;
+}
+}
 
 
-  <div class="container row">
-    <div class="col-md-4 scrollspy pull-right">
-      <ul id="nav" class="nav hidden-xs hidden-sm" data-spy="affix">
-        <li><a href="#introduction">1  &nbsp;&nbsp; Introduction</a><ul class="nav"><li><a href="#installation">1.1  &nbsp;&nbsp; Installation</a></li><li><a href="#motivation">1.2  &nbsp;&nbsp; Motivation</a></li></ul></li><li><a href="#walkthrough">2  &nbsp;&nbsp; Walkthrough</a><ul class="nav"><li><a href="#watching-atoms">2.1  &nbsp;&nbsp; Watching Atoms</a></li><li><a href="#watching-files">2.2  &nbsp;&nbsp; Watching Files</a></li><li><a href="#watch-options">2.3  &nbsp;&nbsp; Watch Options</a></li><li><a href="#components">2.4  &nbsp;&nbsp; Components</a></li></ul></li>
-      </ul>
-    </div>
-    <div class="col-md-8" id="content">
-      <div class="jumbotron">
+
+@media (min-width: 38rem){
+.container {
+    max-width: 37rem;
+    margin-left: 6rem;
+ }
+}
+
+@media (min-width: 56rem){
+.container {
+    max-width: 54rem;
+}
+.page {
+  margin-right: 15rem;
+}
+}
+
+@media (min-width: 60rem){
+.outline .toc{
+  display: block;
+  padding-left: 2em;
+  position: fixed;
+  right: 1em;
+  top: 1em;
+  width: 18em;
+  background-color: white;
+  border: solid 1px #f0f0f0;
+}
+.outline .toc li.active a.chapter h4{
+  font-size: larger;
+  font-style: italic;
+}
+
+.outline .toc li .section{
+  display: none;
+}
+
+.outline .toc li.active .section{
+  display: inherit;
+}
+
+.outline .toc li.active a.active.chapter h4{
+  text-decoration: underline;
+}
+
+.outline .toc li.active a.active.section h5{
+  text-decoration: underline;
+}
+}
+
+
+@media (min-width: 70rem){
+.container {
+    max-width: 66rem;
+}}
+  /*
+
+Original highlight.js style (c) Ivan Sagalaev <maniac@softwaremaniacs.org>
+
+*/
+
+.hljs {
+  display: block;
+  overflow-x: auto;
+  padding: 0.5em;
+}
+
+
+/* Base color: saturation 0; */
+
+.hljs,
+.hljs-subst {
+  color: #444;
+}
+
+.hljs-comment {
+  color: #888888;
+}
+
+.hljs-keyword,
+.hljs-attribute,
+.hljs-selector-tag,
+.hljs-meta-keyword,
+.hljs-doctag,
+.hljs-name {
+  font-weight: bold;
+}
+
+
+/* User color: hue: 0 */
+
+.hljs-type,
+.hljs-string,
+.hljs-number,
+.hljs-selector-id,
+.hljs-selector-class,
+.hljs-quote,
+.hljs-template-tag,
+.hljs-deletion {
+  color: #880000;
+}
+
+.hljs-title,
+.hljs-section {
+  color: #880000;
+  font-weight: bold;
+}
+
+.hljs-regexp,
+.hljs-symbol,
+.hljs-variable,
+.hljs-template-variable,
+.hljs-link,
+.hljs-selector-attr,
+.hljs-selector-pseudo {
+  color: #BC6060;
+}
+
+
+/* Language color: hue: 90; */
+
+.hljs-literal {
+  color: #78A960;
+}
+
+.hljs-built_in,
+.hljs-bullet,
+.hljs-code,
+.hljs-addition {
+  color: #397300;
+}
+
+
+/* Meta color: hue: 200 */
+
+.hljs-meta {
+  color: #1f7199;
+}
+
+.hljs-meta-string {
+  color: #4d99bf;
+}
+
+
+/* Misc effects */
+
+.hljs-emphasis {
+  font-style: italic;
+}
+
+.hljs-strong {
+  font-weight: bold;
+}
+  </style>
+  <!-- Icons -->
+</head>
+
+
+  <body class="theme-base-08">
+    <span id="page-top"></span>
+
+    <!-- Target for toggling the sidebar `.sidebar-checkbox` is for regular
+     styles, `#sidebar-checkbox` for behavior. -->
+<input type="checkbox" class="sidebar-checkbox" id="sidebar-checkbox">
+
+<!-- Toggleable sidebar -->
+<div class="sidebar" id="sidebar">
+  <nav class="sidebar-nav">
+    <a class="sidebar-nav-item header" href="index.html"><img src="img/logo-white.png"/></a>
+    <span>&nbsp;</span>
+    <a class="sidebar-nav-item" href="hara-class.html">class</a><a class="sidebar-nav-item" href="hara-common.html">common</a><a class="sidebar-nav-item" href="hara-component.html">component</a><a class="sidebar-nav-item" href="hara-concurrent.html">concurrent</a><a class="sidebar-nav-item" href="hara-concurrent-ova.html">concurrent.ova</a><a class="sidebar-nav-item" href="hara-concurrent-procedure.html">concurrent.procedure</a><a class="sidebar-nav-item" href="hara-data.html">data</a><a class="sidebar-nav-item" href="hara-event.html">event</a><a class="sidebar-nav-item" href="hara-expression.html">expression</a><a class="sidebar-nav-item" href="hara-extend.html">extend</a><a class="sidebar-nav-item" href="hara-function.html">function</a><a class="sidebar-nav-item" href="hara-group.html">group</a><a class="sidebar-nav-item" href="hara-io.html">io</a><a class="sidebar-nav-item" href="hara-io-file.html">io.file</a><a class="sidebar-nav-item" href="hara-io-scheduler.html">io.scheduler</a><a class="sidebar-nav-item active" href="hara-io-watch.html">io.watch</a><a class="sidebar-nav-item" href="hara-namespace.html">namespace</a><a class="sidebar-nav-item" href="hara-object.html">object</a><a class="sidebar-nav-item" href="hara-reflect.html">reflect</a><a class="sidebar-nav-item" href="hara-sort.html">sort</a><a class="sidebar-nav-item" href="hara-string.html">string</a><a class="sidebar-nav-item" href="hara-test.html">test</a><a class="sidebar-nav-item" href="hara-time.html">time</a><a class="sidebar-nav-item" href="hara-zip.html">zip</a>
+    <span class="sidebar-nav-item">&nbsp;</span>
+    <span class="sidebar-nav-item">&nbsp;</span>
+  </nav>
+</div>
+
+
+    <!-- Wrap is the content to shift when toggling the sidebar. We wrap the
+         content to avoid any CSS collisions with our real content. -->
+    <div class="wrap">
+      <div class="masthead">
         <div class="container">
-          <h1>io.watch</h1>
-          <h4>watch for filesystem changes</h4>
+          <h3 class="masthead-title">
+            <a href="/" title="Home">hara.io.watch</a>
+            <small>watch for filesystem changes</small>
+          </h3>
         </div>
       </div>
-      <section class="chapter" id="introduction"><h2 class="chapter">1  &nbsp;&nbsp; Introduction</h2><section class="section" id="installation"><h3 class="section">1.1  &nbsp;&nbsp; Installation</h3><div class="paragraph"><p>Add to <code>project.clj</code> dependencies:</p><pre><code>&#91;im.chit/hara.io.watch &quot;2.4.4&quot;&#93;
-</code></pre></div><div class="paragraph"><p>All functions are in the <code>hara.common.watch</code> namespace, with <code>hara.io.watch</code> providing filewatch extensions:</p></div><div class="code"><div hljs="hljs" language="clojure" no-escape="no-escape">(require '[hara.io.watch]
-                '[hara.common.watch :as watch])</div></div></section><section class="section" id="motivation"><h3 class="section">1.2  &nbsp;&nbsp; Motivation</h3><div class="paragraph"><p><code>hara.io.watch</code> wraps the <code>java.nio.file.WatchService</code> api for an add-watch compatible interface for. There are many file watches implementations around:</p><ul><li><a href='https://github.com/derekchiang/Clojure-Watch'>clojure-watch</a></li><li><a href='https://github.com/juxt/dirwatch'>dirwatch</a></li><li><a href='https://github.com/wkf/hawk'>hawk</a></li><li><a href='https://github.com/ibdknox/watchtower'>watchtower</a></li><li><a href='https://github.com/klauern/java-watcher.clj'>java-watcher</a></li><li><a href='https://github.com/xsc/panoptic'>panoptic</a></li><li><a href='https://github.com/rplevy/ojo'>ojo</a></li><li><a href='https://github.com/Raynes/filevents'>filevents</a></li></ul><p>As well as seperate filewatch implementations as part of larger application libraries.</p><ul><li><a href='https://github.com/marick/lein-midje'>lein-midje</a></li><li><a href='https://github.com/weavejester/ns-tracker'>ns-tracker</a></li><li><a href='https://github.com/stuartsierra/lazytest'>lazytest</a></li></ul><p>The novelty of <code>hara.io.watch</code> lies in the concept that it extends <code>hara.common.watch</code> (which is an abstraction around clojure<code>s </code>add-watch` semantics).</p></div></section></section><section class="chapter" id="walkthrough"><h2 class="chapter">2  &nbsp;&nbsp; Walkthrough</h2><section class="section" id="watching-atoms"><h3 class="section">2.1  &nbsp;&nbsp; Watching Atoms</h3><div class="paragraph"><p>There's a pattern for watching things that already exists in clojure:</p></div><div class="code"><div hljs="hljs" language="clojure" no-escape="no-escape">(add-watch object :key (fn [object key previous next]))</div></div><div class="paragraph"><p>However, <code>add-watch</code> is a generic concept that exists beyond atoms. It can be applied to all sorts of objects. Furthermore, watching something usually comes with a condition. We usually don't react on every change that comes to us in our lives. We only react when a certain condition comes about. For example, we can see the condition that is placed on this statement:</p><blockquote><p>  Watch the noodles on the stove and IF it starts   boiling over, add some cold water to the pot </p></blockquote><p>The <code>hara.common.watch</code> package provides for additional options to be specified when watching the object in question. Is the following example, <code>:select :b</code> is used to focus on <code>:b</code> and <code>:diff true</code> is a setting that configures the watcher so that it will only take action when <code>:b</code> has been changed:</p></div><div class="code"><div hljs="hljs" language="clojure" no-escape="no-escape">(def subject  (atom {:a 1 :b 2}))
+
+      <div class="container content">
+        <div class="page">
+          <div class="heading">
+            <div>
+              <h5>Author: Chris Zheng&nbsp;&nbsp;<a href="mailto:z@caudate.me">(z@caudate.me)</a></h5>
+              <h5>Date: 03 October 2016</h5>
+              <h5>Repository: <a href="https://github.com/zcaudate/hara">https://github.com/zcaudate/hara</a></h5>
+              <h5>Version: 2.4.5</h5></div></div>
+          <hr/>
+          <div class="outline">
+            <div class="toc">
+              <nav data-gumshoe-header>
+                <ul data-gumshoe>
+                  <a data-scroll class="top" href="#page-top">TOP</a>
+                  <li><a class="chapter" data-scroll="" href="#introduction"><h4>1 &nbsp; Introduction</h4></a><a class="section" data-scroll="" href="#installation"><h5><i>1.1 &nbsp; Installation</i></h5></a><a class="section" data-scroll="" href="#motivation"><h5><i>1.2 &nbsp; Motivation</i></h5></a></li><li><a class="chapter" data-scroll="" href="#walkthrough"><h4>2 &nbsp; Walkthrough</h4></a><a class="section" data-scroll="" href="#watching-atoms"><h5><i>2.1 &nbsp; Watching Atoms</i></h5></a><a class="section" data-scroll="" href="#watching-files"><h5><i>2.2 &nbsp; Watching Files</i></h5></a><a class="section" data-scroll="" href="#watch-options"><h5><i>2.3 &nbsp; Watch Options</i></h5></a><a class="section" data-scroll="" href="#components"><h5><i>2.4 &nbsp; Components</i></h5></a></li>
+                </ul>
+              </nav>
+            </div>
+          </div>
+
+          <div class="toc">
+              <nav>
+                <ul>
+                  <li><a class="chapter" data-scroll="" href="#introduction"><h4>1 &nbsp; Introduction</h4></a><a class="section" data-scroll="" href="#installation"><h5><i>1.1 &nbsp; Installation</i></h5></a><a class="section" data-scroll="" href="#motivation"><h5><i>1.2 &nbsp; Motivation</i></h5></a></li><li><a class="chapter" data-scroll="" href="#walkthrough"><h4>2 &nbsp; Walkthrough</h4></a><a class="section" data-scroll="" href="#watching-atoms"><h5><i>2.1 &nbsp; Watching Atoms</i></h5></a><a class="section" data-scroll="" href="#watching-files"><h5><i>2.2 &nbsp; Watching Files</i></h5></a><a class="section" data-scroll="" href="#watch-options"><h5><i>2.3 &nbsp; Watch Options</i></h5></a><a class="section" data-scroll="" href="#components"><h5><i>2.4 &nbsp; Components</i></h5></a></li>
+                </ul>
+              </nav>
+          </div>
+          <div><span id="introduction" name="introduction"></span><h2><b>1 &nbsp;&nbsp; Introduction</b></h2></div><div><span id="installation" name="installation"></span><h3>1.1 &nbsp;&nbsp; Installation</h3></div><div><p>Add to <code>project.clj</code> dependencies:</p><pre><code>&#91;im.chit/hara.io.watch &quot;2.4.5&quot;&#93;</code></pre></div><div><p>All functions are in the <code>hara.common.watch</code> namespace, with <code>hara.io.watch</code> providing filewatch extensions:</p></div><div class="code"><pre><code class="clojure">(require '[hara.io.watch]
+                '[hara.common.watch :as watch])</code></pre></div><div><span id="motivation" name="motivation"></span><h3>1.2 &nbsp;&nbsp; Motivation</h3></div><div><p><code>hara.io.watch</code> wraps the <code>java.nio.file.WatchService</code> api for an add-watch compatible interface for. There are many file watches implementations around:</p><ul><li><a href='https://github.com/derekchiang/Clojure-Watch'>clojure-watch</a></li><li><a href='https://github.com/juxt/dirwatch'>dirwatch</a></li><li><a href='https://github.com/wkf/hawk'>hawk</a></li><li><a href='https://github.com/ibdknox/watchtower'>watchtower</a></li><li><a href='https://github.com/klauern/java-watcher.clj'>java-watcher</a></li><li><a href='https://github.com/xsc/panoptic'>panoptic</a></li><li><a href='https://github.com/rplevy/ojo'>ojo</a></li><li><a href='https://github.com/Raynes/filevents'>filevents</a></li></ul><p>As well as seperate filewatch implementations as part of larger application libraries.</p><ul><li><a href='https://github.com/marick/lein-midje'>lein-midje</a></li><li><a href='https://github.com/weavejester/ns-tracker'>ns-tracker</a></li><li><a href='https://github.com/stuartsierra/lazytest'>lazytest</a></li></ul><p>The novelty of <code>hara.io.watch</code> lies in the concept that it extends <code>hara.common.watch</code> (which is an abstraction around clojure<code>s </code>add-watch` semantics).</p></div><div><span id="walkthrough" name="walkthrough"></span><h2><b>2 &nbsp;&nbsp; Walkthrough</b></h2></div><div><span id="watching-atoms" name="watching-atoms"></span><h3>2.1 &nbsp;&nbsp; Watching Atoms</h3></div><div><p>There's a pattern for watching things that already exists in clojure:</p></div><div class="code"><pre><code class="clojure">(add-watch object :key (fn [object key previous next]))</code></pre></div><div><p>However, <code>add-watch</code> is a generic concept that exists beyond atoms. It can be applied to all sorts of objects. Furthermore, watching something usually comes with a condition. We usually don't react on every change that comes to us in our lives. We only react when a certain condition comes about. For example, we can see the condition that is placed on this statement:</p><blockquote><p>  Watch the noodles on the stove and IF it starts   boiling over, add some cold water to the pot </p></blockquote><p>The <code>hara.common.watch</code> package provides for additional options to be specified when watching the object in question. Is the following example, <code>:select :b</code> is used to focus on <code>:b</code> and <code>:diff true</code> is a setting that configures the watcher so that it will only take action when <code>:b</code> has been changed:</p></div><div class="code"><pre><code class="clojure">(def subject  (atom {:a 1 :b 2}))
 (def observer (atom nil))
       
 (watch/add subject :clone
@@ -126,7 +485,7 @@
 
 (swap! subject assoc :b 1) ;; change in :b does
 
-@observer =&gt; 1</div></div></section><section class="section" id="watching-files"><h3 class="section">2.2  &nbsp;&nbsp; Watching Files</h3><div class="paragraph"><p>The same concept of <code>watch</code> is used for filesystems. So instead of an atom, a directory is specified using very similar semantics:</p></div><div class="code"><div hljs="hljs" language="clojure" no-escape="no-escape">(def ^:dynamic *happy* (promise))
+@observer =&gt; 1</code></pre></div><div><span id="watching-files" name="watching-files"></span><h3>2.2 &nbsp;&nbsp; Watching Files</h3></div><div><p>The same concept of <code>watch</code> is used for filesystems. So instead of an atom, a directory is specified using very similar semantics:</p></div><div class="code"><pre><code class="clojure">(def ^:dynamic *happy* (promise))
 
 ;; We add a watch
 (watch/add (io/file &quot;.&quot;) :save
@@ -158,7 +517,7 @@
 
 ;; We see that the one-shot watch has worked
 (watch/list (io/file &quot;.&quot;))
-=&gt; {}</div></div></section><section class="section" id="watch-options"><h3 class="section">2.3  &nbsp;&nbsp; Watch Options</h3><div class="paragraph"><p>There are a couple of cenfigurable options for the filewatch:</p><ul><li><code>:types</code> determine which actions are responded to. The possible values are<ul><li><code>:create</code>, when a file is created</li><li><code>:modify</code>, when a file is mobifies</li><li><code>:delete</code>, when a file is deleted</li><li>or a combination of them</li></ul></li><li><code>:recursive</code> determines if subfolders are also going to be responded to</li><li><code>:filter</code> will pick out only files that match this pattern.</li><li><code>:exclude</code> wil leave out files that match this patter</li><li><code>:mode</code>, can be either :sync or :async</li></ul></div></section><section class="section" id="components"><h3 class="section">2.4  &nbsp;&nbsp; Components</h3><div class="paragraph"><p>It was actually very easy to build <code>hara.io.watch</code> using the idea of something that is startable and stoppable. <code>watcher</code>, <code>start-watcher</code> and <code>stop-watcher</code> all follow the conventions and so it becomes easy to wrap the component model around the three methods:</p></div><div class="code"><div hljs="hljs" language="clojure" no-escape="no-escape">(require '[hara.component :as component]
+=&gt; {}</code></pre></div><div><span id="watch-options" name="watch-options"></span><h3>2.3 &nbsp;&nbsp; Watch Options</h3></div><div><p>There are a couple of cenfigurable options for the filewatch:</p><ul><li><code>:types</code> determine which actions are responded to. The possible values are<ul><li><code>:create</code>, when a file is created</li><li><code>:modify</code>, when a file is mobifies</li><li><code>:delete</code>, when a file is deleted</li><li>or a combination of them</li></ul></li><li><code>:recursive</code> determines if subfolders are also going to be responded to</li><li><code>:filter</code> will pick out only files that match this pattern.</li><li><code>:exclude</code> wil leave out files that match this patter</li><li><code>:mode</code>, can be either :sync or :async</li></ul></div><div><span id="components" name="components"></span><h3>2.4 &nbsp;&nbsp; Components</h3></div><div><p>It was actually very easy to build <code>hara.io.watch</code> using the idea of something that is startable and stoppable. <code>watcher</code>, <code>start-watcher</code> and <code>stop-watcher</code> all follow the conventions and so it becomes easy to wrap the component model around the three methods:</p></div><div class="code"><pre><code class="clojure">(require '[hara.component :as component]
          '[hara.io.watch :refer :all])
 
 (extend-protocol component/IComponent
@@ -179,28 +538,20 @@
                   :exclude [&quot;.git&quot;]
                   :async false})))
 
-(component/stop w)</div></div></section></section>
+(component/stop w)</code></pre></div>
+        </div>
+      </div>
     </div>
-</div><!--end of .container-->
 
-  <section class="application">
-    
-  </section>
-</body>
+    <label for="sidebar-checkbox" class="sidebar-toggle"></label>
 
-<script>
-  $('#nav').affix({
-    offset: {
-        top: $('#nav').offset().top,
-        bottom: $('footer').outerHeight(true) + $('.application').outerHeight(true) + 40
-    }});
-</script>
+  </body>
 
-
-<script>
-  if (document.location.search.match(/type=embed/gi)) {
-    window.parent.postMessage("resize", "*");
-  }
-</script>
-</body>
+  <script type="text/javascript">
+    smoothScroll.init();
+    gumshoe.init({});
+  
+    hljs.registerLanguage("clojure",function(e){var t={"builtin-name":"def defonce cond apply if-not if-let if not not= = < > <= >= == + / * - rem quot neg? pos? delay? symbol? keyword? true? false? integer? empty? coll? list? set? ifn? fn? associative? sequential? sorted? counted? reversible? number? decimal? class? distinct? isa? float? rational? reduced? ratio? odd? even? char? seq? vector? string? map? nil? contains? zero? instance? not-every? not-any? libspec? -> ->> .. . inc compare do dotimes mapcat take remove take-while drop letfn drop-last take-last drop-while while intern condp case reduced cycle split-at split-with repeat replicate iterate range merge zipmap declare line-seq sort comparator sort-by dorun doall nthnext nthrest partition eval doseq await await-for let agent atom send send-off release-pending-sends add-watch mapv filterv remove-watch agent-error restart-agent set-error-handler error-handler set-error-mode! error-mode shutdown-agents quote var fn loop recur throw try monitor-enter monitor-exit defmacro defn defn- macroexpand macroexpand-1 for dosync and or when when-not when-let comp juxt partial sequence memoize constantly complement identity assert peek pop doto proxy defstruct first rest cons defprotocol cast coll deftype defrecord last butlast sigs reify second ffirst fnext nfirst nnext defmulti defmethod meta with-meta ns in-ns create-ns import refer keys select-keys vals key val rseq name namespace promise into transient persistent! conj! assoc! dissoc! pop! disj! use class type num float double short byte boolean bigint biginteger bigdec print-method print-dup throw-if printf format load compile get-in update-in pr pr-on newline flush read slurp read-line subvec with-open memfn time re-find re-groups rand-int rand mod locking assert-valid-fdecl alias resolve ref deref refset swap! reset! set-validator! compare-and-set! alter-meta! reset-meta! commute get-validator alter ref-set ref-history-count ref-min-history ref-max-history ensure sync io! new next conj set! to-array future future-call into-array aset gen-class reduce map filter find empty hash-map hash-set sorted-map sorted-map-by sorted-set sorted-set-by vec vector seq flatten reverse assoc dissoc list disj get union difference intersection extend extend-type extend-protocol int nth delay count concat chunk chunk-buffer chunk-append chunk-first chunk-rest max min dec unchecked-inc-int unchecked-inc unchecked-dec-inc unchecked-dec unchecked-negate unchecked-add-int unchecked-add unchecked-subtract-int unchecked-subtract chunk-next chunk-cons chunked-seq? prn vary-meta lazy-seq spread list* str find-keyword keyword symbol gensym force rationalize"},r="a-zA-Z_\\-!.?+*=<>&#'",n="["+r+"]["+r+"0-9/;:]*",a="[-+]?\\d+(\\.\\d+)?",o={b:n,r:0},s={cN:"number",b:a,r:0},i=e.inherit(e.QSM,{i:null}),c=e.C(";","$",{r:0}),d={cN:"literal",b:/\b(true|false|nil)\b/},l={b:"[\\[\\{]",e:"[\\]\\}]"},m={cN:"comment",b:"\\^"+n},p=e.C("\\^\\{","\\}"),u={cN:"symbol",b:"[:]{1,2}"+n},f={b:"\\(",e:"\\)"},h={eW:!0,r:0},y={k:t,l:n,cN:"name",b:n,starts:h},b=[f,i,m,p,c,u,l,s,d,o];return f.c=[e.C("comment",""),y,h],h.c=b,l.c=b,{aliases:["clj"],i:/\S/,c:[f,i,m,p,c,u,l,s,d]}});
+    hljs.initHighlightingOnLoad();
+  </script>
 </html>

@@ -4,14 +4,14 @@
   (:import java.lang.annotation.ElementType))
 
 ^{:refer hara.class.enum/enum? :added "2.2"}
-(fact "Check to see if class is an enum type"
+(fact "check to see if class is an enum type"
 
   (enum? java.lang.annotation.ElementType) => true
 
   (enum? String) => false)
 
 ^{:refer hara.class.enum/enum-values :added "2.2"}
-(fact "Returns all values of an enum type"
+(fact "returns all values of an enum type"
 
   (->> (enum-values ElementType)
        (map str))
