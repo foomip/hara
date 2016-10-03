@@ -16,7 +16,7 @@
 
 
 
-[[:chapter {:title "data.seq"}]]
+[[:chapter {:title "data.seq" :link "hara.data.seq"}]]
 
 "Add to `project.clj` dependencies:
 

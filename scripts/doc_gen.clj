@@ -14,7 +14,13 @@
   (lucid/import :all PROJECT)
   
   (publish/copy-assets  PROJECT)
+
+  (doseq [key (->> PROJECT :publish :files keys sort)] 
+    (println "PUBLISHING:" key)
+    (publish/publish key {:theme "bolton" :refresh true} PROJECT))
   
-  (publish/publish "hara-zip" {:theme "stark"} PROJECT)
+  (publish/publish "hara-zip" {} PROJECT)
+  (publish/publish "hara-data" {} PROJECT)
+  (publish/publish "index" {} PROJECT)
   
   )

@@ -104,8 +104,9 @@ pre{
   margin-bottom: 0px;
 }
 
-.masthead a
+.masthead span
 {
+  color:#ac4142;
   font-size: 1.8em;
 }
 

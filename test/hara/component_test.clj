@@ -80,7 +80,7 @@
   ;; The topology specifies how the system is linked
   (def topo {:db        [map->Database]
              :files     [[map->Filesystem]]
-             :catalogs  [[map->Filestore] [:files :fs] :db]})
+             :catalogs  [[map->Catalog] [:files :fs] :db]})
 
   ;; The configuration customises the system
   (def cfg  {:db     {:type :basic

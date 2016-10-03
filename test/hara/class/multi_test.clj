@@ -1,16 +1,16 @@
 (ns hara.class.multi-test
   (:use hara.test)
-  (:require [hara.class.enum :refer :all]))
+  (:require [hara.class.multi :refer :all]))
 
 ^{:refer hara.class.multi/multimethod :added "2.4"}
 (fact "creates a multimethod from an existing one"
 
   (defmulti hello :type)
-
+  
   (defmethod hello :a
     [e] (assoc e :a 1))
 
-  (def world (clone hello "world"))
+  (def world (multimethod hello "world"))
 
   (defmethod world :b
     [e] (assoc e :b 2))

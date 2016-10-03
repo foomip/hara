@@ -24,99 +24,99 @@
                      :subtitle "patterns and utilities"}
                     "hara-class"
                     {:input "test/documentation/hara_class.clj"
-                     :title "class"
+                     :title "hara.class"
                      :subtitle "functions for reasoning about classes"}
                     "hara-common"
                     {:input "test/documentation/hara_common.clj"
-                     :title "common"
+                     :title "hara.common"
                      :subtitle "primitives declarations and functions"}
                     "hara-component"
                     {:input "test/documentation/hara_component.clj"
-                     :title "component"
+                     :title "hara.component"
                      :subtitle "constructing composable systems"}
                     "hara-concurrent"
                     {:input "test/documentation/hara_concurrent.clj"
-                     :title "concurrent"
+                     :title "hara.concurrent"
                      :subtitle "methods and datastructures for concurrency"}
                     "hara-concurrent-ova"
                     {:input "test/documentation/hara_concurrent_ova.clj"
-                     :title "concurrent.ova"
+                     :title "hara.concurrent.ova"
                      :subtitle "shared mutable state for multi-threaded applications"}
                     "hara-concurrent-procedure"
                     {:input "test/documentation/hara_concurrent_procedure.clj"
-                     :title "concurrent.procedure"
+                     :title "hara.concurrent.procedure"
                      :subtitle "model for controllable execution"}
                     "hara-data"
                     {:input "test/documentation/hara_data.clj"
-                     :title "data"
+                     :title "hara.data"
                      :subtitle "manipulation of maps and representations of data"}
                     "hara-event"
                     {:input "test/documentation/hara_event.clj"
-                     :title "event"
+                     :title "hara.event"
                      :subtitle "event signalling and conditional restart"}
                     "hara-expression"
                     {:input "test/documentation/hara_expression.clj"
-                     :title "expression"
+                     :title "hara.expression"
                      :subtitle "interchange between code and data"}
                     "hara-extend"
                     {:input "test/documentation/hara_extend.clj"
-                     :title "extend"
+                     :title "hara.extend"
                      :subtitle "macros for extensible objects"}
                     "hara-function"
                     {:input "test/documentation/hara_function.clj"
-                     :title "function"
+                     :title "hara.function"
                      :subtitle "functions for reasoning about functions"}
                     "hara-group"
                     {:input "test/documentation/hara_group.clj"
-                     :title "group"
+                     :title "hara.group"
                      :subtitle "generic typed collections"}
                     "hara-io-file"
                     {:input "test/documentation/hara_io_file.clj"
-                     :title "io.file"
+                     :title "hara.io.file"
                      :subtitle "tools for the file system"}
                     "hara-io"
                     {:input "test/documentation/hara_io.clj"
-                     :title "io"
+                     :title "hara.io"
                      :subtitle "tools for files and io operations"}
                     "hara-io-scheduler"
                     {:input "test/documentation/hara_io_scheduler.clj"
-                     :title "io.scheduler"
+                     :title "hara.io.scheduler"
                      :subtitle "easy and intuitive task scheduling"}
                     "hara-io-watch"
                     {:input "test/documentation/hara_io_watch.clj"
-                     :title "io.watch"
+                     :title "hara.io.watch"
                      :subtitle "watch for filesystem changes"}
                     "hara-namespace"
                     {:input "test/documentation/hara_namespace.clj"
-                     :title "namespace"
+                     :title "hara.namespace"
                      :subtitle "utilities for manipulation of namespaces"}
                     "hara-object"
                     {:input "test/documentation/hara_object.clj"
-                     :title "object"
+                     :title "hara.object"
                      :subtitle "think data, escape encapsulation"}
                     "hara-reflect"
                     {:input "test/documentation/hara_reflect.clj"
-                     :title "reflect"
+                     :title "hara.reflect"
                      :subtitle "java reflection made easy"}
                     "hara-sort"
                     {:input "test/documentation/hara_sort.clj"
-                     :title "sort"
+                     :title "hara.sort"
                      :subtitle "micellaneous sorting functions"}
                     "hara-string"
                     {:input "test/documentation/hara_string.clj"
-                     :title "string"
+                     :title "hara.string"
                      :subtitle "methods for string manipulation"}
                     "hara-test"
                     {:input "test/documentation/hara_test.clj"
-                     :title "test"
+                     :title "hara.test"
                      :subtitle "easy to use test framework"}
                     "hara-time"
                     {:input "test/documentation/hara_time.clj"
-                     :title "time"
+                     :title "hara.time"
                      :subtitle "time as a clojure map"}
                     "hara-zip"
                     {:input "test/documentation/hara_zip.clj"
-                     :title "zip"
+                     :title "hara.zip"
                      :subtitle "data traversal in style"}}}
   :jvm-opts []
   :global-vars {*warn-on-reflection* true}
