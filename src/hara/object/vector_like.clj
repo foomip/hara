@@ -4,6 +4,7 @@
             [hara.object.print :as print]))
 
 (defmacro extend-vector-like
+  ""
   [cls {:keys [read write] :as opts}]
   (cond-> []
     read  (conj `(defmethod object/-meta-read ~cls

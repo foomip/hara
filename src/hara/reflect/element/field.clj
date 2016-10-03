@@ -12,13 +12,17 @@
       (.setInt mf field (bit-and (.getModifiers field) (bit-not java.lang.reflect.Modifier/FINAL)))
       field)))
 
-(defn arg-params [ele access]
+(defn arg-params
+  ""
+  [ele access]
   (let [args [(:container ele)]]
     (condp = access
       :set (conj args (:type ele))
       :get args)))
 
-(defmacro throw-arg-exception [ele args]
+(defmacro throw-arg-exception
+  ""
+  [ele args]
   `(throw (Exception. (format  "Accessor `%s` expects %s for getter or %s for setter, but was invoked with %s."
                               (str (:name ~ele))
                               (arg-params ~ele :get)
@@ -28,6 +32,7 @@
                                     ~args)))))
 
 (defn invoke-static-field
+  ""
   ([ele cls]
    (.get ^java.lang.reflect.Field
          (:delegate ele) nil))
@@ -36,6 +41,7 @@
      true))
 
 (defn invoke-instance-field
+  ""
   ([ele obj]
    (.get ^java.lang.reflect.Field
          (:delegate ele) (util/box-arg (:container ele) obj)))

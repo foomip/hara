@@ -290,6 +290,7 @@
                                   (catch Throwable e))))))
 
 (defn copy-single
+  ""
   ([source target]
    (copy-single source target {}))
   ([source target opts]

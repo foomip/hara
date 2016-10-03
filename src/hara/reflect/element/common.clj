@@ -33,10 +33,14 @@
   (doto (.getDeclaredField java.lang.reflect.AccessibleObject "override")
     (.setAccessible true)))
 
-(defn set-accessible [obj flag]
+(defn set-accessible
+  ""
+  [obj flag]
   (.set override obj flag))
 
-(defn add-annotations [seed obj]
+(defn add-annotations
+  ""
+  [seed obj]
   (if-let [anns (seq (.getDeclaredAnnotations
                       ^java.lang.reflect.AnnotatedElement obj))]
     (->> anns
@@ -46,7 +50,9 @@
          (assoc seed :annotations))
     seed))
 
-(defn seed [tag obj]
+(defn seed
+  ""
+  [tag obj]
   (let [int-m (get-modifiers obj)
         modifiers (conj (int-to-modifiers int-m tag) tag)
         modifiers (if (some #(contains? modifiers %) [:public :private :protected])
@@ -66,14 +72,18 @@
          :delegate obj}
         (add-annotations obj))))
 
-(defmacro throw-arg-exception [ele args & [header]]
+(defmacro throw-arg-exception
+  ""
+  [ele args & [header]]
   `(throw (Exception. (format  "%sMethod `%s` expects params to be of type %s, but was invoked with %s instead"
                                (if ~header ~header "")
                                (str (:name ~ele))
                                (str (:params ~ele))
                                (str (mapv type ~args))))))
 
-(defn box-args [ele args]
+(defn box-args
+  ""
+  [ele args]
   (let [params (:params ele)]
     (if (= (count params) (count args))
       (try (mapv (fn [ptype arg]
@@ -84,12 +94,16 @@
              (throw-arg-exception ele args)))
         (throw-arg-exception ele args (format "ARGS: %s <-> %s, " (count params) (count args))))))
 
-(defn format-element-method [ele]
+(defn format-element-method
+  ""
+  [ele]
   (let [params (map #(class-convert % :string) (:params ele))]
     (format "#[%s :: (%s) -> %s]"
                       (:name ele)
                       (clojure.string/join ", " params)
                       (class-convert (:type ele) :string))))
 
-(defn element-params-method [ele]
+(defn element-params-method
+  ""
+  [ele]
   (mapv #(symbol (class-convert % :string)) (:params ele)))

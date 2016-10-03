@@ -186,7 +186,9 @@
           (map #(protocol-extend-type-function % wrappers)
                all-basis)))
 
-(defn protocol-all [typesym protocolsym {:keys [select prefix suffix] :as options}]
+(defn protocol-all
+  ""
+  [typesym protocolsym {:keys [select prefix suffix] :as options}]
   (let [select (or select '-)
         protocol  (eval protocolsym)
         all-basis (protocol-basis protocol select prefix suffix)]
@@ -220,15 +222,21 @@
               (map #(protocol-all typesym % options)
                    protocolsyms))))
 
-(defn protocol-implementation-function [basis wrappers pns]
+(defn protocol-implementation-function
+  ""
+  [basis wrappers pns]
   (list `defn (:fn basis) (:args basis)
         (->> (cons (symbol (str pns "/" (:name basis))) (:args basis))
              (protocol-extend-type-wrappers basis wrappers))))
 
-(defn protocol-ns [protocol]
+(defn protocol-ns
+  ""
+  [protocol]
   (->  ^clojure.lang.Var (protocol :var) .ns str))
 
-(defn protocol-implementation [protocolsym {:keys [select prefix suffix wrappers] :as options}]
+(defn protocol-implementation
+  ""
+  [protocolsym {:keys [select prefix suffix wrappers] :as options}]
   (let [select (or select '-)
         protocol  (eval protocolsym)
         all-basis (protocol-basis protocol select prefix suffix)

@@ -22,6 +22,7 @@
     s))
 
 (defn whitespace?
+  ""
   [s]
   (or (= "" s) (re-find #"^[\s\t]+$" s)))
 

@@ -30,11 +30,11 @@
 
 (defn primitive-convert
   "Converts primitive values across their different representations. The choices are:
-   :raw       - The string in the jdk (i.e. `Z` for Boolean, `C` for Character)
-   :symbol    - The symbol that hara.reflect uses for matching (i.e. boolean, char, int)
-   :string    - The string that hara.reflect uses for matching
-   :class     - The primitive class representation of the primitive
-   :container - The containing class representation for the primitive type
+    :raw       - The string in the jdk (i.e. `Z` for Boolean, `C` for Character)
+    :symbol    - The symbol that hara.reflect uses for matching (i.e. boolean, char, int)
+    :string    - The string that hara.reflect uses for matching
+    :class     - The primitive class representation of the primitive
+    :container - The containing class representation for the primitive type
  
    (primitive-convert Boolean/TYPE :symbol)
    => 'boolean

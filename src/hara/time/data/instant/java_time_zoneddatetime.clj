@@ -9,7 +9,9 @@
   (:import [java.time Clock ZonedDateTime ZoneId]
            [java.time.format DateTimeFormatter]))
 
-(defn from-map [{:keys [millisecond second minute hour day month year timezone] :as rep}]
+(defn from-map
+  ""
+  [{:keys [millisecond second minute hour day month year timezone] :as rep}]
   (ZonedDateTime/of year month day hour minute second (* millisecond 1000000)
                     (coerce/coerce-zone timezone {:type ZoneId})))
 

@@ -43,7 +43,9 @@
                         (zero? (mod (- v a) s))))))
 
 ;; String to Array Methods
-(defn parse-tab-element [^String es]
+(defn parse-tab-element
+  ""
+  [^String es]
   (cond (= es "*") :*
         (re-find #"^\d+$" es) (to-long es)
         (re-find #"^/\d+$" es) (*- (to-long (.substring es 1)))
@@ -55,7 +57,9 @@
                (map to-long (split es #"[-/]")))
         :else (error es " is not in the right format.")))
 
-(defn parse-tab-group [s]
+(defn parse-tab-group
+  ""
+  [s]
   (let [e-toks (re-seq #"[^,]+" s)]
     (map parse-tab-element e-toks)))
 
@@ -83,7 +87,9 @@
           (error "The schedule " s
                  " does not have the correct number of elements."))))
 
-(defn valid-tab? [s]
+(defn valid-tab?
+  ""
+  [s]
   (suppress (if (parse-tab s) true)))
 
 ;; dt-arr methods

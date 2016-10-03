@@ -2,13 +2,17 @@
 
 (defonce ^:dynamic *transform* nil)
 
-(defmulti -meta-read identity)
+(defmulti -meta-read
+  ""
+  identity)
 
 (defmethod -meta-read :default
   [_]
   {})
 
-(defmulti -meta-write identity)
+(defmulti -meta-write
+  ""
+  identity)
 
 (defmethod -meta-write :default
   [_]

@@ -2,18 +2,27 @@
   (:require [clojure.walk :as walk]))
 
 (defmulti invoke-element
+  ""
   (fn [x & args] (:tag x)))
 
 (defmulti invoke-element
+  ""
   (fn [x & args] (:tag x)))
 
-(defmulti to-element type)
+(defmulti to-element
+  ""
+  type)
 
-(defmulti element-params :tag)
+(defmulti element-params
+  ""
+  :tag)
 
-(defmulti format-element :tag)
+(defmulti format-element
+  ""
+  :tag)
 
 (defn make-invoke-element-form
+  ""
   [args]
   (walk/postwalk
    (fn [x]
@@ -28,6 +37,7 @@
             (invoke-element ele))))
 
 (defmacro init-element-type
+  ""
   [n]
   (concat
    '(deftype Element [body]
@@ -53,10 +63,12 @@
 (init-element-type 20)
 
 (defn element
+  ""
   [body]
   (Element. body))
 
 (defn element?
+  ""
   [x]
   (instance? Element x))
 

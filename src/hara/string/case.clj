@@ -3,6 +3,7 @@
             [hara.common.string :as common]))
 
 (defn re-sub
+  ""
   [^String value pattern sub-func]
   (loop [matcher (re-matcher pattern value)
          result []
@@ -20,7 +21,9 @@
 (def non-snake-separator-pattern #"[ |\-]")
 (def non-spear-separator-pattern #"[ |\_]")
 
-(defn separate-camel-humps [value]
+(defn separate-camel-humps
+  ""
+  [value]
   (re-sub value hump-pattern #(string/join " " (seq %))))
 
 (defn title-case

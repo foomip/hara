@@ -5,4 +5,4 @@
             [hara.common.primitives]
             [hara.common.state]
             [hara.common.string]
-            [hara.common.watch])))
+            [hara.common.watch]))

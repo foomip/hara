@@ -23,7 +23,9 @@
   [v ^java.io.Writer w]
   (.write w (str v)))
 
-(defn registry [] (ProcedureRegistry. (atom {})))
+(defn registry
+  ""
+  [] (ProcedureRegistry. (atom {})))
 
 (defrecord ProcedureCache [store]
   Object
@@ -47,7 +49,9 @@
   [v ^java.io.Writer w]
   (.write w (str v)))
 
-(defn cache []  (ProcedureCache. (atom {})))
+(defn cache
+  ""
+  []  (ProcedureCache. (atom {})))
 
 (prefer-method print-method
                clojure.lang.IRecord

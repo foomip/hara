@@ -78,6 +78,7 @@
      (dissoc result nil))))
 
 (defn file-lookup
+  ""
   ([] (file-lookup (project)))
   ([project]
    (all-files (concat (:source-paths project)

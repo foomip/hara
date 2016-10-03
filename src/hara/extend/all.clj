@@ -15,7 +15,9 @@
     (map (fn [tmpl f] (walk/prewalk-replace {'% f} tmpl))
        ptmpls funcs)))
 
-(defn extend-entry [proto ptmpls [ts funcs]]
+(defn extend-entry
+  ""
+  [proto ptmpls [ts funcs]]
   (cond (vector? ts)
         (map #(extend-single % proto ptmpls funcs) ts)
 

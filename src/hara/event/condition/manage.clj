@@ -3,13 +3,17 @@
             [hara.event.common :as common]
             [hara.event.condition.data :as data]))
 
-(defn manage-apply [f args label]
+(defn manage-apply
+  ""
+  [f args label]
   (try
     (apply f args)
     (catch clojure.lang.ArityException e
       (throw (Exception. (str "MANAGE-APPLY: Wrong number of arguments to option key: " label))))))
 
-(defn manage-condition [manager ex]
+(defn manage-condition
+  ""
+  [manager ex]
   (let [data (ex-data ex)]
     (cond (not= (:id manager) (:target data))
           (throw ex)

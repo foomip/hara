@@ -3,16 +3,19 @@
             [hara.event.common :as common]
             [hara.event.condition.data :as data]))
 
-(defn default-unhandled-fn [issue]
+(defn default-unhandled-fn
+  "" [issue]
   (let [ex (data/exception issue)]
     (throw ex)))
 
 (declare raise-loop)
 
-(defn raise-catch [manager value]
+(defn raise-catch
+  "" [manager value]
   (throw (data/catch-condition (:id manager) value)))
 
-(defn raise-choose [issue label args optmap]
+(defn raise-choose
+  "" [issue label args optmap]
   (let [target (get optmap label)]
     (cond (nil? target)
           (throw (Exception. (str "RAISE_CHOOSE: the label " label
@@ -33,7 +36,8 @@
     (raise-choose issue label args optmap)
     (default-unhandled-fn issue)))
 
-(defn raise-fail [issue data]
+(defn raise-fail
+  "" [issue data]
   (throw (data/exception issue (common/expand-data data))))
 
 (defn- raise-escalate [issue res managers optmap]
@@ -47,7 +51,8 @@
                    (map/assoc-if :default ndefault))]
     (raise-loop nissue (next managers) (merge noptmap optmap))))
 
-(defn raise-loop [issue [manager & more :as managers] optmap]
+(defn raise-loop
+  "" [issue [manager & more :as managers] optmap]
   (if manager
     (if-let [handler (first (common/match-handlers manager (:data issue)))]
       (let [data (:data issue)

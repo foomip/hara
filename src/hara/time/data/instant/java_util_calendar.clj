@@ -8,7 +8,9 @@
   (:import [java.util Date Calendar TimeZone GregorianCalendar]
            java.text.SimpleDateFormat))
 
-(defn from-map [{:keys [millisecond second minute hour day month year timezone]}]
+(defn from-map
+  ""
+  [{:keys [millisecond second minute hour day month year timezone]}]
   (let [cal (doto (Calendar/getInstance ^TimeZone
                                         (coerce/coerce-zone timezone {:type TimeZone}))
               (.set year (dec month) day hour minute second))
@@ -23,7 +25,9 @@
    :parser    {:type SimpleDateFormat}
    :map       {:from  {:fn from-map}}})
 
-(defn with-timezone [^Calendar t tz]
+(defn with-timezone
+  ""
+  [^Calendar t tz]
   (cond (= (time/-get-timezone t)
              (string/-to-string tz))
         t

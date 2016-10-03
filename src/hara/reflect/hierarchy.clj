@@ -40,6 +40,7 @@
     smethods))
 
 (defn is-assignable?
+  ""
   [bcls icls]
   (every? (fn [[^Class b ^Class i]]
             (.isAssignableFrom b i))
@@ -70,7 +71,7 @@
    (def without-method
      (-> clojure.lang.PersistentArrayMap
          (.getDeclaredMethod \"without\"
-                             (hara.common.primitives/class-array [Object]))))
+                             (into-array [Object]))))
  
    (origins without-method)
    => [clojure.lang.IPersistentMap

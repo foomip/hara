@@ -28,16 +28,8 @@
 (defn pipe
   "creates a pipe so that tasks can be acted upon asynchronously in order in which they were sent
  
-   (def atm (atom []))
-   (def p (pipe (fn [msg]
-                  (swap! atm conj msg))))
- 
-   (do (pipe/send p 1)
-       (pipe/send p 2)
-       (pipe/send p 3)
-       (Thread/sleep 100)
-       @atm)
-   => [1 2 3]"
+   (pipe (fn [msg] (println msg)))
+   => #(instance? hara.concurrent.pipe.Pipe %)"
   {:added "2.2"}
   [handler]
   (let [queue  (atom (common/queue))
@@ -48,7 +40,19 @@
                 :thread  thread})))
 
 (defn send
-  "sends a task to the pipe for it's handler to act upon"
+  "sends a task to the pipe for it's handler to act upon
+ 
+   (def atm (atom []))
+ 
+   (def p (pipe (fn [msg]
+                  (swap! atm conj msg))))
+ 
+   (do (pipe/send p 1)
+       (pipe/send p 2)
+       (pipe/send p 3)
+       (Thread/sleep 100)
+       @atm)
+   => [1 2 3]"
   {:added "2.2"}
   [pipe task]
   (swap! (:queue pipe) conj task))

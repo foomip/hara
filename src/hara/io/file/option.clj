@@ -11,6 +11,7 @@
                                     PosixFilePermissions)))
 
 (defn enum->keyword
+  ""
   [enum]
   (-> enum
       str
@@ -140,6 +141,7 @@
          open-options))
 
 (defn option
+  ""
   ([] (keys all-options))
   ([k]
    (all-options k)))

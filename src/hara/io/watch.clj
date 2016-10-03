@@ -20,13 +20,15 @@
 (def event-lookup (zipmap event-types event-kinds))
 (def kind-lookup  (zipmap event-kinds event-types))
 
-(defn pattern [s]
+(defn pattern
+  "" [s]
   (-> s
       (string/replace #"\." "\\\\\\Q.\\\\\\E")
       (string/replace #"\*" ".+")
       (re-pattern)))
 
 (defn register-sub-directory
+  ""
   [watcher dir-path]
   (let [{:keys [root seen options service excludes includes]} watcher]
     (when (and (or (= dir-path root)
@@ -43,7 +45,8 @@
             (register-sub-directory watcher (.getCanonicalPath f))))))
     watcher))
 
-(defn process-event [watcher kind ^java.io.File file]
+(defn process-event
+  "" [watcher kind ^java.io.File file]
   (let [{:keys [options callback excludes filters kinds]} watcher
         filepath (.getPath file)
         filename (.getName file)]
@@ -54,7 +57,8 @@
         :async (future (callback (kind-lookup kind) file))
         :sync  (callback (kind-lookup kind) file)))))
 
-(defn run-watcher [watcher]
+(defn run-watcher
+  "" [watcher]
   (let [^java.nio.file.WatchKey wkey
         (.take ^java.nio.file.WatchService (:service watcher))]
     (doseq [^java.nio.file.WatchEvent event (.pollEvents wkey)
@@ -74,7 +78,8 @@
     (.reset wkey)
     (recur watcher)))
 
-(defn start-watcher [watcher]
+(defn start-watcher
+  "" [watcher]
   (let [{:keys [types filter exclude include]} (:options watcher)
         ^java.nio.file.WatchService service (.newWatchService (FileSystems/getDefault))
         seen    (atom #{})
@@ -95,7 +100,8 @@
         watcher  (reduce register-sub-directory watcher (:paths watcher))]
     (assoc watcher :running (future (run-watcher watcher)))))
 
-(defn stop-watcher [watcher]
+(defn stop-watcher
+  "" [watcher]
   (.close ^java.nio.file.WatchService (:service watcher))
   (future-cancel (:running watcher))
   (dissoc watcher :running :service :seen))
@@ -140,12 +146,14 @@
     (Watcher. paths callback
               (merge-nil options *defaults*))))
 
-(defn watch-callback [f root k]
+(defn watch-callback
+  "" [f root k]
   (fn [type file]
     (f root k nil [type file])))
 
 
-(defn add-io-watch [obj k f opts]
+(defn add-io-watch
+  "" [obj k f opts]
   (let [path (.getCanonicalPath ^java.io.File obj)
           _    (if-let [wt (get-in @*filewatchers* [path k :watcher])]
                  (-remove-watch obj k nil))
@@ -154,14 +162,16 @@
       (swap! *filewatchers* assoc-in [path k] {:watcher wt :function f})
       obj))
 
-(defn list-io-watch [obj _]
+(defn list-io-watch
+  "" [obj _]
   (let [path (.getCanonicalPath ^java.io.File  obj)]
       (->> path (get @*filewatchers*)
            (reduce-kv (fn [i k v]
                         (assoc i k (:function v)))
                       {}))))
 
-(defn remove-io-watch [obj k _]
+(defn remove-io-watch
+  "" [obj k _]
   (let [path (.getCanonicalPath ^java.io.File obj)
         wt   (get-in @*filewatchers* [path k :watcher])]
     (if-not (nil? wt)

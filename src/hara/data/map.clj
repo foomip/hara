@@ -191,6 +191,12 @@
   (if (not (nil? (get-in m ks))) m (assoc-in m ks v)))
 
 (defn transform-in
+  "moves values around in a map according to a table
+ 
+   (transform-in {:a 1 :b 2}
+                 {[:c :d] [:a]})
+   => {:b 2, :c {:d 1}}"
+  {:added "2.1"}
   [m rels]
   (reduce (fn [out [to from]]
             (let [v (get-in m from)]
@@ -201,6 +207,12 @@
           rels))
 
 (defn retract-in
+  "reversed the changes by transform-in
+   
+   (retract-in {:b 2, :c {:d 1}}
+               {[:c :d] [:a]})
+   => {:a 1 :b 2}"
+  {:added "2.1"}
   [m rels]
   (reduce (fn [out [to from]]
             (let [v (get-in m to)]

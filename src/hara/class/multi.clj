@@ -5,11 +5,11 @@
   "creates a multimethod from an existing one
  
    (defmulti hello :type)
- 
+   
    (defmethod hello :a
      [e] (assoc e :a 1))
  
-   (def world (clone hello \"world\"))
+   (def world (multimethod hello \"world\"))
  
    (defmethod world :b
      [e] (assoc e :b 2))

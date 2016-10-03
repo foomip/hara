@@ -14,12 +14,16 @@
                       (assoc out k id)))
                   {})))
 
-(defn pad-zeros [s]
+(defn pad-zeros
+  ""
+  [s]
   (if (= 1 (count s))
     (str 0 s)
     s))
 
-(defn generate-offsets []
+(defn generate-offsets
+  ""
+  []
   (for [i (range 0 12)
         j (range 0 60 15)]
     [(format "%s:%s"

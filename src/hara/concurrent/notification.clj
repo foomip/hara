@@ -55,8 +55,8 @@
 
 (defn alter-on
   "A redundant function. Used for testing purposes. The same as
-   `(alter! ref f & args)` but the function is wired with the
-   notification scheme.
+    `(alter! ref f & args)` but the function is wired with the
+    notification scheme.
    (def atm (atom 0))
    (alter-on atm #(do (Thread/sleep 300)
                       (inc %)))

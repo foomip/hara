@@ -1,7 +1,9 @@
 (ns hara.common.pretty
   (:require [clojure.instant :as instant]))
 
-(defn prettify-string [x]
+(defn prettify-string
+  ""
+  [x]
   (cond (nil? x) "nil"
 
         (string? x)

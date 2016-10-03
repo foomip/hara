@@ -65,7 +65,9 @@
   [v ^java.io.Writer w]
   (.write w (str v)))
 
-(defn wrap-exception [f]
+(defn wrap-exception
+  ""
+  [f]
   (fn [{:keys [retry arglist] :as instance} args]
     (try (f instance args)
          (catch Throwable e
@@ -76,13 +78,16 @@
                                             :data e})))))))
 
 (defn invoke-base
+  ""
   [instance args]
   (let [result (apply (:handler instance) args)]
 
     (deliver (:result instance) {:type :success
                                  :data result})))
 
-(defn invoke-procedure [{:keys [id-fn handler arglist time] :as procedure} & args]
+(defn invoke-procedure
+  ""
+  [{:keys [id-fn handler arglist time] :as procedure} & args]
   (let [_          (if (< (count arglist) (count args))
                      (throw (Exception.
                              (str "There should be less inputs than the arglist: " arglist))))
@@ -180,7 +185,9 @@
              (nested/merge-nil-nested *default-settings*)
              (map->Procedure)))))
 
-(defmacro defprocedure [name defaults & body]
+(defmacro defprocedure
+  ""
+  [name defaults & body]
   (let [defaults (cond (vector? defaults)
                        {:arglist defaults}
                        (map? defaults)

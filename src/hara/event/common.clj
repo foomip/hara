@@ -5,7 +5,9 @@
             [hara.data.seq :as seq]
             [hara.common.primitives :refer [uuid]]))
 
-(defn new-id []
+(defn new-id
+  ""
+  []
   (keyword (str (uuid))))
 
 (defn expand-data
@@ -65,6 +67,7 @@
 (defrecord Manager [id store options])
 
 (defn manager
+  ""
   ([] (Manager. (new-id) [] {}))
   ([id store options] (Manager. id store options)))
 
@@ -106,24 +109,31 @@
      (add-handler manager handler))))
 
 (defn list-handlers
+  ""
   ([manager]
    (:store manager))
   ([manager checker]
    (->> (list-handlers manager)
         (filter #(check-data (:checker %) checker)))))
 
-(defn match-handlers [manager data]
+(defn match-handlers
+  ""
+  [manager data]
   (filter #(check-data data (:checker %))
           (:store manager)))
 
-(defn handler-form [bindings body]
+(defn handler-form
+  ""
+  [bindings body]
   (let [bind (cond (vector? bindings)    [{:keys bindings}]
                    (hash-map? bindings)  [bindings]
                    (symbol? bindings)    [bindings]
                    :else (throw (Exception. (str "bindings " bindings " should be a vector, hashmap or symbol"))))]
     `(fn ~bind ~@body)))
 
-(defn checker-form [checker]
+(defn checker-form
+  ""
+  [checker]
   (if (= '_ checker)
     `T
     checker))

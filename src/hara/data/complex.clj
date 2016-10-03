@@ -68,7 +68,7 @@
 
 (defn merges
   "Like `merge` but works across sets and will also
-   combine duplicate key/value pairs together into sets of values.
+    combine duplicate key/value pairs together into sets of values.
  
     (merges {:a 1} {:a 2})
     => {:a #{1 2}}
@@ -176,6 +176,7 @@
 (declare assocs-in)
 
 (defn assocs-in-filtered
+  ""
   ([m all-ks v] (assocs-in-filtered m all-ks v identity combine))
   ([m [[k prchk] & ks :as all-ks] v sel func]
      (let [subm (get m k)]

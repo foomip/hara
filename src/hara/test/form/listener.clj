@@ -3,7 +3,9 @@
             [hara.test.form.print :as print]
             [hara.event :as event]))
 
-(defn summarise-verify [result]
+(defn summarise-verify
+  ""
+  [result]
   {:type    (if (and (= :success(-> result :type))
                      (= true (-> result :data)))
               :success
@@ -16,7 +18,9 @@
    :check   (-> result :checker :form)
    :actual  (-> result :actual :data)})
 
-(defn summarise-evaluate [result]
+(defn summarise-evaluate
+  ""
+  [result]
   {:type    (-> result :type) 
    :name    (-> result :meta :refer)
    :ns      (-> result :meta :ns)

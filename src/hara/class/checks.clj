@@ -1,36 +1,40 @@
 (ns hara.class.checks)
 
 (defn interface?
-  "Returns `true` if `class` is an interface
+  "returns `true` if `class` is an interface
  
    (interface? java.util.Map) => true
+   
    (interface? Class) => false"
   {:added "2.1"}
   [^java.lang.Class class]
   (.isInterface class))
 
 (defn abstract?
-  "Returns `true` if `class` is an abstract class
+  "returns `true` if `class` is an abstract class
  
    (abstract? java.util.Map) => true
+   
    (abstract? Class) => false"
   {:added "2.1"}
   [^java.lang.Class class]
   (java.lang.reflect.Modifier/isAbstract (.getModifiers class)))
 
 (defn multimethod?
-  "Returns `true` if `obj` is a multimethod
+  "returns `true` if `obj` is a multimethod
  
    (multimethod? print-method) => true
+   
    (multimethod? println) => false"
   {:added "2.1"}
   [obj]
   (instance? clojure.lang.MultiFn obj))
 
 (defn protocol?
-  "Returns `true` if `obj` is a protocol
+  "returns `true` if `obj` is a protocol
  
    (defprotocol ISomeProtocol)
+   
    (protocol? ISomeProtocol) => true
  
    (protocol? clojure.lang.ILookup) => false"
@@ -42,7 +46,8 @@
        (-> obj :on-interface class?)))
 
 (defn dispatches?
-  "Returns `true` if the multimethod contains a value for dispatch
+  "returns `true` if the multimethod contains a value for dispatch
+   
    (dispatches? print-method Class)
    => true"
   {:added "2.1"}

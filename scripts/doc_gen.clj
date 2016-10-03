@@ -17,7 +17,7 @@
 
   (doseq [key (->> PROJECT :publish :files keys sort)] 
     (println "PUBLISHING:" key)
-    (publish/publish key {:theme "bolton" :refresh true} PROJECT))
+    (publish/publish key {:theme "bolton"} PROJECT))
   
   (publish/publish "hara-zip" {} PROJECT)
   (publish/publish "hara-data" {} PROJECT)

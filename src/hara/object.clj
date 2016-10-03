@@ -11,17 +11,23 @@
 (ns/import hara.object.read   [to-data meta-read read-getters read-reflect-fields]
            hara.object.write  [from-data meta-write write-setters write-reflect-fields])
 
-(defmacro string-like [& {:as classes}]
+(defmacro string-like
+  ""
+  [& {:as classes}]
   `(vector ~@(map (fn [[cls opts]]
                     `(string-like/extend-string-like ~cls ~opts))
                   classes)))
 
-(defmacro map-like [& {:as classes}]
+(defmacro map-like
+  ""
+  [& {:as classes}]
   `(vector ~@(map (fn [[cls opts]]
                     `(map-like/extend-map-like ~cls ~opts))
                   classes)))
 
-(defmacro vector-like [& {:as classes}]
+(defmacro vector-like
+  ""
+  [& {:as classes}]
   `(vector ~@(map (fn [[cls opts]]
                     `(vector-like/extend-vector-like ~cls ~opts))
                   classes)))

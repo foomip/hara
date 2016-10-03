@@ -5,6 +5,7 @@
   (:import clojure.lang.ExceptionInfo))
 
 (defn retry-wait
+  ""
   [{:keys [wait state count] :as handler}]
   (let [wait (cond (nil? wait) 0
 
@@ -17,6 +18,7 @@
     wait))
 
 (defn retry-pick
+  ""
   [{:keys [on] :as handler} e]
   (cond (class? on)
         (instance? on e)
@@ -31,6 +33,7 @@
              (event/check-data (ex-data e) on))))
 
 (defn retry-args
+  ""
   [args arglist retry instance]
   (map (fn [arg type]
          (cond (= type :retry)
@@ -44,6 +47,7 @@
        arglist))
 
 (defn retry-check
+  ""
   [{:keys [limit state count] :as handler}]
   (cond (number? limit)
         (> limit count)
@@ -55,6 +59,7 @@
         true))
 
 (defn retry-state
+  ""
   [{:keys [apply state] :as handler} e]
   (cond (nil? apply)
         state
@@ -65,6 +70,7 @@
         :else state))
 
 (defn retry
+  ""
   [{:keys [retry arglist] :as instance} args e]
   (let [handlers  (:handlers retry)
         default  (-> retry

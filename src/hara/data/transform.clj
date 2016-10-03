@@ -4,6 +4,7 @@
             [clojure.string :as string]))
 
 (defn template-rel
+  ""
   [v]
   (->> (map name v)
        (string/join "/")
@@ -11,6 +12,7 @@
        keyword))
 
 (defn forward-rel
+  ""
   ([trans] (forward-rel trans [] {}))
   ([trans kv out]
    (reduce-kv (fn [out k v]
@@ -24,6 +26,7 @@
               trans)))
 
 (defn backward-rel
+  ""
   ([trans] (backward-rel trans [] {}))
   ([trans kv out]
    (reduce-kv (fn [out k v]
@@ -37,11 +40,13 @@
               trans)))
 
 (defn full-rel
+  ""
   [trans]
   [(forward-rel trans)
    (backward-rel trans)])
 
 (defn collect-paths
+  ""
   ([m] (collect-paths m [] {}))
   ([m kv out]
    (reduce-kv (fn [out k v]
@@ -53,7 +58,9 @@
               out
               m)))
 
-(defn collect-rel [rel]
+(defn collect-rel
+  ""
+  [rel]
   (->> (map collect-paths rel)
        (apply merge-with vector)))
 
@@ -62,7 +69,9 @@
                         :password [:pass]}}))
 {:<authority/username> [[:authority :username] [:user]], :<authority/password> [[:authority :password] [:pass]]}
 
-(defn apply-rel [m rel]
+(defn apply-rel
+  ""
+  [m rel]
   (reduce-kv (fn [out k [to from]]
                (let [v (get-in m from)]
                  (-> out
@@ -71,7 +80,9 @@
              m
              rel))
 
-(defn retract-rel [m rel]
+(defn retract-rel
+  ""
+  [m rel]
   (reduce-kv (fn [out k [to from]]
                (let [v (get-in m to)]
                  (-> out

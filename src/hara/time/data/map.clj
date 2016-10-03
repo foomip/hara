@@ -89,7 +89,9 @@
       (time/-with-timezone output tz)
       output)))
 
-(defn with-timezone [{:keys [long timezone] :as m} tz]
+(defn with-timezone
+  ""
+  [{:keys [long timezone] :as m} tz]
   (cond (= timezone tz)
         m
 

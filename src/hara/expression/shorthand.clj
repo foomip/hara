@@ -40,8 +40,8 @@
 
 (defn call->
   "Indirect call, takes `obj` and a list containing either a function,
-   a symbol representing the function or the symbol `?` and any additional
-   arguments. Used for calling functions that have been stored as symbols.
+    a symbol representing the function or the symbol `?` and any additional
+    arguments. Used for calling functions that have been stored as symbols.
  
    (call-> 1 '(+ 2 3 4)) => 10
  
@@ -65,7 +65,7 @@
 
 (defn get->
   "Provides a shorthand way of getting a return value.
-   `sel` can be a function, a vector, or a value.
+  `sel` can be a function, a vector, or a value.
  
    (get-> {:a {:b {:c 1}}} :a) => {:b {:c 1}}
  

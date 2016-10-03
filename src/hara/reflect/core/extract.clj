@@ -8,12 +8,14 @@
             [hara.reflect.element multi method field constructor]
             [hara.reflect.core.query :as q]))
 
-(defn process-if-single [args]
+(defn process-if-single
+  "" [args]
   (if (vector? (first (first args)))
     (vec (apply concat args))
     args))
 
 (defn element-meta
+  ""
   [ele]
   (-> {}
       (assoc :arglists (->> (element/element-params ele)

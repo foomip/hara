@@ -2,7 +2,7 @@
  (:require [hara.class.inheritance :as inheritance]))
 
 (defn enum?
-  "Check to see if class is an enum type
+  "check to see if class is an enum type
  
    (enum? java.lang.annotation.ElementType) => true
  
@@ -15,7 +15,7 @@
     true false))
 
 (defn enum-values
-  "Returns all values of an enum type
+  "returns all values of an enum type
  
    (->> (enum-values ElementType)
         (map str))

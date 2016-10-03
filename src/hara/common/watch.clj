@@ -21,19 +21,24 @@
                 (not (= pv nv)))
             (apply f args)))))
 
-(defn wrap-mode [f mode]
+(defn wrap-mode
+  ""
+  [f mode]
   (fn [& args]
     (case mode
       :sync  (apply f args)
       :async (future (apply f args)))))
 
-(defn wrap-suppress [f]
+(defn wrap-suppress
+  ""
+  [f]
   (fn [& args]
     (try
       (apply f args)
       (catch Throwable t))))
 
 (defn process-options
+  ""
   [opts f]
   (let [_ (if (:args opts)
             (args/arg-check f (:args opts)))
@@ -61,8 +66,9 @@
    (reset! subject 1)
    @observer => 1
  
-   Alternatively, options can be given to either transform the current
-   as well as to only execute the callback if there is a difference.
+   ;; options can be given to either transform
+   ;; the current input as well as to only execute
+   ;; the callback if there is a difference.
  
    (def subject  (atom {:a 1 :b 2}))
    (def observer (atom nil))

@@ -8,12 +8,14 @@
             [hara.reflect.util :as reflect-util]))
 
 (defn meta-write
+  ""
   [^Class cls]
   (assoc (object/-meta-write cls) :class cls))
 
 (declare from-data)
 
 (defn write-reflect-fields
+  ""
   [cls]
   (->> (reflect/query-class cls [:field])
        (reduce (fn [out ele]
@@ -23,6 +25,7 @@
                {})))
 
 (defn write-setters
+  ""
   ([cls] (write-setters cls {:prefix "set"
                              :template '(fn <method> [obj val]
                                           (. obj (<method> val))
@@ -39,6 +42,7 @@
                 {}))))
 
 (defn from-empty
+  ""
   [m empty methods]
   (let [obj (empty m)]
     (reduce-kv (fn [obj k v]
@@ -49,6 +53,7 @@
                m)))
 
 (defn from-map
+  ""
   [m ^Class cls]
   (let [m (if-let [rels (get object/*transform* type)]
             (data/transform-in m rels)
@@ -64,6 +69,7 @@
           (map/-from-map m cls))))
 
 (defn from-data
+  ""
   [arg ^Class cls]
   (let [^Class targ (type arg)]
     (cond

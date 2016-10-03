@@ -85,6 +85,20 @@
               m)))
 
 (defn pathify-keys-nested
+  "converts a nested map structure into a flat map structure
+   
+   (pathify-keys-nested {:a {:b {:c 1}}})
+   => {[:a :b :c] 1}
+ 
+   (pathify-keys-nested {:a {:b {:c 1}}} 2)
+   => {[:a :b] {:c 1}}
+ 
+   (pathify-keys-nested {:a {:b {:c 1
+                                 :d 3
+                                 :e {}}}}
+                        -1 true)
+   => {[:a :b :c] 1, [:a :b :d] 3, [:a :b :e] {}}"
+  {:added "2.1"}
   ([m] (pathify-keys-nested m -1 false []))
   ([m max] (pathify-keys-nested m max false []))
   ([m max keep-empty] (pathify-keys-nested m max keep-empty []))
@@ -102,8 +116,8 @@
 
 (defn flatten-keys-nested
   "Returns a single associative map with all of the nested
-   keys of `m` flattened. If `keep` is added, it preserves all the
-   empty sets
+    keys of `m` flattened. If `keep` is added, it preserves all the
+    empty sets
  
    (flatten-keys-nested {\"a\" {\"b\" {\"c\" 3 \"d\" 4}
                                 \"e\" {\"f\" 5 \"g\" 6}}
@@ -123,7 +137,7 @@
 
 (defn treeify-keys
   "Returns a nested map, expanding out the first
-   level of keys into additional hash-maps.
+    level of keys into additional hash-maps.
  
    (treeify-keys {:a/b 2 :a/c 3})
    => {:a {:b 2 :c 3}}
@@ -140,7 +154,7 @@
 
 (defn treeify-keys-nested
   "Returns a nested map, expanding out all
-   levels of keys into additional hash-maps.
+  levels of keys into additional hash-maps.
  
    (treeify-keys-nested {:a/b 2 :a/c 3})
    => {:a {:b 2 :c 3}}

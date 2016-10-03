@@ -7,18 +7,22 @@
 
 (def nothing ::nothing)
 
-(defn nothing? [x]
+(defn nothing?
+  "" [x]
   (= x nothing))
 
-(defn straight-through [& [x]] x)
+(defn straight-through
+  "" [& [x]] x)
 
 (defn cell-state
+  ""
   [{:keys [label content ref-fn]}]
   (do {:label       (atom label)
        :content     ((or ref-fn atom) content)
        :propagators (atom #{})}))
 
 (defn propagator-state
+  ""
   [{:keys [label in-cells out-cell tf tdamp concurrent]}]
   (do {:label      (atom label)
        :in-cells   (atom in-cells)
@@ -30,10 +34,12 @@
 (defprotocol IPropagate
   (propagate [pg]))
 
-(defmacro with-concurrent [flag & body]
+(defmacro with-concurrent
+  "" [flag & body]
   `(if ~flag (do ~body) (future ~body)))
 
-(defn propagation-transfer [in-vals {:keys [tf tdamp out-cell] :as pg}]
+(defn propagation-transfer
+  "" [in-vals {:keys [tf tdamp out-cell] :as pg}]
   (let [out (if-not (some nothing? in-vals)
               (suppress (apply tf in-vals) nothing)
               nothing)]
@@ -41,7 +47,8 @@
                 (suppress (tdamp @out-cell out)))
       (out-cell out))))
 
-(defn format-cells [{:keys [label] :as cell}]
+(defn format-cells
+  "" [{:keys [label] :as cell}]
   (or label
       (format "{%s}" (.hashCode ^Object cell))))
 
@@ -157,6 +164,7 @@
                 (cell-state)))))
 
 (defn propagator
+  ""
   ([label] (propagator label {:tf straight-through}))
   ([label {:keys [in-cells out-cell tf tdamp concurrent] :as opts}]
      (Propagator. (-> opts

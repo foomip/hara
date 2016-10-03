@@ -14,6 +14,7 @@
      (seq (.getDeclaredFields class))))
 
 (defn list-class-elements
+  ""
   ([class]
      (->> (all-class-members class)
           (map types/to-element)))
@@ -35,6 +36,7 @@
 
 
 (defn all-instance-elements
+  ""
   [tcls icls]
   (let [supers (reverse (inheritance/ancestor-list tcls))
         eles   (mapcat #(list-class-elements % [:instance]) supers)]
@@ -57,6 +59,11 @@
          (display/display grp))))
 
 (defn query-hierarchy
+  "lists what methods could be applied to a particular instance
+ 
+   (query-hierarchy String [:name #\"^to\"])
+   => [\"toCharArray\" \"toLowerCase\" \"toString\" \"toUpperCase\"]"
+  {:added "2.1"}
   [obj selectors]
   (let [grp (args/args-group selectors)
         tcls  (common/context-class obj)]

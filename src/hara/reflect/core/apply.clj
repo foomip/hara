@@ -5,6 +5,7 @@
             [hara.reflect.core.query :as q]))
 
 (defn instance-lookup-path
+  ""
   [ele]
   (let [base [(:name ele)
               (:tag ele)]]
@@ -16,6 +17,7 @@
             (conj base (count params) params)))))
 
 (defn assignable?
+  ""
   [current base]
   (->> (map (fn [^Class x ^Class y]
               (or (= y x)
@@ -23,6 +25,7 @@
        (every? identity)))
 
 (defn instance-lookup
+  ""
   ([tcls] (instance-lookup tcls nil))
   ([tcls icls]
      (reduce (fn [m ele]
@@ -37,11 +40,13 @@
              {} (q/all-instance-elements tcls icls))))
 
 (defn object-lookup
+  ""
   [obj]
   (let [tcls (type obj)]
     (instance-lookup tcls (if (class? obj) obj))))
 
 (defn refine-lookup
+  ""
   [lu]
   (let [ks (keys lu)]
     (reduce (fn [m k]
@@ -57,6 +62,7 @@
             {} ks)))
 
 (defn get-element-lookup
+  ""
   [obj]
   (let [obj-type (type obj)
         is-class   (if (class? obj) obj)]

@@ -51,7 +51,7 @@
   (base/move-down zip))
 
 (defn root-node
-  "Accesses the top level node
+  "accesses the top level node
  
    (-> (vector-zip [[[3] 2] 1])
        (move-bottom-most)
@@ -62,7 +62,7 @@
   (-> zip base/move-top-most base/right-node))
 
 (defn surround
-  "Adds additional levels to the element
+  "adds additional levels to the element
    
    (-> (vector-zip 1)
        (surround 2)
@@ -93,7 +93,7 @@
    (-> (vector-zip [1 [[2] 3]])
        (find-next even?)
        (cursor))
-   => ([1 [[| 2] 3]])"
+   => '([1 [[| 2] 3]])"
   {:added "2.4"}
   [zip]
   (event/manage

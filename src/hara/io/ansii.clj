@@ -36,12 +36,15 @@
              (merge colors highlights attributes)))
 
 (defn encode
+  ""
   [modifier]
   (if-let [i (lookup modifier)]
     (str "\033[" i "m")
     (throw (Exception. (str "Modifier not available: " modifier)))))
 
-(defn style [text modifiers]
+(defn style
+  ""
+  [text modifiers]
   (str (string/join (map encode modifiers)) text (encode :reset)))
 
 (defn- ansii-form [modifier]

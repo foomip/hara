@@ -15,7 +15,8 @@
   [v ^java.io.Writer w]
   (.write w (str v)))
 
-(defn build-handler [name props config]
+(defn build-handler
+  "" [name props config]
   (let [procmap (cond (fn? props)
                       {:name   name
                        :handler props}
@@ -30,18 +31,21 @@
                        :id-fn :timestamp)]
     (procedure/procedure procmap [:timestamp :params :instance])))
 
-(defn build-handlers [handlers config]
+(defn build-handlers
+  "" [handlers config]
   (reduce-kv (fn [out name props]
                (conj out (build-handler name props config)))
              []
              handlers))
 
-(defn seed-fn [handlers]
+(defn seed-fn
+  "" [handlers]
   (fn [config]
     (map->TaskArray
      {:handlers (ova/ova (build-handlers handlers config))})))
 
-(defn initialise [{:keys [handlers registry cache ticker] :as arr}]
+(defn initialise
+  "" [{:keys [handlers registry cache ticker] :as arr}]
   ;; watch for changes in ticker
   (add-watch ticker :trigger
              (fn [_ _ _ {:keys [time array params instance] :as result}]

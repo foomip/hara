@@ -19,6 +19,7 @@
            [run run-namespace])
 
 (defn print-options
+  ""
   ([] (print-options :help))
   ([opts]
    (cond (set? opts)
@@ -45,7 +46,9 @@
          (= :all opts)
          (alter-var-root #'common/*print* (constantly (print-options :list))))))
 
-(defn process-args [args]
+(defn process-args
+  ""
+  [args]
   (->> (map read-string args)
        (map (fn [x]
               (cond (symbol? x)
@@ -57,6 +60,7 @@
        set))
 
 (defn -main
+  ""
   ([& args]
    (let [args (process-args args)
          {:keys [thrown failed] :as stats} (run)

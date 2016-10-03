@@ -8,16 +8,24 @@
            (java.nio.file Files)
            (java.nio.charset Charset)))
 
-(defn charset-default []
+(defn charset-default
+  ""
+  []
   (str (Charset/defaultCharset)))
 
-(defn charset-list []
+(defn charset-list
+  ""
+  []
   (keys (Charset/availableCharsets)))
 
-(defn charset [s]
+(defn charset
+  ""
+  [s]
   (Charset/forName s))
 
-(defmulti reader (fn [type path opts] type))
+(defmulti reader
+  ""
+  (fn [type path opts] type))
 
 (defmethod reader :buffered
   [_ io opts]
@@ -59,5 +67,7 @@
   [_ io opts]
   (StringReader. ^String io))
 
-(defn reader-types []
+(defn reader-types
+  ""
+  []
   (keys (.getMethodTable reader)))

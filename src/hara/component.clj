@@ -16,7 +16,13 @@
   (-start [this] this)
   (-stop  [this] this))
 
-(defn component? [x]
+(defn component?
+  "checks if an instance extends IComponent
+ 
+   (component? (Database.))
+   => true"
+  {:added "2.2"}
+  [x]
   (extends? IComponent (type x)))
 
 (defn started?
@@ -132,12 +138,16 @@
   [v ^java.io.Writer w]
   (.write w (str v)))
 
-(defn start-array [carr]
+(defn start-array
+  ""
+  [carr]
   (with-meta
     (ComponentArray. (mapv start (seq carr)))
     (meta carr)))
 
-(defn stop-array [carr]
+(defn stop-array
+  ""
+  [carr]
   (with-meta
     (ComponentArray. (mapv stop (seq carr)))
     (meta carr)))
@@ -167,6 +177,7 @@
 (declare start-system stop-system)
 
 (defn system-string
+  ""
   ([sys]
    (let []
      (str "#" (or (-> sys meta :name) "sys") " "
@@ -265,7 +276,9 @@
                     (assoc cp dk (get csys dk))))
             cp aug)))
 
-(defn start-system [csys]
+(defn start-system
+  ""
+  [csys]
   (let [graph (meta csys)
         cmp-keys    (-> graph :dependencies topological-sort)
         cmp-ctors   (-> graph :constructors)
@@ -308,7 +321,9 @@
                     (dissoc cp dk)))
             cp aug)))
 
-(defn stop-system [csys]
+(defn stop-system
+  ""
+  [csys]
   (let [graph (meta csys)
         cmp-keys  (-> graph :dependencies topological-sort)
         cmp-ctors (-> graph :constructors)
@@ -335,23 +350,45 @@
 
 (defn system
   "creates a system of components
-   (def topo {:db     [map->Database]
-              :files  [[map->Filesystem]]
-              :store  [[map->Database] [:files :fs] :db]})
-   (def cfg  {:db {:type :basic :host \"localhost\" :port 8080}
-              :files [{:path \"/app/local/1\"} {:path \"/app/local/2\"}]
-              :store [{:id 1} {:id 2}]})
+   
+   ;; The topology specifies how the system is linked
+   (def topo {:db        [map->Database]
+              :files     [[map->Filesystem]]
+              :catalogs  [[map->Catalog] [:files :fs] :db]})
+ 
+   ;; The configuration customises the system
+   (def cfg  {:db     {:type :basic
+                       :host \"localhost\"
+                       :port 8080}
+              :files [{:path \"/app/local/1\"}
+                      {:path \"/app/local/2\"}]
+              :catalogs [{:id 1}
+                         {:id 2}]})
+ 
+   ;; `system` will build it and calling `start` initiates it
    (def sys (-> (system topo cfg) start))
  
-   (:db sys) => (just {:status \"started\",
-                       :type :basic,
-                       :port 8080,
-                       :host \"localhost\"})
-   (-> sys :files seq first)
+   ;; Check that the `:db` entry has started
+   (:db sys)
+   => (just {:status \"started\",
+             :type :basic,
+             :port 8080,
+             :host \"localhost\"})
+ 
+   ;; Check the first `:files` entry has started
+   (-> sys :files first)
    => (just {:status \"started\",
              :path \"/app/local/1\"})
-   (-> sys :store seq first keys)
-   => (just [:status :fs :db :id] :in-any-order)"
+ 
+   ;; Check that the second `:store` entry has started
+   (->> sys :catalogs second)
+   => (contains {:id 2
+                 :status \"started\"
+                 :db {:status \"started\",
+                         :type :basic,
+                         :port 8080,
+                         :host \"localhost\"}
+                 :fs {:path \"/app/local/2\", :status \"started\"}})"
   {:added "2.1"}
   ([topology config] (system topology config nil))
   ([topology config name]

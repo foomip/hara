@@ -238,6 +238,7 @@
   (concat! ova es))
 
 (defn empty!
+  ""
   [ova]
   (watch/clear ova {:type :ova})
   (watch/clear ova)
@@ -289,6 +290,7 @@
                            ova)))))
 
 (defn selectv
+  ""
   ([ova]
       (persistent! ova))
   ([ova pchk]
@@ -399,7 +401,9 @@
       (alter (nth @ova i) #(f i %))))
   ova)
 
-(defn insert-fn [v val & [i]]
+(defn insert-fn
+  ""
+  [v val & [i]]
   (if (nil? i)
     (conj v val)
     (vec (clojure.core/concat (conj (subvec v 0 i) val)
@@ -465,7 +469,9 @@
        (filter (comp not nil?))
        vec))
 
-(defn delete-indices [ova idx]
+(defn delete-indices
+  ""
+  [ova idx]
   (delete-internal-watches ova idx)
   (alter (state/get ova) delete-internal-objs idx)
   ova)

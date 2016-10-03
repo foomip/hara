@@ -8,4 +8,6 @@
   (-to-map [obj])
   (-to-map-meta [obj]))
 
-(defmulti -from-map (fn [map type] type))
+(defmulti -from-map
+  ""
+  (fn [map type] type))

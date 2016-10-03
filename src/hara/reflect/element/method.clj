@@ -6,6 +6,7 @@
             [hara.reflect.pretty.classes :refer [class-convert]]))
 
 (defn invoke-static-method
+  ""
   ([ele]
      (try (.invoke ^java.lang.reflect.Method (:delegate ele) nil (object-array []))
           (catch IllegalArgumentException e
@@ -13,7 +14,9 @@
   ([ele args]
      (.invoke ^java.lang.reflect.Method (:delegate ele) nil (object-array (box-args ele args)))))
 
-(defn invoke-instance-method [ele args]
+(defn invoke-instance-method
+  ""
+  [ele args]
   (let [bargs (box-args ele args)]
     (.invoke ^java.lang.reflect.Method (:delegate ele) (first bargs) (object-array (rest bargs)))))
 
@@ -27,18 +30,23 @@
        (invoke-static-method ele args)
        (invoke-instance-method ele args))))
 
-(defn to-static-method [^java.lang.reflect.Method obj body]
+(defn to-static-method
+  ""
+  [^java.lang.reflect.Method obj body]
   (-> body
       (assoc :params (vec (seq (.getParameterTypes obj))))
       (assoc :origins (list (.getDeclaringClass obj)))))
 
 (defn to-instance-method
+  ""
   [^java.lang.reflect.Method obj body]
   (-> body
       (assoc :params (vec (cons (:container body) (seq (.getParameterTypes obj)))))
       (assoc :origins (hierarchy/origins obj))))
 
-(defn to-pre-element [obj]
+(defn to-pre-element
+  ""
+  [obj]
   (let [body (seed :method obj)
         body (if (:static body)
                (to-static-method obj body)

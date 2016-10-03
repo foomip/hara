@@ -5,10 +5,12 @@
             [clojure.walk :as walk]))
 
 (defn meta-read
+  ""
   [^Class cls]
   (assoc (object/-meta-read cls) :class cls))
 
 (defn read-reflect-fields
+  ""
   [cls]
   (->> (reflect/query-class cls [:field])
        (map (juxt (comp keyword case/spear-case :name)
@@ -25,6 +27,7 @@
   {:prefix "get" :template +read-template+})
 
 (defn read-getters
+  ""
   ([cls] (read-getters cls +read-get-template+))
   ([cls {:keys [prefix template extra]}]
    (->> [:method :instance :public (re-pattern (str "^" prefix ".+")) 1]
@@ -41,6 +44,7 @@
                 {}))))
 
 (defn to-data
+  ""
   [obj]
   (let [cls (type obj)
         {:keys [to-clojure to-string to-map to-vector methods]} (meta-read cls)]

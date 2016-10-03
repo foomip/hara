@@ -36,7 +36,9 @@
                 (format "Unexpected param type, expected: %s, given: %s"
                         param-type (-> arg .getClass .getName))))))
 
-(defn set-field [^Field field ^Object obj ^Object val]
+(defn set-field
+  ""
+  [^Field field ^Object obj ^Object val]
   (let [ftype (.getType field)]
     (cond (-> ftype .isPrimitive)
           (.set field obj (box-arg ftype val))
@@ -117,7 +119,9 @@
           Boolean/TYPE   (= arg-type Boolean)
           false)))
 
-(defn is-congruent [params args]
+(defn is-congruent
+  ""
+  [params args]
   (cond (nil? args)
         (= 0 (count params))
 

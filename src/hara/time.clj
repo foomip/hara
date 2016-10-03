@@ -162,7 +162,9 @@
   ([t rep]
    (time/-to-length t rep)))
 
-(defn wrap-proxy [f]
+(defn wrap-proxy
+  ""
+  [f]
   (fn [t opts]
     (cond (representation? t)
           (f t opts)

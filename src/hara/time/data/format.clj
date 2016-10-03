@@ -29,7 +29,9 @@
 
 (defonce +parse-cache+  (atom {}))
 
-(defn cache [cache constructor ks flag]
+(defn cache
+  ""
+  [cache constructor ks flag]
   (cond flag
         (or (get-in @cache ks)
             (let [obj (constructor)]

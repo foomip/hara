@@ -3,6 +3,7 @@
             [hara.common.primitives :refer [uuid]]))
 
 (defn issue
+  ""
   ([data msg options default]
    (issue (common/new-id) data msg options default))
   ([id data msg options default]
@@ -17,14 +18,17 @@
       :default default})))
 
 (defn catch-condition
+  ""
   [target value]
   (ex-info "catch" {::condition :catch :target target :value value}))
 
 (defn choose-condition
+  ""
   [target label args]
   (ex-info "choose" {::condition :choose :target target :label label :args args}))
 
 (defn exception
+  ""
   ([issue]
    (let [contents (:data issue)
          msg    (str (:msg issue) " - " contents)

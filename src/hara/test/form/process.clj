@@ -3,7 +3,9 @@
             [hara.test.checker.base :as checker]
             [hara.event :as event]))
 
-(defmulti process :type)
+(defmulti process
+  ""
+  :type)
 
 (defmethod process :form
   [{:keys [form meta] :as op}]

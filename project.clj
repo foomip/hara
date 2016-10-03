@@ -4,7 +4,7 @@
   :license {:name "The MIT License"
             :url "http://http://opensource.org/licenses/MIT"}
   :dependencies [[org.clojure/clojure "1.8.0"]]
-  :aliases {"hara.test" ["run" "-m" "test" "exit"]}
+  :aliases {"test" ["run" "-m" "hara.test" "exit"]}
   :profiles {:dev {:dependencies [[compojure "1.4.0"]
                                   [ring "1.4.0"]
                                   [clj-http "2.1.0"]
@@ -43,15 +43,15 @@
                     "hara-concurrent-ova"
                     {:input "test/documentation/hara_concurrent_ova.clj"
                      :title "concurrent.ova"
-                     :subtitle "shared mutable state for multi-threaded applications"}
+                     :subtitle "shared mutable state"}
                     "hara-concurrent-procedure"
                     {:input "test/documentation/hara_concurrent_procedure.clj"
                      :title "concurrent.procedure"
-                     :subtitle "model for controllable execution"}
+                     :subtitle "controllable execution"}
                     "hara-data"
                     {:input "test/documentation/hara_data.clj"
                      :title "data"
-                     :subtitle "manipulation of maps and representations of data"}
+                     :subtitle "maps and representations of data"}
                     "hara-event"
                     {:input "test/documentation/hara_event.clj"
                      :title "event"
@@ -67,7 +67,7 @@
                     "hara-function"
                     {:input "test/documentation/hara_function.clj"
                      :title "function"
-                     :subtitle "functions for reasoning about functions"}
+                     :subtitle "reasoning about functions"}
                     "hara-group"
                     {:input "test/documentation/hara_group.clj"
                      :title "group"
@@ -91,7 +91,7 @@
                     "hara-namespace"
                     {:input "test/documentation/hara_namespace.clj"
                      :title "namespace"
-                     :subtitle "utilities for manipulation of namespaces"}
+                     :subtitle "utilities for namespace manipulation"}
                     "hara-object"
                     {:input "test/documentation/hara_object.clj"
                      :title "object"
@@ -127,4 +127,4 @@
   :repack [{:type :clojure
             :levels 2
             :path "src"
-            :standalone #{"reflect" "time" "event" "object" "test"}}])
+            :standalone #{"event" "reflect" "time" "object" "test" "zip"}}])

@@ -3,7 +3,7 @@
 
 (defn hash-label
   "Returns a keyword repesentation of the hash-code. For use in
-   generating internally unique keys
+    generating internally unique keys
  
     (hash-label 1) => \"__1__\"
     (hash-label \"a\" \"b\" \"c\") => \"__97_98_99__\"
