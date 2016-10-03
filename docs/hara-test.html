@@ -636,7 +636,8 @@ Original highlight.js style (c) Ivan Sagalaev <maniac@softwaremaniacs.org>
          (alter-var-root #'common/*print* (constantly #(print-options :default)))
          
          (= :all opts)
-         (alter-var-root #'common/*print* (constantly (print-options :list))))))</code></pre></div></div><pre class="error"><h6>example not found</h6><code></code></pre></div><div class="entry"><span id="entry__hara_test__process_args"></span><div class="entry-description"><h4><b>process-args&nbsp<a data-scroll="" href="#entry__hara_test__">^</a></b></h4><p><i></i></p></div><div class="entry-option"><h6><i class="error version">NONE</i>&nbsp;&nbsp;args: <i class="args">[args]</i>&nbsp;&nbsp;&nbsp;</h6><div><input class="source-toggle" id="entry__pre_hara_test__process_args" type="checkbox" /><label class="source-toggle" for="entry__pre_hara_test__process_args"></label><pre class="source"><code class="clojure">(defn process-args [args]
+         (alter-var-root #'common/*print* (constantly (print-options :list))))))</code></pre></div></div><pre class="error"><h6>example not found</h6><code></code></pre></div><div class="entry"><span id="entry__hara_test__process_args"></span><div class="entry-description"><h4><b>process-args&nbsp<a data-scroll="" href="#entry__hara_test__">^</a></b></h4><p><i></i></p></div><div class="entry-option"><h6><i class="error version">NONE</i>&nbsp;&nbsp;args: <i class="args">[args]</i>&nbsp;&nbsp;&nbsp;</h6><div><input class="source-toggle" id="entry__pre_hara_test__process_args" type="checkbox" /><label class="source-toggle" for="entry__pre_hara_test__process_args"></label><pre class="source"><code class="clojure">(defn process-args
+  [args]
   (->> (map read-string args)
        (map (fn [x]
               (cond (symbol? x)
