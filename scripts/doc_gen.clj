@@ -21,6 +21,6 @@
   
   (publish/publish "hara-zip" {} PROJECT)
   (publish/publish "hara-data" {} PROJECT)
-  (publish/publish "index" {} PROJECT)
+  (publish/publish "index" {:refresh true} PROJECT)
   
   )
