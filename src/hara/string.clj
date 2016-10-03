@@ -1,11 +1,5 @@
 (ns hara.string
-  (:require [hara.namespace.import :as ns]
-            [hara.string.case]
+  (:require [hara.string.case]
             [hara.string.path]
-            [hara.string.prose])
-  (:refer-clojure :exclude [val]))
+            [hara.string.prose]))
 
-(ns/import
-  hara.string.case   :all
-  hara.string.path   :all
-  hara.string.prose  :all)
