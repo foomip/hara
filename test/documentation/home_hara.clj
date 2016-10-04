@@ -9,15 +9,15 @@
 
 ### What is It?
 
-`hara` is a set of utilities and libraries extending `clojure.core`, a little bit like [boost](http://www.boost.org) but without the compilation time.
+[hara](https://github.com/zcaudate/hara) is a set of libraries extending `clojure.core`, a little bit like [boost](http://www.boost.org) but without the compilation time.
 
 ### Why was it made?
 
-Apart from [clojure.core](http://www.clojure.org) itself, the language lacks a big, monolithic, kitchen-sink type library. `hara` aims to fill that gap.
+Apart from [clojure](http://www.clojure.org) itself, the language lacks a big, monolithic, kitchen-sink type codebase. [hara](https://github.com/zcaudate/hara) aims to fill that gap.
 
 ### Who is this targeting?
 
-Clojure developers, and people that like pretty code.
+All JVM Clojure developers.
 
 ### When was this started?
 
@@ -30,7 +30,6 @@ In many places. Mostly to write libraries that keep this maintainable.
 ### How to begin?
 
 That's a good question. It really depends on what is being built. There's a fair amount of documentation already so please jump in and start exploring.
-
 
 ### Okay, lets go!
 
