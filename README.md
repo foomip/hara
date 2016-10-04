@@ -4,17 +4,15 @@
 [![Build Status](https://travis-ci.org/zcaudate/hara.png?branch=master)](https://travis-ci.org/zcaudate/hara)
 [![Clojars](https://img.shields.io/clojars/v/im.chit/hara.svg)](https://clojars.org/im.chit/hara)
 
-code patterns and utilities - visit the [hara website](http://docs.caudate.me/hara/)
-
 ![Logo](http://docs.caudate.me/hara/img/logo.png)
 
 ### What is It?
 
-[hara](https://github.com/zcaudate/hara) is a set of libraries extending `clojure.core`, a little bit like [boost](http://www.boost.org) but without the compilation time.
+[hara](http://docs.caudate.me/hara) is a set of libraries extending `clojure.core`, a little bit like [boost](http://www.boost.org) but without the compilation time.
 
 ### Why was it made?
 
-Apart from [clojure](http://www.clojure.org) itself, the language lacks a big, monolithic, kitchen-sink type codebase. [hara](https://github.com/zcaudate/hara) aims to fill that gap.
+Apart from [clojure](http://www.clojure.org) itself, the language lacks a big, monolithic, kitchen-sink type codebase. [hara](http://docs.caudate.me/hara) aims to fill that gap.
 
 ### Who is this targeting?
 
