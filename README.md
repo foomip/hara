@@ -8,8 +8,6 @@ code patterns and utilities - visit the [hara website](http://docs.caudate.me/ha
 
 ![Logo](http://docs.caudate.me/hara/img/logo.png)
 
-## Welcome
-
 ### What is It?
 
 [hara](https://github.com/zcaudate/hara) is a set of libraries extending `clojure.core`, a little bit like [boost](http://www.boost.org) but without the compilation time.
