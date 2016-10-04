@@ -6,9 +6,9 @@
 
 code patterns and utilities - visit the [hara website](http://docs.caudate.me/hara/)
 
-# Welcome
-
 ![Logo](http://docs.caudate.me/hara/img/logo.png)
+
+## Welcome
 
 ### What is It?
 
