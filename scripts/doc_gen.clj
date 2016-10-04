@@ -33,5 +33,4 @@
                      (:title m)
                      (:title m)
                      (:subtitle m))))
-  nil
   )
