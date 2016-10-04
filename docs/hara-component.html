@@ -127,6 +127,11 @@
   font-size: 15px;
 }
 
+pre, code {
+  white-space: pre;
+  overflow-x: scroll;
+}
+
 h2 {
   margin-top: 2.5rem;
   font-size: 1.5rem;
@@ -248,6 +253,16 @@ pre{
 {
   font-size: x-large;
 }
+}
+
+@media (max-width: 30rem) {
+  pre, code {
+    font-size: x-small;
+  } 
+  h6 .args
+  {
+    font-size: x-small;    
+  }
 }
 
 
@@ -445,7 +460,7 @@ Original highlight.js style (c) Ivan Sagalaev <maniac@softwaremaniacs.org>
           <div class="heading">
             <div>
               <h5>Author: Chris Zheng&nbsp;&nbsp;<a href="mailto:z@caudate.me">(z@caudate.me)</a></h5>
-              <h5>Date: 03 October 2016</h5>
+              <h5>Date: 04 October 2016</h5>
               <h5>Repository: <a href="https://github.com/zcaudate/hara">https://github.com/zcaudate/hara</a></h5>
               <h5>Version: 2.4.5</h5></div></div>
           <hr/>
@@ -486,7 +501,7 @@ Original highlight.js style (c) Ivan Sagalaev <maniac@softwaremaniacs.org>
   (-start [store]
     (assoc store :status &quot;started&quot;))
   (-stop [store]
-    (dissoc store :status)))</code></pre></div><div><p>These definitions are then used in context of specifying a system consisting of two <code>Catalog</code> instances, having the same <code>Database</code> instance, but different <code>Filesystem</code> instances.</p></div><div class="api"><span id="entry__hara_component__"></span><hr /><div><ul><li><a data-scroll="" href="#entry__hara_component__system">system</a></li><li><a data-scroll="" href="#entry__hara_component__system_QMARK_">system?</a></li><li><a data-scroll="" href="#entry__hara_component__start">start</a></li><li><a data-scroll="" href="#entry__hara_component__stop">stop</a></li></ul><hr style="margin-bottom: 0" /><div><div class="entry"><span id="entry__hara_component__system"></span><div class="entry-description"><h4><b>system&nbsp<a data-scroll="" href="#entry__hara_component__">^</a></b></h4><p><i>creates a system of components</i></p></div><div class="entry-option"><h6><a href="https://github.com/zcaudate/hara/blob/master/src/hara/component.clj#L351-L424" target="_blank">v&nbsp;2.1</a>&nbsp;&nbsp;args: <i class="args">[topology config] [topology config name]</i>&nbsp;&nbsp;&nbsp;</h6><div><input class="source-toggle" id="entry__pre_hara_component__system" type="checkbox" /><label class="source-toggle" for="entry__pre_hara_component__system"></label><pre class="source"><code class="clojure">(defn system
+    (dissoc store :status)))</code></pre></div><div><p>These definitions are then used in context of specifying a system consisting of two <code>Catalog</code> instances, having the same <code>Database</code> instance, but different <code>Filesystem</code> instances.</p></div><div class="api"><span id="entry__hara_component__"></span><hr /><div><ul><li><a data-scroll="" href="#entry__hara_component__system">system</a></li><li><a data-scroll="" href="#entry__hara_component__system_QMARK_">system?</a></li><li><a data-scroll="" href="#entry__hara_component__start">start</a></li><li><a data-scroll="" href="#entry__hara_component__stop">stop</a></li></ul><hr style="margin-bottom: 0" /><div><div class="entry"><span id="entry__hara_component__system"></span><div class="entry-description"><h4><b>system&nbsp<a data-scroll="" href="#entry__hara_component__">^</a></b></h4><p><i>creates a system of components</i></p></div><div class="entry-option"><h6><a href="https://github.com/zcaudate/hara/blob/master/src/hara/component.clj#L351-L424" target="_blank">v&nbsp;2.1</a></h6><div><input class="source-toggle" id="entry__pre_hara_component__system" type="checkbox" /><label class="source-toggle" for="entry__pre_hara_component__system"></label><pre class="source"><code class="clojure">(defn system
   ([topology config] (system topology config nil))
   ([topology config name]
    (let [deps  (system-dependencies  topology)
@@ -555,16 +570,16 @@ Original highlight.js style (c) Ivan Sagalaev <maniac@softwaremaniacs.org>
                       :type :basic,
                       :port 8080,
                       :host "localhost"}
-              :fs {:path "/app/local/2", :status "started"}})</code></pre></div><div class="entry"><span id="entry__hara_component__system_QMARK_"></span><div class="entry-description"><h4><b>system?&nbsp<a data-scroll="" href="#entry__hara_component__">^</a></b></h4><p><i>checks if object is a component system</i></p></div><div class="entry-option"><h6><a href="https://github.com/zcaudate/hara/blob/master/src/hara/component.clj#L426-L433" target="_blank">v&nbsp;2.1</a>&nbsp;&nbsp;args: <i class="args">[x]</i>&nbsp;&nbsp;&nbsp;</h6><div><input class="source-toggle" id="entry__pre_hara_component__system_QMARK_" type="checkbox" /><label class="source-toggle" for="entry__pre_hara_component__system_QMARK_"></label><pre class="source"><code class="clojure">(defn system?
+              :fs {:path "/app/local/2", :status "started"}})</code></pre></div><div class="entry"><span id="entry__hara_component__system_QMARK_"></span><div class="entry-description"><h4><b>system?&nbsp<a data-scroll="" href="#entry__hara_component__">^</a></b></h4><p><i>checks if object is a component system</i></p></div><div class="entry-option"><h6><a href="https://github.com/zcaudate/hara/blob/master/src/hara/component.clj#L426-L433" target="_blank">v&nbsp;2.1</a></h6><div><input class="source-toggle" id="entry__pre_hara_component__system_QMARK_" type="checkbox" /><label class="source-toggle" for="entry__pre_hara_component__system_QMARK_"></label><pre class="source"><code class="clojure">(defn system?
   [x]
   (instance? ComponentSystem x))</code></pre></div></div><pre><h6><i><a href="https://github.com/zcaudate/hara/blob/master/test/hara/component_test.clj#L121-L124" target="_blank">link</a></i></h6><code class="clojure">(system? (system {} {}))
-=> true</code></pre></div><div class="entry"><span id="entry__hara_component__start"></span><div class="entry-description"><h4><b>start&nbsp<a data-scroll="" href="#entry__hara_component__">^</a></b></h4><p><i>starts a component/array/system</i></p></div><div class="entry-option"><h6><a href="https://github.com/zcaudate/hara/blob/master/src/hara/component.clj#L66-L76" target="_blank">v&nbsp;2.1</a>&nbsp;&nbsp;args: <i class="args">[component]</i>&nbsp;&nbsp;&nbsp;</h6><div><input class="source-toggle" id="entry__pre_hara_component__start" type="checkbox" /><label class="source-toggle" for="entry__pre_hara_component__start"></label><pre class="source"><code class="clojure">(defn start
+=> true</code></pre></div><div class="entry"><span id="entry__hara_component__start"></span><div class="entry-description"><h4><b>start&nbsp<a data-scroll="" href="#entry__hara_component__">^</a></b></h4><p><i>starts a component/array/system</i></p></div><div class="entry-option"><h6><a href="https://github.com/zcaudate/hara/blob/master/src/hara/component.clj#L66-L76" target="_blank">v&nbsp;2.1</a></h6><div><input class="source-toggle" id="entry__pre_hara_component__start" type="checkbox" /><label class="source-toggle" for="entry__pre_hara_component__start"></label><pre class="source"><code class="clojure">(defn start
   [component]
   (let [cp (-start component)]
     (if (instance? clojure.lang.IObj cp)
       (vary-meta cp assoc :started true)
       cp)))</code></pre></div></div><pre><h6><i><a href="https://github.com/zcaudate/hara/blob/master/test/hara/component_test.clj#L52-L55" target="_blank">link</a></i></h6><code class="clojure">(start (Database.))
-=> (just {:status "started"})</code></pre></div><div class="entry"><span id="entry__hara_component__stop"></span><div class="entry-description"><h4><b>stop&nbsp<a data-scroll="" href="#entry__hara_component__">^</a></b></h4><p><i>stops a component/array/system</i></p></div><div class="entry-option"><h6><a href="https://github.com/zcaudate/hara/blob/master/src/hara/component.clj#L78-L88" target="_blank">v&nbsp;2.1</a>&nbsp;&nbsp;args: <i class="args">[component]</i>&nbsp;&nbsp;&nbsp;</h6><div><input class="source-toggle" id="entry__pre_hara_component__stop" type="checkbox" /><label class="source-toggle" for="entry__pre_hara_component__stop"></label><pre class="source"><code class="clojure">(defn stop
+=> (just {:status "started"})</code></pre></div><div class="entry"><span id="entry__hara_component__stop"></span><div class="entry-description"><h4><b>stop&nbsp<a data-scroll="" href="#entry__hara_component__">^</a></b></h4><p><i>stops a component/array/system</i></p></div><div class="entry-option"><h6><a href="https://github.com/zcaudate/hara/blob/master/src/hara/component.clj#L78-L88" target="_blank">v&nbsp;2.1</a></h6><div><input class="source-toggle" id="entry__pre_hara_component__stop" type="checkbox" /><label class="source-toggle" for="entry__pre_hara_component__stop"></label><pre class="source"><code class="clojure">(defn stop
   [component]
   (let [cp (-stop component)]
     (if (instance? clojure.lang.IObj cp)

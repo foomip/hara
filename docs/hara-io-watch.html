@@ -127,6 +127,11 @@
   font-size: 15px;
 }
 
+pre, code {
+  white-space: pre;
+  overflow-x: scroll;
+}
+
 h2 {
   margin-top: 2.5rem;
   font-size: 1.5rem;
@@ -248,6 +253,16 @@ pre{
 {
   font-size: x-large;
 }
+}
+
+@media (max-width: 30rem) {
+  pre, code {
+    font-size: x-small;
+  } 
+  h6 .args
+  {
+    font-size: x-small;    
+  }
 }
 
 
@@ -445,7 +460,7 @@ Original highlight.js style (c) Ivan Sagalaev <maniac@softwaremaniacs.org>
           <div class="heading">
             <div>
               <h5>Author: Chris Zheng&nbsp;&nbsp;<a href="mailto:z@caudate.me">(z@caudate.me)</a></h5>
-              <h5>Date: 03 October 2016</h5>
+              <h5>Date: 04 October 2016</h5>
               <h5>Repository: <a href="https://github.com/zcaudate/hara">https://github.com/zcaudate/hara</a></h5>
               <h5>Version: 2.4.5</h5></div></div>
           <hr/>

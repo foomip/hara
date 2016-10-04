@@ -127,6 +127,11 @@
   font-size: 15px;
 }
 
+pre, code {
+  white-space: pre;
+  overflow-x: scroll;
+}
+
 h2 {
   margin-top: 2.5rem;
   font-size: 1.5rem;
@@ -248,6 +253,16 @@ pre{
 {
   font-size: x-large;
 }
+}
+
+@media (max-width: 30rem) {
+  pre, code {
+    font-size: x-small;
+  } 
+  h6 .args
+  {
+    font-size: x-small;    
+  }
 }
 
 
@@ -445,7 +460,7 @@ Original highlight.js style (c) Ivan Sagalaev <maniac@softwaremaniacs.org>
           <div class="heading">
             <div>
               <h5>Author: Chris Zheng&nbsp;&nbsp;<a href="mailto:z@caudate.me">(z@caudate.me)</a></h5>
-              <h5>Date: 03 October 2016</h5>
+              <h5>Date: 04 October 2016</h5>
               <h5>Repository: <a href="https://github.com/zcaudate/hara">https://github.com/zcaudate/hara</a></h5>
               <h5>Version: 2.4.5</h5></div></div>
           <hr/>
@@ -468,7 +483,7 @@ Original highlight.js style (c) Ivan Sagalaev <maniac@softwaremaniacs.org>
               </nav>
           </div>
           <div><span id="concurrent-latch" name="concurrent-latch"></span><h2><b>1 &nbsp;&nbsp; concurrent.latch</b></h2></div><div><p>Add to <code>project.clj</code> dependencies:</p><pre><code>&#91;im.chit/hara.concurrent.latch &quot;2.4.5&quot;&#93;</code></pre><p><strong>hara.concurrent.latch</strong> supplies a simple primary/follower latch mechanism for atoms and ref such that if the primary is updated, then the followers will update as well</p></div><div class="api"><span id="entry__hara_concurrent_latch__"></span><hr /><div><ul><li><a data-scroll="" href="#entry__hara_concurrent_latch__latch">latch</a></li><li><a data-scroll="" href="#entry__hara_concurrent_latch__unlatch">unlatch</a></li></ul><hr style="margin-bottom: 0" /><div><div class="entry"><span id="entry__hara_concurrent_latch__latch"></span><div class="entry-description"><h4><b>latch&nbsp<a data-scroll="" href="#entry__hara_concurrent_latch__">^</a></b></h4><p><i>followes two irefs together so that when `primary`
-  changes, the `follower` will also be updated.</i></p></div><div class="entry-option"><h6><a href="https://github.com/zcaudate/hara/blob/master/src/hara/concurrent/latch.clj#L12-L31" target="_blank">v&nbsp;2.1</a>&nbsp;&nbsp;args: <i class="args">[primary follower] [primary follower f] [primary follower f opts]</i>&nbsp;&nbsp;&nbsp;</h6><div><input class="source-toggle" id="entry__pre_hara_concurrent_latch__latch" type="checkbox" /><label class="source-toggle" for="entry__pre_hara_concurrent_latch__latch"></label><pre class="source"><code class="clojure">(defn latch
+  changes, the `follower` will also be updated.</i></p></div><div class="entry-option"><h6><a href="https://github.com/zcaudate/hara/blob/master/src/hara/concurrent/latch.clj#L12-L31" target="_blank">v&nbsp;2.1</a></h6><div><input class="source-toggle" id="entry__pre_hara_concurrent_latch__latch" type="checkbox" /><label class="source-toggle" for="entry__pre_hara_concurrent_latch__latch"></label><pre class="source"><code class="clojure">(defn latch
   ([primary follower] (latch primary follower identity))
   ([primary follower f] (latch primary follower f nil))
   ([primary follower f opts]
@@ -482,7 +497,7 @@ Original highlight.js style (c) Ivan Sagalaev <maniac@softwaremaniacs.org>
 (swap! primary inc)
 
 @primary => 2
-@follower => 20</code></pre></div><div class="entry"><span id="entry__hara_concurrent_latch__unlatch"></span><div class="entry-description"><h4><b>unlatch&nbsp<a data-scroll="" href="#entry__hara_concurrent_latch__">^</a></b></h4><p><i>removes the latch so that updates will not be propagated</i></p></div><div class="entry-option"><h6><a href="https://github.com/zcaudate/hara/blob/master/src/hara/concurrent/latch.clj#L33-L50" target="_blank">v&nbsp;2.1</a>&nbsp;&nbsp;args: <i class="args">[primary follower]</i>&nbsp;&nbsp;&nbsp;</h6><div><input class="source-toggle" id="entry__pre_hara_concurrent_latch__unlatch" type="checkbox" /><label class="source-toggle" for="entry__pre_hara_concurrent_latch__unlatch"></label><pre class="source"><code class="clojure">(defn unlatch
+@follower => 20</code></pre></div><div class="entry"><span id="entry__hara_concurrent_latch__unlatch"></span><div class="entry-description"><h4><b>unlatch&nbsp<a data-scroll="" href="#entry__hara_concurrent_latch__">^</a></b></h4><p><i>removes the latch so that updates will not be propagated</i></p></div><div class="entry-option"><h6><a href="https://github.com/zcaudate/hara/blob/master/src/hara/concurrent/latch.clj#L33-L50" target="_blank">v&nbsp;2.1</a></h6><div><input class="source-toggle" id="entry__pre_hara_concurrent_latch__unlatch" type="checkbox" /><label class="source-toggle" for="entry__pre_hara_concurrent_latch__unlatch"></label><pre class="source"><code class="clojure">(defn unlatch
   [primary follower]
   (watch/remove primary (keyword (hash-label primary follower))))</code></pre></div></div><pre><h6><i><a href="https://github.com/zcaudate/hara/blob/master/test/hara/concurrent/latch_test.clj#L19-L32" target="_blank">link</a></i></h6><code class="clojure">(def primary (atom 1))
 (def follower (atom nil))
@@ -497,14 +512,14 @@ Original highlight.js style (c) Ivan Sagalaev <maniac@softwaremaniacs.org>
 @primary => 3
 @follower => 2</code></pre></div></div></div></div><div><span id="concurrent-notification" name="concurrent-notification"></span><h2><b>2 &nbsp;&nbsp; concurrent.notification</b></h2></div><div><p>Add to <code>project.clj</code> dependencies:</p><pre><code>&#91;im.chit/hara.concurrent.notification &quot;2.4.5&quot;&#93;</code></pre><p><strong>hara.concurrent.notification</strong> introduces a way to be notified of changes, based on this <a href='http://stackoverflow.com/questions/13717161/are-there-any-good-libraries-or-strategies-for-testing-multithreaded-application'>post</a></p></div><div class="api"><span id="entry__hara_concurrent_notification__"></span><hr /><div><ul><li><a data-scroll="" href="#entry__hara_concurrent_notification__alter_on">alter-on</a></li><li><a data-scroll="" href="#entry__hara_concurrent_notification__dispatch">dispatch</a></li><li><a data-scroll="" href="#entry__hara_concurrent_notification__notify">notify</a></li><li><a data-scroll="" href="#entry__hara_concurrent_notification__wait_on">wait-on</a></li></ul><hr style="margin-bottom: 0" /><div><div class="entry"><span id="entry__hara_concurrent_notification__alter_on"></span><div class="entry-description"><h4><b>alter-on&nbsp<a data-scroll="" href="#entry__hara_concurrent_notification__">^</a></b></h4><p><i>a redundant function. Used for testing purposes. The same as
    `(alter! ref f & args)` but the function is wired with the
-   notification scheme.</i></p></div><div class="entry-option"><h6><a href="https://github.com/zcaudate/hara/blob/master/src/hara/concurrent/notification.clj#L56-L68" target="_blank">v&nbsp;2.1</a>&nbsp;&nbsp;args: <i class="args">[obj f] [obj opts? f & args]</i>&nbsp;&nbsp;&nbsp;</h6><div><input class="source-toggle" id="entry__pre_hara_concurrent_notification__alter_on" type="checkbox" /><label class="source-toggle" for="entry__pre_hara_concurrent_notification__alter_on"></label><pre class="source"><code class="clojure">(defn alter-on
+   notification scheme.</i></p></div><div class="entry-option"><h6><a href="https://github.com/zcaudate/hara/blob/master/src/hara/concurrent/notification.clj#L56-L68" target="_blank">v&nbsp;2.1</a></h6><div><input class="source-toggle" id="entry__pre_hara_concurrent_notification__alter_on" type="checkbox" /><label class="source-toggle" for="entry__pre_hara_concurrent_notification__alter_on"></label><pre class="source"><code class="clojure">(defn alter-on
   ([obj f]
      (wait-on #(dispatch % f) obj))
   ([obj opts? f & args]
      (wait-on #(apply dispatch % opts? f args) obj)))</code></pre></div></div><pre><h6><i><a href="https://github.com/zcaudate/hara/blob/master/test/hara/concurrent/notification_test.clj#L36-L42" target="_blank">link</a></i></h6><code class="clojure">(def atm (atom 0))
 (alter-on atm #(do (Thread/sleep 300)
                    (inc %)))
-@atm => 1</code></pre></div><div class="entry"><span id="entry__hara_concurrent_notification__dispatch"></span><div class="entry-description"><h4><b>dispatch&nbsp<a data-scroll="" href="#entry__hara_concurrent_notification__">^</a></b></h4><p><i>updates the value contained within a ref or atom using another thread.</i></p></div><div class="entry-option"><h6><a href="https://github.com/zcaudate/hara/blob/master/src/hara/concurrent/notification.clj#L6-L17" target="_blank">v&nbsp;2.1</a>&nbsp;&nbsp;args: <i class="args">[obj f] [obj opts? f & args]</i>&nbsp;&nbsp;&nbsp;</h6><div><input class="source-toggle" id="entry__pre_hara_concurrent_notification__dispatch" type="checkbox" /><label class="source-toggle" for="entry__pre_hara_concurrent_notification__dispatch"></label><pre class="source"><code class="clojure">(defn dispatch
+@atm => 1</code></pre></div><div class="entry"><span id="entry__hara_concurrent_notification__dispatch"></span><div class="entry-description"><h4><b>dispatch&nbsp<a data-scroll="" href="#entry__hara_concurrent_notification__">^</a></b></h4><p><i>updates the value contained within a ref or atom using another thread.</i></p></div><div class="entry-option"><h6><a href="https://github.com/zcaudate/hara/blob/master/src/hara/concurrent/notification.clj#L6-L17" target="_blank">v&nbsp;2.1</a></h6><div><input class="source-toggle" id="entry__pre_hara_concurrent_notification__dispatch" type="checkbox" /><label class="source-toggle" for="entry__pre_hara_concurrent_notification__dispatch"></label><pre class="source"><code class="clojure">(defn dispatch
   ([obj f]
     (future (state/update obj f)))
  ([obj opts? f & args]
@@ -513,7 +528,7 @@ Original highlight.js style (c) Ivan Sagalaev <maniac@softwaremaniacs.org>
               (Thread/sleep 200)
               (inc x)))
 => 1</code></pre></div><div class="entry"><span id="entry__hara_concurrent_notification__notify"></span><div class="entry-description"><h4><b>notify&nbsp<a data-scroll="" href="#entry__hara_concurrent_notification__">^</a></b></h4><p><i>creates a watch mechanism so that when a long running function
-  finishes, it returns a promise that delivers the updated iref.</i></p></div><div class="entry-option"><h6><a href="https://github.com/zcaudate/hara/blob/master/src/hara/concurrent/notification.clj#L19-L39" target="_blank">v&nbsp;2.1</a>&nbsp;&nbsp;args: <i class="args">[mtf rf] [mtf rf opts]</i>&nbsp;&nbsp;&nbsp;</h6><div><input class="source-toggle" id="entry__pre_hara_concurrent_notification__notify" type="checkbox" /><label class="source-toggle" for="entry__pre_hara_concurrent_notification__notify"></label><pre class="source"><code class="clojure">(defn notify
+  finishes, it returns a promise that delivers the updated iref.</i></p></div><div class="entry-option"><h6><a href="https://github.com/zcaudate/hara/blob/master/src/hara/concurrent/notification.clj#L19-L39" target="_blank">v&nbsp;2.1</a></h6><div><input class="source-toggle" id="entry__pre_hara_concurrent_notification__notify" type="checkbox" /><label class="source-toggle" for="entry__pre_hara_concurrent_notification__notify"></label><pre class="source"><code class="clojure">(defn notify
   ([mtf rf] (notify mtf rf nil))
   ([mtf rf opts]
      (let [p  (promise)
@@ -530,7 +545,7 @@ Original highlight.js style (c) Ivan Sagalaev <maniac@softwaremaniacs.org>
  res   => promise?
  @res  => iref?
  @@res => 2</code></pre></div><div class="entry"><span id="entry__hara_concurrent_notification__wait_on"></span><div class="entry-description"><h4><b>wait-on&nbsp<a data-scroll="" href="#entry__hara_concurrent_notification__">^</a></b></h4><p><i>waits for a long running multithreaded function to update the
-  ref. Used for testing purposes</i></p></div><div class="entry-option"><h6><a href="https://github.com/zcaudate/hara/blob/master/src/hara/concurrent/notification.clj#L41-L54" target="_blank">v&nbsp;2.1</a>&nbsp;&nbsp;args: <i class="args">[mtf rf] [mtf rf opts ms ret]</i>&nbsp;&nbsp;&nbsp;</h6><div><input class="source-toggle" id="entry__pre_hara_concurrent_notification__wait_on" type="checkbox" /><label class="source-toggle" for="entry__pre_hara_concurrent_notification__wait_on"></label><pre class="source"><code class="clojure">(defn wait-on
+  ref. Used for testing purposes</i></p></div><div class="entry-option"><h6><a href="https://github.com/zcaudate/hara/blob/master/src/hara/concurrent/notification.clj#L41-L54" target="_blank">v&nbsp;2.1</a></h6><div><input class="source-toggle" id="entry__pre_hara_concurrent_notification__wait_on" type="checkbox" /><label class="source-toggle" for="entry__pre_hara_concurrent_notification__wait_on"></label><pre class="source"><code class="clojure">(defn wait-on
   ([mtf rf]
      (deref (notify mtf rf)))
   ([mtf rf opts ms ret]
@@ -538,7 +553,7 @@ Original highlight.js style (c) Ivan Sagalaev <maniac@softwaremaniacs.org>
 (def f (fn [obj] (dispatch obj #(do (Thread/sleep 300)
                                     (inc %)))))
 (wait-on f atm)
-@atm => 1</code></pre></div></div></div></div><div><span id="concurrent-pipe" name="concurrent-pipe"></span><h2><b>3 &nbsp;&nbsp; concurrent.pipe</b></h2></div><div><p>Add to <code>project.clj</code> dependencies:</p><pre><code>&#91;im.chit/hara.concurrent.pipe &quot;2.4.5&quot;&#93;</code></pre><p><strong>hara.concurrent.pipe</strong> provides a simple asynchronous pipe that can be sent tasks that are queued until previous tasks are complete</p></div><div class="api"><span id="entry__hara_concurrent_pipe__"></span><hr /><div><ul><li><a data-scroll="" href="#entry__hara_concurrent_pipe__pipe">pipe</a></li><li><a data-scroll="" href="#entry__hara_concurrent_pipe__send">send</a></li></ul><hr style="margin-bottom: 0" /><div><div class="entry"><span id="entry__hara_concurrent_pipe__pipe"></span><div class="entry-description"><h4><b>pipe&nbsp<a data-scroll="" href="#entry__hara_concurrent_pipe__">^</a></b></h4><p><i>creates a pipe so that tasks can be acted upon asynchronously in order in which they were sent</i></p></div><div class="entry-option"><h6><a href="https://github.com/zcaudate/hara/blob/master/src/hara/concurrent/pipe.clj#L28-L40" target="_blank">v&nbsp;2.2</a>&nbsp;&nbsp;args: <i class="args">[handler]</i>&nbsp;&nbsp;&nbsp;</h6><div><input class="source-toggle" id="entry__pre_hara_concurrent_pipe__pipe" type="checkbox" /><label class="source-toggle" for="entry__pre_hara_concurrent_pipe__pipe"></label><pre class="source"><code class="clojure">(defn pipe
+@atm => 1</code></pre></div></div></div></div><div><span id="concurrent-pipe" name="concurrent-pipe"></span><h2><b>3 &nbsp;&nbsp; concurrent.pipe</b></h2></div><div><p>Add to <code>project.clj</code> dependencies:</p><pre><code>&#91;im.chit/hara.concurrent.pipe &quot;2.4.5&quot;&#93;</code></pre><p><strong>hara.concurrent.pipe</strong> provides a simple asynchronous pipe that can be sent tasks that are queued until previous tasks are complete</p></div><div class="api"><span id="entry__hara_concurrent_pipe__"></span><hr /><div><ul><li><a data-scroll="" href="#entry__hara_concurrent_pipe__pipe">pipe</a></li><li><a data-scroll="" href="#entry__hara_concurrent_pipe__send">send</a></li></ul><hr style="margin-bottom: 0" /><div><div class="entry"><span id="entry__hara_concurrent_pipe__pipe"></span><div class="entry-description"><h4><b>pipe&nbsp<a data-scroll="" href="#entry__hara_concurrent_pipe__">^</a></b></h4><p><i>creates a pipe so that tasks can be acted upon asynchronously in order in which they were sent</i></p></div><div class="entry-option"><h6><a href="https://github.com/zcaudate/hara/blob/master/src/hara/concurrent/pipe.clj#L28-L40" target="_blank">v&nbsp;2.2</a></h6><div><input class="source-toggle" id="entry__pre_hara_concurrent_pipe__pipe" type="checkbox" /><label class="source-toggle" for="entry__pre_hara_concurrent_pipe__pipe"></label><pre class="source"><code class="clojure">(defn pipe
   [handler]
   (let [queue  (atom (common/queue))
         thread (atom nil)
@@ -546,7 +561,7 @@ Original highlight.js style (c) Ivan Sagalaev <maniac@softwaremaniacs.org>
     (map->Pipe {:handler handler
                 :queue   queue
                 :thread  thread})))</code></pre></div></div><pre><h6><i><a href="https://github.com/zcaudate/hara/blob/master/test/hara/concurrent/pipe_test.clj#L21-L24" target="_blank">link</a></i></h6><code class="clojure">(pipe (fn [msg] (println msg)))
-=> #(instance? hara.concurrent.pipe.Pipe %)</code></pre></div><div class="entry"><span id="entry__hara_concurrent_pipe__send"></span><div class="entry-description"><h4><b>send&nbsp<a data-scroll="" href="#entry__hara_concurrent_pipe__">^</a></b></h4><p><i>sends a task to the pipe for it's handler to act upon</i></p></div><div class="entry-option"><h6><a href="https://github.com/zcaudate/hara/blob/master/src/hara/concurrent/pipe.clj#L42-L58" target="_blank">v&nbsp;2.2</a>&nbsp;&nbsp;args: <i class="args">[pipe task]</i>&nbsp;&nbsp;&nbsp;</h6><div><input class="source-toggle" id="entry__pre_hara_concurrent_pipe__send" type="checkbox" /><label class="source-toggle" for="entry__pre_hara_concurrent_pipe__send"></label><pre class="source"><code class="clojure">(defn send
+=> #(instance? hara.concurrent.pipe.Pipe %)</code></pre></div><div class="entry"><span id="entry__hara_concurrent_pipe__send"></span><div class="entry-description"><h4><b>send&nbsp<a data-scroll="" href="#entry__hara_concurrent_pipe__">^</a></b></h4><p><i>sends a task to the pipe for it's handler to act upon</i></p></div><div class="entry-option"><h6><a href="https://github.com/zcaudate/hara/blob/master/src/hara/concurrent/pipe.clj#L42-L58" target="_blank">v&nbsp;2.2</a></h6><div><input class="source-toggle" id="entry__pre_hara_concurrent_pipe__send" type="checkbox" /><label class="source-toggle" for="entry__pre_hara_concurrent_pipe__send"></label><pre class="source"><code class="clojure">(defn send
   [pipe task]
   (swap! (:queue pipe) conj task))</code></pre></div></div><pre><h6><i><a href="https://github.com/zcaudate/hara/blob/master/test/hara/concurrent/pipe_test.clj#L6-L18" target="_blank">link</a></i></h6><code class="clojure">(def atm (atom []))
 
@@ -558,7 +573,7 @@ Original highlight.js style (c) Ivan Sagalaev <maniac@softwaremaniacs.org>
     (pipe/send p 3)
     (Thread/sleep 100)
     @atm)
-=> [1 2 3]</code></pre></div></div></div></div><div><span id="concurrent-propagate" name="concurrent-propagate"></span><h2><b>4 &nbsp;&nbsp; concurrent.propagate</b></h2></div><div><p>Add to <code>project.clj</code> dependencies:</p><pre><code>&#91;im.chit/hara.concurrent.propagate &quot;2.4.5&quot;&#93;</code></pre><p><strong>hara.concurrent.propagate</strong> is an implemention around the concept of <a href='http://web.mit.edu/~axch/www/art.pdf'>propagators</a>, introduced by <a href='https://vimeo.com/12184930'>Sussman</a></p></div><div class="api"><span id="entry__hara_concurrent_propagate__"></span><hr /><div><ul><li><a data-scroll="" href="#entry__hara_concurrent_propagate__cell">cell</a></li><li><a data-scroll="" href="#entry__hara_concurrent_propagate__link">link</a></li><li><a data-scroll="" href="#entry__hara_concurrent_propagate__unlink">unlink</a></li></ul><hr style="margin-bottom: 0" /><div><div class="entry"><span id="entry__hara_concurrent_propagate__cell"></span><div class="entry-description"><h4><b>cell&nbsp<a data-scroll="" href="#entry__hara_concurrent_propagate__">^</a></b></h4><p><i>creates a propogation cell</i></p></div><div class="entry-option"><h6><a href="https://github.com/zcaudate/hara/blob/master/src/hara/concurrent/propagate.clj#L147-L164" target="_blank">v&nbsp;2.1</a>&nbsp;&nbsp;args: <i class="args">[] [content] [content opts]</i>&nbsp;&nbsp;&nbsp;</h6><div><input class="source-toggle" id="entry__pre_hara_concurrent_propagate__cell" type="checkbox" /><label class="source-toggle" for="entry__pre_hara_concurrent_propagate__cell"></label><pre class="source"><code class="clojure">(defn cell
+=> [1 2 3]</code></pre></div></div></div></div><div><span id="concurrent-propagate" name="concurrent-propagate"></span><h2><b>4 &nbsp;&nbsp; concurrent.propagate</b></h2></div><div><p>Add to <code>project.clj</code> dependencies:</p><pre><code>&#91;im.chit/hara.concurrent.propagate &quot;2.4.5&quot;&#93;</code></pre><p><strong>hara.concurrent.propagate</strong> is an implemention around the concept of <a href='http://web.mit.edu/~axch/www/art.pdf'>propagators</a>, introduced by <a href='https://vimeo.com/12184930'>Sussman</a></p></div><div class="api"><span id="entry__hara_concurrent_propagate__"></span><hr /><div><ul><li><a data-scroll="" href="#entry__hara_concurrent_propagate__cell">cell</a></li><li><a data-scroll="" href="#entry__hara_concurrent_propagate__link">link</a></li><li><a data-scroll="" href="#entry__hara_concurrent_propagate__unlink">unlink</a></li></ul><hr style="margin-bottom: 0" /><div><div class="entry"><span id="entry__hara_concurrent_propagate__cell"></span><div class="entry-description"><h4><b>cell&nbsp<a data-scroll="" href="#entry__hara_concurrent_propagate__">^</a></b></h4><p><i>creates a propogation cell</i></p></div><div class="entry-option"><h6><a href="https://github.com/zcaudate/hara/blob/master/src/hara/concurrent/propagate.clj#L147-L164" target="_blank">v&nbsp;2.1</a></h6><div><input class="source-toggle" id="entry__pre_hara_concurrent_propagate__cell" type="checkbox" /><label class="source-toggle" for="entry__pre_hara_concurrent_propagate__cell"></label><pre class="source"><code class="clojure">(defn cell
   ([] (cell nothing))
   ([content] (cell content {}) )
   ([content opts]
@@ -571,7 +586,7 @@ Original highlight.js style (c) Ivan Sagalaev <maniac@softwaremaniacs.org>
 @cell-b => "Hello"
 
 (cell-b "World")    ;; invoking sets the state of the cell
-@cell-b => "World"</code></pre></div><div class="entry"><span id="entry__hara_concurrent_propagate__link"></span><div class="entry-description"><h4><b>link&nbsp<a data-scroll="" href="#entry__hara_concurrent_propagate__">^</a></b></h4><p><i>creates a propogation link between a set of input cells and an output cell</i></p></div><div class="entry-option"><h6><a href="https://github.com/zcaudate/hara/blob/master/src/hara/concurrent/propagate.clj#L174-L207" target="_blank">v&nbsp;2.1</a>&nbsp;&nbsp;args: <i class="args">[sources sink] [sources sink tf] [sources sink tf {:keys [label tdamp concurrent], :as options}]</i>&nbsp;&nbsp;&nbsp;</h6><div><input class="source-toggle" id="entry__pre_hara_concurrent_propagate__link" type="checkbox" /><label class="source-toggle" for="entry__pre_hara_concurrent_propagate__link"></label><pre class="source"><code class="clojure">(defn link
+@cell-b => "World"</code></pre></div><div class="entry"><span id="entry__hara_concurrent_propagate__link"></span><div class="entry-description"><h4><b>link&nbsp<a data-scroll="" href="#entry__hara_concurrent_propagate__">^</a></b></h4><p><i>creates a propogation link between a set of input cells and an output cell</i></p></div><div class="entry-option"><h6><a href="https://github.com/zcaudate/hara/blob/master/src/hara/concurrent/propagate.clj#L174-L207" target="_blank">v&nbsp;2.1</a></h6><div><input class="source-toggle" id="entry__pre_hara_concurrent_propagate__link" type="checkbox" /><label class="source-toggle" for="entry__pre_hara_concurrent_propagate__link"></label><pre class="source"><code class="clojure">(defn link
   ([sources sink] (link sources sink straight-through))
   ([sources sink tf] (link sources sink tf {}))
   ([sources sink tf {:keys [label tdamp concurrent] :as options}]
@@ -600,7 +615,7 @@ Original highlight.js style (c) Ivan Sagalaev <maniac@softwaremaniacs.org>
 
 (in-c 1000)
 @inter => 110
-@out => 1110</code></pre></div><div class="entry"><span id="entry__hara_concurrent_propagate__unlink"></span><div class="entry-description"><h4><b>unlink&nbsp<a data-scroll="" href="#entry__hara_concurrent_propagate__">^</a></b></h4><p><i>removes the propagation link between a set of cells</i></p></div><div class="entry-option"><h6><a href="https://github.com/zcaudate/hara/blob/master/src/hara/concurrent/propagate.clj#L209-L229" target="_blank">v&nbsp;2.1</a>&nbsp;&nbsp;args: <i class="args">[pg]</i>&nbsp;&nbsp;&nbsp;</h6><div><input class="source-toggle" id="entry__pre_hara_concurrent_propagate__unlink" type="checkbox" /><label class="source-toggle" for="entry__pre_hara_concurrent_propagate__unlink"></label><pre class="source"><code class="clojure">(defn unlink
+@out => 1110</code></pre></div><div class="entry"><span id="entry__hara_concurrent_propagate__unlink"></span><div class="entry-description"><h4><b>unlink&nbsp<a data-scroll="" href="#entry__hara_concurrent_propagate__">^</a></b></h4><p><i>removes the propagation link between a set of cells</i></p></div><div class="entry-option"><h6><a href="https://github.com/zcaudate/hara/blob/master/src/hara/concurrent/propagate.clj#L209-L229" target="_blank">v&nbsp;2.1</a></h6><div><input class="source-toggle" id="entry__pre_hara_concurrent_propagate__unlink" type="checkbox" /><label class="source-toggle" for="entry__pre_hara_concurrent_propagate__unlink"></label><pre class="source"><code class="clojure">(defn unlink
   [pg]
   (let [sources (:in-cells pg)]
     (doseq [s sources]

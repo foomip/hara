@@ -8,7 +8,7 @@
   <!-- Enable responsiveness on mobile devices-->
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
   <link rel="shortcut icon" href="favicon.ico">
-  <title>hara.namespace - utilities for manipulation of namespaces</title>
+  <title>hara.namespace - utilities for namespace manipulation</title>
   <script src="js/highlight.min.js"></script>
   <script src="js/gumshoe.min.js"></script>
   <script src="js/smooth-scroll.min.js"></script>
@@ -125,6 +125,11 @@
  
   html {
   font-size: 15px;
+}
+
+pre, code {
+  white-space: pre;
+  overflow-x: scroll;
 }
 
 h2 {
@@ -248,6 +253,16 @@ pre{
 {
   font-size: x-large;
 }
+}
+
+@media (max-width: 30rem) {
+  pre, code {
+    font-size: x-small;
+  } 
+  h6 .args
+  {
+    font-size: x-small;    
+  }
 }
 
 
@@ -435,7 +450,7 @@ Original highlight.js style (c) Ivan Sagalaev <maniac@softwaremaniacs.org>
         <div class="container">
           <h3 class="masthead-title">
             <span>hara.namespace</span>
-            <small>utilities for manipulation of namespaces</small>
+            <small>utilities for namespace manipulation</small>
           </h3>
         </div>
       </div>
@@ -445,7 +460,7 @@ Original highlight.js style (c) Ivan Sagalaev <maniac@softwaremaniacs.org>
           <div class="heading">
             <div>
               <h5>Author: Chris Zheng&nbsp;&nbsp;<a href="mailto:z@caudate.me">(z@caudate.me)</a></h5>
-              <h5>Date: 03 October 2016</h5>
+              <h5>Date: 04 October 2016</h5>
               <h5>Repository: <a href="https://github.com/zcaudate/hara">https://github.com/zcaudate/hara</a></h5>
               <h5>Version: 2.4.5</h5></div></div>
           <hr/>
@@ -467,14 +482,14 @@ Original highlight.js style (c) Ivan Sagalaev <maniac@softwaremaniacs.org>
                 </ul>
               </nav>
           </div>
-          <div><span id="introduction" name="introduction"></span><h2><b>1 &nbsp;&nbsp; Introduction</b></h2></div><div><p><code>hara.namespace</code> contain namespace functions and utilities</p></div><div><span id="namespace-eval" name="namespace-eval"></span><h2><b>2 &nbsp;&nbsp; namespace.eval</b></h2></div><div><p>Add to <code>project.clj</code> dependencies:</p><pre><code>&#91;im.chit/hara.namespace.eval &quot;2.4.5&quot;&#93;</code></pre><p><strong>hara.namespace.eval</strong> allows for evaluation within a given namespace</p></div><div class="api"><span id="entry__hara_namespace_eval__"></span><hr /><div><ul><li><a data-scroll="" href="#entry__hara_namespace_eval__eval_ns">eval-ns</a></li><li><a data-scroll="" href="#entry__hara_namespace_eval__eval_temp_ns">eval-temp-ns</a></li><li><a data-scroll="" href="#entry__hara_namespace_eval__with_ns">with-ns</a></li><li><a data-scroll="" href="#entry__hara_namespace_eval__with_temp_ns">with-temp-ns</a></li></ul><hr style="margin-bottom: 0" /><div><div class="entry"><span id="entry__hara_namespace_eval__eval_ns"></span><div class="entry-description"><h4><b>eval-ns&nbsp<a data-scroll="" href="#entry__hara_namespace_eval__">^</a></b></h4><p><i>evaluates a list of forms in an existing namespace</i></p></div><div class="entry-option"><h6><a href="https://github.com/zcaudate/hara/blob/master/src/hara/namespace/eval.clj#L4-L14" target="_blank">v&nbsp;2.2</a>&nbsp;&nbsp;args: <i class="args">[ns forms]</i>&nbsp;&nbsp;&nbsp;</h6><div><input class="source-toggle" id="entry__pre_hara_namespace_eval__eval_ns" type="checkbox" /><label class="source-toggle" for="entry__pre_hara_namespace_eval__eval_ns"></label><pre class="source"><code class="clojure">(defn eval-ns
+          <div><span id="introduction" name="introduction"></span><h2><b>1 &nbsp;&nbsp; Introduction</b></h2></div><div><p><code>hara.namespace</code> contain namespace functions and utilities</p></div><div><span id="namespace-eval" name="namespace-eval"></span><h2><b>2 &nbsp;&nbsp; namespace.eval</b></h2></div><div><p>Add to <code>project.clj</code> dependencies:</p><pre><code>&#91;im.chit/hara.namespace.eval &quot;2.4.5&quot;&#93;</code></pre><p><strong>hara.namespace.eval</strong> allows for evaluation within a given namespace</p></div><div class="api"><span id="entry__hara_namespace_eval__"></span><hr /><div><ul><li><a data-scroll="" href="#entry__hara_namespace_eval__eval_ns">eval-ns</a></li><li><a data-scroll="" href="#entry__hara_namespace_eval__eval_temp_ns">eval-temp-ns</a></li><li><a data-scroll="" href="#entry__hara_namespace_eval__with_ns">with-ns</a></li><li><a data-scroll="" href="#entry__hara_namespace_eval__with_temp_ns">with-temp-ns</a></li></ul><hr style="margin-bottom: 0" /><div><div class="entry"><span id="entry__hara_namespace_eval__eval_ns"></span><div class="entry-description"><h4><b>eval-ns&nbsp<a data-scroll="" href="#entry__hara_namespace_eval__">^</a></b></h4><p><i>evaluates a list of forms in an existing namespace</i></p></div><div class="entry-option"><h6><a href="https://github.com/zcaudate/hara/blob/master/src/hara/namespace/eval.clj#L4-L14" target="_blank">v&nbsp;2.2</a></h6><div><input class="source-toggle" id="entry__pre_hara_namespace_eval__eval_ns" type="checkbox" /><label class="source-toggle" for="entry__pre_hara_namespace_eval__eval_ns"></label><pre class="source"><code class="clojure">(defn eval-ns
   [ns forms]
   (binding [*ns* (the-ns ns)]
     (->> forms
          (mapv (fn [form] (eval form)))
          last)))</code></pre></div></div><pre><h6><i><a href="https://github.com/zcaudate/hara/blob/master/test/hara/namespace/eval_test.clj#L6-L9" target="_blank">link</a></i></h6><code class="clojure">(eval-ns 'hara.common.checks
               '[(long? 1)])
-=> true</code></pre></div><div class="entry"><span id="entry__hara_namespace_eval__eval_temp_ns"></span><div class="entry-description"><h4><b>eval-temp-ns&nbsp<a data-scroll="" href="#entry__hara_namespace_eval__">^</a></b></h4><p><i>evaluates a list of forms in a temporary namespace</i></p></div><div class="entry-option"><h6><a href="https://github.com/zcaudate/hara/blob/master/src/hara/namespace/eval.clj#L27-L44" target="_blank">v&nbsp;2.2</a>&nbsp;&nbsp;args: <i class="args">[forms]</i>&nbsp;&nbsp;&nbsp;</h6><div><input class="source-toggle" id="entry__pre_hara_namespace_eval__eval_temp_ns" type="checkbox" /><label class="source-toggle" for="entry__pre_hara_namespace_eval__eval_temp_ns"></label><pre class="source"><code class="clojure">(defn eval-temp-ns
+=> true</code></pre></div><div class="entry"><span id="entry__hara_namespace_eval__eval_temp_ns"></span><div class="entry-description"><h4><b>eval-temp-ns&nbsp<a data-scroll="" href="#entry__hara_namespace_eval__">^</a></b></h4><p><i>evaluates a list of forms in a temporary namespace</i></p></div><div class="entry-option"><h6><a href="https://github.com/zcaudate/hara/blob/master/src/hara/namespace/eval.clj#L27-L44" target="_blank">v&nbsp;2.2</a></h6><div><input class="source-toggle" id="entry__pre_hara_namespace_eval__eval_temp_ns" type="checkbox" /><label class="source-toggle" for="entry__pre_hara_namespace_eval__eval_temp_ns"></label><pre class="source"><code class="clojure">(defn eval-temp-ns
   [forms]
   (let [sym (gensym)]
     (try
@@ -488,12 +503,12 @@ Original highlight.js style (c) Ivan Sagalaev <maniac@softwaremaniacs.org>
 
 "All created vars will be destroyed after evaluation."
 
-(resolve 'inc1) => nil</code></pre></div><div class="entry"><span id="entry__hara_namespace_eval__with_ns"></span><div class="entry-description"><h4><b>with-ns&nbsp<a data-scroll="" href="#entry__hara_namespace_eval__">^</a></b></h4><p><i>evaluates `body` forms in an existing namespace given by `ns`.</i></p></div><div class="entry-option"><h6><a href="https://github.com/zcaudate/hara/blob/master/src/hara/namespace/eval.clj#L16-L25" target="_blank">v&nbsp;2.0</a>&nbsp;&nbsp;args: <i class="args">[ns & forms]</i>&nbsp;&nbsp;&nbsp;</h6><div><input class="source-toggle" id="entry__pre_hara_namespace_eval__with_ns" type="checkbox" /><label class="source-toggle" for="entry__pre_hara_namespace_eval__with_ns"></label><pre class="source"><code class="clojure">(defmacro with-ns
+(resolve 'inc1) => nil</code></pre></div><div class="entry"><span id="entry__hara_namespace_eval__with_ns"></span><div class="entry-description"><h4><b>with-ns&nbsp<a data-scroll="" href="#entry__hara_namespace_eval__">^</a></b></h4><p><i>evaluates `body` forms in an existing namespace given by `ns`.</i></p></div><div class="entry-option"><h6><a href="https://github.com/zcaudate/hara/blob/master/src/hara/namespace/eval.clj#L16-L25" target="_blank">v&nbsp;2.0</a></h6><div><input class="source-toggle" id="entry__pre_hara_namespace_eval__with_ns" type="checkbox" /><label class="source-toggle" for="entry__pre_hara_namespace_eval__with_ns"></label><pre class="source"><code class="clojure">(defmacro with-ns
   [ns & forms]
   `(binding [*ns* (the-ns ~ns)]
      ~@(map (fn [form] `(eval '~form)) forms)))</code></pre></div></div><pre><h6><i><a href="https://github.com/zcaudate/hara/blob/master/test/hara/namespace/eval_test.clj#L12-L16" target="_blank">link</a></i></h6><code class="clojure">(require '[hara.common.checks])
 (with-ns 'hara.common.checks
-  (long? 1)) => true</code></pre></div><div class="entry"><span id="entry__hara_namespace_eval__with_temp_ns"></span><div class="entry-description"><h4><b>with-temp-ns&nbsp<a data-scroll="" href="#entry__hara_namespace_eval__">^</a></b></h4><p><i>evaluates `body` forms in a temporary namespace.</i></p></div><div class="entry-option"><h6><a href="https://github.com/zcaudate/hara/blob/master/src/hara/namespace/eval.clj#L46-L66" target="_blank">v&nbsp;2.0</a>&nbsp;&nbsp;args: <i class="args">[& forms]</i>&nbsp;&nbsp;&nbsp;</h6><div><input class="source-toggle" id="entry__pre_hara_namespace_eval__with_temp_ns" type="checkbox" /><label class="source-toggle" for="entry__pre_hara_namespace_eval__with_temp_ns"></label><pre class="source"><code class="clojure">(defmacro with-temp-ns
+  (long? 1)) => true</code></pre></div><div class="entry"><span id="entry__hara_namespace_eval__with_temp_ns"></span><div class="entry-description"><h4><b>with-temp-ns&nbsp<a data-scroll="" href="#entry__hara_namespace_eval__">^</a></b></h4><p><i>evaluates `body` forms in a temporary namespace.</i></p></div><div class="entry-option"><h6><a href="https://github.com/zcaudate/hara/blob/master/src/hara/namespace/eval.clj#L46-L66" target="_blank">v&nbsp;2.0</a></h6><div><input class="source-toggle" id="entry__pre_hara_namespace_eval__with_temp_ns" type="checkbox" /><label class="source-toggle" for="entry__pre_hara_namespace_eval__with_temp_ns"></label><pre class="source"><code class="clojure">(defmacro with-temp-ns
   [& forms]
   `(try
      (create-ns 'sym#)
@@ -509,7 +524,7 @@ Original highlight.js style (c) Ivan Sagalaev <maniac@softwaremaniacs.org>
 
 "All created vars will be destroyed after evaluation."
 
-(resolve 'inc1) => nil</code></pre></div></div></div></div><div><span id="namespace-import" name="namespace-import"></span><h2><b>3 &nbsp;&nbsp; namespace.import</b></h2></div><div><p>Add to <code>project.clj</code> dependencies:</p><pre><code>&#91;im.chit/hara.namespace.eval &quot;2.4.5&quot;&#93;</code></pre><p><strong>hara.namespace.import</strong> allows for moving function definitions around</p></div><div class="api"><span id="entry__hara_namespace_import__"></span><hr /><div><ul><li><a data-scroll="" href="#entry__hara_namespace_import__import">import</a></li><li><a data-scroll="" href="#entry__hara_namespace_import__import_namespace">import-namespace</a></li><li><a data-scroll="" href="#entry__hara_namespace_import__import_var">import-var</a></li></ul><hr style="margin-bottom: 0" /><div><div class="entry"><span id="entry__hara_namespace_import__import"></span><div class="entry-description"><h4><b>import&nbsp<a data-scroll="" href="#entry__hara_namespace_import__">^</a></b></h4><p><i>imports all or a selection of vars from one namespace to the current one.</i></p></div><div class="entry-option"><h6><a href="https://github.com/zcaudate/hara/blob/master/src/hara/namespace/import.clj#L37-L57" target="_blank">v&nbsp;2.0</a>&nbsp;&nbsp;args: <i class="args">[nsp vars & more]</i>&nbsp;&nbsp;&nbsp;</h6><div><input class="source-toggle" id="entry__pre_hara_namespace_import__import" type="checkbox" /><label class="source-toggle" for="entry__pre_hara_namespace_import__import"></label><pre class="source"><code class="clojure">(defmacro import
+(resolve 'inc1) => nil</code></pre></div></div></div></div><div><span id="namespace-import" name="namespace-import"></span><h2><b>3 &nbsp;&nbsp; namespace.import</b></h2></div><div><p>Add to <code>project.clj</code> dependencies:</p><pre><code>&#91;im.chit/hara.namespace.eval &quot;2.4.5&quot;&#93;</code></pre><p><strong>hara.namespace.import</strong> allows for moving function definitions around</p></div><div class="api"><span id="entry__hara_namespace_import__"></span><hr /><div><ul><li><a data-scroll="" href="#entry__hara_namespace_import__import">import</a></li><li><a data-scroll="" href="#entry__hara_namespace_import__import_namespace">import-namespace</a></li><li><a data-scroll="" href="#entry__hara_namespace_import__import_var">import-var</a></li></ul><hr style="margin-bottom: 0" /><div><div class="entry"><span id="entry__hara_namespace_import__import"></span><div class="entry-description"><h4><b>import&nbsp<a data-scroll="" href="#entry__hara_namespace_import__">^</a></b></h4><p><i>imports all or a selection of vars from one namespace to the current one.</i></p></div><div class="entry-option"><h6><a href="https://github.com/zcaudate/hara/blob/master/src/hara/namespace/import.clj#L37-L57" target="_blank">v&nbsp;2.0</a></h6><div><input class="source-toggle" id="entry__pre_hara_namespace_import__import" type="checkbox" /><label class="source-toggle" for="entry__pre_hara_namespace_import__import"></label><pre class="source"><code class="clojure">(defmacro import
   [nsp vars & more]
   `(do
      (require (quote ~nsp))
@@ -523,7 +538,7 @@ Original highlight.js style (c) Ivan Sagalaev <maniac@softwaremaniacs.org>
 (eval '(bytes? 1)) => false
 
 (import hara.common.checks :all) => nil
-(eval '(bigint? 1)) => false</code></pre></div><div class="entry"><span id="entry__hara_namespace_import__import_namespace"></span><div class="entry-description"><h4><b>import-namespace&nbsp<a data-scroll="" href="#entry__hara_namespace_import__">^</a></b></h4><p><i>imports all or a selection of vars from one namespace to the current one.</i></p></div><div class="entry-option"><h6><a href="https://github.com/zcaudate/hara/blob/master/src/hara/namespace/import.clj#L19-L35" target="_blank">v&nbsp;2.0</a>&nbsp;&nbsp;args: <i class="args">[ns] [ns vars]</i>&nbsp;&nbsp;&nbsp;</h6><div><input class="source-toggle" id="entry__pre_hara_namespace_import__import_namespace" type="checkbox" /><label class="source-toggle" for="entry__pre_hara_namespace_import__import_namespace"></label><pre class="source"><code class="clojure">(defn import-namespace
+(eval '(bigint? 1)) => false</code></pre></div><div class="entry"><span id="entry__hara_namespace_import__import_namespace"></span><div class="entry-description"><h4><b>import-namespace&nbsp<a data-scroll="" href="#entry__hara_namespace_import__">^</a></b></h4><p><i>imports all or a selection of vars from one namespace to the current one.</i></p></div><div class="entry-option"><h6><a href="https://github.com/zcaudate/hara/blob/master/src/hara/namespace/import.clj#L19-L35" target="_blank">v&nbsp;2.0</a></h6><div><input class="source-toggle" id="entry__pre_hara_namespace_import__import_namespace" type="checkbox" /><label class="source-toggle" for="entry__pre_hara_namespace_import__import_namespace"></label><pre class="source"><code class="clojure">(defn import-namespace
   ([ns] (import-namespace ns nil))
   ([ns vars]
      (let [all-vars (ns-publics ns)
@@ -533,16 +548,16 @@ Original highlight.js style (c) Ivan Sagalaev <maniac@softwaremaniacs.org>
        (doseq [[n v] selected-vars]
          (import-var n v)))))</code></pre></div></div><pre><h6><i><a href="https://github.com/zcaudate/hara/blob/master/test/hara/namespace/import_test.clj#L18-L26" target="_blank">link</a></i></h6><code class="clojure">(import-namespace 'hara.common.checks '[bytes? long?])
 (eval '(long? 1))  => true
-(eval '(bytes? 1)) => false</code></pre></div><div class="entry"><span id="entry__hara_namespace_import__import_var"></span><div class="entry-description"><h4><b>import-var&nbsp<a data-scroll="" href="#entry__hara_namespace_import__">^</a></b></h4><p><i>imports a single var from one namespace to the current one.</i></p></div><div class="entry-option"><h6><a href="https://github.com/zcaudate/hara/blob/master/src/hara/namespace/import.clj#L4-L17" target="_blank">v&nbsp;2.0</a>&nbsp;&nbsp;args: <i class="args">[name var]</i>&nbsp;&nbsp;&nbsp;</h6><div><input class="source-toggle" id="entry__pre_hara_namespace_import__import_var" type="checkbox" /><label class="source-toggle" for="entry__pre_hara_namespace_import__import_var"></label><pre class="source"><code class="clojure">(defn import-var
+(eval '(bytes? 1)) => false</code></pre></div><div class="entry"><span id="entry__hara_namespace_import__import_var"></span><div class="entry-description"><h4><b>import-var&nbsp<a data-scroll="" href="#entry__hara_namespace_import__">^</a></b></h4><p><i>imports a single var from one namespace to the current one.</i></p></div><div class="entry-option"><h6><a href="https://github.com/zcaudate/hara/blob/master/src/hara/namespace/import.clj#L4-L17" target="_blank">v&nbsp;2.0</a></h6><div><input class="source-toggle" id="entry__pre_hara_namespace_import__import_var" type="checkbox" /><label class="source-toggle" for="entry__pre_hara_namespace_import__import_var"></label><pre class="source"><code class="clojure">(defn import-var
   [name ^clojure.lang.Var var]
   (if (.hasRoot var)
     (intern *ns* (with-meta name (merge (meta var)
                                         (meta name)))
             @var)))</code></pre></div></div><pre><h6><i><a href="https://github.com/zcaudate/hara/blob/master/test/hara/namespace/import_test.clj#L8-L15" target="_blank">link</a></i></h6><code class="clojure">(import-var 'ifl #'clojure.core/if-let)
 => anything ; #'hara.namespace.import-test/ifl
-(eval '(ifl [a 1] (inc a))) => 2</code></pre></div></div></div></div><div><span id="namespace-resolve" name="namespace-resolve"></span><h2><b>4 &nbsp;&nbsp; namespace.resolve</b></h2></div><div><p><strong>hara.namespace.resolve</strong> allows for resolving namespaces</p></div><div class="api"><span id="entry__hara_namespace_resolve__"></span><hr /><div><ul><li><a data-scroll="" href="#entry__hara_namespace_resolve__ns_vars">ns-vars</a></li><li><a data-scroll="" href="#entry__hara_namespace_resolve__resolve_ns">resolve-ns</a></li></ul><hr style="margin-bottom: 0" /><div><div class="entry"><span id="entry__hara_namespace_resolve__ns_vars"></span><div class="entry-description"><h4><b>ns-vars&nbsp<a data-scroll="" href="#entry__hara_namespace_resolve__">^</a></b></h4><p><i>lists the vars in a particular namespace</i></p></div><div class="entry-option"><h6><a href="https://github.com/zcaudate/hara/blob/master/src/hara/namespace/resolve.clj#L21-L27" target="_blank">v&nbsp;2.1</a>&nbsp;&nbsp;args: <i class="args">[ns]</i>&nbsp;&nbsp;&nbsp;</h6><div><input class="source-toggle" id="entry__pre_hara_namespace_resolve__ns_vars" type="checkbox" /><label class="source-toggle" for="entry__pre_hara_namespace_resolve__ns_vars"></label><pre class="source"><code class="clojure">(defn ns-vars
+(eval '(ifl [a 1] (inc a))) => 2</code></pre></div></div></div></div><div><span id="namespace-resolve" name="namespace-resolve"></span><h2><b>4 &nbsp;&nbsp; namespace.resolve</b></h2></div><div><p><strong>hara.namespace.resolve</strong> allows for resolving namespaces</p></div><div class="api"><span id="entry__hara_namespace_resolve__"></span><hr /><div><ul><li><a data-scroll="" href="#entry__hara_namespace_resolve__ns_vars">ns-vars</a></li><li><a data-scroll="" href="#entry__hara_namespace_resolve__resolve_ns">resolve-ns</a></li></ul><hr style="margin-bottom: 0" /><div><div class="entry"><span id="entry__hara_namespace_resolve__ns_vars"></span><div class="entry-description"><h4><b>ns-vars&nbsp<a data-scroll="" href="#entry__hara_namespace_resolve__">^</a></b></h4><p><i>lists the vars in a particular namespace</i></p></div><div class="entry-option"><h6><a href="https://github.com/zcaudate/hara/blob/master/src/hara/namespace/resolve.clj#L21-L27" target="_blank">v&nbsp;2.1</a></h6><div><input class="source-toggle" id="entry__pre_hara_namespace_resolve__ns_vars" type="checkbox" /><label class="source-toggle" for="entry__pre_hara_namespace_resolve__ns_vars"></label><pre class="source"><code class="clojure">(defn ns-vars
   [ns]
-  (vec (sort (keys (ns-publics ns)))))</code></pre></div></div><pre><h6><i><a href="https://github.com/zcaudate/hara/blob/master/test/hara/namespace/resolve_test.clj#L15-L17" target="_blank">link</a></i></h6><code class="clojure">(ns-vars 'hara.namespace.resolve) => '[ns-vars resolve-ns]</code></pre></div><div class="entry"><span id="entry__hara_namespace_resolve__resolve_ns"></span><div class="entry-description"><h4><b>resolve-ns&nbsp<a data-scroll="" href="#entry__hara_namespace_resolve__">^</a></b></h4><p><i>resolves the namespace or else returns nil if it does not exist</i></p></div><div class="entry-option"><h6><a href="https://github.com/zcaudate/hara/blob/master/src/hara/namespace/resolve.clj#L4-L19" target="_blank">v&nbsp;2.1</a>&nbsp;&nbsp;args: <i class="args">[sym]</i>&nbsp;&nbsp;&nbsp;</h6><div><input class="source-toggle" id="entry__pre_hara_namespace_resolve__resolve_ns" type="checkbox" /><label class="source-toggle" for="entry__pre_hara_namespace_resolve__resolve_ns"></label><pre class="source"><code class="clojure">(defn resolve-ns
+  (vec (sort (keys (ns-publics ns)))))</code></pre></div></div><pre><h6><i><a href="https://github.com/zcaudate/hara/blob/master/test/hara/namespace/resolve_test.clj#L15-L17" target="_blank">link</a></i></h6><code class="clojure">(ns-vars 'hara.namespace.resolve) => '[ns-vars resolve-ns]</code></pre></div><div class="entry"><span id="entry__hara_namespace_resolve__resolve_ns"></span><div class="entry-description"><h4><b>resolve-ns&nbsp<a data-scroll="" href="#entry__hara_namespace_resolve__">^</a></b></h4><p><i>resolves the namespace or else returns nil if it does not exist</i></p></div><div class="entry-option"><h6><a href="https://github.com/zcaudate/hara/blob/master/src/hara/namespace/resolve.clj#L4-L19" target="_blank">v&nbsp;2.1</a></h6><div><input class="source-toggle" id="entry__pre_hara_namespace_resolve__resolve_ns" type="checkbox" /><label class="source-toggle" for="entry__pre_hara_namespace_resolve__resolve_ns"></label><pre class="source"><code class="clojure">(defn resolve-ns
   [^clojure.lang.Symbol sym]
   (let [nsp  (.getNamespace sym)
         nsym (or  (and nsp

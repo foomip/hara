@@ -40,7 +40,7 @@ List of current libraries:
 - [hara.common](hara-common.html) - primitives declarations and functions
 - [hara.component](hara-component.html) - constructing composable systems
 - [hara.concurrent](hara-concurrent.html) - methods and datastructures for concurrency
-- [hara.concurrent.ova](hara-concurrent.ova.html) - shared mutable state
+- [hara.concurrent.ova](hara-concurrent-ova.html) - shared mutable state
 - [hara.concurrent.procedure](hara-concurrent.procedure.html) - controllable execution
 - [hara.data](hara-data.html) - maps and representations of data
 - [hara.event](hara-event.html) - event signalling and conditional restart
@@ -49,9 +49,9 @@ List of current libraries:
 - [hara.function](hara-function.html) - reasoning about functions
 - [hara.group](hara-group.html) - generic typed collections
 - [hara.io](hara-io.html) - tools for files and io operations
-- [hara.io.file](hara-io.file.html) - tools for the file system
-- [hara.io.scheduler](hara-io.scheduler.html) - easy and intuitive task scheduling
-- [hara.io.watch](hara-io.watch.html) - watch for filesystem changes
+- [hara.io.file](hara-io-file.html) - tools for the file system
+- [hara.io.scheduler](hara-io-scheduler.html) - easy and intuitive task scheduling
+- [hara.io.watch](hara-io-watch.html) - watch for filesystem changes
 - [hara.namespace](hara-namespace.html) - utilities for namespace manipulation
 - [hara.object](hara-object.html) - think data, escape encapsulation
 - [hara.reflect](hara-reflect.html) - java reflection made easy

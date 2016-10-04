@@ -2,6 +2,11 @@ html {
   font-size: 15px;
 }
 
+pre, code {
+  white-space: pre;
+  overflow-x: scroll;
+}
+
 h2 {
   margin-top: 2.5rem;
   font-size: 1.5rem;
@@ -123,6 +128,16 @@ pre{
 {
   font-size: x-large;
 }
+}
+
+@media (max-width: 30rem) {
+  pre, code {
+    font-size: x-small;
+  } 
+  h6 .args
+  {
+    font-size: x-small;    
+  }
 }
 
 

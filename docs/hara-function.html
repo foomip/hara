@@ -8,7 +8,7 @@
   <!-- Enable responsiveness on mobile devices-->
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
   <link rel="shortcut icon" href="favicon.ico">
-  <title>hara.function - functions for reasoning about functions</title>
+  <title>hara.function - reasoning about functions</title>
   <script src="js/highlight.min.js"></script>
   <script src="js/gumshoe.min.js"></script>
   <script src="js/smooth-scroll.min.js"></script>
@@ -125,6 +125,11 @@
  
   html {
   font-size: 15px;
+}
+
+pre, code {
+  white-space: pre;
+  overflow-x: scroll;
 }
 
 h2 {
@@ -248,6 +253,16 @@ pre{
 {
   font-size: x-large;
 }
+}
+
+@media (max-width: 30rem) {
+  pre, code {
+    font-size: x-small;
+  } 
+  h6 .args
+  {
+    font-size: x-small;    
+  }
 }
 
 
@@ -435,7 +450,7 @@ Original highlight.js style (c) Ivan Sagalaev <maniac@softwaremaniacs.org>
         <div class="container">
           <h3 class="masthead-title">
             <span>hara.function</span>
-            <small>functions for reasoning about functions</small>
+            <small>reasoning about functions</small>
           </h3>
         </div>
       </div>
@@ -445,7 +460,7 @@ Original highlight.js style (c) Ivan Sagalaev <maniac@softwaremaniacs.org>
           <div class="heading">
             <div>
               <h5>Author: Chris Zheng&nbsp;&nbsp;<a href="mailto:z@caudate.me">(z@caudate.me)</a></h5>
-              <h5>Date: 03 October 2016</h5>
+              <h5>Date: 04 October 2016</h5>
               <h5>Repository: <a href="https://github.com/zcaudate/hara">https://github.com/zcaudate/hara</a></h5>
               <h5>Version: 2.4.5</h5></div></div>
           <hr/>
@@ -467,7 +482,7 @@ Original highlight.js style (c) Ivan Sagalaev <maniac@softwaremaniacs.org>
                 </ul>
               </nav>
           </div>
-          <div><p><a href='https://github.com/zcaudate/hara/blob/master/src/hara/function.clj'>hara.function</a> allow reasoning and dispatch of functions.</p></div><div><span id="function-args" name="function-args"></span><h2><b>1 &nbsp;&nbsp; function.args</b></h2></div><div><p>Add to <code>project.clj</code> dependencies:</p><pre><code>&#91;im.chit/hara.function.args &quot;2.4.5&quot;&#93;</code></pre><p><strong>hara.function.args</strong> allow reasoning on the arguments of clojure methods</p></div><div class="api"><span id="entry__hara_function_args__"></span><hr /><div><ul><li><a data-scroll="" href="#entry__hara_function_args__arg_check">arg-check</a></li><li><a data-scroll="" href="#entry__hara_function_args__arg_count">arg-count</a></li><li><a data-scroll="" href="#entry__hara_function_args__op">op</a></li><li><a data-scroll="" href="#entry__hara_function_args__varg_count">varg-count</a></li><li><a data-scroll="" href="#entry__hara_function_args__vargs_QMARK_">vargs?</a></li></ul><hr style="margin-bottom: 0" /><div><div class="entry"><span id="entry__hara_function_args__arg_check"></span><div class="entry-description"><h4><b>arg-check&nbsp<a data-scroll="" href="#entry__hara_function_args__">^</a></b></h4><p><i>counts the number of non-varidic argument types</i></p></div><div class="entry-option"><h6><a href="https://github.com/zcaudate/hara/blob/master/src/hara/function/args.clj#L47-L61" target="_blank">v&nbsp;2.1</a>&nbsp;&nbsp;args: <i class="args">[f num]</i>&nbsp;&nbsp;&nbsp;</h6><div><input class="source-toggle" id="entry__pre_hara_function_args__arg_check" type="checkbox" /><label class="source-toggle" for="entry__pre_hara_function_args__arg_check"></label><pre class="source"><code class="clojure">(defn arg-check
+          <div><p><a href='https://github.com/zcaudate/hara/blob/master/src/hara/function.clj'>hara.function</a> allow reasoning and dispatch of functions.</p></div><div><span id="function-args" name="function-args"></span><h2><b>1 &nbsp;&nbsp; function.args</b></h2></div><div><p>Add to <code>project.clj</code> dependencies:</p><pre><code>&#91;im.chit/hara.function.args &quot;2.4.5&quot;&#93;</code></pre><p><strong>hara.function.args</strong> allow reasoning on the arguments of clojure methods</p></div><div class="api"><span id="entry__hara_function_args__"></span><hr /><div><ul><li><a data-scroll="" href="#entry__hara_function_args__arg_check">arg-check</a></li><li><a data-scroll="" href="#entry__hara_function_args__arg_count">arg-count</a></li><li><a data-scroll="" href="#entry__hara_function_args__op">op</a></li><li><a data-scroll="" href="#entry__hara_function_args__varg_count">varg-count</a></li><li><a data-scroll="" href="#entry__hara_function_args__vargs_QMARK_">vargs?</a></li></ul><hr style="margin-bottom: 0" /><div><div class="entry"><span id="entry__hara_function_args__arg_check"></span><div class="entry-description"><h4><b>arg-check&nbsp<a data-scroll="" href="#entry__hara_function_args__">^</a></b></h4><p><i>counts the number of non-varidic argument types</i></p></div><div class="entry-option"><h6><a href="https://github.com/zcaudate/hara/blob/master/src/hara/function/args.clj#L47-L61" target="_blank">v&nbsp;2.1</a></h6><div><input class="source-toggle" id="entry__pre_hara_function_args__arg_check" type="checkbox" /><label class="source-toggle" for="entry__pre_hara_function_args__arg_check"></label><pre class="source"><code class="clojure">(defn arg-check
   [f num]
   (or (if-let [vc (varg-count f)]
         (<= vc num))
@@ -477,7 +492,7 @@ Original highlight.js style (c) Ivan Sagalaev <maniac@softwaremaniacs.org>
 (arg-check (fn [x & xs]) 1) => true
 
 (arg-check (fn [x & xs]) 0)
-=> (throws Exception "Function must accomodate 0 arguments")</code></pre></div><div class="entry"><span id="entry__hara_function_args__arg_count"></span><div class="entry-description"><h4><b>arg-count&nbsp<a data-scroll="" href="#entry__hara_function_args__">^</a></b></h4><p><i>counts the number of non-varidic argument types</i></p></div><div class="entry-option"><h6><a href="https://github.com/zcaudate/hara/blob/master/src/hara/function/args.clj#L30-L45" target="_blank">v&nbsp;2.1</a>&nbsp;&nbsp;args: <i class="args">[f]</i>&nbsp;&nbsp;&nbsp;</h6><div><input class="source-toggle" id="entry__pre_hara_function_args__arg_count" type="checkbox" /><label class="source-toggle" for="entry__pre_hara_function_args__arg_count"></label><pre class="source"><code class="clojure">(defn arg-count
+=> (throws Exception "Function must accomodate 0 arguments")</code></pre></div><div class="entry"><span id="entry__hara_function_args__arg_count"></span><div class="entry-description"><h4><b>arg-count&nbsp<a data-scroll="" href="#entry__hara_function_args__">^</a></b></h4><p><i>counts the number of non-varidic argument types</i></p></div><div class="entry-option"><h6><a href="https://github.com/zcaudate/hara/blob/master/src/hara/function/args.clj#L30-L45" target="_blank">v&nbsp;2.1</a></h6><div><input class="source-toggle" id="entry__pre_hara_function_args__arg_count" type="checkbox" /><label class="source-toggle" for="entry__pre_hara_function_args__arg_count"></label><pre class="source"><code class="clojure">(defn arg-count
   [f]
   (let [ms (filter (fn [^java.lang.reflect.Method mthd]
                      (= "invoke" (.getName mthd)))
@@ -488,7 +503,7 @@ Original highlight.js style (c) Ivan Sagalaev <maniac@softwaremaniacs.org>
 
 (arg-count (fn [x & xs])) => []
 
-(arg-count (fn ([x]) ([x y]))) => [1 2]</code></pre></div><div class="entry"><span id="entry__hara_function_args__op"></span><div class="entry-description"><h4><b>op&nbsp<a data-scroll="" href="#entry__hara_function_args__">^</a></b></h4><p><i>loose version of apply. Will adjust the arguments to put into a function</i></p></div><div class="entry-option"><h6><a href="https://github.com/zcaudate/hara/blob/master/src/hara/function/args.clj#L63-L84" target="_blank">v&nbsp;2.1</a>&nbsp;&nbsp;args: <i class="args">[f & args]</i>&nbsp;&nbsp;&nbsp;</h6><div><input class="source-toggle" id="entry__pre_hara_function_args__op" type="checkbox" /><label class="source-toggle" for="entry__pre_hara_function_args__op"></label><pre class="source"><code class="clojure">(defn op
+(arg-count (fn ([x]) ([x y]))) => [1 2]</code></pre></div><div class="entry"><span id="entry__hara_function_args__op"></span><div class="entry-description"><h4><b>op&nbsp<a data-scroll="" href="#entry__hara_function_args__">^</a></b></h4><p><i>loose version of apply. Will adjust the arguments to put into a function</i></p></div><div class="entry-option"><h6><a href="https://github.com/zcaudate/hara/blob/master/src/hara/function/args.clj#L63-L84" target="_blank">v&nbsp;2.1</a></h6><div><input class="source-toggle" id="entry__pre_hara_function_args__op" type="checkbox" /><label class="source-toggle" for="entry__pre_hara_function_args__op"></label><pre class="source"><code class="clojure">(defn op
   [f & args]
   (let [nargs (count args)
         vargs (varg-count f)]
@@ -505,14 +520,14 @@ Original highlight.js style (c) Ivan Sagalaev <maniac@softwaremaniacs.org>
 
 (op (fn [_ y] y) 1 2 3) => 2
 
-(op (fn [_] nil)) => (throws Exception)</code></pre></div><div class="entry"><span id="entry__hara_function_args__varg_count"></span><div class="entry-description"><h4><b>varg-count&nbsp<a data-scroll="" href="#entry__hara_function_args__">^</a></b></h4><p><i>counts the number of arguments types before variable arguments</i></p></div><div class="entry-option"><h6><a href="https://github.com/zcaudate/hara/blob/master/src/hara/function/args.clj#L17-L28" target="_blank">v&nbsp;2.1</a>&nbsp;&nbsp;args: <i class="args">[f]</i>&nbsp;&nbsp;&nbsp;</h6><div><input class="source-toggle" id="entry__pre_hara_function_args__varg_count" type="checkbox" /><label class="source-toggle" for="entry__pre_hara_function_args__varg_count"></label><pre class="source"><code class="clojure">(defn varg-count
+(op (fn [_] nil)) => (throws Exception)</code></pre></div><div class="entry"><span id="entry__hara_function_args__varg_count"></span><div class="entry-description"><h4><b>varg-count&nbsp<a data-scroll="" href="#entry__hara_function_args__">^</a></b></h4><p><i>counts the number of arguments types before variable arguments</i></p></div><div class="entry-option"><h6><a href="https://github.com/zcaudate/hara/blob/master/src/hara/function/args.clj#L17-L28" target="_blank">v&nbsp;2.1</a></h6><div><input class="source-toggle" id="entry__pre_hara_function_args__varg_count" type="checkbox" /><label class="source-toggle" for="entry__pre_hara_function_args__varg_count"></label><pre class="source"><code class="clojure">(defn varg-count
   [f]
   (if (some (fn [^java.lang.reflect.Method mthd]
               (= "getRequiredArity" (.getName mthd)))
             (.getDeclaredMethods (class f)))
     (.getRequiredArity ^clojure.lang.RestFn f)))</code></pre></div></div><pre><h6><i><a href="https://github.com/zcaudate/hara/blob/master/test/hara/function/args_test.clj#L13-L17" target="_blank">link</a></i></h6><code class="clojure">(varg-count (fn [x y & xs])) => 2
 
-(varg-count (fn [x])) => nil</code></pre></div><div class="entry"><span id="entry__hara_function_args__vargs_QMARK_"></span><div class="entry-description"><h4><b>vargs?&nbsp<a data-scroll="" href="#entry__hara_function_args__">^</a></b></h4><p><i>checks that function contain variable arguments</i></p></div><div class="entry-option"><h6><a href="https://github.com/zcaudate/hara/blob/master/src/hara/function/args.clj#L3-L15" target="_blank">v&nbsp;2.1</a>&nbsp;&nbsp;args: <i class="args">[f]</i>&nbsp;&nbsp;&nbsp;</h6><div><input class="source-toggle" id="entry__pre_hara_function_args__vargs_QMARK_" type="checkbox" /><label class="source-toggle" for="entry__pre_hara_function_args__vargs_QMARK_"></label><pre class="source"><code class="clojure">(defn vargs?
+(varg-count (fn [x])) => nil</code></pre></div><div class="entry"><span id="entry__hara_function_args__vargs_QMARK_"></span><div class="entry-description"><h4><b>vargs?&nbsp<a data-scroll="" href="#entry__hara_function_args__">^</a></b></h4><p><i>checks that function contain variable arguments</i></p></div><div class="entry-option"><h6><a href="https://github.com/zcaudate/hara/blob/master/src/hara/function/args.clj#L3-L15" target="_blank">v&nbsp;2.1</a></h6><div><input class="source-toggle" id="entry__pre_hara_function_args__vargs_QMARK_" type="checkbox" /><label class="source-toggle" for="entry__pre_hara_function_args__vargs_QMARK_"></label><pre class="source"><code class="clojure">(defn vargs?
   [^clojure.lang.Fn f]
   (if (some (fn [^java.lang.reflect.Method mthd]
               (= "getRequiredArity" (.getName mthd)))
@@ -520,7 +535,7 @@ Original highlight.js style (c) Ivan Sagalaev <maniac@softwaremaniacs.org>
     true
     false))</code></pre></div></div><pre><h6><i><a href="https://github.com/zcaudate/hara/blob/master/test/hara/function/args_test.clj#L6-L10" target="_blank">link</a></i></h6><code class="clojure">(vargs? (fn [x])) => false
 
-(vargs? (fn [x & xs])) => true</code></pre></div></div></div></div><div><span id="function-dispatch" name="function-dispatch"></span><h2><b>2 &nbsp;&nbsp; function.dispatch</b></h2></div><div><p>Add to <code>project.clj</code> dependencies:</p><pre><code>&#91;im.chit/hara.function.dispatch &quot;2.4.5&quot;&#93;</code></pre><p><strong>hara.function.dispatch</strong> allows alternative ways of calling a function</p></div><div class="api"><span id="entry__hara_function_dispatch__"></span><hr /><div><ul><li><a data-scroll="" href="#entry__hara_function_dispatch__call">call</a></li><li><a data-scroll="" href="#entry__hara_function_dispatch__msg">msg</a></li></ul><hr style="margin-bottom: 0" /><div><div class="entry"><span id="entry__hara_function_dispatch__call"></span><div class="entry-description"><h4><b>call&nbsp<a data-scroll="" href="#entry__hara_function_dispatch__">^</a></b></h4><p><i>executes `(f v1 ... vn)` if `f` is not nil</i></p></div><div class="entry-option"><h6><a href="https://github.com/zcaudate/hara/blob/master/src/hara/function/dispatch.clj#L11-L23" target="_blank">v&nbsp;2.1</a>&nbsp;&nbsp;args: <i class="args">[f] [f v] [f v1 v2] [f v1 v2 v3] [f v1 v2 v3 v4] [f v1 v2 v3 v4 & vs]</i>&nbsp;&nbsp;&nbsp;</h6><div><input class="source-toggle" id="entry__pre_hara_function_dispatch__call" type="checkbox" /><label class="source-toggle" for="entry__pre_hara_function_dispatch__call"></label><pre class="source"><code class="clojure">(defn call
+(vargs? (fn [x & xs])) => true</code></pre></div></div></div></div><div><span id="function-dispatch" name="function-dispatch"></span><h2><b>2 &nbsp;&nbsp; function.dispatch</b></h2></div><div><p>Add to <code>project.clj</code> dependencies:</p><pre><code>&#91;im.chit/hara.function.dispatch &quot;2.4.5&quot;&#93;</code></pre><p><strong>hara.function.dispatch</strong> allows alternative ways of calling a function</p></div><div class="api"><span id="entry__hara_function_dispatch__"></span><hr /><div><ul><li><a data-scroll="" href="#entry__hara_function_dispatch__call">call</a></li><li><a data-scroll="" href="#entry__hara_function_dispatch__msg">msg</a></li></ul><hr style="margin-bottom: 0" /><div><div class="entry"><span id="entry__hara_function_dispatch__call"></span><div class="entry-description"><h4><b>call&nbsp<a data-scroll="" href="#entry__hara_function_dispatch__">^</a></b></h4><p><i>executes `(f v1 ... vn)` if `f` is not nil</i></p></div><div class="entry-option"><h6><a href="https://github.com/zcaudate/hara/blob/master/src/hara/function/dispatch.clj#L11-L23" target="_blank">v&nbsp;2.1</a></h6><div><input class="source-toggle" id="entry__pre_hara_function_dispatch__call" type="checkbox" /><label class="source-toggle" for="entry__pre_hara_function_dispatch__call"></label><pre class="source"><code class="clojure">(defn call
   ([f] (if-not (nil? f) (f)) )
   ([f v] (if-not (nil? f) (f v)))
   ([f v1 v2] (if-not (nil? f) (f v1 v2)))
@@ -528,7 +543,7 @@ Original highlight.js style (c) Ivan Sagalaev <maniac@softwaremaniacs.org>
   ([f v1 v2 v3 v4 ] (if-not (nil? f) (f v1 v2 v3 v4)))
   ([f v1 v2 v3 v4 & vs] (if-not (nil? f) (apply f v1 v2 v3 v4 vs))))</code></pre></div></div><pre><h6><i><a href="https://github.com/zcaudate/hara/blob/master/test/hara/function/dispatch_test.clj#L6-L10" target="_blank">link</a></i></h6><code class="clojure">(call nil 1 2 3) => nil
 
-(call + 1 2 3) => 6</code></pre></div><div class="entry"><span id="entry__hara_function_dispatch__msg"></span><div class="entry-description"><h4><b>msg&nbsp<a data-scroll="" href="#entry__hara_function_dispatch__">^</a></b></h4><p><i>message dispatch for object orientated type calling convention.</i></p></div><div class="entry-option"><h6><a href="https://github.com/zcaudate/hara/blob/master/src/hara/function/dispatch.clj#L25-L40" target="_blank">v&nbsp;2.1</a>&nbsp;&nbsp;args: <i class="args">[obj kw] [obj kw v] [obj kw v1 v2] [obj kw v1 v2 v3] [obj kw v1 v2 v3 v4] [obj kw v1 v2 v3 v4 & vs]</i>&nbsp;&nbsp;&nbsp;</h6><div><input class="source-toggle" id="entry__pre_hara_function_dispatch__msg" type="checkbox" /><label class="source-toggle" for="entry__pre_hara_function_dispatch__msg"></label><pre class="source"><code class="clojure">(defn msg
+(call + 1 2 3) => 6</code></pre></div><div class="entry"><span id="entry__hara_function_dispatch__msg"></span><div class="entry-description"><h4><b>msg&nbsp<a data-scroll="" href="#entry__hara_function_dispatch__">^</a></b></h4><p><i>message dispatch for object orientated type calling convention.</i></p></div><div class="entry-option"><h6><a href="https://github.com/zcaudate/hara/blob/master/src/hara/function/dispatch.clj#L25-L40" target="_blank">v&nbsp;2.1</a></h6><div><input class="source-toggle" id="entry__pre_hara_function_dispatch__msg" type="checkbox" /><label class="source-toggle" for="entry__pre_hara_function_dispatch__msg"></label><pre class="source"><code class="clojure">(defn msg
   ([obj kw] (call (obj kw) obj))
   ([obj kw v] (call (obj kw) obj v))
   ([obj kw v1 v2] (call (obj kw) obj v1 v2))

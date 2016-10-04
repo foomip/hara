@@ -127,6 +127,11 @@
   font-size: 15px;
 }
 
+pre, code {
+  white-space: pre;
+  overflow-x: scroll;
+}
+
 h2 {
   margin-top: 2.5rem;
   font-size: 1.5rem;
@@ -248,6 +253,16 @@ pre{
 {
   font-size: x-large;
 }
+}
+
+@media (max-width: 30rem) {
+  pre, code {
+    font-size: x-small;
+  } 
+  h6 .args
+  {
+    font-size: x-small;    
+  }
 }
 
 
@@ -445,7 +460,7 @@ Original highlight.js style (c) Ivan Sagalaev <maniac@softwaremaniacs.org>
           <div class="heading">
             <div>
               <h5>Author: Chris Zheng&nbsp;&nbsp;<a href="mailto:z@caudate.me">(z@caudate.me)</a></h5>
-              <h5>Date: 03 October 2016</h5>
+              <h5>Date: 04 October 2016</h5>
               <h5>Repository: <a href="https://github.com/zcaudate/hara">https://github.com/zcaudate/hara</a></h5>
               <h5>Version: 2.4.5</h5></div></div>
           <hr/>
@@ -468,7 +483,7 @@ Original highlight.js style (c) Ivan Sagalaev <maniac@softwaremaniacs.org>
               </nav>
           </div>
           <div><p><a href='https://github.com/zcaudate/hara/blob/master/src/hara/extend.clj'>hara.extend</a> provide additional functionality on top of <code>defrecord</code> and <code>defmulti</code>/<code>defmethod</code>.</p></div><div><span id="extend-abstract" name="extend-abstract"></span><h2><b>1 &nbsp;&nbsp; extend.abstract</b></h2></div><div><p>Add to <code>project.clj</code> dependencies:</p><pre><code>&#91;im.chit/hara.extend.abstract &quot;2.4.5&quot;&#93;</code></pre><p><strong>hara.extend.abstract</strong> provides the implementation for the <a href='http://z.caudate.me/the-abstract-container-pattern/'>abstract container pattern</a></p></div><div class="api"><span id="entry__hara_extend_abstract__"></span><hr /><div><ul><li><a data-scroll="" href="#entry__hara_extend_abstract__extend_abstract">extend-abstract</a></li><li><a data-scroll="" href="#entry__hara_extend_abstract__extend_implementations">extend-implementations</a></li></ul><hr style="margin-bottom: 0" /><div><div class="entry"><span id="entry__hara_extend_abstract__extend_abstract"></span><div class="entry-description"><h4><b>extend-abstract&nbsp<a data-scroll="" href="#entry__hara_extend_abstract__">^</a></b></h4><p><i>creates a set of abstract multimethods as well as extends a set of
-  protocols to a given type</i></p></div><div class="entry-option"><h6><a href="https://github.com/zcaudate/hara/blob/master/src/hara/extend/abstract.clj#L199-L223" target="_blank">v&nbsp;2.1</a>&nbsp;&nbsp;args: <i class="args">[typesym protocolsyms & {:as options}]</i>&nbsp;&nbsp;&nbsp;</h6><div><input class="source-toggle" id="entry__pre_hara_extend_abstract__extend_abstract" type="checkbox" /><label class="source-toggle" for="entry__pre_hara_extend_abstract__extend_abstract"></label><pre class="source"><code class="clojure">(defmacro extend-abstract
+  protocols to a given type</i></p></div><div class="entry-option"><h6><a href="https://github.com/zcaudate/hara/blob/master/src/hara/extend/abstract.clj#L199-L223" target="_blank">v&nbsp;2.1</a></h6><div><input class="source-toggle" id="entry__pre_hara_extend_abstract__extend_abstract" type="checkbox" /><label class="source-toggle" for="entry__pre_hara_extend_abstract__extend_abstract"></label><pre class="source"><code class="clojure">(defmacro extend-abstract
   [typesym protocolsyms & {:as options}]
   (list `keep `identity
         (cons `concat
@@ -488,7 +503,7 @@ Original highlight.js style (c) Ivan Sagalaev <maniac@softwaremaniacs.org>
 
 (-data (map->Envelope {:hello "world"}))
 => "hello world"</code></pre></div><div class="entry"><span id="entry__hara_extend_abstract__extend_implementations"></span><div class="entry-description"><h4><b>extend-implementations&nbsp<a data-scroll="" href="#entry__hara_extend_abstract__">^</a></b></h4><p><i>creates a set of implementation functions for implementation
-  of protocol functionality</i></p></div><div class="entry-option"><h6><a href="https://github.com/zcaudate/hara/blob/master/src/hara/extend/abstract.clj#L247-L262" target="_blank">v&nbsp;2.1</a>&nbsp;&nbsp;args: <i class="args">[protocolsyms & {:as options}]</i>&nbsp;&nbsp;&nbsp;</h6><div><input class="source-toggle" id="entry__pre_hara_extend_abstract__extend_implementations" type="checkbox" /><label class="source-toggle" for="entry__pre_hara_extend_abstract__extend_implementations"></label><pre class="source"><code class="clojure">(defmacro extend-implementations
+  of protocol functionality</i></p></div><div class="entry-option"><h6><a href="https://github.com/zcaudate/hara/blob/master/src/hara/extend/abstract.clj#L247-L262" target="_blank">v&nbsp;2.1</a></h6><div><input class="source-toggle" id="entry__pre_hara_extend_abstract__extend_implementations" type="checkbox" /><label class="source-toggle" for="entry__pre_hara_extend_abstract__extend_implementations"></label><pre class="source"><code class="clojure">(defmacro extend-implementations
   [protocolsyms & {:as options}]
   (vec
    (mapcat #(protocol-implementation % options)
@@ -498,7 +513,7 @@ Original highlight.js style (c) Ivan Sagalaev <maniac@softwaremaniacs.org>
              (list 'str form " again")))
 
 (data (map->Envelope {:hello "world"}))
-=> "hello world again"</code></pre></div></div></div></div><div><span id="extend-all" name="extend-all"></span><h2><b>2 &nbsp;&nbsp; extend.all</b></h2></div><div><p>Add to <code>project.clj</code> dependencies:</p><pre><code>&#91;im.chit/hara.extend.all &quot;2.4.5&quot;&#93;</code></pre><p><strong>hara.extend.all</strong> promotes code reuse by providing a template for <code>extend-type</code></p></div><div class="api"><span id="entry__hara_extend_all__"></span><div><h2>hara.extend.all</h2></div><hr /><div><ul><li><a data-scroll="" href="#entry__hara_extend_all__extend_all">extend-all</a></li></ul><hr style="margin-bottom: 0" /><div><div class="entry"><span id="entry__hara_extend_all__extend_all"></span><div class="entry-description"><h4><b>extend-all&nbsp<a data-scroll="" href="#entry__hara_extend_all__">^</a></b></h4><p><i>transforms a protocl template into multiple extend-type expresions</i></p></div><div class="entry-option"><h6><a href="https://github.com/zcaudate/hara/blob/master/src/hara/extend/all.clj#L27-L43" target="_blank">v&nbsp;2.1</a>&nbsp;&nbsp;args: <i class="args">[proto ptmpls & args]</i>&nbsp;&nbsp;&nbsp;</h6><div><input class="source-toggle" id="entry__pre_hara_extend_all__extend_all" type="checkbox" /><label class="source-toggle" for="entry__pre_hara_extend_all__extend_all"></label><pre class="source"><code class="clojure">(defmacro extend-all
+=> "hello world again"</code></pre></div></div></div></div><div><span id="extend-all" name="extend-all"></span><h2><b>2 &nbsp;&nbsp; extend.all</b></h2></div><div><p>Add to <code>project.clj</code> dependencies:</p><pre><code>&#91;im.chit/hara.extend.all &quot;2.4.5&quot;&#93;</code></pre><p><strong>hara.extend.all</strong> promotes code reuse by providing a template for <code>extend-type</code></p></div><div class="api"><span id="entry__hara_extend_all__"></span><div><h2>hara.extend.all</h2></div><hr /><div><ul><li><a data-scroll="" href="#entry__hara_extend_all__extend_all">extend-all</a></li></ul><hr style="margin-bottom: 0" /><div><div class="entry"><span id="entry__hara_extend_all__extend_all"></span><div class="entry-description"><h4><b>extend-all&nbsp<a data-scroll="" href="#entry__hara_extend_all__">^</a></b></h4><p><i>transforms a protocl template into multiple extend-type expresions</i></p></div><div class="entry-option"><h6><a href="https://github.com/zcaudate/hara/blob/master/src/hara/extend/all.clj#L27-L43" target="_blank">v&nbsp;2.1</a></h6><div><input class="source-toggle" id="entry__pre_hara_extend_all__extend_all" type="checkbox" /><label class="source-toggle" for="entry__pre_hara_extend_all__extend_all"></label><pre class="source"><code class="clojure">(defmacro extend-all
   [proto ptmpls & args]
   (let [types (partition 2 args)]
     `(do

@@ -127,6 +127,11 @@
   font-size: 15px;
 }
 
+pre, code {
+  white-space: pre;
+  overflow-x: scroll;
+}
+
 h2 {
   margin-top: 2.5rem;
   font-size: 1.5rem;
@@ -248,6 +253,16 @@ pre{
 {
   font-size: x-large;
 }
+}
+
+@media (max-width: 30rem) {
+  pre, code {
+    font-size: x-small;
+  } 
+  h6 .args
+  {
+    font-size: x-small;    
+  }
 }
 
 
@@ -445,7 +460,7 @@ Original highlight.js style (c) Ivan Sagalaev <maniac@softwaremaniacs.org>
           <div class="heading">
             <div>
               <h5>Author: Chris Zheng&nbsp;&nbsp;<a href="mailto:z@caudate.me">(z@caudate.me)</a></h5>
-              <h5>Date: 03 October 2016</h5>
+              <h5>Date: 04 October 2016</h5>
               <h5>Repository: <a href="https://github.com/zcaudate/hara">https://github.com/zcaudate/hara</a></h5>
               <h5>Version: 2.4.5</h5></div></div>
           <hr/>
@@ -467,7 +482,7 @@ Original highlight.js style (c) Ivan Sagalaev <maniac@softwaremaniacs.org>
                 </ul>
               </nav>
           </div>
-          <div><span id="introduction" name="introduction"></span><h2><b>1 &nbsp;&nbsp; Introduction</b></h2></div><div><p><a href='https://github.com/zcaudate/hara/blob/master/src/hara/sort.clj'>hara.sort</a> contain functions and utilities for sorting algorithms.</p></div><div><span id="sort-hierarchical" name="sort-hierarchical"></span><h2><b>2 &nbsp;&nbsp; sort.hierarchical</b></h2></div><div><p>Add to <code>project.clj</code> dependencies:</p><pre><code>&#91;im.chit/hara.sort.hierarchical &quot;2.4.5&quot;&#93;</code></pre><p><strong>hara.sort.hierarchical</strong> gives a list of dependents for each key</p></div><div class="api"><span id="entry__hara_sort_hierarchical__"></span><hr /><div><ul><li><a data-scroll="" href="#entry__hara_sort_hierarchical__hierarchical_sort">hierarchical-sort</a></li><li><a data-scroll="" href="#entry__hara_sort_hierarchical__top_node">top-node</a></li></ul><hr style="margin-bottom: 0" /><div><div class="entry"><span id="entry__hara_sort_hierarchical__hierarchical_sort"></span><div class="entry-description"><h4><b>hierarchical-sort&nbsp<a data-scroll="" href="#entry__hara_sort_hierarchical__">^</a></b></h4><p><i>prunes a hierarchy of descendants into a directed graph</i></p></div><div class="entry-option"><h6><a href="https://github.com/zcaudate/hara/blob/master/src/hara/sort/hierarchical.clj#L20-L51" target="_blank">v&nbsp;2.2</a>&nbsp;&nbsp;args: <i class="args">[idx]</i>&nbsp;&nbsp;&nbsp;</h6><div><input class="source-toggle" id="entry__pre_hara_sort_hierarchical__hierarchical_sort" type="checkbox" /><label class="source-toggle" for="entry__pre_hara_sort_hierarchical__hierarchical_sort"></label><pre class="source"><code class="clojure">(defn hierarchical-sort
+          <div><span id="introduction" name="introduction"></span><h2><b>1 &nbsp;&nbsp; Introduction</b></h2></div><div><p><a href='https://github.com/zcaudate/hara/blob/master/src/hara/sort.clj'>hara.sort</a> contain functions and utilities for sorting algorithms.</p></div><div><span id="sort-hierarchical" name="sort-hierarchical"></span><h2><b>2 &nbsp;&nbsp; sort.hierarchical</b></h2></div><div><p>Add to <code>project.clj</code> dependencies:</p><pre><code>&#91;im.chit/hara.sort.hierarchical &quot;2.4.5&quot;&#93;</code></pre><p><strong>hara.sort.hierarchical</strong> gives a list of dependents for each key</p></div><div class="api"><span id="entry__hara_sort_hierarchical__"></span><hr /><div><ul><li><a data-scroll="" href="#entry__hara_sort_hierarchical__hierarchical_sort">hierarchical-sort</a></li><li><a data-scroll="" href="#entry__hara_sort_hierarchical__top_node">top-node</a></li></ul><hr style="margin-bottom: 0" /><div><div class="entry"><span id="entry__hara_sort_hierarchical__hierarchical_sort"></span><div class="entry-description"><h4><b>hierarchical-sort&nbsp<a data-scroll="" href="#entry__hara_sort_hierarchical__">^</a></b></h4><p><i>prunes a hierarchy of descendants into a directed graph</i></p></div><div class="entry-option"><h6><a href="https://github.com/zcaudate/hara/blob/master/src/hara/sort/hierarchical.clj#L20-L51" target="_blank">v&nbsp;2.2</a></h6><div><input class="source-toggle" id="entry__pre_hara_sort_hierarchical__hierarchical_sort" type="checkbox" /><label class="source-toggle" for="entry__pre_hara_sort_hierarchical__hierarchical_sort"></label><pre class="source"><code class="clojure">(defn hierarchical-sort
   [idx]
   (let [top (top-node idx)]
     (loop [out {}
@@ -495,7 +510,7 @@ Original highlight.js style (c) Ivan Sagalaev <maniac@softwaremaniacs.org>
     3 #{5}
     4 #{}
     5 #{6}
-    6 #{} }</code></pre></div><div class="entry"><span id="entry__hara_sort_hierarchical__top_node"></span><div class="entry-description"><h4><b>top-node&nbsp<a data-scroll="" href="#entry__hara_sort_hierarchical__">^</a></b></h4><p><i>find the top node for the hierarchy of descendants</i></p></div><div class="entry-option"><h6><a href="https://github.com/zcaudate/hara/blob/master/src/hara/sort/hierarchical.clj#L4-L18" target="_blank">v&nbsp;2.2</a>&nbsp;&nbsp;args: <i class="args">[idx]</i>&nbsp;&nbsp;&nbsp;</h6><div><input class="source-toggle" id="entry__pre_hara_sort_hierarchical__top_node" type="checkbox" /><label class="source-toggle" for="entry__pre_hara_sort_hierarchical__top_node"></label><pre class="source"><code class="clojure">(defn top-node
+    6 #{} }</code></pre></div><div class="entry"><span id="entry__hara_sort_hierarchical__top_node"></span><div class="entry-description"><h4><b>top-node&nbsp<a data-scroll="" href="#entry__hara_sort_hierarchical__">^</a></b></h4><p><i>find the top node for the hierarchy of descendants</i></p></div><div class="entry-option"><h6><a href="https://github.com/zcaudate/hara/blob/master/src/hara/sort/hierarchical.clj#L4-L18" target="_blank">v&nbsp;2.2</a></h6><div><input class="source-toggle" id="entry__pre_hara_sort_hierarchical__top_node" type="checkbox" /><label class="source-toggle" for="entry__pre_hara_sort_hierarchical__top_node"></label><pre class="source"><code class="clojure">(defn top-node
   [idx]
   (let [rest (apply set/union (vals idx))]
     (ffirst (filter (fn [[k v]]
@@ -506,12 +521,12 @@ Original highlight.js style (c) Ivan Sagalaev <maniac@softwaremaniacs.org>
            4 #{}
            5 #{6}
            6 #{}})
-=> 1</code></pre></div></div></div></div><div><span id="sort-topological" name="sort-topological"></span><h2><b>3 &nbsp;&nbsp; sort.topological</b></h2></div><div><p>Add to <code>project.clj</code> dependencies:</p><pre><code>&#91;im.chit/hara.sort.topological &quot;2.4.5&quot;&#93;</code></pre><p><strong>hara.sort.topological</strong> gives an order of preference for a set of hierarchies</p></div><div class="api"><span id="entry__hara_sort_topological__"></span><hr /><div><ul><li><a data-scroll="" href="#entry__hara_sort_topological__top_nodes">top-nodes</a></li><li><a data-scroll="" href="#entry__hara_sort_topological__topological_sort">topological-sort</a></li></ul><hr style="margin-bottom: 0" /><div><div class="entry"><span id="entry__hara_sort_topological__top_nodes"></span><div class="entry-description"><h4><b>top-nodes&nbsp<a data-scroll="" href="#entry__hara_sort_topological__">^</a></b></h4><p><i>nodes that have no other nodes that are dependent on them</i></p></div><div class="entry-option"><h6><a href="https://github.com/zcaudate/hara/blob/master/src/hara/sort/topological.clj#L4-L12" target="_blank">v&nbsp;2.1</a>&nbsp;&nbsp;args: <i class="args">[g]</i>&nbsp;&nbsp;&nbsp;</h6><div><input class="source-toggle" id="entry__pre_hara_sort_topological__top_nodes" type="checkbox" /><label class="source-toggle" for="entry__pre_hara_sort_topological__top_nodes"></label><pre class="source"><code class="clojure">(defn top-nodes
+=> 1</code></pre></div></div></div></div><div><span id="sort-topological" name="sort-topological"></span><h2><b>3 &nbsp;&nbsp; sort.topological</b></h2></div><div><p>Add to <code>project.clj</code> dependencies:</p><pre><code>&#91;im.chit/hara.sort.topological &quot;2.4.5&quot;&#93;</code></pre><p><strong>hara.sort.topological</strong> gives an order of preference for a set of hierarchies</p></div><div class="api"><span id="entry__hara_sort_topological__"></span><hr /><div><ul><li><a data-scroll="" href="#entry__hara_sort_topological__top_nodes">top-nodes</a></li><li><a data-scroll="" href="#entry__hara_sort_topological__topological_sort">topological-sort</a></li></ul><hr style="margin-bottom: 0" /><div><div class="entry"><span id="entry__hara_sort_topological__top_nodes"></span><div class="entry-description"><h4><b>top-nodes&nbsp<a data-scroll="" href="#entry__hara_sort_topological__">^</a></b></h4><p><i>nodes that have no other nodes that are dependent on them</i></p></div><div class="entry-option"><h6><a href="https://github.com/zcaudate/hara/blob/master/src/hara/sort/topological.clj#L4-L12" target="_blank">v&nbsp;2.1</a></h6><div><input class="source-toggle" id="entry__pre_hara_sort_topological__top_nodes" type="checkbox" /><label class="source-toggle" for="entry__pre_hara_sort_topological__top_nodes"></label><pre class="source"><code class="clojure">(defn top-nodes
   [g]
   (let [nodes (set (keys g))
         dependent-nodes (apply union (vals g))]
     (difference nodes dependent-nodes)))</code></pre></div></div><pre><h6><i><a href="https://github.com/zcaudate/hara/blob/master/test/hara/sort/topological_test.clj#L6-L8" target="_blank">link</a></i></h6><code class="clojure">(top-nodes {:a #{} :b #{:a}})
-=> #{:b}</code></pre></div><div class="entry"><span id="entry__hara_sort_topological__topological_sort"></span><div class="entry-description"><h4><b>topological-sort&nbsp<a data-scroll="" href="#entry__hara_sort_topological__">^</a></b></h4><p><i>sorts a directed graph into its dependency order</i></p></div><div class="entry-option"><h6><a href="https://github.com/zcaudate/hara/blob/master/src/hara/sort/topological.clj#L14-L47" target="_blank">v&nbsp;2.1</a>&nbsp;&nbsp;args: <i class="args">[g] [g l s]</i>&nbsp;&nbsp;&nbsp;</h6><div><input class="source-toggle" id="entry__pre_hara_sort_topological__topological_sort" type="checkbox" /><label class="source-toggle" for="entry__pre_hara_sort_topological__topological_sort"></label><pre class="source"><code class="clojure">(defn topological-sort
+=> #{:b}</code></pre></div><div class="entry"><span id="entry__hara_sort_topological__topological_sort"></span><div class="entry-description"><h4><b>topological-sort&nbsp<a data-scroll="" href="#entry__hara_sort_topological__">^</a></b></h4><p><i>sorts a directed graph into its dependency order</i></p></div><div class="entry-option"><h6><a href="https://github.com/zcaudate/hara/blob/master/src/hara/sort/topological.clj#L14-L47" target="_blank">v&nbsp;2.1</a></h6><div><input class="source-toggle" id="entry__pre_hara_sort_topological__topological_sort" type="checkbox" /><label class="source-toggle" for="entry__pre_hara_sort_topological__topological_sort"></label><pre class="source"><code class="clojure">(defn topological-sort
   ([g]
      (let [g (let [dependent-nodes (apply union (vals g))]
                (reduce #(if (get % %2) % (assoc % %2 #{})) g dependent-nodes))]

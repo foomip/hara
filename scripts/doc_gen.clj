@@ -19,8 +19,19 @@
     (println "PUBLISHING:" key)
     (publish/publish key {:theme "bolton"} PROJECT))
   
+  (publish/publish "hara-reflect" {:refresh true} PROJECT)
   (publish/publish "hara-zip" {} PROJECT)
   (publish/publish "hara-data" {} PROJECT)
-  (publish/publish "index" {} PROJECT)
+  (publish/publish "index" {:refresh true} PROJECT)
   
+  (doseq [m (map second (-> PROJECT
+                            :publish
+                            :files
+                            seq
+                            sort))]
+    (println (format "- [hara.%s](hara-%s.html) - %s"
+                     (:title m)
+                     (:title m)
+                     (:subtitle m))))
+  nil
   )

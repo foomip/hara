@@ -8,7 +8,7 @@
   <!-- Enable responsiveness on mobile devices-->
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
   <link rel="shortcut icon" href="favicon.ico">
-  <title>hara.concurrent.procedure - model for controllable execution</title>
+  <title>hara.concurrent.procedure - controllable execution</title>
   <script src="js/highlight.min.js"></script>
   <script src="js/gumshoe.min.js"></script>
   <script src="js/smooth-scroll.min.js"></script>
@@ -125,6 +125,11 @@
  
   html {
   font-size: 15px;
+}
+
+pre, code {
+  white-space: pre;
+  overflow-x: scroll;
 }
 
 h2 {
@@ -248,6 +253,16 @@ pre{
 {
   font-size: x-large;
 }
+}
+
+@media (max-width: 30rem) {
+  pre, code {
+    font-size: x-small;
+  } 
+  h6 .args
+  {
+    font-size: x-small;    
+  }
 }
 
 
@@ -435,7 +450,7 @@ Original highlight.js style (c) Ivan Sagalaev <maniac@softwaremaniacs.org>
         <div class="container">
           <h3 class="masthead-title">
             <span>hara.concurrent.procedure</span>
-            <small>model for controllable execution</small>
+            <small>controllable execution</small>
           </h3>
         </div>
       </div>
@@ -445,7 +460,7 @@ Original highlight.js style (c) Ivan Sagalaev <maniac@softwaremaniacs.org>
           <div class="heading">
             <div>
               <h5>Author: Chris Zheng&nbsp;&nbsp;<a href="mailto:z@caudate.me">(z@caudate.me)</a></h5>
-              <h5>Date: 03 October 2016</h5>
+              <h5>Date: 04 October 2016</h5>
               <h5>Repository: <a href="https://github.com/zcaudate/hara">https://github.com/zcaudate/hara</a></h5>
               <h5>Version: 2.4.5</h5></div></div>
           <hr/>
@@ -467,19 +482,19 @@ Original highlight.js style (c) Ivan Sagalaev <maniac@softwaremaniacs.org>
                 </ul>
               </nav>
           </div>
-          <div><span id="introduction" name="introduction"></span><h2><b>1 &nbsp;&nbsp; Introduction</b></h2></div><div><p><code>hara.concurrent.procedure</code> provides a wrapper-like layer for controlling the execution of concurrent operations. Many features are added in order to support use in the real world. These include restarts, interrupts, timeouts, caching, synchronous/asynchronous dispatch, timing and other issues associated with concurrent systems.</p></div><div><span id="installation" name="installation"></span><h3>1.1 &nbsp;&nbsp; Installation</h3></div><div><p>Add to <code>project.clj</code> dependencies:</p><pre><code>&#91;im.chit/hara.concurrent.procedure &quot;2.4.5&quot;&#93;</code></pre></div><div><p>All functions are in the <code>hara.concurrent.procedure</code> namespace.</p></div><div class="code"><pre><code class="clojure">(use 'hara.concurrent.procedure)</code></pre></div><div><span id="motivation" name="motivation"></span><h3>1.2 &nbsp;&nbsp; Motivation</h3></div><div><p>The <code>concurrent.procedure</code> construct is like a future, but contains more information and so is more <strong>self aware</strong>. This is a very useful construct for workflow modelling and concurrent applications where the library provides rich information about the execution of a particular running instance:</p><ul><li>the function that originated the process instance</li><li>the thread or future on which the instance is executing</li><li>the result (maybe cached) of the execution if returned</li><li>the time of execution</li><li>the id of the process (used for identification)</li><li>other running instances of the proces</li></ul></div><div><span id="api" name="api"></span><h2><b>2 &nbsp;&nbsp; API</b></h2></div><div class="api"><span id="entry__hara_concurrent_procedure__"></span><hr /><div><ul><li><a data-scroll="" href="#entry__hara_concurrent_procedure__defprocedure">defprocedure</a></li><li><a data-scroll="" href="#entry__hara_concurrent_procedure__invoke_base">invoke-base</a></li><li><a data-scroll="" href="#entry__hara_concurrent_procedure__invoke_procedure">invoke-procedure</a></li><li><a data-scroll="" href="#entry__hara_concurrent_procedure__max_inputs">max-inputs</a></li><li><a data-scroll="" href="#entry__hara_concurrent_procedure__procedure">procedure</a></li><li><a data-scroll="" href="#entry__hara_concurrent_procedure__wrap_exception">wrap-exception</a></li></ul><hr style="margin-bottom: 0" /><div><div class="entry"><span id="entry__hara_concurrent_procedure__defprocedure"></span><div class="entry-description"><h4><b>defprocedure&nbsp<a data-scroll="" href="#entry__hara_concurrent_procedure__">^</a></b></h4><p><i></i></p></div><div class="entry-option"><h6><i class="error version">NONE</i>&nbsp;&nbsp;args: <i class="args">[name defaults & body]</i>&nbsp;&nbsp;&nbsp;</h6><div><input class="source-toggle" id="entry__pre_hara_concurrent_procedure__defprocedure" type="checkbox" /><label class="source-toggle" for="entry__pre_hara_concurrent_procedure__defprocedure"></label><pre class="source"><code class="clojure">(defmacro defprocedure
+          <div><span id="introduction" name="introduction"></span><h2><b>1 &nbsp;&nbsp; Introduction</b></h2></div><div><p><code>hara.concurrent.procedure</code> provides a wrapper-like layer for controlling the execution of concurrent operations. Many features are added in order to support use in the real world. These include restarts, interrupts, timeouts, caching, synchronous/asynchronous dispatch, timing and other issues associated with concurrent systems.</p></div><div><span id="installation" name="installation"></span><h3>1.1 &nbsp;&nbsp; Installation</h3></div><div><p>Add to <code>project.clj</code> dependencies:</p><pre><code>&#91;im.chit/hara.concurrent.procedure &quot;2.4.5&quot;&#93;</code></pre></div><div><p>All functions are in the <code>hara.concurrent.procedure</code> namespace.</p></div><div class="code"><pre><code class="clojure">(use 'hara.concurrent.procedure)</code></pre></div><div><span id="motivation" name="motivation"></span><h3>1.2 &nbsp;&nbsp; Motivation</h3></div><div><p>The <code>concurrent.procedure</code> construct is like a future, but contains more information and so is more <strong>self aware</strong>. This is a very useful construct for workflow modelling and concurrent applications where the library provides rich information about the execution of a particular running instance:</p><ul><li>the function that originated the process instance</li><li>the thread or future on which the instance is executing</li><li>the result (maybe cached) of the execution if returned</li><li>the time of execution</li><li>the id of the process (used for identification)</li><li>other running instances of the proces</li></ul></div><div><span id="api" name="api"></span><h2><b>2 &nbsp;&nbsp; API</b></h2></div><div class="api"><span id="entry__hara_concurrent_procedure__"></span><hr /><div><ul><li><a data-scroll="" href="#entry__hara_concurrent_procedure__defprocedure">defprocedure</a></li><li><a data-scroll="" href="#entry__hara_concurrent_procedure__invoke_base">invoke-base</a></li><li><a data-scroll="" href="#entry__hara_concurrent_procedure__invoke_procedure">invoke-procedure</a></li><li><a data-scroll="" href="#entry__hara_concurrent_procedure__max_inputs">max-inputs</a></li><li><a data-scroll="" href="#entry__hara_concurrent_procedure__procedure">procedure</a></li><li><a data-scroll="" href="#entry__hara_concurrent_procedure__wrap_exception">wrap-exception</a></li></ul><hr style="margin-bottom: 0" /><div><div class="entry"><span id="entry__hara_concurrent_procedure__defprocedure"></span><div class="entry-description"><h4><b>defprocedure&nbsp<a data-scroll="" href="#entry__hara_concurrent_procedure__">^</a></b></h4><p><i></i></p></div><div class="entry-option"><h6><i class="error version">NONE</i></h6><div><input class="source-toggle" id="entry__pre_hara_concurrent_procedure__defprocedure" type="checkbox" /><label class="source-toggle" for="entry__pre_hara_concurrent_procedure__defprocedure"></label><pre class="source"><code class="clojure">(defmacro defprocedure
   [name defaults & body]
   (let [defaults (cond (vector? defaults)
                        {:arglist defaults}
                        (map? defaults)
                        defaults)
         arglist  (:arglist defaults)]
-    `(def ~name (procedure (merge {:handler (fn ~@body)} ~defaults) ~arglist))))</code></pre></div></div><pre class="error"><h6>example not found</h6><code></code></pre></div><div class="entry"><span id="entry__hara_concurrent_procedure__invoke_base"></span><div class="entry-description"><h4><b>invoke-base&nbsp<a data-scroll="" href="#entry__hara_concurrent_procedure__">^</a></b></h4><p><i></i></p></div><div class="entry-option"><h6><i class="error version">NONE</i>&nbsp;&nbsp;args: <i class="args">[instance args]</i>&nbsp;&nbsp;&nbsp;</h6><div><input class="source-toggle" id="entry__pre_hara_concurrent_procedure__invoke_base" type="checkbox" /><label class="source-toggle" for="entry__pre_hara_concurrent_procedure__invoke_base"></label><pre class="source"><code class="clojure">(defn invoke-base
+    `(def ~name (procedure (merge {:handler (fn ~@body)} ~defaults) ~arglist))))</code></pre></div></div><pre class="error"><h6>example not found</h6><code></code></pre></div><div class="entry"><span id="entry__hara_concurrent_procedure__invoke_base"></span><div class="entry-description"><h4><b>invoke-base&nbsp<a data-scroll="" href="#entry__hara_concurrent_procedure__">^</a></b></h4><p><i></i></p></div><div class="entry-option"><h6><i class="error version">NONE</i></h6><div><input class="source-toggle" id="entry__pre_hara_concurrent_procedure__invoke_base" type="checkbox" /><label class="source-toggle" for="entry__pre_hara_concurrent_procedure__invoke_base"></label><pre class="source"><code class="clojure">(defn invoke-base
   [instance args]
   (let [result (apply (:handler instance) args)]
 
     (deliver (:result instance) {:type :success
-                                 :data result})))</code></pre></div></div><pre class="error"><h6>example not found</h6><code></code></pre></div><div class="entry"><span id="entry__hara_concurrent_procedure__invoke_procedure"></span><div class="entry-description"><h4><b>invoke-procedure&nbsp<a data-scroll="" href="#entry__hara_concurrent_procedure__">^</a></b></h4><p><i></i></p></div><div class="entry-option"><h6><i class="error version">NONE</i>&nbsp;&nbsp;args: <i class="args">[{:keys [id-fn handler arglist time], :as procedure} & args]</i>&nbsp;&nbsp;&nbsp;</h6><div><input class="source-toggle" id="entry__pre_hara_concurrent_procedure__invoke_procedure" type="checkbox" /><label class="source-toggle" for="entry__pre_hara_concurrent_procedure__invoke_procedure"></label><pre class="source"><code class="clojure">(defn invoke-procedure
+                                 :data result})))</code></pre></div></div><pre class="error"><h6>example not found</h6><code></code></pre></div><div class="entry"><span id="entry__hara_concurrent_procedure__invoke_procedure"></span><div class="entry-description"><h4><b>invoke-procedure&nbsp<a data-scroll="" href="#entry__hara_concurrent_procedure__">^</a></b></h4><p><i></i></p></div><div class="entry-option"><h6><i class="error version">NONE</i></h6><div><input class="source-toggle" id="entry__pre_hara_concurrent_procedure__invoke_procedure" type="checkbox" /><label class="source-toggle" for="entry__pre_hara_concurrent_procedure__invoke_procedure"></label><pre class="source"><code class="clojure">(defn invoke-procedure
   [{:keys [id-fn handler arglist time] :as procedure} & args]
   (let [_          (if (< (count arglist) (count args))
                      (throw (Exception.
@@ -514,7 +529,7 @@ Original highlight.js style (c) Ivan Sagalaev <maniac@softwaremaniacs.org>
          middleware/wrap-timeout
          middleware/wrap-interrupt
          middleware/wrap-id)
-     instance nargs)))</code></pre></div></div><pre class="error"><h6>example not found</h6><code></code></pre></div><div class="entry"><span id="entry__hara_concurrent_procedure__max_inputs"></span><div class="entry-description"><h4><b>max-inputs&nbsp<a data-scroll="" href="#entry__hara_concurrent_procedure__">^</a></b></h4><p><i>finds the maximum number of inputs that a function can take</i></p></div><div class="entry-option"><h6><a href="https://github.com/zcaudate/hara/blob/master/src/hara/concurrent/procedure.clj#L25-L44" target="_blank">v&nbsp;2.2</a>&nbsp;&nbsp;args: <i class="args">[func num]</i>&nbsp;&nbsp;&nbsp;</h6><div><input class="source-toggle" id="entry__pre_hara_concurrent_procedure__max_inputs" type="checkbox" /><label class="source-toggle" for="entry__pre_hara_concurrent_procedure__max_inputs"></label><pre class="source"><code class="clojure">(defn max-inputs
+     instance nargs)))</code></pre></div></div><pre class="error"><h6>example not found</h6><code></code></pre></div><div class="entry"><span id="entry__hara_concurrent_procedure__max_inputs"></span><div class="entry-description"><h4><b>max-inputs&nbsp<a data-scroll="" href="#entry__hara_concurrent_procedure__">^</a></b></h4><p><i>finds the maximum number of inputs that a function can take</i></p></div><div class="entry-option"><h6><a href="https://github.com/zcaudate/hara/blob/master/src/hara/concurrent/procedure.clj#L25-L44" target="_blank">v&nbsp;2.2</a></h6><div><input class="source-toggle" id="entry__pre_hara_concurrent_procedure__max_inputs" type="checkbox" /><label class="source-toggle" for="entry__pre_hara_concurrent_procedure__max_inputs"></label><pre class="source"><code class="clojure">(defn max-inputs
   [func num]
   (if (args/vargs? func)
     num
@@ -529,7 +544,7 @@ Original highlight.js style (c) Ivan Sagalaev <maniac@softwaremaniacs.org>
 => 4
 
 (max-inputs (fn ([a])) 0)
-=> throws</code></pre></div><div class="entry"><span id="entry__hara_concurrent_procedure__procedure"></span><div class="entry-description"><h4><b>procedure&nbsp<a data-scroll="" href="#entry__hara_concurrent_procedure__">^</a></b></h4><p><i>creates</i></p></div><div class="entry-option"><h6><a href="https://github.com/zcaudate/hara/blob/master/src/hara/concurrent/procedure.clj#L176-L186" target="_blank">v&nbsp;2.2</a>&nbsp;&nbsp;args: <i class="args">[tk arglist]</i>&nbsp;&nbsp;&nbsp;</h6><div><input class="source-toggle" id="entry__pre_hara_concurrent_procedure__procedure" type="checkbox" /><label class="source-toggle" for="entry__pre_hara_concurrent_procedure__procedure"></label><pre class="source"><code class="clojure">(defn procedure
+=> throws</code></pre></div><div class="entry"><span id="entry__hara_concurrent_procedure__procedure"></span><div class="entry-description"><h4><b>procedure&nbsp<a data-scroll="" href="#entry__hara_concurrent_procedure__">^</a></b></h4><p><i>creates</i></p></div><div class="entry-option"><h6><a href="https://github.com/zcaudate/hara/blob/master/src/hara/concurrent/procedure.clj#L176-L186" target="_blank">v&nbsp;2.2</a></h6><div><input class="source-toggle" id="entry__pre_hara_concurrent_procedure__procedure" type="checkbox" /><label class="source-toggle" for="entry__pre_hara_concurrent_procedure__procedure"></label><pre class="source"><code class="clojure">(defn procedure
   ([tk arglist]
    (cond (fn? tk)
          (procedure {:handler tk} arglist)
@@ -537,7 +552,7 @@ Original highlight.js style (c) Ivan Sagalaev <maniac@softwaremaniacs.org>
          (hash-map? tk)
          (-> (assoc tk :arglist arglist)
              (nested/merge-nil-nested *default-settings*)
-             (map->Procedure)))))</code></pre></div></div><pre><h6><i><a href="https://github.com/zcaudate/hara/blob/master/test/hara/concurrent/procedure_test.clj#L20-L20" target="_blank">link</a></i></h6><code class="clojure"></code></pre></div><div class="entry"><span id="entry__hara_concurrent_procedure__wrap_exception"></span><div class="entry-description"><h4><b>wrap-exception&nbsp<a data-scroll="" href="#entry__hara_concurrent_procedure__">^</a></b></h4><p><i></i></p></div><div class="entry-option"><h6><i class="error version">NONE</i>&nbsp;&nbsp;args: <i class="args">[f]</i>&nbsp;&nbsp;&nbsp;</h6><div><input class="source-toggle" id="entry__pre_hara_concurrent_procedure__wrap_exception" type="checkbox" /><label class="source-toggle" for="entry__pre_hara_concurrent_procedure__wrap_exception"></label><pre class="source"><code class="clojure">(defn wrap-exception
+             (map->Procedure)))))</code></pre></div></div><pre><h6><i><a href="https://github.com/zcaudate/hara/blob/master/test/hara/concurrent/procedure_test.clj#L20-L20" target="_blank">link</a></i></h6><code class="clojure"></code></pre></div><div class="entry"><span id="entry__hara_concurrent_procedure__wrap_exception"></span><div class="entry-description"><h4><b>wrap-exception&nbsp<a data-scroll="" href="#entry__hara_concurrent_procedure__">^</a></b></h4><p><i></i></p></div><div class="entry-option"><h6><i class="error version">NONE</i></h6><div><input class="source-toggle" id="entry__pre_hara_concurrent_procedure__wrap_exception" type="checkbox" /><label class="source-toggle" for="entry__pre_hara_concurrent_procedure__wrap_exception"></label><pre class="source"><code class="clojure">(defn wrap-exception
   [f]
   (fn [{:keys [retry arglist] :as instance} args]
     (try (f instance args)

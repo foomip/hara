@@ -127,6 +127,11 @@
   font-size: 15px;
 }
 
+pre, code {
+  white-space: pre;
+  overflow-x: scroll;
+}
+
 h2 {
   margin-top: 2.5rem;
   font-size: 1.5rem;
@@ -248,6 +253,16 @@ pre{
 {
   font-size: x-large;
 }
+}
+
+@media (max-width: 30rem) {
+  pre, code {
+    font-size: x-small;
+  } 
+  h6 .args
+  {
+    font-size: x-small;    
+  }
 }
 
 
@@ -445,7 +460,7 @@ Original highlight.js style (c) Ivan Sagalaev <maniac@softwaremaniacs.org>
           <div class="heading">
             <div>
               <h5>Author: Chris Zheng&nbsp;&nbsp;<a href="mailto:z@caudate.me">(z@caudate.me)</a></h5>
-              <h5>Date: 03 October 2016</h5>
+              <h5>Date: 04 October 2016</h5>
               <h5>Repository: <a href="https://github.com/zcaudate/hara">https://github.com/zcaudate/hara</a></h5>
               <h5>Version: 2.4.5</h5></div></div>
           <hr/>
@@ -467,7 +482,7 @@ Original highlight.js style (c) Ivan Sagalaev <maniac@softwaremaniacs.org>
                 </ul>
               </nav>
           </div>
-          <div><span id="introduction" name="introduction"></span><h2><b>1 &nbsp;&nbsp; Introduction</b></h2></div><div><p> <code>hara.reflect</code> contains methods for class reflection and method invocation.</p></div><div><span id="installation" name="installation"></span><h3>1.1 &nbsp;&nbsp; Installation</h3></div><div><p>Add to <code>project.clj</code> dependencies:</p><pre><code>  &#91;im.chit/hara.reflect &quot;2.4.5&quot;&#93;</code></pre></div><div><p>All functionality is found contained in the <code>hara.reflect</code> namespace</p></div><div class="code"><pre><code class="clojure">(use 'hara.reflect)</code></pre></div><div><span id="api" name="api"></span><h2><b>2 &nbsp;&nbsp; API</b></h2></div><div class="api"><span id="entry__hara_reflect__"></span><hr /><div><ul><li><a data-scroll="" href="#entry__hara_reflect__apply_element">apply-element</a></li><li><a data-scroll="" href="#entry__hara_reflect__class_hierarchy">class-hierarchy</a></li><li><a data-scroll="" href="#entry__hara_reflect__class_info">class-info</a></li><li><a data-scroll="" href="#entry__hara_reflect__context_class">context-class</a></li><li><a data-scroll="" href="#entry__hara_reflect__delegate">delegate</a></li><li><a data-scroll="" href="#entry__hara_reflect__extract_to_ns">extract-to-ns</a></li><li><a data-scroll="" href="#entry__hara_reflect__extract_to_var">extract-to-var</a></li><li><a data-scroll="" href="#entry__hara_reflect__query_class">query-class</a></li><li><a data-scroll="" href="#entry__hara_reflect__query_hierarchy">query-hierarchy</a></li><li><a data-scroll="" href="#entry__hara_reflect__query_instance">query-instance</a></li></ul><hr style="margin-bottom: 0" /><div><div class="entry"><span id="entry__hara_reflect__apply_element"></span><div class="entry-description"><h4><b>apply-element&nbsp<a data-scroll="" href="#entry__hara_reflect__">^</a></b></h4><p><i>apply the class element to arguments</i></p></div><div class="entry-option"><h6><a href="https://github.com/zcaudate/hara/blob/master/src/hara/reflect/core/apply.clj#L76-L93" target="_blank">v&nbsp;2.1</a>&nbsp;&nbsp;args: <i class="args">[obj method args]</i>&nbsp;&nbsp;&nbsp;</h6><div><input class="source-toggle" id="entry__pre_hara_reflect__apply_element" type="checkbox" /><label class="source-toggle" for="entry__pre_hara_reflect__apply_element"></label><pre class="source"><code class="clojure">(defn apply-element
+          <div><span id="introduction" name="introduction"></span><h2><b>1 &nbsp;&nbsp; Introduction</b></h2></div><div><p><code>hara.reflect</code> contains methods for class reflection and method invocation.</p></div><div><span id="installation" name="installation"></span><h3>1.1 &nbsp;&nbsp; Installation</h3></div><div><p>Add to <code>project.clj</code> dependencies:</p><pre><code>&#91;im.chit/hara.reflect &quot;2.4.5&quot;&#93;</code></pre></div><div><p>All functionality is found contained in the <code>hara.reflect</code> namespace</p></div><div class="code"><pre><code class="clojure">(use 'hara.reflect)</code></pre></div><div><span id="api" name="api"></span><h2><b>2 &nbsp;&nbsp; API</b></h2></div><div class="api"><span id="entry__hara_reflect__"></span><hr /><div><ul><li><a data-scroll="" href="#entry__hara_reflect__apply_element">apply-element</a></li><li><a data-scroll="" href="#entry__hara_reflect__class_hierarchy">class-hierarchy</a></li><li><a data-scroll="" href="#entry__hara_reflect__class_info">class-info</a></li><li><a data-scroll="" href="#entry__hara_reflect__context_class">context-class</a></li><li><a data-scroll="" href="#entry__hara_reflect__delegate">delegate</a></li><li><a data-scroll="" href="#entry__hara_reflect__extract_to_ns">extract-to-ns</a></li><li><a data-scroll="" href="#entry__hara_reflect__extract_to_var">extract-to-var</a></li><li><a data-scroll="" href="#entry__hara_reflect__query_class">query-class</a></li><li><a data-scroll="" href="#entry__hara_reflect__query_hierarchy">query-hierarchy</a></li><li><a data-scroll="" href="#entry__hara_reflect__query_instance">query-instance</a></li></ul><hr style="margin-bottom: 0" /><div><div class="entry"><span id="entry__hara_reflect__apply_element"></span><div class="entry-description"><h4><b>apply-element&nbsp<a data-scroll="" href="#entry__hara_reflect__">^</a></b></h4><p><i>apply the class element to arguments</i></p></div><div class="entry-option"><h6><a href="https://github.com/zcaudate/hara/blob/master/src/hara/reflect/core/apply.clj#L76-L93" target="_blank">v&nbsp;2.1</a></h6><div><input class="source-toggle" id="entry__pre_hara_reflect__apply_element" type="checkbox" /><label class="source-toggle" for="entry__pre_hara_reflect__apply_element"></label><pre class="source"><code class="clojure">(defn apply-element
   [obj method args]
   (let [lu (get-element-lookup obj)]
     (if-let [ele (get lu method)]
@@ -480,7 +495,7 @@ Original highlight.js style (c) Ivan Sagalaev <maniac@softwaremaniacs.org>
             :else
             (apply ele obj args))
       (throw (Exception. (format "Class member not Found for %s - `%s`" (common/context-class obj) method))))))</code></pre></div></div><pre><h6><i><a href="https://github.com/zcaudate/hara/blob/master/test/hara/reflect/core/apply_test.clj#L6-L9" target="_blank">link</a></i></h6><code class="clojure">(seq (apply-element "123" "value" []))
-=> [1 2 3]</code></pre></div><div class="entry"><span id="entry__hara_reflect__class_hierarchy"></span><div class="entry-description"><h4><b>class-hierarchy&nbsp<a data-scroll="" href="#entry__hara_reflect__">^</a></b></h4><p><i>lists the class and interface hierarchy for the class</i></p></div><div class="entry-option"><h6><a href="https://github.com/zcaudate/hara/blob/master/src/hara/reflect/core/class.clj#L18-L30" target="_blank">v&nbsp;2.1</a>&nbsp;&nbsp;args: <i class="args">[obj]</i>&nbsp;&nbsp;&nbsp;</h6><div><input class="source-toggle" id="entry__pre_hara_reflect__class_hierarchy" type="checkbox" /><label class="source-toggle" for="entry__pre_hara_reflect__class_hierarchy"></label><pre class="source"><code class="clojure">(defn class-hierarchy
+=> [1 2 3]</code></pre></div><div class="entry"><span id="entry__hara_reflect__class_hierarchy"></span><div class="entry-description"><h4><b>class-hierarchy&nbsp<a data-scroll="" href="#entry__hara_reflect__">^</a></b></h4><p><i>lists the class and interface hierarchy for the class</i></p></div><div class="entry-option"><h6><a href="https://github.com/zcaudate/hara/blob/master/src/hara/reflect/core/class.clj#L18-L30" target="_blank">v&nbsp;2.1</a></h6><div><input class="source-toggle" id="entry__pre_hara_reflect__class_hierarchy" type="checkbox" /><label class="source-toggle" for="entry__pre_hara_reflect__class_hierarchy"></label><pre class="source"><code class="clojure">(defn class-hierarchy
   [obj]
   (let [t (common/context-class obj)]
     (vec (cons t (inheritance/ancestor-tree t)))))</code></pre></div></div><pre><h6><i><a href="https://github.com/zcaudate/hara/blob/master/test/hara/reflect/core/class_test.clj#L14-L21" target="_blank">link</a></i></h6><code class="clojure">(class-hierarchy String)
@@ -488,19 +503,19 @@ Original highlight.js style (c) Ivan Sagalaev <maniac@softwaremaniacs.org>
     [java.lang.Object
      #{java.io.Serializable
        java.lang.Comparable
-       java.lang.CharSequence}]]</code></pre></div><div class="entry"><span id="entry__hara_reflect__class_info"></span><div class="entry-description"><h4><b>class-info&nbsp<a data-scroll="" href="#entry__hara_reflect__">^</a></b></h4><p><i>lists class information</i></p></div><div class="entry-option"><h6><a href="https://github.com/zcaudate/hara/blob/master/src/hara/reflect/core/class.clj#L6-L16" target="_blank">v&nbsp;2.1</a>&nbsp;&nbsp;args: <i class="args">[obj]</i>&nbsp;&nbsp;&nbsp;</h6><div><input class="source-toggle" id="entry__pre_hara_reflect__class_info" type="checkbox" /><label class="source-toggle" for="entry__pre_hara_reflect__class_info"></label><pre class="source"><code class="clojure">(defn class-info
+       java.lang.CharSequence}]]</code></pre></div><div class="entry"><span id="entry__hara_reflect__class_info"></span><div class="entry-description"><h4><b>class-info&nbsp<a data-scroll="" href="#entry__hara_reflect__">^</a></b></h4><p><i>lists class information</i></p></div><div class="entry-option"><h6><a href="https://github.com/zcaudate/hara/blob/master/src/hara/reflect/core/class.clj#L6-L16" target="_blank">v&nbsp;2.1</a></h6><div><input class="source-toggle" id="entry__pre_hara_reflect__class_info" type="checkbox" /><label class="source-toggle" for="entry__pre_hara_reflect__class_info"></label><pre class="source"><code class="clojure">(defn class-info
   [obj]
   (select-keys (element/seed :class (common/context-class obj))
                [:name :hash :modifiers]))</code></pre></div></div><pre><h6><i><a href="https://github.com/zcaudate/hara/blob/master/test/hara/reflect/core/class_test.clj#L6-L11" target="_blank">link</a></i></h6><code class="clojure">(class-info String)
 => (contains {:name "java.lang.String"
               :hash anything
-              :modifiers #{:instance :class :public :final}})</code></pre></div><div class="entry"><span id="entry__hara_reflect__context_class"></span><div class="entry-description"><h4><b>context-class&nbsp<a data-scroll="" href="#entry__hara_reflect__">^</a></b></h4><p><i>if x is a class, return x otherwise return the class of x</i></p></div><div class="entry-option"><h6><a href="https://github.com/zcaudate/hara/blob/master/src/hara/reflect/common.clj#L6-L16" target="_blank">v&nbsp;2.1</a>&nbsp;&nbsp;args: <i class="args">[obj]</i>&nbsp;&nbsp;&nbsp;</h6><div><input class="source-toggle" id="entry__pre_hara_reflect__context_class" type="checkbox" /><label class="source-toggle" for="entry__pre_hara_reflect__context_class"></label><pre class="source"><code class="clojure">(defn context-class
+              :modifiers #{:instance :class :public :final}})</code></pre></div><div class="entry"><span id="entry__hara_reflect__context_class"></span><div class="entry-description"><h4><b>context-class&nbsp<a data-scroll="" href="#entry__hara_reflect__">^</a></b></h4><p><i>if x is a class, return x otherwise return the class of x</i></p></div><div class="entry-option"><h6><a href="https://github.com/zcaudate/hara/blob/master/src/hara/reflect/common.clj#L6-L16" target="_blank">v&nbsp;2.1</a></h6><div><input class="source-toggle" id="entry__pre_hara_reflect__context_class" type="checkbox" /><label class="source-toggle" for="entry__pre_hara_reflect__context_class"></label><pre class="source"><code class="clojure">(defn context-class
   [obj]
   (if (class? obj) obj (type obj)))</code></pre></div></div><pre><h6><i><a href="https://github.com/zcaudate/hara/blob/master/test/hara/reflect/common_test.clj#L6-L12" target="_blank">link</a></i></h6><code class="clojure">(context-class String)
 => String
 
 (context-class "")
-=> String</code></pre></div><div class="entry"><span id="entry__hara_reflect__delegate"></span><div class="entry-description"><h4><b>delegate&nbsp<a data-scroll="" href="#entry__hara_reflect__">^</a></b></h4><p><i>allow transparent field access and manipulation to the underlying object.</i></p></div><div class="entry-option"><h6><a href="https://github.com/zcaudate/hara/blob/master/src/hara/reflect/core/delegate.clj#L42-L56" target="_blank">v&nbsp;2.1</a>&nbsp;&nbsp;args: <i class="args">[obj]</i>&nbsp;&nbsp;&nbsp;</h6><div><input class="source-toggle" id="entry__pre_hara_reflect__delegate" type="checkbox" /><label class="source-toggle" for="entry__pre_hara_reflect__delegate"></label><pre class="source"><code class="clojure">(defn delegate
+=> String</code></pre></div><div class="entry"><span id="entry__hara_reflect__delegate"></span><div class="entry-description"><h4><b>delegate&nbsp<a data-scroll="" href="#entry__hara_reflect__">^</a></b></h4><p><i>allow transparent field access and manipulation to the underlying object.</i></p></div><div class="entry-option"><h6><a href="https://github.com/zcaudate/hara/blob/master/src/hara/reflect/core/delegate.clj#L42-L56" target="_blank">v&nbsp;2.1</a></h6><div><input class="source-toggle" id="entry__pre_hara_reflect__delegate" type="checkbox" /><label class="source-toggle" for="entry__pre_hara_reflect__delegate"></label><pre class="source"><code class="clojure">(defn delegate
   [obj]
   (let [fields (->> (map (juxt (comp keyword :name) identity) (q/query-instance obj [:field]))
                     (into {}))]
@@ -510,7 +525,7 @@ Original highlight.js style (c) Ivan Sagalaev <maniac@softwaremaniacs.org>
 (seq (>a :value)) => [h e l l o]
 
 (>a :value (char-array "world"))
-a => "world"</code></pre></div><div class="entry"><span id="entry__hara_reflect__extract_to_ns"></span><div class="entry-description"><h4><b>extract-to-ns&nbsp<a data-scroll="" href="#entry__hara_reflect__">^</a></b></h4><p><i>extracts all class methods into its own namespace.</i></p></div><div class="entry-option"><h6><a href="https://github.com/zcaudate/hara/blob/master/src/hara/reflect/core/extract.clj#L66-L82" target="_blank">v&nbsp;2.1</a>&nbsp;&nbsp;args: <i class="args">[class] [nssym class] [nssym class selectors]</i>&nbsp;&nbsp;&nbsp;</h6><div><input class="source-toggle" id="entry__pre_hara_reflect__extract_to_ns" type="checkbox" /><label class="source-toggle" for="entry__pre_hara_reflect__extract_to_ns"></label><pre class="source"><code class="clojure">(defn extract-to-ns
+a => "world"</code></pre></div><div class="entry"><span id="entry__hara_reflect__extract_to_ns"></span><div class="entry-description"><h4><b>extract-to-ns&nbsp<a data-scroll="" href="#entry__hara_reflect__">^</a></b></h4><p><i>extracts all class methods into its own namespace.</i></p></div><div class="entry-option"><h6><a href="https://github.com/zcaudate/hara/blob/master/src/hara/reflect/core/extract.clj#L66-L82" target="_blank">v&nbsp;2.1</a></h6><div><input class="source-toggle" id="entry__pre_hara_reflect__extract_to_ns" type="checkbox" /><label class="source-toggle" for="entry__pre_hara_reflect__extract_to_ns"></label><pre class="source"><code class="clojure">(defn extract-to-ns
   ([class]
    (extract-to-ns (symbol (.getName *ns*)) class []))
   ([nssym class]
@@ -522,7 +537,7 @@ a => "world"</code></pre></div><div class="entry"><span id="entry__hara_reflect_
      (doall (for [method methods]
               (extract-to-var nssym (symbol method) class method selectors))))))</code></pre></div></div><pre><h6><i><a href="https://github.com/zcaudate/hara/blob/master/test/hara/reflect/core/extract_test.clj#L24-L28" target="_blank">link</a></i></h6><code class="clojure">(map #(.sym %)
      (extract-to-ns 'test.string String [:private #"serial"]))
-=> '[serialPersistentFields serialVersionUID]</code></pre></div><div class="entry"><span id="entry__hara_reflect__extract_to_var"></span><div class="entry-description"><h4><b>extract-to-var&nbsp<a data-scroll="" href="#entry__hara_reflect__">^</a></b></h4><p><i>extracts a class method into a namespace.</i></p></div><div class="entry-option"><h6><a href="https://github.com/zcaudate/hara/blob/master/src/hara/reflect/core/extract.clj#L34-L64" target="_blank">v&nbsp;2.1</a>&nbsp;&nbsp;args: <i class="args">[varsym class method] [varsym class method selectors] [nssym varsym class method selectors]</i>&nbsp;&nbsp;&nbsp;</h6><div><input class="source-toggle" id="entry__pre_hara_reflect__extract_to_var" type="checkbox" /><label class="source-toggle" for="entry__pre_hara_reflect__extract_to_var"></label><pre class="source"><code class="clojure">(defn extract-to-var
+=> '[serialPersistentFields serialVersionUID]</code></pre></div><div class="entry"><span id="entry__hara_reflect__extract_to_var"></span><div class="entry-description"><h4><b>extract-to-var&nbsp<a data-scroll="" href="#entry__hara_reflect__">^</a></b></h4><p><i>extracts a class method into a namespace.</i></p></div><div class="entry-option"><h6><a href="https://github.com/zcaudate/hara/blob/master/src/hara/reflect/core/extract.clj#L34-L64" target="_blank">v&nbsp;2.1</a></h6><div><input class="source-toggle" id="entry__pre_hara_reflect__extract_to_var" type="checkbox" /><label class="source-toggle" for="entry__pre_hara_reflect__extract_to_var"></label><pre class="source"><code class="clojure">(defn extract-to-var
   ([varsym class method]
    (extract-to-var varsym class method []))
   ([varsym class method selectors]
@@ -548,18 +563,18 @@ a => "world"</code></pre></div><div class="entry"><span id="entry__hara_reflect_
         "modifiers: instance, method, public, abstractn")
 
 (eval '(hash-without {:a 1 :b 2} :a))
-=> {:b 2}</code></pre></div><div class="entry"><span id="entry__hara_reflect__query_class"></span><div class="entry-description"><h4><b>query-class&nbsp<a data-scroll="" href="#entry__hara_reflect__">^</a></b></h4><p><i>queries the java view of the class declaration</i></p></div><div class="entry-option"><h6><a href="https://github.com/zcaudate/hara/blob/master/src/hara/reflect/core/query.clj#L26-L35" target="_blank">v&nbsp;2.1</a>&nbsp;&nbsp;args: <i class="args">[obj selectors]</i>&nbsp;&nbsp;&nbsp;</h6><div><input class="source-toggle" id="entry__pre_hara_reflect__query_class" type="checkbox" /><label class="source-toggle" for="entry__pre_hara_reflect__query_class"></label><pre class="source"><code class="clojure">(defn query-class
+=> {:b 2}</code></pre></div><div class="entry"><span id="entry__hara_reflect__query_class"></span><div class="entry-description"><h4><b>query-class&nbsp<a data-scroll="" href="#entry__hara_reflect__">^</a></b></h4><p><i>queries the java view of the class declaration</i></p></div><div class="entry-option"><h6><a href="https://github.com/zcaudate/hara/blob/master/src/hara/reflect/core/query.clj#L26-L35" target="_blank">v&nbsp;2.1</a></h6><div><input class="source-toggle" id="entry__pre_hara_reflect__query_class" type="checkbox" /><label class="source-toggle" for="entry__pre_hara_reflect__query_class"></label><pre class="source"><code class="clojure">(defn query-class
   [obj selectors]
   (list-class-elements (common/context-class obj) selectors))</code></pre></div></div><pre><h6><i><a href="https://github.com/zcaudate/hara/blob/master/test/hara/reflect/core/query_test.clj#L6-L11" target="_blank">link</a></i></h6><code class="clojure">(query-class String  [#"^c" :name])
 => ["charAt" "checkBounds" "codePointAt" "codePointBefore"
     "codePointCount" "compareTo" "compareToIgnoreCase"
-    "concat" "contains" "contentEquals" "copyValueOf"]</code></pre></div><div class="entry"><span id="entry__hara_reflect__query_hierarchy"></span><div class="entry-description"><h4><b>query-hierarchy&nbsp<a data-scroll="" href="#entry__hara_reflect__">^</a></b></h4><p><i>lists what methods could be applied to a particular instance</i></p></div><div class="entry-option"><h6><a href="https://github.com/zcaudate/hara/blob/master/src/hara/reflect/core/query.clj#L61-L71" target="_blank">v&nbsp;2.1</a>&nbsp;&nbsp;args: <i class="args">[obj selectors]</i>&nbsp;&nbsp;&nbsp;</h6><div><input class="source-toggle" id="entry__pre_hara_reflect__query_hierarchy" type="checkbox" /><label class="source-toggle" for="entry__pre_hara_reflect__query_hierarchy"></label><pre class="source"><code class="clojure">(defn query-hierarchy
+    "concat" "contains" "contentEquals" "copyValueOf"]</code></pre></div><div class="entry"><span id="entry__hara_reflect__query_hierarchy"></span><div class="entry-description"><h4><b>query-hierarchy&nbsp<a data-scroll="" href="#entry__hara_reflect__">^</a></b></h4><p><i>lists what methods could be applied to a particular instance</i></p></div><div class="entry-option"><h6><a href="https://github.com/zcaudate/hara/blob/master/src/hara/reflect/core/query.clj#L61-L71" target="_blank">v&nbsp;2.1</a></h6><div><input class="source-toggle" id="entry__pre_hara_reflect__query_hierarchy" type="checkbox" /><label class="source-toggle" for="entry__pre_hara_reflect__query_hierarchy"></label><pre class="source"><code class="clojure">(defn query-hierarchy
   [obj selectors]
   (let [grp (args/args-group selectors)
         tcls  (common/context-class obj)]
     (->> (all-instance-elements tcls nil)
          (display/display grp))))</code></pre></div></div><pre><h6><i><a href="https://github.com/zcaudate/hara/blob/master/test/hara/reflect/core/query_test.clj#L14-L17" target="_blank">link</a></i></h6><code class="clojure">(query-hierarchy String [:name #"^to"])
-=> ["toCharArray" "toLowerCase" "toString" "toUpperCase"]</code></pre></div><div class="entry"><span id="entry__hara_reflect__query_instance"></span><div class="entry-description"><h4><b>query-instance&nbsp<a data-scroll="" href="#entry__hara_reflect__">^</a></b></h4><p><i>lists what methods could be applied to a particular instance</i></p></div><div class="entry-option"><h6><a href="https://github.com/zcaudate/hara/blob/master/src/hara/reflect/core/query.clj#L46-L59" target="_blank">v&nbsp;2.1</a>&nbsp;&nbsp;args: <i class="args">[obj selectors]</i>&nbsp;&nbsp;&nbsp;</h6><div><input class="source-toggle" id="entry__pre_hara_reflect__query_instance" type="checkbox" /><label class="source-toggle" for="entry__pre_hara_reflect__query_instance"></label><pre class="source"><code class="clojure">(defn query-instance
+=> ["toCharArray" "toLowerCase" "toString" "toUpperCase"]</code></pre></div><div class="entry"><span id="entry__hara_reflect__query_instance"></span><div class="entry-description"><h4><b>query-instance&nbsp<a data-scroll="" href="#entry__hara_reflect__">^</a></b></h4><p><i>lists what methods could be applied to a particular instance</i></p></div><div class="entry-option"><h6><a href="https://github.com/zcaudate/hara/blob/master/src/hara/reflect/core/query.clj#L46-L59" target="_blank">v&nbsp;2.1</a></h6><div><input class="source-toggle" id="entry__pre_hara_reflect__query_instance" type="checkbox" /><label class="source-toggle" for="entry__pre_hara_reflect__query_instance"></label><pre class="source"><code class="clojure">(defn query-instance
   [obj selectors]
   (let [grp (args/args-group selectors)
         tcls (type obj)]
