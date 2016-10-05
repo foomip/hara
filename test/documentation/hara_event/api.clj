@@ -6,8 +6,8 @@
 
 "The keyword `raise` is used to raise an 'issue'. At the simplest, when there is no `manage` blocks, `raise` just throws a `clojure.lang.ExceptionInfo` object"
 
+[[{:title "raise is of type clojure.lang.ExceptionInfo" :tag "raise-type"}]]
 (fact
-  [[{:title "raise is of type clojure.lang.ExceptionInfo" :tag "raise-type"}]]
   (raise {:error true})
   => (throws clojure.lang.ExceptionInfo))
 
@@ -56,7 +56,6 @@
 "Vectors can contain only keywords or both maps and keywords. They are there mainly for syntacic sugar"
 
 (fact
-
    (raise [:lvl-1 :lvl-2 :lvl-3])
   => (throws-info {:lvl-1 true :lvl-2 true :lvl-3 true})
 
@@ -71,22 +70,25 @@
 - [e.{{option-two}}](#option-two) sets the default as `:use-custom` with an argument of `10`.
 - [e.{{option-none}}](#option-none) shows that if there is no default selection, then an exception will be thrown as per previously seen:"
 
-(facts
-  [[{:title "default :use-nil" :tag "option-one"}]]
+
+[[{:title "default :use-nil" :tag "option-one"}]]
+(fact
   (raise :error
          (option :use-nil [] nil)
          (option :use-custom [n] n)
          (default :use-nil))
-  => nil
+  => nil)
 
-  [[{:title "default :use-custom" :tag "option-two"}]]
+[[{:title "default :use-custom" :tag "option-two"}]]
+(fact
   (raise :error
          (option :use-nil [] nil)
          (option :use-custom [n] n)
          (default :use-custom 10))
-  => 10
+  => 10)
 
-  [[{:title "no default" :tag "option-none"}]]
+[[{:title "no default" :tag "option-none"}]]
+(fact
   (raise :error
          (option :use-nil [] nil)
          (option :use-custom [n] n))
@@ -261,41 +263,46 @@
 
   The `on` handler can take keys of the `payload` of the raised `issue` as parameters. In [e.{{continue-using-str}}](#continue-using-str), a vector containing strings of the odd numbers are formed. Whereas in [e.{{continue-using-fractions}}](#continue-using-fractions), the on handler puts in fractions instead."
 
-(facts
-  [[{:title "continue using nan"}]]
+
+[[{:title "continue using nan"}]]
+(fact
   (manage
    (mapv half-int [1 2 3 4])
    (on :odd-number []
        (continue :nan)))
-  => [:nan 1 :nan 2]
+  => [:nan 1 :nan 2])
 
-  [[{:title "continue using str"}]]
+[[{:title "continue using str"}]]
+(fact
   (manage
    (mapv half-int [1 2 3 4])
    (on :odd-number [value]
        (continue (str value))))
-  => ["1" 1 "3" 2]
+  => ["1" 1 "3" 2])
 
-  [[{:title "continue using fractions"}]]
+[[{:title "continue using fractions"}]]
+(fact
   (manage
    (mapv half-int [1 2 3 4])
    (on :odd-number [value]
        (continue (/ value 2))))
-  => [1/2 1 3/2 2]
-  )
+  => [1/2 1 3/2 2])
+  
 
 [[:section {:title "fail" :tag "api-fail"}]]
 
 "The `fail` special form will forcibly cause an exception to be thrown. It is used when there is no need to advise managers of situation. More data can be added to the failure ([e.{{fail-example}}](#fail-example))."
 
-(facts
-  [[{:title "failure"}]]
+[[{:title "failure"}]]
+(fact
   (manage
     (mapv half-int [1 2 3 4])
     (on :odd-number []
       (fail [:unhandled :error])))
-  => (throws-info {:value 1 :odd-number true :unhandled true :error true})
-  )
+  => (throws-info {:value 1
+                   :odd-number true
+                   :unhandled true
+                   :error true}))
 
 [[:section {:title "choose" :tag "api-choose"}]]
 
@@ -312,26 +319,29 @@
 "Its usage can be seen in [e.{{choose-ex-1}}](#choose-ex-1) where different paths can be chosen depending upon `:value`. An option can also be specified in the manage block ([e.{{choose-ex-2}}](#choose-ex-2)). Options can also be overridden when specified in higher manage blocks ([e.{{choose-ex-3}}](#choose-ex-3)). "
 
 
-(facts
-  [[{:title "choosing different paths based on value" :tag "choose-ex-1"}]]
+
+[[{:title "choosing different paths based on value" :tag "choose-ex-1"}]]
+(fact
   (manage
    (mapv half-int-b [1 2 3 4])
    (on {:value 1} []
        (choose :use-nil))
    (on {:value 3} [value]
        (choose :use-custom (/ value 2))))
-  => [nil 1 3/2 2]
+  => [nil 1 3/2 2])
 
 
-  [[{:title "choosing option within manage form" :tag "choose-ex-2"}]]
+[[{:title "choosing option within manage form" :tag "choose-ex-2"}]]
+(fact
   (manage
    (mapv half-int-b [1 2 3 4])
    (on :odd-number []
        (choose :use-empty))
    (option :use-empty [] []))
-  => []
+  => [])
 
-  [[{:title "overwriting :use-nil within manage form" :tag "choose-ex-3"}]]
+[[{:title "overwriting :use-nil within manage form" :tag "choose-ex-3"}]]
+(fact
   (manage
    (mapv half-int-b [1 2 3 4])
    (on :odd-number []
@@ -369,12 +379,13 @@
 
 "The usage for `half-int-d` can be seen in ([e.{{d-alone}}](#d-alone) and [e.{{d-higher}}](#d-higher)) to show these particular cases."
 
-(facts
-  [[{:title "half-int-d alone" :tag "d-alone"}]]
+[[{:title "half-int-d alone" :tag "d-alone"}]]
+(fact
   (half-int-d 3)
-  => (throws java.lang.Exception "RAISE_CHOOSE: the label :use-empty has not been implemented")
+  => (throws java.lang.Exception "RAISE_CHOOSE: the label :use-empty has not been implemented"))
 
-  [[{:title "half-int-d inside manage block" :tag "d-higher"}]]
+[[{:title "half-int-d inside manage block" :tag "d-higher"}]]
+(fact
   (manage
    (mapv half-int-d [1 2 3 4])
    (option :use-empty [] [])

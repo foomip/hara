@@ -483,6 +483,7 @@
         :else
         (-> zip
             (update-in [:left] #(->> % rest (cons element)))
+            (assoc :changed? true)
             (update-in [:meta :history] conj :replace-left))))
 
 (defn replace-right
@@ -506,4 +507,5 @@
         :else
         (-> zip
             (update-in [:right] #(->> % rest (cons element)))
+            (assoc :changed? true)
             (update-in [:meta :history] conj :replace-right))))
