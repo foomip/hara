@@ -25,7 +25,7 @@ The first pieces of the current codebase was committed in 2012. Since then, the 
 
 ### Where has it been used?
 
-In many places. Mostly to write libraries that keep this maintainable. 
+In many places. Mostly to write libraries that keep this [maintainable](https://github.com/zcaudate/lucidity). 
 
 ### How to begin?
 

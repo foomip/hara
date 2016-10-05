@@ -32,5 +32,4 @@
     (println (format "- [hara.%s](hara-%s.html) - %s"
                      (:title m)
                      (:title m)
-                     (:subtitle m))))
-  )
+                     (:subtitle m)))))

@@ -472,16 +472,18 @@
        (zip/cursor))
    => '([1 \"10\" | 3])"
   {:added "2.4"}
-  [zip element]
-  (event/manage
-   (-> zip
-       (delete-left)
-       (insert-left element)
-       (assoc :changed? true))
-   (on {:fn :delete-left :tag :at-top} [zip]
-       (event/continue (delete-base zip :left :delete-left)))
-   (on {:fn :insert-left :tag :at-top} [zip element]
-       (event/continue (insert-base zip element :left :insert-left)))))
+  [{:keys [left] :as zip} element]
+  (cond (empty? left)
+        (event/raise {:fn  :replace-left
+                      :op  :replace
+                      :tag :no-left
+                      :zip zip}
+                     "No Left Node")
+
+        :else
+        (-> zip
+            (update-in [:left] #(->> % rest (cons element)))
+            (update-in [:meta :history] conj :replace-left))))
 
 (defn replace-right
   "replace element right of the current position
@@ -493,13 +495,15 @@
        (zip/cursor))
    => '([1 2 | \"10\"])"
   {:added "2.4"}
-  [zip element]
-  (event/manage
-   (-> zip
-       (delete-right)
-       (insert-right element)
-       (assoc :changed? true))
-   (on {:fn :delete-right :tag :at-top} [zip]
-       (event/continue (delete-base zip :right :delete-right)))
-   (on {:fn :insert-right :tag :at-top} [zip element]
-       (event/continue (insert-base zip element :right :insert-right)))))
+  [{:keys [right] :as zip} element]
+  (cond (empty? right)
+        (event/raise {:fn  :replace-right
+                      :op  :replace
+                      :tag :no-right
+                      :zip zip}
+                     "No Right Node")
+
+        :else
+        (-> zip
+            (update-in [:right] #(->> % rest (cons element)))
+            (update-in [:meta :history] conj :replace-right))))
