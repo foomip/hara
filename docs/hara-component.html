@@ -8,7 +8,7 @@
   <!-- Enable responsiveness on mobile devices-->
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
   <link rel="shortcut icon" href="favicon.ico">
-  <title>hara.component - constructing composable systems</title>
+  <title>lucid.component - constructing composable systems</title>
   <script src="js/highlight.min.js"></script>
   <script src="js/gumshoe.min.js"></script>
   <script src="js/smooth-scroll.min.js"></script>
@@ -18,8 +18,8 @@
   <link rel="stylesheet" href="css/syntax.css">
   <link rel="stylesheet" href="css/lanyon.css">
   <link rel="stylesheet" href="css/bolton.css">
-  <link rel="stylesheet" href="css/api.css">
-  <link rel="stylesheet" href="css/highlight.css">
+  <link rel="stylesheet" href="css/bolton-api.css">
+  <link rel="stylesheet" href="css/bolton-highlight.css">
   <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=PT+Serif:400,400italic,700|PT+Sans:400">
   
 </head>
@@ -34,6 +34,7 @@
 <!-- Toggleable sidebar -->
 <div class="sidebar" id="sidebar">
   <nav class="sidebar-nav">
+    <span>&nbsp;</span>
     <a class="sidebar-nav-item header" href="index.html"><img src="img/logo-white.png"/></a>
     <span>&nbsp;</span>
     <a class="sidebar-nav-item" href="hara-class.html">class</a><a class="sidebar-nav-item" href="hara-common.html">common</a><a class="sidebar-nav-item active" href="hara-component.html">component</a><a class="sidebar-nav-item" href="hara-concurrent.html">concurrent</a><a class="sidebar-nav-item" href="hara-concurrent-ova.html">concurrent.ova</a><a class="sidebar-nav-item" href="hara-concurrent-procedure.html">concurrent.procedure</a><a class="sidebar-nav-item" href="hara-data.html">data</a><a class="sidebar-nav-item" href="hara-event.html">event</a><a class="sidebar-nav-item" href="hara-expression.html">expression</a><a class="sidebar-nav-item" href="hara-extend.html">extend</a><a class="sidebar-nav-item" href="hara-function.html">function</a><a class="sidebar-nav-item" href="hara-group.html">group</a><a class="sidebar-nav-item" href="hara-io.html">io</a><a class="sidebar-nav-item" href="hara-io-file.html">io.file</a><a class="sidebar-nav-item" href="hara-io-scheduler.html">io.scheduler</a><a class="sidebar-nav-item" href="hara-io-watch.html">io.watch</a><a class="sidebar-nav-item" href="hara-namespace.html">namespace</a><a class="sidebar-nav-item" href="hara-object.html">object</a><a class="sidebar-nav-item" href="hara-reflect.html">reflect</a><a class="sidebar-nav-item" href="hara-sort.html">sort</a><a class="sidebar-nav-item" href="hara-string.html">string</a><a class="sidebar-nav-item" href="hara-test.html">test</a><a class="sidebar-nav-item" href="hara-time.html">time</a><a class="sidebar-nav-item" href="hara-zip.html">zip</a>
@@ -49,7 +50,7 @@
       <div class="masthead">
         <div class="container">
           <h3 class="masthead-title">
-            <span>hara.component</span>
+            <span>lucid.component</span>
             <small>constructing composable systems</small>
           </h3>
         </div>
@@ -60,7 +61,7 @@
           <div class="heading">
             <div>
               <h5>Author: Chris Zheng&nbsp;&nbsp;<a href="mailto:z@caudate.me">(z@caudate.me)</a></h5>
-              <h5>Date: 04 October 2016</h5>
+              <h5>Date: 05 October 2016</h5>
               <h5>Repository: <a href="https://github.com/zcaudate/hara">https://github.com/zcaudate/hara</a></h5>
               <h5>Version: 2.4.5</h5></div></div>
           <hr/>
@@ -82,7 +83,7 @@
                 </ul>
               </nav>
           </div>
-          <div><span id="introduction" name="introduction"></span><h2><b>1 &nbsp;&nbsp; Introduction</b></h2></div><div><p><a href='https://github.com/zcaudate/hara/blob/master/src/hara/component.clj'>hara.component</a> is a dependency injection framework for clojure. The virtues of this type of design for composing large systems has been much lauded. This library places emphasis on building large systems using a toplogy of how subsystems fit together and data of how it is to be configured.</p></div><div><span id="installation" name="installation"></span><h3>1.1 &nbsp;&nbsp; Installation</h3></div><div><p>Add to <code>project.clj</code> dependencies:</p><pre><code>&#91;im.chit/hara.component &quot;2.4.5&quot;&#93;</code></pre></div><div><p>All functions are in the <code>hara.component</code> namespace.</p></div><div class="code"><pre><code class="clojure">(require '[hara.component :as component])</code></pre></div><div><span id="motivation" name="motivation"></span><h3>1.2 &nbsp;&nbsp; Motivation</h3></div><div><p>There are two existing component libraries, namely:  </p><ul><li><a href='https://github.com/stuartsierra/component'>component</a></li><li><a href='https://github.com/tolitius/mount'>mount</a></li></ul><p><code>hara.component</code> takes the more simplified idea proposed by the <a href='https://github.com/stuartsierra/component'>original</a> library where there is whole system start up and teardown. However, it extends upon that concept by teasing apart configuration and application topology to give cleaner notion of design.</p><p>Configuration gives the ability to set the starting state of the entire program and should be easy as possible. Many a system become bloated due to not being able to properly manage configuration, therefore composing systems with configuration at the forefront will make for much simpler code and design. This library was build with this paradigm in mind. </p><p>Additionally, there are additional features that enable developers to write their systems in a clearer fashion.</p><ul><li>support for dealing with arrays of component</li><li>control with nested systems</li></ul></div><div><span id="api" name="api"></span><h2><b>2 &nbsp;&nbsp; API</b></h2></div><div><p>Because component is a framework for building systems, we have to start off with concepts of what we wish to build:</p><ul><li>A <code>Catalog</code> searches through files in a smart way and consists of a <code>FileSystem</code> and a <code>Database</code></li><li>A <code>Filesystem</code> stores and manages files</li><li>A <code>Database</code> stores indexed information about files</li></ul><p>The most simple representation is:</p></div><div class="code"><pre><code class="clojure">(defrecord Database []
+          <div><span id="introduction"></span><h2><b>1 &nbsp;&nbsp; Introduction</b></h2></div><div><p><a href='https://github.com/zcaudate/hara/blob/master/src/hara/component.clj'>hara.component</a> is a dependency injection framework for clojure. The virtues of this type of design for composing large systems has been much lauded. This library places emphasis on building large systems using a toplogy of how subsystems fit together and data of how it is to be configured.</p></div><div><span id="installation"></span><h3>1.1 &nbsp;&nbsp; Installation</h3></div><div><p>Add to <code>project.clj</code> dependencies:</p><pre><code>&#91;im.chit/hara.component &quot;2.4.5&quot;&#93;</code></pre></div><div><p>All functions are in the <code>hara.component</code> namespace.</p></div><div class="code"><pre><code class="clojure">(require '[hara.component :as component])</code></pre></div><div><span id="motivation"></span><h3>1.2 &nbsp;&nbsp; Motivation</h3></div><div><p>There are two existing component libraries, namely:  </p><ul><li><a href='https://github.com/stuartsierra/component'>component</a></li><li><a href='https://github.com/tolitius/mount'>mount</a></li></ul><p><code>hara.component</code> takes the more simplified idea proposed by the <a href='https://github.com/stuartsierra/component'>original</a> library where there is whole system start up and teardown. However, it extends upon that concept by teasing apart configuration and application topology to give cleaner notion of design.</p><p>Configuration gives the ability to set the starting state of the entire program and should be easy as possible. Many a system become bloated due to not being able to properly manage configuration, therefore composing systems with configuration at the forefront will make for much simpler code and design. This library was build with this paradigm in mind. </p><p>Additionally, there are additional features that enable developers to write their systems in a clearer fashion.</p><ul><li>support for dealing with arrays of component</li><li>control with nested systems</li></ul></div><div><span id="api"></span><h2><b>2 &nbsp;&nbsp; API</b></h2></div><div><p>Because component is a framework for building systems, we have to start off with concepts of what we wish to build:</p><ul><li>A <code>Catalog</code> searches through files in a smart way and consists of a <code>FileSystem</code> and a <code>Database</code></li><li>A <code>Filesystem</code> stores and manages files</li><li>A <code>Database</code> stores indexed information about files</li></ul><p>The most simple representation is:</p></div><div class="code"><pre><code class="clojure">(defrecord Database []
   component/IComponent
   (-start [db]
     (assoc db :status &quot;started&quot;))
@@ -185,7 +186,7 @@
     (if (instance? clojure.lang.IObj cp)
       (vary-meta cp dissoc :started)
       cp)))</code></pre></div></div><pre><h6><i><a href="https://github.com/zcaudate/hara/blob/master/test/hara/component_test.clj#L58-L61" target="_blank">link</a></i></h6><code class="clojure">(stop (start (Database.)))
-=> (just {})</code></pre></div></div></div></div><div><span id="config-driven-design" name="config-driven-design"></span><h2><b>3 &nbsp;&nbsp; Config Driven Design</b></h2></div><div><p>Following on from the general concepts we have have a look at how such a framework can be used in practice.</p><p>We will aim to create a system based upon a configuration file. As components are a very high level concept, using the pattern in code is more of a state of mind than following a set of APIs. Therefore in this documentation, it is hoped that a tutorial based approach will demonstrate the core functionality within the library. We seperate the guide into the following sections</p><ul><li><a href='#probability-model'>Probability Model</a> - How to calculate a bug distribution model.</li><li><a href='#sampling-model'>Sampling Model</a> - How to sample the distribution model.</li><li><a href='#implementing-components'>Implementing Components</a> - How to create and pretty up components so they are easy to integrate.</li><li><a href='#the-big-picture'>The Big Picture</a> - How to think about building and extending systems</li></ul><p>The first two chapters are not really about components, but it is important in showing how to create functions based around a particular configuration. The rest of the sections take a comphrensive approach of how to configure and reason about entire systems based on the component approach.</p></div><div><span id="the-bug-trapper" name="the-bug-trapper"></span><h3>3.1 &nbsp;&nbsp; The Bug Trapper</h3></div><div><p>We are creating a simulation based on trapping bugs in different parts of the house, then tallying up the results and displaying it through a web interface. We can see how the sub-systems connect together in the diagram below:</p></div><div class="figure"><a id="sub-system-dependencies" name="sub-system-dependencies"></a><h4><i>fig.1  &nbsp;-&nbsp; sub-system dependencies</i></h4><div class="img"><img height="400px" line="{:row 99, :col 1, :end-row 99, :end-col 103}" src="img/hara_component/dependency.png" title="sub-system dependencies" /></div><p></p></div><div><p>At the very bottom is a statistical model for generating events ie, how often an insect would be likely to appear given a certain set of conditions such as brightness, dampness, if it is indoors or outdoors, etc. This is used by a number of <code>traps</code>, which are an array of devices that simulates events of an insect going into the trap. An insect may or may not be captured by the trap itself and this is also tallied. The <code>app</code> itself tracks events over time by putting results into a <em>'database'</em> and the server takes live results and outputs a string via http.</p></div><div><span id="configuration" name="configuration"></span><h3>3.2 &nbsp;&nbsp; Configuration</h3></div><div><p>A datastructure can be created that customises various aspects of the simulation:</p></div><div class="code"><pre><code class="clojure">(def config
+=> (just {})</code></pre></div></div></div></div><div><span id="config-driven-design"></span><h2><b>3 &nbsp;&nbsp; Config Driven Design</b></h2></div><div><p>Following on from the general concepts we have have a look at how such a framework can be used in practice.</p><p>We will aim to create a system based upon a configuration file. As components are a very high level concept, using the pattern in code is more of a state of mind than following a set of APIs. Therefore in this documentation, it is hoped that a tutorial based approach will demonstrate the core functionality within the library. We seperate the guide into the following sections</p><ul><li><a href='#probability-model'>Probability Model</a> - How to calculate a bug distribution model.</li><li><a href='#sampling-model'>Sampling Model</a> - How to sample the distribution model.</li><li><a href='#implementing-components'>Implementing Components</a> - How to create and pretty up components so they are easy to integrate.</li><li><a href='#the-big-picture'>The Big Picture</a> - How to think about building and extending systems</li></ul><p>The first two chapters are not really about components, but it is important in showing how to create functions based around a particular configuration. The rest of the sections take a comphrensive approach of how to configure and reason about entire systems based on the component approach.</p></div><div><span id="the-bug-trapper"></span><h3>3.1 &nbsp;&nbsp; The Bug Trapper</h3></div><div><p>We are creating a simulation based on trapping bugs in different parts of the house, then tallying up the results and displaying it through a web interface. We can see how the sub-systems connect together in the diagram below:</p></div><div class="figure"><a id="sub-system-dependencies"></a><h4><i>fig.1  &nbsp;-&nbsp; sub-system dependencies</i></h4><div class="img"><img height="400px" line="{:row 99, :col 1, :end-row 99, :end-col 103}" src="img/hara_component/dependency.png" title="sub-system dependencies" /></div><p></p></div><div><p>At the very bottom is a statistical model for generating events ie, how often an insect would be likely to appear given a certain set of conditions such as brightness, dampness, if it is indoors or outdoors, etc. This is used by a number of <code>traps</code>, which are an array of devices that simulates events of an insect going into the trap. An insect may or may not be captured by the trap itself and this is also tallied. The <code>app</code> itself tracks events over time by putting results into a <em>'database'</em> and the server takes live results and outputs a string via http.</p></div><div><span id="configuration"></span><h3>3.2 &nbsp;&nbsp; Configuration</h3></div><div><p>A datastructure can be created that customises various aspects of the simulation:</p></div><div class="code"><pre><code class="clojure">(def config
   {:server     {:port 8090}
    :app        {}
    :traps     ^{:fuzziness 0.1 :efficiency 0.6}
@@ -205,12 +206,12 @@
                 :toggle  {:indoor     {:fly 0.3
                                        :mosquito 0.2}
                           :outdoor    {:bee 0.1
-                                       :ladybug 0.1}}}})</code></pre></div><div><span id="probability-model" name="probability-model"></span><h2><b>4 &nbsp;&nbsp; Probability Model</b></h2></div><div><p>We have a model of what percentage of bugs and depending on location, brightness and dampness, we adjust our model accordingly. So for example, we should be able to write a function <code>adjusted-distribution</code> that takes in a model and some parameter settings and spits out a probability distribution in the form of a map:</p></div><div class="code"><pre><code class="clojure">(adjusted-distribution {} (-&gt; config :model))
+                                       :ladybug 0.1}}}})</code></pre></div><div><span id="probability-model"></span><h2><b>4 &nbsp;&nbsp; Probability Model</b></h2></div><div><p>We have a model of what percentage of bugs and depending on location, brightness and dampness, we adjust our model accordingly. So for example, we should be able to write a function <code>adjusted-distribution</code> that takes in a model and some parameter settings and spits out a probability distribution in the form of a map:</p></div><div class="code"><pre><code class="clojure">(adjusted-distribution {} (-&gt; config :model))
 =&gt; {:fly 0.5, :ladybug 0.05, :mosquito 0.35, :bee 0.1}
 
 (adjusted-distribution {:indoor true}
                        (-&gt; config :model))
-=&gt; {:fly 0.8, :ladybug 0.05, :mosquito 0.55, :bee 0.1}</code></pre></div><div><span id="linear-adjustment" name="linear-adjustment"></span><h3>4.1 &nbsp;&nbsp; linear-adjustment</h3></div><div><p>We write a functions to adjustment for the linear increase:</p></div><div class="code"><pre><code class="clojure">(defn linear-adjustment [params linear]
+=&gt; {:fly 0.8, :ladybug 0.05, :mosquito 0.55, :bee 0.1}</code></pre></div><div><span id="linear-adjustment"></span><h3>4.1 &nbsp;&nbsp; linear-adjustment</h3></div><div><p>We write a functions to adjustment for the linear increase:</p></div><div class="code"><pre><code class="clojure">(defn linear-adjustment [params linear]
   (reduce-kv (fn [m k stats]
                (if-let [mul (get params k)]
                  (reduce-kv (fn [m k v]
@@ -234,7 +235,7 @@
 
 (linear-adjustment {:dampness 0.5}
                    (-&gt; config :model :linear))
-=&gt; {:mosquito 0.2}</code></pre></div><div><span id="toggle-adjustment" name="toggle-adjustment"></span><h3>4.2 &nbsp;&nbsp; toggle-adjustment</h3></div><div><p>The second function is for toggle adjustment, meaning that depending on a particular flag, we add a certain amount to the overall distribution:</p></div><div class="code"><pre><code class="clojure">(defn toggle-adjustment [params toggle]
+=&gt; {:mosquito 0.2}</code></pre></div><div><span id="toggle-adjustment"></span><h3>4.2 &nbsp;&nbsp; toggle-adjustment</h3></div><div><p>The second function is for toggle adjustment, meaning that depending on a particular flag, we add a certain amount to the overall distribution:</p></div><div class="code"><pre><code class="clojure">(defn toggle-adjustment [params toggle]
   (reduce-kv (fn [m k stats]
                (if-let [mul (get params k)]
                  (reduce-kv (fn [m k v]
@@ -250,7 +251,7 @@
 
 (toggle-adjustment {:outdoor true}
                    (-&gt; config :model :toggle))
-=&gt; {:bee 0.1, :ladybug 0.1}</code></pre></div><div><span id="add-distributions" name="add-distributions"></span><h3>4.3 &nbsp;&nbsp; add-distributions</h3></div><div><p>A helper function is defined to add distributions together</p></div><div class="code"><pre><code class="clojure">(defn add-distributions
+=&gt; {:bee 0.1, :ladybug 0.1}</code></pre></div><div><span id="add-distributions"></span><h3>4.3 &nbsp;&nbsp; add-distributions</h3></div><div><p>A helper function is defined to add distributions together</p></div><div class="code"><pre><code class="clojure">(defn add-distributions
   ([] {})
   ([m] m)
   ([m1 m2]
@@ -260,7 +261,7 @@
               m2))
   ([m1 m2 &amp; more]
    (apply add-distributions (add-distributions m1 m2) more)))</code></pre></div><div><p>The function is relatively generic and can be used to add arbitrary maps together:</p></div><div class="code"><pre><code class="clojure">(add-distributions {:a 0.1} {:a 0.1 :b 0.3} {:a 0.3 :c 0.3})
-=&gt; {:a 0.5, :b 0.3, :c 0.3}</code></pre></div><div><span id="adjusted-distribution" name="adjusted-distribution"></span><h3>4.4 &nbsp;&nbsp; adjusted-distribution</h3></div><div><p>Combining the three functions, we can get an adjusted distribution based on the model taken from the config:</p></div><div class="code"><pre><code class="clojure">(defn adjusted-distribution [params {:keys [default linear toggle] :as model}]
+=&gt; {:a 0.5, :b 0.3, :c 0.3}</code></pre></div><div><span id="adjusted-distribution"></span><h3>4.4 &nbsp;&nbsp; adjusted-distribution</h3></div><div><p>Combining the three functions, we can get an adjusted distribution based on the model taken from the config:</p></div><div class="code"><pre><code class="clojure">(defn adjusted-distribution [params {:keys [default linear toggle] :as model}]
   (let [ladjust (linear-adjustment params linear)
         tadjust (toggle-adjustment params toggle)]
     (add-distributions default ladjust tadjust)))</code></pre></div><div><p>The adjusted distributions for each trap can then be calculated:</p></div><div class="code"><pre><code class="clojure">(mapv #(adjusted-distribution % (-&gt; config :model))
@@ -276,9 +277,9 @@
      :mosquito 0.35, :bee 0.44999999999999996}
     ;; bathroom
     {:fly 0.8, :ladybug 0.05,
-     :mosquito 0.6699999999999999, :bee 0.1}]</code></pre></div><div><span id="sampling-model" name="sampling-model"></span><h2><b>5 &nbsp;&nbsp; Sampling Model</b></h2></div><div><p>The sampling model is easier to construct. We wish to create a function that takes in a distribution and returns a key that is proportional to the values of the map:</p></div><div class="code"><pre><code class="clojure">(random-sample {:a 0.5 :b 0.5})
+     :mosquito 0.6699999999999999, :bee 0.1}]</code></pre></div><div><span id="sampling-model"></span><h2><b>5 &nbsp;&nbsp; Sampling Model</b></h2></div><div><p>The sampling model is easier to construct. We wish to create a function that takes in a distribution and returns a key that is proportional to the values of the map:</p></div><div class="code"><pre><code class="clojure">(random-sample {:a 0.5 :b 0.5})
 =&gt; ;; either returns :a or :b
-#(get #{:a :b} %)</code></pre></div><div><span id="cumultive" name="cumultive"></span><h3>5.1 &nbsp;&nbsp; cumultive</h3></div><div><p>culmultive takes a distribution and turns it into a range, sorted by value:</p></div><div class="code"><pre><code class="clojure">(defn cumultive [distribution]
+#(get #{:a :b} %)</code></pre></div><div><span id="cumultive"></span><h3>5.1 &nbsp;&nbsp; cumultive</h3></div><div><p>culmultive takes a distribution and turns it into a range, sorted by value:</p></div><div class="code"><pre><code class="clojure">(defn cumultive [distribution]
   (dissoc (reduce (fn [out [k v]]
                     (let [total (::total out)
                           ntotal (+ total v)]
@@ -288,7 +289,7 @@
                   {::total 0}
                   (sort-by val distribution))
           ::total))</code></pre></div><div><p>examples of its usage can be seen:</p></div><div class="code"><pre><code class="clojure">(cumultive {:a 0.3 :b 0.5 :c 0.2})
-=&gt; {:c [0 0.2], :a [0.2 0.5], :b [0.5 1.0]}</code></pre></div><div><span id="category" name="category"></span><h3>5.2 &nbsp;&nbsp; category</h3></div><div><p>category takes a cumultive distribution and a point, return which section it belongs to:</p></div><div class="code"><pre><code class="clojure">(defn category [cumulative stat]
+=&gt; {:c [0 0.2], :a [0.2 0.5], :b [0.5 1.0]}</code></pre></div><div><span id="category"></span><h3>5.2 &nbsp;&nbsp; category</h3></div><div><p>category takes a cumultive distribution and a point, return which section it belongs to:</p></div><div class="code"><pre><code class="clojure">(defn category [cumulative stat]
   (-&gt;&gt; cumulative
        (keep (fn [[k [lower upper]]]
                (if (&lt;= lower stat upper) k)))
@@ -300,7 +301,7 @@
 
 (category dist 0.3) =&gt; :a
 
-(category dist 0.8) =&gt; :b</code></pre></div><div><span id="random-sample" name="random-sample"></span><h3>5.3 &nbsp;&nbsp; random-sample</h3></div><div><p>Now the <code>random-sample</code> function can be written:</p></div><div class="code"><pre><code class="clojure">(defn random-sample [distribution]
+(category dist 0.8) =&gt; :b</code></pre></div><div><span id="random-sample"></span><h3>5.3 &nbsp;&nbsp; random-sample</h3></div><div><p>Now the <code>random-sample</code> function can be written:</p></div><div class="code"><pre><code class="clojure">(defn random-sample [distribution]
   (let [total (apply + (vals distribution))
         stat  (rand total)]
     (category (cumultive distribution) stat)))</code></pre></div><div><p>We can now use this with a probability map:</p></div><div class="code"><pre><code class="clojure">(random-sample {:a 0.3 :b 0.5 :c 0.2})
@@ -309,7 +310,7 @@
  (adjusted-distribution {:brightness 0.3 :indoor true :rate 0.5}
                         (-&gt; config :model)))
 =&gt; ;; Return either :fly :ladybug :mosquito :bee
-#(get #{:fly :ladybug :mosquito :bee} %)</code></pre></div><div><span id="implementing-components" name="implementing-components"></span><h2><b>6 &nbsp;&nbsp; Implementing Components</b></h2></div><div><span id="model" name="model"></span><h3>6.1 &nbsp;&nbsp; Model</h3></div><div><p>We create a record for <code>Model</code>. The data is just a nested map but a record is used purely for printing purposes. There is quite alot of stuff in the map and we should be able to only show the necessary amount of information - in this case, we only want to know the keys of the datastructure:</p></div><div class="code"><pre><code class="clojure">(defrecord Model []
+#(get #{:fly :ladybug :mosquito :bee} %)</code></pre></div><div><span id="implementing-components"></span><h2><b>6 &nbsp;&nbsp; Implementing Components</b></h2></div><div><span id="model"></span><h3>6.1 &nbsp;&nbsp; Model</h3></div><div><p>We create a record for <code>Model</code>. The data is just a nested map but a record is used purely for printing purposes. There is quite alot of stuff in the map and we should be able to only show the necessary amount of information - in this case, we only want to know the keys of the datastructure:</p></div><div class="code"><pre><code class="clojure">(defrecord Model []
   Object
   (toString [obj]
     (str &quot;#model&quot; (vec (keys (into {} obj))))))
@@ -317,7 +318,7 @@
 (defmethod print-method Model
   [v w]
   (.write w (str v)))</code></pre></div><div><p>We can now use the <code>map-&gt;Model</code> function to create a nicer new on the model:</p></div><div class="code"><pre><code class="clojure">(map-&gt;Model (:model config))
-;;=&gt; #model[:default :linear :toggle]</code></pre></div><div><span id="trap" name="trap"></span><h3>6.2 &nbsp;&nbsp; Trap</h3></div><div><p><code>Trap</code> is a component that needs to be started and stopped. It simulates a trap that knows what insect went inside the trap, what time it entered and if it had been captured. We create a basic function for one round of the trapping an insect:</p></div><div class="code"><pre><code class="clojure">(defn trap-bug [{:keys [rate efficiency fuzziness model output] :as trap}]
+;;=&gt; #model[:default :linear :toggle]</code></pre></div><div><span id="trap"></span><h3>6.2 &nbsp;&nbsp; Trap</h3></div><div><p><code>Trap</code> is a component that needs to be started and stopped. It simulates a trap that knows what insect went inside the trap, what time it entered and if it had been captured. We create a basic function for one round of the trapping an insect:</p></div><div class="code"><pre><code class="clojure">(defn trap-bug [{:keys [rate efficiency fuzziness model output] :as trap}]
   (let [pause   (long (* (+ rate
                             (* (- (rand 1) 0.5) fuzziness))
                          1000))]
@@ -363,7 +364,7 @@
   [v w]
   (.write w (str v)))</code></pre></div><div><p>Finally, we create a <code>trap</code> constructor taking a config map and outputting a <code>Trap</code> record:</p></div><div class="code"><pre><code class="clojure">(defn trap [m]
   (assoc (map-&gt;Trap m)
-         :output (atom nil)))</code></pre></div><div><span id="partial-system-testing" name="partial-system-testing"></span><h3>6.3 &nbsp;&nbsp; Partial System Testing</h3></div><div><p>Having implemented the records for <code>:traps</code> and <code>:model</code>, we can test to see if our array of traps are working. The call to system takes two parameters - a topology map and a configuration map. The topology map specifies functions and dependencies whilst the configuration map specifies the initial input data. Note that to specify contruction of an array of components put the constructor in an additional vector:</p></div><div class="code"><pre><code class="clojure">(def topology {:traps [[trap] :model]
+         :output (atom nil)))</code></pre></div><div><span id="partial-system-testing"></span><h3>6.3 &nbsp;&nbsp; Partial System Testing</h3></div><div><p>Having implemented the records for <code>:traps</code> and <code>:model</code>, we can test to see if our array of traps are working. The call to system takes two parameters - a topology map and a configuration map. The topology map specifies functions and dependencies whilst the configuration map specifies the initial input data. Note that to specify contruction of an array of components put the constructor in an additional vector:</p></div><div class="code"><pre><code class="clojure">(def topology {:traps [[trap] :model]
                :model [map-&gt;Model]})
 
 (def sys (-&gt; (component/system toplogy config)
@@ -393,7 +394,7 @@
 ;;             #trap{:location &quot;bedroom&quot;, :output nil}
 ;;             #trap{:location &quot;patio&quot;, :output nil}
 ;;             #trap{:location &quot;bathroom&quot;, :output nil],
-;;    :model #model[:default :linear :toggle]}</code></pre></div><div><span id="app" name="app"></span><h3>6.4 &nbsp;&nbsp; App</h3></div><div><p>The role of the app is to hook up the sensors to a datastore, in this case an <a href='hara-concurrent-ova.html'>ova</a>, a mutable array of elements. We define <code>initialise-app</code> to setup watches to provide some summary and coordination:</p></div><div class="code"><pre><code class="clojure">(require '[hara.concurrent.ova :as ova])
+;;    :model #model[:default :linear :toggle]}</code></pre></div><div><span id="app"></span><h3>6.4 &nbsp;&nbsp; App</h3></div><div><p>The role of the app is to hook up the sensors to a datastore, in this case an <a href='hara-concurrent-ova.html'>ova</a>, a mutable array of elements. We define <code>initialise-app</code> to setup watches to provide some summary and coordination:</p></div><div class="code"><pre><code class="clojure">(require '[hara.concurrent.ova :as ova])
 
 (defn initialise-app [{:keys [db traps display total] :as app}]
   (let [data (mapv (fn [trap]
@@ -435,7 +436,7 @@
   (.write w (str v)))
 
 (defn app [m]
-  (assoc (map-&gt;App m) :total (atom {})))</code></pre></div><div><span id="app-testing" name="app-testing"></span><h3>6.5 &nbsp;&nbsp; App Testing</h3></div><div><p>We can now do a more testing by including a couple more constructors. Note that the keys <code>:db</code>, <code>app</code> and <code>summary</code> have been added. Also see the syntax for the <code>:summary</code> topology to expose the <code>:total</code> submap from <code>:app</code>.</p><p>The syntax for the <code>:summary</code> key should be further explained. What <code>component/start</code> sees a initialisation of {:expose [:total]}, it take the first dependency (in this case, <code>:app</code>), gets the <code>:total</code> submap and exposes it as <code>:summary</code> in the system map. The value of <code>:expose</code> can be either a vector (for nested map supprt) or a function for more generic operations. This promotes reuse and composition of multiple systems.</p></div><div class="code"><pre><code class="clojure">(def topology {:traps   [[trap] :model]
+  (assoc (map-&gt;App m) :total (atom {})))</code></pre></div><div><span id="app-testing"></span><h3>6.5 &nbsp;&nbsp; App Testing</h3></div><div><p>We can now do a more testing by including a couple more constructors. Note that the keys <code>:db</code>, <code>app</code> and <code>summary</code> have been added. Also see the syntax for the <code>:summary</code> topology to expose the <code>:total</code> submap from <code>:app</code>.</p><p>The syntax for the <code>:summary</code> key should be further explained. What <code>component/start</code> sees a initialisation of {:expose [:total]}, it take the first dependency (in this case, <code>:app</code>), gets the <code>:total</code> submap and exposes it as <code>:summary</code> in the system map. The value of <code>:expose</code> can be either a vector (for nested map supprt) or a function for more generic operations. This promotes reuse and composition of multiple systems.</p></div><div class="code"><pre><code class="clojure">(def topology {:traps   [[trap] :model]
                :model   [map-&gt;Model]
                :db      [ova/ova]
                :app     [app :traps :db]
@@ -467,7 +468,7 @@
 ;;                #trap{:location &quot;bedroom&quot;,  :output nil}
 ;;                #trap{:location &quot;patio&quot;,    :output nil}
 ;;                #trap{:location &quot;bathroom&quot;, :output nil}]
-;;    :model #model[:default :linear :toggle]}</code></pre></div><div><span id="server" name="server"></span><h3>6.6 &nbsp;&nbsp; Server</h3></div><div><p>The server requires a couple of external dependencies:</p></div><div class="code"><pre><code class="clojure">(require '[compojure.core :as routes]
+;;    :model #model[:default :linear :toggle]}</code></pre></div><div><span id="server"></span><h3>6.6 &nbsp;&nbsp; Server</h3></div><div><p>The server requires a couple of external dependencies:</p></div><div class="code"><pre><code class="clojure">(require '[compojure.core :as routes]
          '[ring.adapter.jetty :as jetty]
          '[clj-http.client :as client])</code></pre></div><div><p>We define a very simple server with one route that just returns the summary as a string:</p></div><div class="code"><pre><code class="clojure">(defn make-routes
   [{:keys [summary] :as serv}]
@@ -491,7 +492,7 @@
     (.stop instance)
     (dissoc serv :instance)))</code></pre></div><div><p>Again, <code>print-method</code> is defined for prettiness:</p></div><div class="code"><pre><code class="clojure">(defmethod print-method Server
   [v w]
-  (.write w (str v)))</code></pre></div><div><span id="server-testing" name="server-testing"></span><h3>6.7 &nbsp;&nbsp; Server Testing</h3></div><div><p>Again, we add an additional constructor to the system and start:</p></div><div class="code"><pre><code class="clojure">(def sys (-&gt; {:traps   [[trap] :model]
+  (.write w (str v)))</code></pre></div><div><span id="server-testing"></span><h3>6.7 &nbsp;&nbsp; Server Testing</h3></div><div><p>Again, we add an additional constructor to the system and start:</p></div><div class="code"><pre><code class="clojure">(def sys (-&gt; {:traps   [[trap] :model]
               :model   [map-&gt;Model]
               :db      [ova/ova]
               :app     [app :traps :db]
@@ -526,7 +527,7 @@
 ;;                #trap{:location &quot;patio&quot;,    :output nil}
 ;;                #trap{:location &quot;bathroom&quot;, :output nil}]
 ;;    :model #model[:default :linear :toggle]
-;;    :server #server[:port]}</code></pre></div><div><span id="the-big-picture" name="the-big-picture"></span><h2><b>7 &nbsp;&nbsp; The Big Picture</b></h2></div><div><span id="summary" name="summary"></span><h3>7.1 &nbsp;&nbsp; Summary</h3></div><div><p>We have created the bug trapping system based on our <a href='#sub-system-dependencies'>dependency diagram</a>. We can visualize the essential components that make up our system in the diagram below:</p></div><div class="figure"><a id="the-system" name="the-system"></a><h4><i>fig.2  &nbsp;-&nbsp; the system</i></h4><div class="img"><img line="{:row 653, :col 1, :end-row 653, :end-col 84}" src="img/hara_component/system.png" title="the system" width="100%" /></div><p></p></div><div><p>The constructors and the dependencies form our system topology whilst the data that initialised our system form our config. There are significant advantages of doing this:</p><ul><li>The final code is almost the same as the diagram of the system.</li><li>There is an isometric correspondence between process and data.</li><li>It clearly seperates data (which is normally loaded from a file) from process.</li><li>It keeps all the initialisations in a single place.</li><li>Systems can be built incrementally in the way that we have just done.</li></ul></div><div><span id="further-extension" name="further-extension"></span><h3>7.2 &nbsp;&nbsp; Further Extension</h3></div><div><p>Say we needed to add more functionality to our system, in which we define the <code>make-routes</code> method to add an endpoint giving us information about the status of the datastore:</p></div><div class="code"><pre><code class="clojure">(defn make-routes
+;;    :server #server[:port]}</code></pre></div><div><span id="the-big-picture"></span><h2><b>7 &nbsp;&nbsp; The Big Picture</b></h2></div><div><span id="summary"></span><h3>7.1 &nbsp;&nbsp; Summary</h3></div><div><p>We have created the bug trapping system based on our <a href='#sub-system-dependencies'>dependency diagram</a>. We can visualize the essential components that make up our system in the diagram below:</p></div><div class="figure"><a id="the-system"></a><h4><i>fig.2  &nbsp;-&nbsp; the system</i></h4><div class="img"><img line="{:row 653, :col 1, :end-row 653, :end-col 84}" src="img/hara_component/system.png" title="the system" width="100%" /></div><p></p></div><div><p>The constructors and the dependencies form our system topology whilst the data that initialised our system form our config. There are significant advantages of doing this:</p><ul><li>The final code is almost the same as the diagram of the system.</li><li>There is an isometric correspondence between process and data.</li><li>It clearly seperates data (which is normally loaded from a file) from process.</li><li>It keeps all the initialisations in a single place.</li><li>Systems can be built incrementally in the way that we have just done.</li></ul></div><div><span id="further-extension"></span><h3>7.2 &nbsp;&nbsp; Further Extension</h3></div><div><p>Say we needed to add more functionality to our system, in which we define the <code>make-routes</code> method to add an endpoint giving us information about the status of the datastore:</p></div><div class="code"><pre><code class="clojure">(defn make-routes
   [{:keys [db summary] :as serv}]
   (routes/routes
     (routes/GET &quot;/total&quot; [] (str @summary))
@@ -538,7 +539,7 @@
               :server  [map-&gt;Server :summary :db]}) ;; note the extra `:db` key
 
 (def sys (-&gt; (component/system topology config)
-             (component/start)))</code></pre></div><div><p>We can again visualize the extended system:</p></div><div class="figure"><a id="the-extended-system" name="the-extended-system"></a><h4><i>fig.3  &nbsp;-&nbsp; the extended system</i></h4><div class="img"><img line="{:row 688, :col 1, :end-row 688, :end-col 94}" src="img/hara_component/system2.png" title="the extended system" width="100%" /></div><p></p></div><div><span id="links-and-resources" name="links-and-resources"></span><h2><b>8 &nbsp;&nbsp; Links and Resources</b></h2></div><div><p>Here are some more links and resources on the web:</p><ul><li><a href='https://github.com/stuartsierra/component'>stuartsierra/component</a> - original library</li><li><a href='http://z.caudate.me/hara-component-just-a-bit-more-structure/'>just a bit more structure</a> - the announcement on my blog</li></ul></div>
+             (component/start)))</code></pre></div><div><p>We can again visualize the extended system:</p></div><div class="figure"><a id="the-extended-system"></a><h4><i>fig.3  &nbsp;-&nbsp; the extended system</i></h4><div class="img"><img line="{:row 688, :col 1, :end-row 688, :end-col 94}" src="img/hara_component/system2.png" title="the extended system" width="100%" /></div><p></p></div><div><span id="links-and-resources"></span><h2><b>8 &nbsp;&nbsp; Links and Resources</b></h2></div><div><p>Here are some more links and resources on the web:</p><ul><li><a href='https://github.com/stuartsierra/component'>stuartsierra/component</a> - original library</li><li><a href='http://z.caudate.me/hara-component-just-a-bit-more-structure/'>just a bit more structure</a> - the announcement on my blog</li></ul></div>
         </div>
       </div>
     </div>

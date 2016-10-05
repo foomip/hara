@@ -8,7 +8,7 @@
   <!-- Enable responsiveness on mobile devices-->
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
   <link rel="shortcut icon" href="favicon.ico">
-  <title>hara.sort - micellaneous sorting functions</title>
+  <title>lucid.sort - micellaneous sorting functions</title>
   <script src="js/highlight.min.js"></script>
   <script src="js/gumshoe.min.js"></script>
   <script src="js/smooth-scroll.min.js"></script>
@@ -18,8 +18,8 @@
   <link rel="stylesheet" href="css/syntax.css">
   <link rel="stylesheet" href="css/lanyon.css">
   <link rel="stylesheet" href="css/bolton.css">
-  <link rel="stylesheet" href="css/api.css">
-  <link rel="stylesheet" href="css/highlight.css">
+  <link rel="stylesheet" href="css/bolton-api.css">
+  <link rel="stylesheet" href="css/bolton-highlight.css">
   <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=PT+Serif:400,400italic,700|PT+Sans:400">
   
 </head>
@@ -34,6 +34,7 @@
 <!-- Toggleable sidebar -->
 <div class="sidebar" id="sidebar">
   <nav class="sidebar-nav">
+    <span>&nbsp;</span>
     <a class="sidebar-nav-item header" href="index.html"><img src="img/logo-white.png"/></a>
     <span>&nbsp;</span>
     <a class="sidebar-nav-item" href="hara-class.html">class</a><a class="sidebar-nav-item" href="hara-common.html">common</a><a class="sidebar-nav-item" href="hara-component.html">component</a><a class="sidebar-nav-item" href="hara-concurrent.html">concurrent</a><a class="sidebar-nav-item" href="hara-concurrent-ova.html">concurrent.ova</a><a class="sidebar-nav-item" href="hara-concurrent-procedure.html">concurrent.procedure</a><a class="sidebar-nav-item" href="hara-data.html">data</a><a class="sidebar-nav-item" href="hara-event.html">event</a><a class="sidebar-nav-item" href="hara-expression.html">expression</a><a class="sidebar-nav-item" href="hara-extend.html">extend</a><a class="sidebar-nav-item" href="hara-function.html">function</a><a class="sidebar-nav-item" href="hara-group.html">group</a><a class="sidebar-nav-item" href="hara-io.html">io</a><a class="sidebar-nav-item" href="hara-io-file.html">io.file</a><a class="sidebar-nav-item" href="hara-io-scheduler.html">io.scheduler</a><a class="sidebar-nav-item" href="hara-io-watch.html">io.watch</a><a class="sidebar-nav-item" href="hara-namespace.html">namespace</a><a class="sidebar-nav-item" href="hara-object.html">object</a><a class="sidebar-nav-item" href="hara-reflect.html">reflect</a><a class="sidebar-nav-item active" href="hara-sort.html">sort</a><a class="sidebar-nav-item" href="hara-string.html">string</a><a class="sidebar-nav-item" href="hara-test.html">test</a><a class="sidebar-nav-item" href="hara-time.html">time</a><a class="sidebar-nav-item" href="hara-zip.html">zip</a>
@@ -49,7 +50,7 @@
       <div class="masthead">
         <div class="container">
           <h3 class="masthead-title">
-            <span>hara.sort</span>
+            <span>lucid.sort</span>
             <small>micellaneous sorting functions</small>
           </h3>
         </div>
@@ -60,7 +61,7 @@
           <div class="heading">
             <div>
               <h5>Author: Chris Zheng&nbsp;&nbsp;<a href="mailto:z@caudate.me">(z@caudate.me)</a></h5>
-              <h5>Date: 04 October 2016</h5>
+              <h5>Date: 05 October 2016</h5>
               <h5>Repository: <a href="https://github.com/zcaudate/hara">https://github.com/zcaudate/hara</a></h5>
               <h5>Version: 2.4.5</h5></div></div>
           <hr/>
@@ -82,7 +83,7 @@
                 </ul>
               </nav>
           </div>
-          <div><span id="introduction" name="introduction"></span><h2><b>1 &nbsp;&nbsp; Introduction</b></h2></div><div><p><a href='https://github.com/zcaudate/hara/blob/master/src/hara/sort.clj'>hara.sort</a> contain functions and utilities for sorting algorithms.</p></div><div><span id="sort-hierarchical" name="sort-hierarchical"></span><h2><b>2 &nbsp;&nbsp; sort.hierarchical</b></h2></div><div><p>Add to <code>project.clj</code> dependencies:</p><pre><code>&#91;im.chit/hara.sort.hierarchical &quot;2.4.5&quot;&#93;</code></pre><p><strong>hara.sort.hierarchical</strong> gives a list of dependents for each key</p></div><div class="api"><span id="entry__hara_sort_hierarchical__"></span><hr /><div><ul><li><a data-scroll="" href="#entry__hara_sort_hierarchical__hierarchical_sort">hierarchical-sort</a></li><li><a data-scroll="" href="#entry__hara_sort_hierarchical__top_node">top-node</a></li></ul><hr style="margin-bottom: 0" /><div><div class="entry"><span id="entry__hara_sort_hierarchical__hierarchical_sort"></span><div class="entry-description"><h4><b>hierarchical-sort&nbsp<a data-scroll="" href="#entry__hara_sort_hierarchical__">^</a></b></h4><p><i>prunes a hierarchy of descendants into a directed graph</i></p></div><div class="entry-option"><h6><a href="https://github.com/zcaudate/hara/blob/master/src/hara/sort/hierarchical.clj#L20-L51" target="_blank">v&nbsp;2.2</a></h6><div><input class="source-toggle" id="entry__pre_hara_sort_hierarchical__hierarchical_sort" type="checkbox" /><label class="source-toggle" for="entry__pre_hara_sort_hierarchical__hierarchical_sort"></label><pre class="source"><code class="clojure">(defn hierarchical-sort
+          <div><span id="introduction"></span><h2><b>1 &nbsp;&nbsp; Introduction</b></h2></div><div><p><a href='https://github.com/zcaudate/hara/blob/master/src/hara/sort.clj'>hara.sort</a> contain functions and utilities for sorting algorithms.</p></div><div><span id="sort-hierarchical"></span><h2><b>2 &nbsp;&nbsp; sort.hierarchical</b></h2></div><div><p>Add to <code>project.clj</code> dependencies:</p><pre><code>&#91;im.chit/hara.sort.hierarchical &quot;2.4.5&quot;&#93;</code></pre><p><strong>hara.sort.hierarchical</strong> gives a list of dependents for each key</p></div><div class="api"><span id="entry__hara_sort_hierarchical__"></span><hr /><div><ul><li><a data-scroll="" href="#entry__hara_sort_hierarchical__hierarchical_sort">hierarchical-sort</a></li><li><a data-scroll="" href="#entry__hara_sort_hierarchical__top_node">top-node</a></li></ul><hr style="margin-bottom: 0" /><div><div class="entry"><span id="entry__hara_sort_hierarchical__hierarchical_sort"></span><div class="entry-description"><h4><b>hierarchical-sort&nbsp<a data-scroll="" href="#entry__hara_sort_hierarchical__">^</a></b></h4><p><i>prunes a hierarchy of descendants into a directed graph</i></p></div><div class="entry-option"><h6><a href="https://github.com/zcaudate/hara/blob/master/src/hara/sort/hierarchical.clj#L20-L51" target="_blank">v&nbsp;2.2</a></h6><div><input class="source-toggle" id="entry__pre_hara_sort_hierarchical__hierarchical_sort" type="checkbox" /><label class="source-toggle" for="entry__pre_hara_sort_hierarchical__hierarchical_sort"></label><pre class="source"><code class="clojure">(defn hierarchical-sort
   [idx]
   (let [top (top-node idx)]
     (loop [out {}
@@ -121,7 +122,7 @@
            4 #{}
            5 #{6}
            6 #{}})
-=> 1</code></pre></div></div></div></div><div><span id="sort-topological" name="sort-topological"></span><h2><b>3 &nbsp;&nbsp; sort.topological</b></h2></div><div><p>Add to <code>project.clj</code> dependencies:</p><pre><code>&#91;im.chit/hara.sort.topological &quot;2.4.5&quot;&#93;</code></pre><p><strong>hara.sort.topological</strong> gives an order of preference for a set of hierarchies</p></div><div class="api"><span id="entry__hara_sort_topological__"></span><hr /><div><ul><li><a data-scroll="" href="#entry__hara_sort_topological__top_nodes">top-nodes</a></li><li><a data-scroll="" href="#entry__hara_sort_topological__topological_sort">topological-sort</a></li></ul><hr style="margin-bottom: 0" /><div><div class="entry"><span id="entry__hara_sort_topological__top_nodes"></span><div class="entry-description"><h4><b>top-nodes&nbsp<a data-scroll="" href="#entry__hara_sort_topological__">^</a></b></h4><p><i>nodes that have no other nodes that are dependent on them</i></p></div><div class="entry-option"><h6><a href="https://github.com/zcaudate/hara/blob/master/src/hara/sort/topological.clj#L4-L12" target="_blank">v&nbsp;2.1</a></h6><div><input class="source-toggle" id="entry__pre_hara_sort_topological__top_nodes" type="checkbox" /><label class="source-toggle" for="entry__pre_hara_sort_topological__top_nodes"></label><pre class="source"><code class="clojure">(defn top-nodes
+=> 1</code></pre></div></div></div></div><div><span id="sort-topological"></span><h2><b>3 &nbsp;&nbsp; sort.topological</b></h2></div><div><p>Add to <code>project.clj</code> dependencies:</p><pre><code>&#91;im.chit/hara.sort.topological &quot;2.4.5&quot;&#93;</code></pre><p><strong>hara.sort.topological</strong> gives an order of preference for a set of hierarchies</p></div><div class="api"><span id="entry__hara_sort_topological__"></span><hr /><div><ul><li><a data-scroll="" href="#entry__hara_sort_topological__top_nodes">top-nodes</a></li><li><a data-scroll="" href="#entry__hara_sort_topological__topological_sort">topological-sort</a></li></ul><hr style="margin-bottom: 0" /><div><div class="entry"><span id="entry__hara_sort_topological__top_nodes"></span><div class="entry-description"><h4><b>top-nodes&nbsp<a data-scroll="" href="#entry__hara_sort_topological__">^</a></b></h4><p><i>nodes that have no other nodes that are dependent on them</i></p></div><div class="entry-option"><h6><a href="https://github.com/zcaudate/hara/blob/master/src/hara/sort/topological.clj#L4-L12" target="_blank">v&nbsp;2.1</a></h6><div><input class="source-toggle" id="entry__pre_hara_sort_topological__top_nodes" type="checkbox" /><label class="source-toggle" for="entry__pre_hara_sort_topological__top_nodes"></label><pre class="source"><code class="clojure">(defn top-nodes
   [g]
   (let [nodes (set (keys g))
         dependent-nodes (apply union (vals g))]

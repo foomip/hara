@@ -8,7 +8,7 @@
   <!-- Enable responsiveness on mobile devices-->
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
   <link rel="shortcut icon" href="favicon.ico">
-  <title>hara.zip - data traversal in style</title>
+  <title>lucid.zip - data traversal in style</title>
   <script src="js/highlight.min.js"></script>
   <script src="js/gumshoe.min.js"></script>
   <script src="js/smooth-scroll.min.js"></script>
@@ -18,8 +18,8 @@
   <link rel="stylesheet" href="css/syntax.css">
   <link rel="stylesheet" href="css/lanyon.css">
   <link rel="stylesheet" href="css/bolton.css">
-  <link rel="stylesheet" href="css/api.css">
-  <link rel="stylesheet" href="css/highlight.css">
+  <link rel="stylesheet" href="css/bolton-api.css">
+  <link rel="stylesheet" href="css/bolton-highlight.css">
   <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=PT+Serif:400,400italic,700|PT+Sans:400">
   
 </head>
@@ -34,6 +34,7 @@
 <!-- Toggleable sidebar -->
 <div class="sidebar" id="sidebar">
   <nav class="sidebar-nav">
+    <span>&nbsp;</span>
     <a class="sidebar-nav-item header" href="index.html"><img src="img/logo-white.png"/></a>
     <span>&nbsp;</span>
     <a class="sidebar-nav-item" href="hara-class.html">class</a><a class="sidebar-nav-item" href="hara-common.html">common</a><a class="sidebar-nav-item" href="hara-component.html">component</a><a class="sidebar-nav-item" href="hara-concurrent.html">concurrent</a><a class="sidebar-nav-item" href="hara-concurrent-ova.html">concurrent.ova</a><a class="sidebar-nav-item" href="hara-concurrent-procedure.html">concurrent.procedure</a><a class="sidebar-nav-item" href="hara-data.html">data</a><a class="sidebar-nav-item" href="hara-event.html">event</a><a class="sidebar-nav-item" href="hara-expression.html">expression</a><a class="sidebar-nav-item" href="hara-extend.html">extend</a><a class="sidebar-nav-item" href="hara-function.html">function</a><a class="sidebar-nav-item" href="hara-group.html">group</a><a class="sidebar-nav-item" href="hara-io.html">io</a><a class="sidebar-nav-item" href="hara-io-file.html">io.file</a><a class="sidebar-nav-item" href="hara-io-scheduler.html">io.scheduler</a><a class="sidebar-nav-item" href="hara-io-watch.html">io.watch</a><a class="sidebar-nav-item" href="hara-namespace.html">namespace</a><a class="sidebar-nav-item" href="hara-object.html">object</a><a class="sidebar-nav-item" href="hara-reflect.html">reflect</a><a class="sidebar-nav-item" href="hara-sort.html">sort</a><a class="sidebar-nav-item" href="hara-string.html">string</a><a class="sidebar-nav-item" href="hara-test.html">test</a><a class="sidebar-nav-item" href="hara-time.html">time</a><a class="sidebar-nav-item active" href="hara-zip.html">zip</a>
@@ -49,7 +50,7 @@
       <div class="masthead">
         <div class="container">
           <h3 class="masthead-title">
-            <span>hara.zip</span>
+            <span>lucid.zip</span>
             <small>data traversal in style</small>
           </h3>
         </div>
@@ -60,7 +61,7 @@
           <div class="heading">
             <div>
               <h5>Author: Chris Zheng&nbsp;&nbsp;<a href="mailto:z@caudate.me">(z@caudate.me)</a></h5>
-              <h5>Date: 04 October 2016</h5>
+              <h5>Date: 05 October 2016</h5>
               <h5>Repository: <a href="https://github.com/zcaudate/hara">https://github.com/zcaudate/hara</a></h5>
               <h5>Version: 2.4.5</h5></div></div>
           <hr/>
@@ -82,8 +83,8 @@
                 </ul>
               </nav>
           </div>
-          <div><span id="introduction" name="introduction"></span><h2><b>1 &nbsp;&nbsp; Introduction</b></h2></div><div><p><a href='https://github.com/zcaudate/hara/blob/master/src/hara/zip.clj'>hara.zip</a> provides a customisable zipper implementation</p></div><div><span id="installation" name="installation"></span><h3>1.1 &nbsp;&nbsp; Installation</h3></div><div><p>Add to <code>project.clj</code> dependencies:</p><pre><code>&#91;im.chit/hara.zip &quot;2.4.5&quot;&#93;
-</code></pre>All functionality is found contained in the <code>hara.zip</code> namespace</div><div class="code"><pre><code class="clojure">(require '[hara.zip :as zip])</code></pre></div><div><span id="api" name="api"></span><h2><b>2 &nbsp;&nbsp; API</b></h2></div><div class="api"><span id="entry__hara_zip__"></span><hr /><div><ul><li><a data-scroll="" href="#entry__hara_zip__bottom_most_QMARK_">bottom-most?</a></li><li><a data-scroll="" href="#entry__hara_zip__cursor">cursor</a></li><li><a data-scroll="" href="#entry__hara_zip__cursor_str">cursor-str</a></li><li><a data-scroll="" href="#entry__hara_zip__delete_left">delete-left</a></li><li><a data-scroll="" href="#entry__hara_zip__delete_right">delete-right</a></li><li><a data-scroll="" href="#entry__hara_zip__down">down</a></li><li><a data-scroll="" href="#entry__hara_zip__end">end</a></li><li><a data-scroll="" href="#entry__hara_zip__find_next">find-next</a></li><li><a data-scroll="" href="#entry__hara_zip__find_prev">find-prev</a></li><li><a data-scroll="" href="#entry__hara_zip__history">history</a></li><li><a data-scroll="" href="#entry__hara_zip__insert_left">insert-left</a></li><li><a data-scroll="" href="#entry__hara_zip__insert_right">insert-right</a></li><li><a data-scroll="" href="#entry__hara_zip__left">left</a></li><li><a data-scroll="" href="#entry__hara_zip__left_most_QMARK_">left-most?</a></li><li><a data-scroll="" href="#entry__hara_zip__left_node">left-node</a></li><li><a data-scroll="" href="#entry__hara_zip__left_nodes">left-nodes</a></li><li><a data-scroll="" href="#entry__hara_zip__move_bottom_most">move-bottom-most</a></li><li><a data-scroll="" href="#entry__hara_zip__move_down">move-down</a></li><li><a data-scroll="" href="#entry__hara_zip__move_down_QMARK_">move-down?</a></li><li><a data-scroll="" href="#entry__hara_zip__move_left">move-left</a></li><li><a data-scroll="" href="#entry__hara_zip__move_left_most">move-left-most</a></li><li><a data-scroll="" href="#entry__hara_zip__move_left_QMARK_">move-left?</a></li><li><a data-scroll="" href="#entry__hara_zip__move_right">move-right</a></li><li><a data-scroll="" href="#entry__hara_zip__move_right_most">move-right-most</a></li><li><a data-scroll="" href="#entry__hara_zip__move_right_QMARK_">move-right?</a></li><li><a data-scroll="" href="#entry__hara_zip__move_top_most">move-top-most</a></li><li><a data-scroll="" href="#entry__hara_zip__move_up">move-up</a></li><li><a data-scroll="" href="#entry__hara_zip__move_up_QMARK_">move-up?</a></li><li><a data-scroll="" href="#entry__hara_zip__next">next</a></li><li><a data-scroll="" href="#entry__hara_zip__node">node</a></li><li><a data-scroll="" href="#entry__hara_zip__postwalk">postwalk</a></li><li><a data-scroll="" href="#entry__hara_zip__prev">prev</a></li><li><a data-scroll="" href="#entry__hara_zip__prewalk">prewalk</a></li><li><a data-scroll="" href="#entry__hara_zip__replace_left">replace-left</a></li><li><a data-scroll="" href="#entry__hara_zip__replace_right">replace-right</a></li><li><a data-scroll="" href="#entry__hara_zip__right">right</a></li><li><a data-scroll="" href="#entry__hara_zip__right_most_QMARK_">right-most?</a></li><li><a data-scroll="" href="#entry__hara_zip__right_node">right-node</a></li><li><a data-scroll="" href="#entry__hara_zip__right_nodes">right-nodes</a></li><li><a data-scroll="" href="#entry__hara_zip__root_node">root-node</a></li><li><a data-scroll="" href="#entry__hara_zip__seq_zip">seq-zip</a></li><li><a data-scroll="" href="#entry__hara_zip__siblings">siblings</a></li><li><a data-scroll="" href="#entry__hara_zip__surround">surround</a></li><li><a data-scroll="" href="#entry__hara_zip__top_most_QMARK_">top-most?</a></li><li><a data-scroll="" href="#entry__hara_zip__traverse">traverse</a></li><li><a data-scroll="" href="#entry__hara_zip__up">up</a></li><li><a data-scroll="" href="#entry__hara_zip__vector_zip">vector-zip</a></li><li><a data-scroll="" href="#entry__hara_zip__zipper">zipper</a></li></ul><hr style="margin-bottom: 0" /><div><div class="entry"><span id="entry__hara_zip__bottom_most_QMARK_"></span><div class="entry-description"><h4><b>bottom-most?&nbsp<a data-scroll="" href="#entry__hara_zip__">^</a></b></h4><p><i>check if at bottom-most point of a branch</i></p></div><div class="entry-option"><h6><a href="https://github.com/zcaudate/hara/blob/master/src/hara/zip/base.clj#L177-L183" target="_blank">v&nbsp;2.4</a></h6><div><input class="source-toggle" id="entry__pre_hara_zip__bottom_most_QMARK_" type="checkbox" /><label class="source-toggle" for="entry__pre_hara_zip__bottom_most_QMARK_"></label><pre class="source"><code class="clojure">(defn bottom-most?
+          <div><span id="introduction"></span><h2><b>1 &nbsp;&nbsp; Introduction</b></h2></div><div><p><a href='https://github.com/zcaudate/hara/blob/master/src/hara/zip.clj'>hara.zip</a> provides a customisable zipper implementation</p></div><div><span id="installation"></span><h3>1.1 &nbsp;&nbsp; Installation</h3></div><div><p>Add to <code>project.clj</code> dependencies:</p><pre><code>&#91;im.chit/hara.zip &quot;2.4.5&quot;&#93;
+</code></pre>All functionality is found contained in the <code>hara.zip</code> namespace</div><div class="code"><pre><code class="clojure">(require '[hara.zip :as zip])</code></pre></div><div><span id="api"></span><h2><b>2 &nbsp;&nbsp; API</b></h2></div><div class="api"><span id="entry__hara_zip__"></span><hr /><div><ul><li><a data-scroll="" href="#entry__hara_zip__bottom_most_QMARK_">bottom-most?</a></li><li><a data-scroll="" href="#entry__hara_zip__cursor">cursor</a></li><li><a data-scroll="" href="#entry__hara_zip__cursor_str">cursor-str</a></li><li><a data-scroll="" href="#entry__hara_zip__delete_left">delete-left</a></li><li><a data-scroll="" href="#entry__hara_zip__delete_right">delete-right</a></li><li><a data-scroll="" href="#entry__hara_zip__down">down</a></li><li><a data-scroll="" href="#entry__hara_zip__end">end</a></li><li><a data-scroll="" href="#entry__hara_zip__find_next">find-next</a></li><li><a data-scroll="" href="#entry__hara_zip__find_prev">find-prev</a></li><li><a data-scroll="" href="#entry__hara_zip__history">history</a></li><li><a data-scroll="" href="#entry__hara_zip__insert_left">insert-left</a></li><li><a data-scroll="" href="#entry__hara_zip__insert_right">insert-right</a></li><li><a data-scroll="" href="#entry__hara_zip__left">left</a></li><li><a data-scroll="" href="#entry__hara_zip__left_most_QMARK_">left-most?</a></li><li><a data-scroll="" href="#entry__hara_zip__left_node">left-node</a></li><li><a data-scroll="" href="#entry__hara_zip__left_nodes">left-nodes</a></li><li><a data-scroll="" href="#entry__hara_zip__move_bottom_most">move-bottom-most</a></li><li><a data-scroll="" href="#entry__hara_zip__move_down">move-down</a></li><li><a data-scroll="" href="#entry__hara_zip__move_down_QMARK_">move-down?</a></li><li><a data-scroll="" href="#entry__hara_zip__move_left">move-left</a></li><li><a data-scroll="" href="#entry__hara_zip__move_left_most">move-left-most</a></li><li><a data-scroll="" href="#entry__hara_zip__move_left_QMARK_">move-left?</a></li><li><a data-scroll="" href="#entry__hara_zip__move_right">move-right</a></li><li><a data-scroll="" href="#entry__hara_zip__move_right_most">move-right-most</a></li><li><a data-scroll="" href="#entry__hara_zip__move_right_QMARK_">move-right?</a></li><li><a data-scroll="" href="#entry__hara_zip__move_top_most">move-top-most</a></li><li><a data-scroll="" href="#entry__hara_zip__move_up">move-up</a></li><li><a data-scroll="" href="#entry__hara_zip__move_up_QMARK_">move-up?</a></li><li><a data-scroll="" href="#entry__hara_zip__next">next</a></li><li><a data-scroll="" href="#entry__hara_zip__node">node</a></li><li><a data-scroll="" href="#entry__hara_zip__postwalk">postwalk</a></li><li><a data-scroll="" href="#entry__hara_zip__prev">prev</a></li><li><a data-scroll="" href="#entry__hara_zip__prewalk">prewalk</a></li><li><a data-scroll="" href="#entry__hara_zip__replace_left">replace-left</a></li><li><a data-scroll="" href="#entry__hara_zip__replace_right">replace-right</a></li><li><a data-scroll="" href="#entry__hara_zip__right">right</a></li><li><a data-scroll="" href="#entry__hara_zip__right_most_QMARK_">right-most?</a></li><li><a data-scroll="" href="#entry__hara_zip__right_node">right-node</a></li><li><a data-scroll="" href="#entry__hara_zip__right_nodes">right-nodes</a></li><li><a data-scroll="" href="#entry__hara_zip__root_node">root-node</a></li><li><a data-scroll="" href="#entry__hara_zip__seq_zip">seq-zip</a></li><li><a data-scroll="" href="#entry__hara_zip__siblings">siblings</a></li><li><a data-scroll="" href="#entry__hara_zip__surround">surround</a></li><li><a data-scroll="" href="#entry__hara_zip__top_most_QMARK_">top-most?</a></li><li><a data-scroll="" href="#entry__hara_zip__traverse">traverse</a></li><li><a data-scroll="" href="#entry__hara_zip__up">up</a></li><li><a data-scroll="" href="#entry__hara_zip__vector_zip">vector-zip</a></li><li><a data-scroll="" href="#entry__hara_zip__zipper">zipper</a></li></ul><hr style="margin-bottom: 0" /><div><div class="entry"><span id="entry__hara_zip__bottom_most_QMARK_"></span><div class="entry-description"><h4><b>bottom-most?&nbsp<a data-scroll="" href="#entry__hara_zip__">^</a></b></h4><p><i>check if at bottom-most point of a branch</i></p></div><div class="entry-option"><h6><a href="https://github.com/zcaudate/hara/blob/master/src/hara/zip/base.clj#L177-L183" target="_blank">v&nbsp;2.4</a></h6><div><input class="source-toggle" id="entry__pre_hara_zip__bottom_most_QMARK_" type="checkbox" /><label class="source-toggle" for="entry__pre_hara_zip__bottom_most_QMARK_"></label><pre class="source"><code class="clojure">(defn bottom-most?
   [zip]
   (or (empty? (:right zip))
       (not ((-> zip :meta :branch?)
@@ -458,32 +459,36 @@
                        (conj v 100)
                        (+ v 100))))
     (root-node))
-=> [101 [102 [106 107 200] 103 200] [104 105 200] 200]</code></pre></div><div class="entry"><span id="entry__hara_zip__replace_left"></span><div class="entry-description"><h4><b>replace-left&nbsp<a data-scroll="" href="#entry__hara_zip__">^</a></b></h4><p><i>replace element left of the current position</i></p></div><div class="entry-option"><h6><a href="https://github.com/zcaudate/hara/blob/master/src/hara/zip/base.clj#L465-L484" target="_blank">v&nbsp;2.4</a></h6><div><input class="source-toggle" id="entry__pre_hara_zip__replace_left" type="checkbox" /><label class="source-toggle" for="entry__pre_hara_zip__replace_left"></label><pre class="source"><code class="clojure">(defn replace-left
-  [zip element]
-  (event/manage
-   (-> zip
-       (delete-left)
-       (insert-left element)
-       (assoc :changed? true))
-   (on {:fn :delete-left :tag :at-top} [zip]
-       (event/continue (delete-base zip :left :delete-left)))
-   (on {:fn :insert-left :tag :at-top} [zip element]
-       (event/continue (insert-base zip element :left :insert-left)))))</code></pre></div></div><pre><h6><i><a href="https://github.com/zcaudate/hara/blob/master/test/hara/zip/base_test.clj#L187-L194" target="_blank">link</a></i></h6><code class="clojure">(-> (vector-zip [1 2 3])
+=> [101 [102 [106 107 200] 103 200] [104 105 200] 200]</code></pre></div><div class="entry"><span id="entry__hara_zip__replace_left"></span><div class="entry-description"><h4><b>replace-left&nbsp<a data-scroll="" href="#entry__hara_zip__">^</a></b></h4><p><i>replace element left of the current position</i></p></div><div class="entry-option"><h6><a href="https://github.com/zcaudate/hara/blob/master/src/hara/zip/base.clj#L465-L486" target="_blank">v&nbsp;2.4</a></h6><div><input class="source-toggle" id="entry__pre_hara_zip__replace_left" type="checkbox" /><label class="source-toggle" for="entry__pre_hara_zip__replace_left"></label><pre class="source"><code class="clojure">(defn replace-left
+  [{:keys [left] :as zip} element]
+  (cond (empty? left)
+        (event/raise {:fn  :replace-left
+                      :op  :replace
+                      :tag :no-left
+                      :zip zip}
+                     "No Left Node")
+
+        :else
+        (-> zip
+            (update-in [:left] #(->> % rest (cons element)))
+            (update-in [:meta :history] conj :replace-left))))</code></pre></div></div><pre><h6><i><a href="https://github.com/zcaudate/hara/blob/master/test/hara/zip/base_test.clj#L187-L194" target="_blank">link</a></i></h6><code class="clojure">(-> (vector-zip [1 2 3])
     (move-down)
     (move-right 2)
     (replace-left "10")
     (zip/cursor))
-=> '([1 "10" | 3])</code></pre></div><div class="entry"><span id="entry__hara_zip__replace_right"></span><div class="entry-description"><h4><b>replace-right&nbsp<a data-scroll="" href="#entry__hara_zip__">^</a></b></h4><p><i>replace element right of the current position</i></p></div><div class="entry-option"><h6><a href="https://github.com/zcaudate/hara/blob/master/src/hara/zip/base.clj#L486-L505" target="_blank">v&nbsp;2.4</a></h6><div><input class="source-toggle" id="entry__pre_hara_zip__replace_right" type="checkbox" /><label class="source-toggle" for="entry__pre_hara_zip__replace_right"></label><pre class="source"><code class="clojure">(defn replace-right
-  [zip element]
-  (event/manage
-   (-> zip
-       (delete-right)
-       (insert-right element)
-       (assoc :changed? true))
-   (on {:fn :delete-right :tag :at-top} [zip]
-       (event/continue (delete-base zip :right :delete-right)))
-   (on {:fn :insert-right :tag :at-top} [zip element]
-       (event/continue (insert-base zip element :right :insert-right)))))</code></pre></div></div><pre><h6><i><a href="https://github.com/zcaudate/hara/blob/master/test/hara/zip/base_test.clj#L197-L204" target="_blank">link</a></i></h6><code class="clojure">(-> (vector-zip [1 2 3])
+=> '([1 "10" | 3])</code></pre></div><div class="entry"><span id="entry__hara_zip__replace_right"></span><div class="entry-description"><h4><b>replace-right&nbsp<a data-scroll="" href="#entry__hara_zip__">^</a></b></h4><p><i>replace element right of the current position</i></p></div><div class="entry-option"><h6><a href="https://github.com/zcaudate/hara/blob/master/src/hara/zip/base.clj#L488-L509" target="_blank">v&nbsp;2.4</a></h6><div><input class="source-toggle" id="entry__pre_hara_zip__replace_right" type="checkbox" /><label class="source-toggle" for="entry__pre_hara_zip__replace_right"></label><pre class="source"><code class="clojure">(defn replace-right
+  [{:keys [right] :as zip} element]
+  (cond (empty? right)
+        (event/raise {:fn  :replace-right
+                      :op  :replace
+                      :tag :no-right
+                      :zip zip}
+                     "No Right Node")
+
+        :else
+        (-> zip
+            (update-in [:right] #(->> % rest (cons element)))
+            (update-in [:meta :history] conj :replace-right))))</code></pre></div></div><pre><h6><i><a href="https://github.com/zcaudate/hara/blob/master/test/hara/zip/base_test.clj#L197-L204" target="_blank">link</a></i></h6><code class="clojure">(-> (vector-zip [1 2 3])
     (move-down)
     (move-right 2)
     (replace-right "10")

@@ -8,7 +8,7 @@
   <!-- Enable responsiveness on mobile devices-->
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
   <link rel="shortcut icon" href="favicon.ico">
-  <title>hara.concurrent.ova - shared mutable state</title>
+  <title>lucid.concurrent.ova - shared mutable state</title>
   <script src="js/highlight.min.js"></script>
   <script src="js/gumshoe.min.js"></script>
   <script src="js/smooth-scroll.min.js"></script>
@@ -18,8 +18,8 @@
   <link rel="stylesheet" href="css/syntax.css">
   <link rel="stylesheet" href="css/lanyon.css">
   <link rel="stylesheet" href="css/bolton.css">
-  <link rel="stylesheet" href="css/api.css">
-  <link rel="stylesheet" href="css/highlight.css">
+  <link rel="stylesheet" href="css/bolton-api.css">
+  <link rel="stylesheet" href="css/bolton-highlight.css">
   <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=PT+Serif:400,400italic,700|PT+Sans:400">
   
 </head>
@@ -34,6 +34,7 @@
 <!-- Toggleable sidebar -->
 <div class="sidebar" id="sidebar">
   <nav class="sidebar-nav">
+    <span>&nbsp;</span>
     <a class="sidebar-nav-item header" href="index.html"><img src="img/logo-white.png"/></a>
     <span>&nbsp;</span>
     <a class="sidebar-nav-item" href="hara-class.html">class</a><a class="sidebar-nav-item" href="hara-common.html">common</a><a class="sidebar-nav-item" href="hara-component.html">component</a><a class="sidebar-nav-item" href="hara-concurrent.html">concurrent</a><a class="sidebar-nav-item active" href="hara-concurrent-ova.html">concurrent.ova</a><a class="sidebar-nav-item" href="hara-concurrent-procedure.html">concurrent.procedure</a><a class="sidebar-nav-item" href="hara-data.html">data</a><a class="sidebar-nav-item" href="hara-event.html">event</a><a class="sidebar-nav-item" href="hara-expression.html">expression</a><a class="sidebar-nav-item" href="hara-extend.html">extend</a><a class="sidebar-nav-item" href="hara-function.html">function</a><a class="sidebar-nav-item" href="hara-group.html">group</a><a class="sidebar-nav-item" href="hara-io.html">io</a><a class="sidebar-nav-item" href="hara-io-file.html">io.file</a><a class="sidebar-nav-item" href="hara-io-scheduler.html">io.scheduler</a><a class="sidebar-nav-item" href="hara-io-watch.html">io.watch</a><a class="sidebar-nav-item" href="hara-namespace.html">namespace</a><a class="sidebar-nav-item" href="hara-object.html">object</a><a class="sidebar-nav-item" href="hara-reflect.html">reflect</a><a class="sidebar-nav-item" href="hara-sort.html">sort</a><a class="sidebar-nav-item" href="hara-string.html">string</a><a class="sidebar-nav-item" href="hara-test.html">test</a><a class="sidebar-nav-item" href="hara-time.html">time</a><a class="sidebar-nav-item" href="hara-zip.html">zip</a>
@@ -49,7 +50,7 @@
       <div class="masthead">
         <div class="container">
           <h3 class="masthead-title">
-            <span>hara.concurrent.ova</span>
+            <span>lucid.concurrent.ova</span>
             <small>shared mutable state</small>
           </h3>
         </div>
@@ -60,7 +61,7 @@
           <div class="heading">
             <div>
               <h5>Author: Chris Zheng&nbsp;&nbsp;<a href="mailto:z@caudate.me">(z@caudate.me)</a></h5>
-              <h5>Date: 04 October 2016</h5>
+              <h5>Date: 05 October 2016</h5>
               <h5>Repository: <a href="https://github.com/zcaudate/hara">https://github.com/zcaudate/hara</a></h5>
               <h5>Version: 2.4.5</h5></div></div>
           <hr/>
@@ -82,7 +83,7 @@
                 </ul>
               </nav>
           </div>
-          <div><span id="introduction" name="introduction"></span><h2><b>1 &nbsp;&nbsp; Introduction</b></h2></div><div><p>An <code>ova</code> represents a mutable array of elements. It has been designed especially for dealing with shared mutable state in multi-threaded applications. Clojure uses <code>refs</code> and <code>atoms</code> off the shelf to resolve this issue but left out methods to deal with arrays of shared elements. <code>ova</code> has been specifically designed for the following use case:</p><ul><li>Elements (usually clojure maps) can be added or removed from an array</li><li>Element data are accessible and mutated from several threads.</li><li>Array itself can also be mutated from several threads.</li></ul></div><div><span id="installation" name="installation"></span><h3>1.1 &nbsp;&nbsp; Installation</h3></div><div><p>Add to <code>project.clj</code> dependencies:</p><pre><code>&#91;im.chit/hara.concurrent.ova &quot;2.4.5&quot;&#93;</code></pre></div><div><p>All functions are in the <code>hara.concurrent.ova</code> namespace.</p></div><div class="code"><pre><code class="clojure">(use 'hara.concurrent.ova)</code></pre></div><div><span id="motivation" name="motivation"></span><h3>1.2 &nbsp;&nbsp; Motivation</h3></div><div><p>Coordination in multi-threaded applications have always been a pain. Most times situations are usally co-ordinated using a external cache store like redis. <code>hara.concurrent.ova</code> provides an easy to use interface for array data. Alought is no where near as fully featured as a database/cache, it has a small footprint and is small. The actual <code>ova</code> datastructure is a <code>ref</code> containing a <code>vector</code> containing ref. The library comes with a whole bundle of goodies to deal with mutation:</p><ul><li>Clean element selection and array manipulation syntax.</li><li>Watches for both the array and array elements.</li><li>Designed to play nicely with <code>dosync</code> and <code>refs</code>.</li><li>Written in pure clojure, no external dependencies.</li></ul></div><div><span id="api" name="api"></span><h2><b>2 &nbsp;&nbsp; API</b></h2></div><div class="api"><span id="entry__hara_concurrent_ova__"></span><hr /><div><ul><li><a data-scroll="" href="#entry__hara_concurrent_ova___BANG__BANG_">!!</a></li><li><a data-scroll="" href="#entry__hara_concurrent_ova___BANG__GT_">!></a></li><li><a data-scroll="" href="#entry__hara_concurrent_ova___invoke">-invoke</a></li><li><a data-scroll="" href="#entry__hara_concurrent_ova___LT__LT_"><<</a></li><li><a data-scroll="" href="#entry__hara_concurrent_ova__append_BANG_">append!</a></li><li><a data-scroll="" href="#entry__hara_concurrent_ova__clone">clone</a></li><li><a data-scroll="" href="#entry__hara_concurrent_ova__concat_BANG_">concat!</a></li><li><a data-scroll="" href="#entry__hara_concurrent_ova__delete_indices">delete-indices</a></li><li><a data-scroll="" href="#entry__hara_concurrent_ova__empty_BANG_">empty!</a></li><li><a data-scroll="" href="#entry__hara_concurrent_ova__filter_BANG_">filter!</a></li><li><a data-scroll="" href="#entry__hara_concurrent_ova__get_filtered">get-filtered</a></li><li><a data-scroll="" href="#entry__hara_concurrent_ova__has_QMARK_">has?</a></li><li><a data-scroll="" href="#entry__hara_concurrent_ova__indices">indices</a></li><li><a data-scroll="" href="#entry__hara_concurrent_ova__init_BANG_">init!</a></li><li><a data-scroll="" href="#entry__hara_concurrent_ova__insert_BANG_">insert!</a></li><li><a data-scroll="" href="#entry__hara_concurrent_ova__insert_fn">insert-fn</a></li><li><a data-scroll="" href="#entry__hara_concurrent_ova__map_BANG_">map!</a></li><li><a data-scroll="" href="#entry__hara_concurrent_ova__map_indexed_BANG_">map-indexed!</a></li><li><a data-scroll="" href="#entry__hara_concurrent_ova__ova">ova</a></li><li><a data-scroll="" href="#entry__hara_concurrent_ova__remove_BANG_">remove!</a></li><li><a data-scroll="" href="#entry__hara_concurrent_ova__reverse_BANG_">reverse!</a></li><li><a data-scroll="" href="#entry__hara_concurrent_ova__select">select</a></li><li><a data-scroll="" href="#entry__hara_concurrent_ova__selectv">selectv</a></li><li><a data-scroll="" href="#entry__hara_concurrent_ova__smap_BANG_">smap!</a></li><li><a data-scroll="" href="#entry__hara_concurrent_ova__smap_indexed_BANG_">smap-indexed!</a></li><li><a data-scroll="" href="#entry__hara_concurrent_ova__sort_BANG_">sort!</a></li><li><a data-scroll="" href="#entry__hara_concurrent_ova__split">split</a></li></ul><hr style="margin-bottom: 0" /><div><div class="entry"><span id="entry__hara_concurrent_ova___BANG__BANG_"></span><div class="entry-description"><h4><b>!!&nbsp<a data-scroll="" href="#entry__hara_concurrent_ova__">^</a></b></h4><p><i>sets the value of a given data cell in the ova</i></p></div><div class="entry-option"><h6><a href="https://github.com/zcaudate/hara/blob/master/src/hara/concurrent/ova.clj#L554-L564" target="_blank">v&nbsp;2.1</a></h6><div><input class="source-toggle" id="entry__pre_hara_concurrent_ova___BANG__BANG_" type="checkbox" /><label class="source-toggle" for="entry__pre_hara_concurrent_ova___BANG__BANG_"></label><pre class="source"><code class="clojure">(defn !!
+          <div><span id="introduction"></span><h2><b>1 &nbsp;&nbsp; Introduction</b></h2></div><div><p>An <code>ova</code> represents a mutable array of elements. It has been designed especially for dealing with shared mutable state in multi-threaded applications. Clojure uses <code>refs</code> and <code>atoms</code> off the shelf to resolve this issue but left out methods to deal with arrays of shared elements. <code>ova</code> has been specifically designed for the following use case:</p><ul><li>Elements (usually clojure maps) can be added or removed from an array</li><li>Element data are accessible and mutated from several threads.</li><li>Array itself can also be mutated from several threads.</li></ul></div><div><span id="installation"></span><h3>1.1 &nbsp;&nbsp; Installation</h3></div><div><p>Add to <code>project.clj</code> dependencies:</p><pre><code>&#91;im.chit/hara.concurrent.ova &quot;2.4.5&quot;&#93;</code></pre></div><div><p>All functions are in the <code>hara.concurrent.ova</code> namespace.</p></div><div class="code"><pre><code class="clojure">(use 'hara.concurrent.ova)</code></pre></div><div><span id="motivation"></span><h3>1.2 &nbsp;&nbsp; Motivation</h3></div><div><p>Coordination in multi-threaded applications have always been a pain. Most times situations are usally co-ordinated using a external cache store like redis. <code>hara.concurrent.ova</code> provides an easy to use interface for array data. Alought is no where near as fully featured as a database/cache, it has a small footprint and is small. The actual <code>ova</code> datastructure is a <code>ref</code> containing a <code>vector</code> containing ref. The library comes with a whole bundle of goodies to deal with mutation:</p><ul><li>Clean element selection and array manipulation syntax.</li><li>Watches for both the array and array elements.</li><li>Designed to play nicely with <code>dosync</code> and <code>refs</code>.</li><li>Written in pure clojure, no external dependencies.</li></ul></div><div><span id="api"></span><h2><b>2 &nbsp;&nbsp; API</b></h2></div><div class="api"><span id="entry__hara_concurrent_ova__"></span><hr /><div><ul><li><a data-scroll="" href="#entry__hara_concurrent_ova___BANG__BANG_">!!</a></li><li><a data-scroll="" href="#entry__hara_concurrent_ova___BANG__GT_">!></a></li><li><a data-scroll="" href="#entry__hara_concurrent_ova___invoke">-invoke</a></li><li><a data-scroll="" href="#entry__hara_concurrent_ova___LT__LT_"><<</a></li><li><a data-scroll="" href="#entry__hara_concurrent_ova__append_BANG_">append!</a></li><li><a data-scroll="" href="#entry__hara_concurrent_ova__clone">clone</a></li><li><a data-scroll="" href="#entry__hara_concurrent_ova__concat_BANG_">concat!</a></li><li><a data-scroll="" href="#entry__hara_concurrent_ova__delete_indices">delete-indices</a></li><li><a data-scroll="" href="#entry__hara_concurrent_ova__empty_BANG_">empty!</a></li><li><a data-scroll="" href="#entry__hara_concurrent_ova__filter_BANG_">filter!</a></li><li><a data-scroll="" href="#entry__hara_concurrent_ova__get_filtered">get-filtered</a></li><li><a data-scroll="" href="#entry__hara_concurrent_ova__has_QMARK_">has?</a></li><li><a data-scroll="" href="#entry__hara_concurrent_ova__indices">indices</a></li><li><a data-scroll="" href="#entry__hara_concurrent_ova__init_BANG_">init!</a></li><li><a data-scroll="" href="#entry__hara_concurrent_ova__insert_BANG_">insert!</a></li><li><a data-scroll="" href="#entry__hara_concurrent_ova__insert_fn">insert-fn</a></li><li><a data-scroll="" href="#entry__hara_concurrent_ova__map_BANG_">map!</a></li><li><a data-scroll="" href="#entry__hara_concurrent_ova__map_indexed_BANG_">map-indexed!</a></li><li><a data-scroll="" href="#entry__hara_concurrent_ova__ova">ova</a></li><li><a data-scroll="" href="#entry__hara_concurrent_ova__remove_BANG_">remove!</a></li><li><a data-scroll="" href="#entry__hara_concurrent_ova__reverse_BANG_">reverse!</a></li><li><a data-scroll="" href="#entry__hara_concurrent_ova__select">select</a></li><li><a data-scroll="" href="#entry__hara_concurrent_ova__selectv">selectv</a></li><li><a data-scroll="" href="#entry__hara_concurrent_ova__smap_BANG_">smap!</a></li><li><a data-scroll="" href="#entry__hara_concurrent_ova__smap_indexed_BANG_">smap-indexed!</a></li><li><a data-scroll="" href="#entry__hara_concurrent_ova__sort_BANG_">sort!</a></li><li><a data-scroll="" href="#entry__hara_concurrent_ova__split">split</a></li></ul><hr style="margin-bottom: 0" /><div><div class="entry"><span id="entry__hara_concurrent_ova___BANG__BANG_"></span><div class="entry-description"><h4><b>!!&nbsp<a data-scroll="" href="#entry__hara_concurrent_ova__">^</a></b></h4><p><i>sets the value of a given data cell in the ova</i></p></div><div class="entry-option"><h6><a href="https://github.com/zcaudate/hara/blob/master/src/hara/concurrent/ova.clj#L554-L564" target="_blank">v&nbsp;2.1</a></h6><div><input class="source-toggle" id="entry__pre_hara_concurrent_ova___BANG__BANG_" type="checkbox" /><label class="source-toggle" for="entry__pre_hara_concurrent_ova___BANG__BANG_"></label><pre class="source"><code class="clojure">(defn !!
   [ova pchk val]
   (smap! ova pchk (constantly val)))</code></pre></div></div><pre><h6><i><a href="https://github.com/zcaudate/hara/blob/master/test/hara/concurrent/ova_test.clj#L241-L247" target="_blank">link</a></i></h6><code class="clojure">(dosync (-> (range 5) (ova) (!! 1 0) persistent!))
 => [0 0 2 3 4]
@@ -365,18 +366,18 @@
 (def sp (dosync (split o #{'(< 3) '(> 6)})))
 
 (persistent! (sp true))  => [0 1 2 7 8 9]
-(persistent! (sp false)) => [3 4 5 6]</code></pre></div></div></div></div><div><span id="walkthrough" name="walkthrough"></span><h2><b>3 &nbsp;&nbsp; Walkthrough</b></h2></div><div><span id="constructor" name="constructor"></span><h3>3.1 &nbsp;&nbsp; Constructor</h3></div><div><p>The key to <code>ova</code> lies in the ease of manipulating the postions of elements within an array as well as updating the elements themselves. We begin by constructing and displaying an ova.</p></div><div class="code"><pre><code class="clojure">(def ov
+(persistent! (sp false)) => [3 4 5 6]</code></pre></div></div></div></div><div><span id="walkthrough"></span><h2><b>3 &nbsp;&nbsp; Walkthrough</b></h2></div><div><span id="constructor"></span><h3>3.1 &nbsp;&nbsp; Constructor</h3></div><div><p>The key to <code>ova</code> lies in the ease of manipulating the postions of elements within an array as well as updating the elements themselves. We begin by constructing and displaying an ova.</p></div><div class="code"><pre><code class="clojure">(def ov
   (ova [{:val 1} {:val 2}
         {:val 3} {:val 4}]))
 
 (-&gt; ov class str)
-=&gt; &quot;class hara.concurrent.ova.Ova&quot;</code></pre></div><div><span id="dereferencing" name="dereferencing"></span><h3>3.2 &nbsp;&nbsp; Dereferencing</h3></div><div><p>An <code>ova</code> is a <code>ref</code> of a <code>vector</code> of <code>refs</code>. They are dereferenced accordingly:</p></div><div class="code"><pre><code class="clojure">(mapv deref (deref ov))
+=&gt; &quot;class hara.concurrent.ova.Ova&quot;</code></pre></div><div><span id="dereferencing"></span><h3>3.2 &nbsp;&nbsp; Dereferencing</h3></div><div><p>An <code>ova</code> is a <code>ref</code> of a <code>vector</code> of <code>refs</code>. They are dereferenced accordingly:</p></div><div class="code"><pre><code class="clojure">(mapv deref (deref ov))
 =&gt; [{:val 1} {:val 2}
     {:val 3} {:val 4}]
 
 (&lt;&lt; ov)                     ;; Shorthand
 =&gt; [{:val 1} {:val 2}
-    {:val 3} {:val 4}]</code></pre></div><div><span id="append----insert----concat" name="append----insert----concat"></span><h3>3.3 &nbsp;&nbsp; Append / Insert / Concat</h3></div><div><p>Adding elements to the ova is very straight forward:</p></div><div class="code"><pre><code class="clojure">(&lt;&lt; (append! ov {:val 6}))         ;; Append
+    {:val 3} {:val 4}]</code></pre></div><div><span id="append----insert----concat"></span><h3>3.3 &nbsp;&nbsp; Append / Insert / Concat</h3></div><div><p>Adding elements to the ova is very straight forward:</p></div><div class="code"><pre><code class="clojure">(&lt;&lt; (append! ov {:val 6}))         ;; Append
 =&gt; [{:val 1} {:val 2} {:val 3}
     {:val 4} {:val 6}]
 
@@ -388,7 +389,7 @@
                  {:val 8}]))
 =&gt; [{:val 1} {:val 2} {:val 3}
     {:val 4} {:val 5} {:val 6}
-    {:val 7} {:val 8}]</code></pre></div><div><span id="select" name="select"></span><h3>3.4 &nbsp;&nbsp; Select</h3></div><div><p>Where <code>ova</code> really shines is in the mechanism by which elements are selected. There are abundant ways of selecting elements - by index, by sets, by vectors, by predicates and by lists. The specific mechanism will be described more clearly in later sections.</p></div><div class="code"><pre><code class="clojure">(select ov 0)                      ;; By Index
+    {:val 7} {:val 8}]</code></pre></div><div><span id="select"></span><h3>3.4 &nbsp;&nbsp; Select</h3></div><div><p>Where <code>ova</code> really shines is in the mechanism by which elements are selected. There are abundant ways of selecting elements - by index, by sets, by vectors, by predicates and by lists. The specific mechanism will be described more clearly in later sections.</p></div><div class="code"><pre><code class="clojure">(select ov 0)                      ;; By Index
 =&gt; #{{:val 1}}
 
 (select ov #{0 1})                 ;; By Set of Index
@@ -419,7 +420,7 @@
 
 (select ov [:val even?            ;; By Vector/Predicate/List
             :val '(&gt; 4)])
-=&gt; #{{:val 6} {:val 8}}</code></pre></div><div><span id="remove----filter" name="remove----filter"></span><h3>3.5 &nbsp;&nbsp; Remove / Filter</h3></div><div><p><code>remove!</code> and <code>filter!</code> also use the same mechanism as <code>select</code>:</p></div><div class="code"><pre><code class="clojure">(&lt;&lt; (remove! ov 7))               ;; Index Notation
+=&gt; #{{:val 6} {:val 8}}</code></pre></div><div><span id="remove----filter"></span><h3>3.5 &nbsp;&nbsp; Remove / Filter</h3></div><div><p><code>remove!</code> and <code>filter!</code> also use the same mechanism as <code>select</code>:</p></div><div class="code"><pre><code class="clojure">(&lt;&lt; (remove! ov 7))               ;; Index Notation
 =&gt; [{:val 1} {:val 2} {:val 3}
     {:val 4} {:val 5} {:val 6}
     {:val 7}]
@@ -432,7 +433,7 @@
 =&gt; [{:val 3} {:val 5} {:val 7}]
 
 (&lt;&lt; (remove! ov [:val '(&gt; 3)]))   ;; List Notation
-=&gt; [{:val 3}]</code></pre></div><div><span id="sorting" name="sorting"></span><h3>3.6 &nbsp;&nbsp; Sorting</h3></div><div><p>The <code>sort!</code> functions allows elements in the ova to be rearranged. The function becomes clearer to read with access and comparison defined seperately (last example).</p></div><div class="code"><pre><code class="clojure">(def ov (ova (map (fn [n] {:val n})
+=&gt; [{:val 3}]</code></pre></div><div><span id="sorting"></span><h3>3.6 &nbsp;&nbsp; Sorting</h3></div><div><p>The <code>sort!</code> functions allows elements in the ova to be rearranged. The function becomes clearer to read with access and comparison defined seperately (last example).</p></div><div class="code"><pre><code class="clojure">(def ov (ova (map (fn [n] {:val n})
                   (range 8))))
 
 (&lt;&lt; ov)
@@ -450,7 +451,7 @@
 (&lt;&lt; (sort! ov [:val] &lt;))         ;; Accessor/Comparater
 =&gt; [{:val 0} {:val 1} {:val 2}
     {:val 3} {:val 4} {:val 5}
-    {:val 6} {:val 7}]</code></pre></div><div><span id="manipulation" name="manipulation"></span><h3>3.7 &nbsp;&nbsp; Manipulation</h3></div><div><p>Using the same mechanism as <code>select</code>, bulk update of elements within the <code>ova</code> can be performed in a succint manner:</p></div><div class="code"><pre><code class="clojure">(def ov (ova (map (fn [n] {:val n})
+    {:val 6} {:val 7}]</code></pre></div><div><span id="manipulation"></span><h3>3.7 &nbsp;&nbsp; Manipulation</h3></div><div><p>Using the same mechanism as <code>select</code>, bulk update of elements within the <code>ova</code> can be performed in a succint manner:</p></div><div class="code"><pre><code class="clojure">(def ov (ova (map (fn [n] {:val n})
                   (range 4))))
 
 (&lt;&lt; ov)
@@ -477,7 +478,7 @@
     {:val 3} {:val 4 :x {:y {:z 10}}}]
 
 (&lt;&lt; (smap! ov [:x :y :z] dissoc :x))          ;; dissoc :x for elements with nested [:x :y :z] keys
-=&gt; [{:val 1} {:val 2} {:val 3} {:val 4}]</code></pre></div><div><span id="ova-watch" name="ova-watch"></span><h3>3.8 &nbsp;&nbsp; Ova Watch</h3></div><div><p>Because a ova is simply a ref, it can be watched for changes</p></div><div class="code"><pre><code class="clojure">(def ov (ova [0 1 2 3 4 5]))
+=&gt; [{:val 1} {:val 2} {:val 3} {:val 4}]</code></pre></div><div><span id="ova-watch"></span><h3>3.8 &nbsp;&nbsp; Ova Watch</h3></div><div><p>Because a ova is simply a ref, it can be watched for changes</p></div><div class="code"><pre><code class="clojure">(def ov (ova [0 1 2 3 4 5]))
 
 (def output (atom []))
 (add-watch ov
@@ -489,7 +490,7 @@
 (do (dosync (sort! ov &gt;))
     (deref output))
 =&gt; [[[0 1 2 3 4 5]
-     [5 4 3 2 1 0]]]</code></pre></div><div><span id="element-watch" name="element-watch"></span><h3>3.9 &nbsp;&nbsp; Element Watch</h3></div><div><p>Entire elements of the ova can be watched. A more substantial example can be seen in the <a href='#scoreboard-example'>scoreboard example</a>:</p></div><div class="code"><pre><code class="clojure">(def ov (ova [0 1 2 3 4 5]))
+     [5 4 3 2 1 0]]]</code></pre></div><div><span id="element-watch"></span><h3>3.9 &nbsp;&nbsp; Element Watch</h3></div><div><p>Entire elements of the ova can be watched. A more substantial example can be seen in the <a href='#scoreboard-example'>scoreboard example</a>:</p></div><div class="code"><pre><code class="clojure">(def ov (ova [0 1 2 3 4 5]))
 
 (def output (atom []))
 
@@ -508,7 +509,7 @@
 =&gt; [:zero 1 2 :three 4 5]
 
 (deref output)
-=&gt; [[0 :zero] [3 :three]]</code></pre></div><div><span id="element-change-watch" name="element-change-watch"></span><h3><i>3.9.1 &nbsp;&nbsp; Element Change Watch</i></h3></div><div><p>The <code>add-elem-change-watch</code> function can be used to only notify when an element has changed.</p></div><div class="code"><pre><code class="clojure">(def ov (ova [0 1 2 3 4 5]))
+=&gt; [[0 :zero] [3 :three]]</code></pre></div><div><span id="element-change-watch"></span><h3><i>3.9.1 &nbsp;&nbsp; Element Change Watch</i></h3></div><div><p>The <code>add-elem-change-watch</code> function can be used to only notify when an element has changed.</p></div><div class="code"><pre><code class="clojure">(def ov (ova [0 1 2 3 4 5]))
 
 (def output (atom []))
 
@@ -529,7 +530,7 @@
 
 (do (&lt;&lt; (!! ov 0 0))      ;; no change to output
     (deref output))
-=&gt; [[0 :zero] [:zero 0]]</code></pre></div><div><span id="clojure-protocols" name="clojure-protocols"></span><h3>3.10 &nbsp;&nbsp; Clojure Protocols</h3></div><div><p><code>ova</code> implements the sequence protocol so it is compatible with all the bread and butter methods.</p></div><div class="code"><pre><code class="clojure">(def ov (ova (map (fn [n] {:val n})
+=&gt; [[0 :zero] [:zero 0]]</code></pre></div><div><span id="clojure-protocols"></span><h3>3.10 &nbsp;&nbsp; Clojure Protocols</h3></div><div><p><code>ova</code> implements the sequence protocol so it is compatible with all the bread and butter methods.</p></div><div class="code"><pre><code class="clojure">(def ov (ova (map (fn [n] {:val n})
                   (range 8))))
 
 (seq ov)
@@ -558,19 +559,19 @@
 =&gt; {:val 0}
 
 (ov [:val] #{1 2 3}) ;; Gets the first that matches
-=&gt; {:val 1}</code></pre></div><div><span id="guide" name="guide"></span><h2><b>4 &nbsp;&nbsp; Guide</b></h2></div><div><span id="basics" name="basics"></span><h3>4.1 &nbsp;&nbsp; Basics</h3></div><div><span id="ova" name="ova"></span><h3><i>4.1.1 &nbsp;&nbsp; ova</i></h3></div><div><p>An <code>ova</code> deals with data in a vector. The data can be anything but it is recommended that the data are clojure maps.</p></div><div class="code"><pre><code class="clojure">(def ov (ova [1 2 3 4]))
+=&gt; {:val 1}</code></pre></div><div><span id="guide"></span><h2><b>4 &nbsp;&nbsp; Guide</b></h2></div><div><span id="basics"></span><h3>4.1 &nbsp;&nbsp; Basics</h3></div><div><span id="ova"></span><h3><i>4.1.1 &nbsp;&nbsp; ova</i></h3></div><div><p>An <code>ova</code> deals with data in a vector. The data can be anything but it is recommended that the data are clojure maps.</p></div><div class="code"><pre><code class="clojure">(def ov (ova [1 2 3 4]))
 
 (def ov (ova [{:id :a1 :score 10 :name &quot;Bill&quot;  :gender :m :nationality :aus}
                {:id :a2 :score 15 :name &quot;John&quot;  :gender :m :nationality :aus}]))
 
 (def ov (ova [{:type &quot;form&quot; :data {:sex :m :age 23}}
-               {:type &quot;form&quot; :data {:sex :f :age 24}}]))</code></pre></div><div><span id="persistent" name="persistent"></span><h3><i>4.1.2 &nbsp;&nbsp; persistent!</i></h3></div><div><p>Since <code>ova.core.Ova</code> implements the <code>clojure.lang.ITransientCollection</code> interface, it can be made persistent with <code>persistent!</code>.</p></div><div class="code"><pre><code class="clojure">(persistent! (ova [1 2 3 4]))
-=&gt; [1 2 3 4]</code></pre></div><div><span id="init" name="init"></span><h3><i>4.1.3 &nbsp;&nbsp; init!</i></h3></div><div><p><code>init!</code> resets the data elements in an ova to another set of values. Any change in the ova requires it to be wrapped in a <code>dosync</code> macro.</p></div><div class="code"><pre><code class="clojure">(def ov (ova [1 2 3 4]))
+               {:type &quot;form&quot; :data {:sex :f :age 24}}]))</code></pre></div><div><span id="persistent"></span><h3><i>4.1.2 &nbsp;&nbsp; persistent!</i></h3></div><div><p>Since <code>ova.core.Ova</code> implements the <code>clojure.lang.ITransientCollection</code> interface, it can be made persistent with <code>persistent!</code>.</p></div><div class="code"><pre><code class="clojure">(persistent! (ova [1 2 3 4]))
+=&gt; [1 2 3 4]</code></pre></div><div><span id="init"></span><h3><i>4.1.3 &nbsp;&nbsp; init!</i></h3></div><div><p><code>init!</code> resets the data elements in an ova to another set of values. Any change in the ova requires it to be wrapped in a <code>dosync</code> macro.</p></div><div class="code"><pre><code class="clojure">(def ov (ova [1 2 3 4]))
 (dosync (init! ov [5 6 7 8 9]))
 (persistent! ov)
-=&gt; [5 6 7 8 9]</code></pre></div><div><span id="" name=""></span><h3><i>4.1.4 &nbsp;&nbsp; <<</i></h3></div><div><p>The output macro is a shorthand for outputting the value of <code>ova</code> after a series of transformations. There is an implicit <code>dosync</code> block within the macro.</p></div><div class="code"><pre><code class="clojure">(&lt;&lt; (def ov (ova [1 2 3 4]))
+=&gt; [5 6 7 8 9]</code></pre></div><div><span id=""></span><h3><i>4.1.4 &nbsp;&nbsp; <<</i></h3></div><div><p>The output macro is a shorthand for outputting the value of <code>ova</code> after a series of transformations. There is an implicit <code>dosync</code> block within the macro.</p></div><div class="code"><pre><code class="clojure">(&lt;&lt; (def ov (ova [1 2 3 4]))
     (init! ov [5 6 7 8 9]))
-=&gt; [5 6 7 8 9]</code></pre></div><div><span id="clojure" name="clojure"></span><h3>4.2 &nbsp;&nbsp; Clojure</h3></div><div><p>Built-in operations supported including (but not limited to):</p><ul><li><code>map</code>, <code>reduce</code>, <code>first</code>, <code>next</code>, <code>nth</code> and many more <code>seq</code> operations<ul><li><code>get</code>, <code>contains?</code></li><li><code>deref</code></li><li><code>add-watch</code>, <code>remove-watch</code></li><li><code>pop!</code>, <code>push!</code>, <code>conj!</code></li></ul></li></ul></div><div><span id="query" name="query"></span><h3>4.3 &nbsp;&nbsp; Query</h3></div><div><p>Where ova shines is in the various ways that elements can be selected. It is best to define some data that can be queried:</p></div><div class="code"><pre><code class="clojure">(def players
+=&gt; [5 6 7 8 9]</code></pre></div><div><span id="clojure"></span><h3>4.2 &nbsp;&nbsp; Clojure</h3></div><div><p>Built-in operations supported including (but not limited to):</p><ul><li><code>map</code>, <code>reduce</code>, <code>first</code>, <code>next</code>, <code>nth</code> and many more <code>seq</code> operations<ul><li><code>get</code>, <code>contains?</code></li><li><code>deref</code></li><li><code>add-watch</code>, <code>remove-watch</code></li><li><code>pop!</code>, <code>push!</code>, <code>conj!</code></li></ul></li></ul></div><div><span id="query"></span><h3>4.3 &nbsp;&nbsp; Query</h3></div><div><p>Where ova shines is in the various ways that elements can be selected. It is best to define some data that can be queried:</p></div><div class="code"><pre><code class="clojure">(def players
   (ova [{:id :a1 :score 10 :info {:name &quot;Bill&quot;  :gender :m :nationality :aus}}
         {:id :a2 :score 15 :info {:name &quot;John&quot;  :gender :m :nationality :aus}}
         {:id :a3 :score 15 :info {:name &quot;Dave&quot;  :gender :m :nationality :aus}}
@@ -579,7 +580,7 @@
         {:id :a6 :score 13 :info {:name &quot;Tom&quot;   :gender :m :nationality :usa}}
         {:id :a7 :score 15 :info {:name &quot;Jill&quot;  :gender :f :nationality :aus}}
         {:id :a8 :score 19 :info {:name &quot;Sally&quot; :gender :f :nationality :usa}}
-        {:id :a9 :score 13 :info {:name &quot;Rose&quot;  :gender :f :nationality :aus}}]))</code></pre></div><div><span id="select-0" name="select-0"></span><h3><i>4.3.1 &nbsp;&nbsp; select</i></h3></div><div><h5>Index:</h5></div><div class="code"><pre><code class="clojure">(select players 0)
+        {:id :a9 :score 13 :info {:name &quot;Rose&quot;  :gender :f :nationality :aus}}]))</code></pre></div><div><span id="select-0"></span><h3><i>4.3.1 &nbsp;&nbsp; select</i></h3></div><div><h5>Index:</h5></div><div class="code"><pre><code class="clojure">(select players 0)
 =&gt; #{{:id :a1 :score 10 :info {:name &quot;Bill&quot;  :gender :m :nationality :aus}}}</code></pre></div><div><h5>Predicates:</h5></div><div class="code"><pre><code class="clojure">(select players #(= (:id %) :a1))
 =&gt; #{{:id :a1 :score 10 :info {:name &quot;Bill&quot;  :gender :m :nationality :aus}}}</code></pre></div><div><h5>List Predicates:</h5></div><div class="code"><pre><code class="clojure">(select players '(:id (= :a1)))
 =&gt; #{{:id :a1 :score 10 :info {:name &quot;Bill&quot;  :gender :m :nationality :aus}}}</code></pre></div><div><h5>Vector Predicates:</h5></div><div class="code"><pre><code class="clojure">(select players [:id :a1])
@@ -601,11 +602,11 @@
 (select players #{[:score even?] [:score 13 [:info :gender] :f]})
 =&gt; #{{:id :a1 :score 10 :info {:name &quot;Bill&quot;  :gender :m :nationality :aus}}
      {:id :a5 :score 20 :info {:name &quot;Scott&quot; :gender :m :nationality :usa}}
-     {:id :a9 :score 13 :info {:name &quot;Rose&quot;  :gender :f :nationality :aus}}}</code></pre></div><div><span id="selectv" name="selectv"></span><h3><i>4.3.2 &nbsp;&nbsp; selectv</i></h3></div><div><p><code>selectv</code> is the same as <code>select</code> except it returns a vector instead of a set.</p></div><div class="code"><pre><code class="clojure">(selectv players #{[:score even?] [:score 13 [:info :gender] :f]})
+     {:id :a9 :score 13 :info {:name &quot;Rose&quot;  :gender :f :nationality :aus}}}</code></pre></div><div><span id="selectv"></span><h3><i>4.3.2 &nbsp;&nbsp; selectv</i></h3></div><div><p><code>selectv</code> is the same as <code>select</code> except it returns a vector instead of a set.</p></div><div class="code"><pre><code class="clojure">(selectv players #{[:score even?] [:score 13 [:info :gender] :f]})
 =&gt; (just [{:id :a1 :score 10 :info {:name &quot;Bill&quot;  :gender :m :nationality :aus}}
           {:id :a5 :score 20 :info {:name &quot;Scott&quot; :gender :m :nationality :usa}}
           {:id :a9 :score 13 :info {:name &quot;Rose&quot;  :gender :f :nationality :aus}}]
-         :in-any-order)</code></pre></div><div><span id="fn" name="fn"></span><h3><i>4.3.3 &nbsp;&nbsp; fn</i></h3></div><div><p><code>ova</code> implements the <code>clojure.lang.IFn</code> interface and so can be called with select parameters. It can be used to return elements within an array. Additionally, if an element has an :id tag, it will search based on the :id tag.</p></div><div class="code"><pre><code class="clojure">(players 0)
+         :in-any-order)</code></pre></div><div><span id="fn"></span><h3><i>4.3.3 &nbsp;&nbsp; fn</i></h3></div><div><p><code>ova</code> implements the <code>clojure.lang.IFn</code> interface and so can be called with select parameters. It can be used to return elements within an array. Additionally, if an element has an :id tag, it will search based on the :id tag.</p></div><div class="code"><pre><code class="clojure">(players 0)
 =&gt; {:id :a1 :score 10 :info {:name &quot;Bill&quot;  :gender :m :nationality :aus}}
 
 (players 1)
@@ -618,33 +619,33 @@
 =&gt; {:id :a3 :score 15 :info {:name &quot;Dave&quot;  :gender :m :nationality :aus}}
 
 (ov :a10)
-=&gt; nil</code></pre></div><div><span id="array-operations" name="array-operations"></span><h3>4.4 &nbsp;&nbsp; Array Operations</h3></div><div><span id="append" name="append"></span><h3><i>4.4.1 &nbsp;&nbsp; append!</i></h3></div><div><p><code>append!</code> adds additional elements to the end:</p></div><div class="code"><pre><code class="clojure">(&lt;&lt; (append! (ova [1 2 3 4])
+=&gt; nil</code></pre></div><div><span id="array-operations"></span><h3>4.4 &nbsp;&nbsp; Array Operations</h3></div><div><span id="append"></span><h3><i>4.4.1 &nbsp;&nbsp; append!</i></h3></div><div><p><code>append!</code> adds additional elements to the end:</p></div><div class="code"><pre><code class="clojure">(&lt;&lt; (append! (ova [1 2 3 4])
              5 6 7 8))
-=&gt; [1 2 3 4 5 6 7 8]</code></pre></div><div><span id="concat" name="concat"></span><h3><i>4.4.2 &nbsp;&nbsp; concat!</i></h3></div><div><p><code>concat!</code> joins an array at the end:</p></div><div class="code"><pre><code class="clojure">(&lt;&lt; (concat! (ova [1 2 3 4])
+=&gt; [1 2 3 4 5 6 7 8]</code></pre></div><div><span id="concat"></span><h3><i>4.4.2 &nbsp;&nbsp; concat!</i></h3></div><div><p><code>concat!</code> joins an array at the end:</p></div><div class="code"><pre><code class="clojure">(&lt;&lt; (concat! (ova [1 2 3 4])
              [5 6 7 8]))
-=&gt; [1 2 3 4 5 6 7 8]</code></pre></div><div><span id="insert" name="insert"></span><h3><i>4.4.3 &nbsp;&nbsp; insert!</i></h3></div><div><p><code>insert!</code> allows elements to be inserted.</p></div><div class="code"><pre><code class="clojure">(&lt;&lt; (insert! (ova [:a :b :c :e :f])
+=&gt; [1 2 3 4 5 6 7 8]</code></pre></div><div><span id="insert"></span><h3><i>4.4.3 &nbsp;&nbsp; insert!</i></h3></div><div><p><code>insert!</code> allows elements to be inserted.</p></div><div class="code"><pre><code class="clojure">(&lt;&lt; (insert! (ova [:a :b :c :e :f])
              :d 3))
- =&gt; [:a :b :c :d :e :f]</code></pre></div><div><span id="empty" name="empty"></span><h3><i>4.4.4 &nbsp;&nbsp; empty!</i></h3></div><div><p><code>empty!</code> clears all elements</p></div><div class="code"><pre><code class="clojure">(&lt;&lt; (empty! (ova [:a :b :c :d])))
-=&gt; []</code></pre></div><div><span id="remove" name="remove"></span><h3><i>4.4.5 &nbsp;&nbsp; remove!</i></h3></div><div><p><code>remove!</code> will selectively remove elements from the <code>ova</code>. The query syntax can be used</p></div><div class="code"><pre><code class="clojure">(&lt;&lt; (remove! (ova [:a :b :c :d])
+ =&gt; [:a :b :c :d :e :f]</code></pre></div><div><span id="empty"></span><h3><i>4.4.4 &nbsp;&nbsp; empty!</i></h3></div><div><p><code>empty!</code> clears all elements</p></div><div class="code"><pre><code class="clojure">(&lt;&lt; (empty! (ova [:a :b :c :d])))
+=&gt; []</code></pre></div><div><span id="remove"></span><h3><i>4.4.5 &nbsp;&nbsp; remove!</i></h3></div><div><p><code>remove!</code> will selectively remove elements from the <code>ova</code>. The query syntax can be used</p></div><div class="code"><pre><code class="clojure">(&lt;&lt; (remove! (ova [:a :b :c :d])
              '(= :a)))
 =&gt; [:b :c :d]
 
 (&lt;&lt; (remove! (ova [1 2 3 4 5 6 7 8 9])
              #{'(&lt; 3) '(&gt; 6)}))
-=&gt; [3 4 5 6]</code></pre></div><div><span id="filter" name="filter"></span><h3><i>4.4.6 &nbsp;&nbsp; filter!</i></h3></div><div><p><code>filter!</code> performs the opposite of <code>remove!</code>. It will keep all elements in the array that matches the query.</p></div><div class="code"><pre><code class="clojure">(&lt;&lt; (filter! (ova [:a :b :c :d])
+=&gt; [3 4 5 6]</code></pre></div><div><span id="filter"></span><h3><i>4.4.6 &nbsp;&nbsp; filter!</i></h3></div><div><p><code>filter!</code> performs the opposite of <code>remove!</code>. It will keep all elements in the array that matches the query.</p></div><div class="code"><pre><code class="clojure">(&lt;&lt; (filter! (ova [:a :b :c :d])
              '(= :a)))
 =&gt; [:a]
 
 (&lt;&lt; (filter! (ova [1 2 3 4 5 6 7 8 9])
            #{'(&lt; 3) '(&gt; 6)}))
-=&gt; [1 2 7 8 9]</code></pre></div><div><span id="sort" name="sort"></span><h3><i>4.4.7 &nbsp;&nbsp; sort!</i></h3></div><div><p><code>sort!</code> arranges the array in order of the comparator. It can take only a comparator, or a selector/comparator combination.</p></div><div class="code"><pre><code class="clojure">(&lt;&lt; (sort! (ova [9 8 7 6 5 4 3 2 1])
+=&gt; [1 2 7 8 9]</code></pre></div><div><span id="sort"></span><h3><i>4.4.7 &nbsp;&nbsp; sort!</i></h3></div><div><p><code>sort!</code> arranges the array in order of the comparator. It can take only a comparator, or a selector/comparator combination.</p></div><div class="code"><pre><code class="clojure">(&lt;&lt; (sort! (ova [9 8 7 6 5 4 3 2 1])
            &lt;))
 =&gt; [1 2 3 4 5 6 7 8 9]
 
 (&lt;&lt; (sort! (ova [1 2 3 4 5 6 7 8 9])
            identity &gt;))
-=&gt; [9 8 7 6 5 4 3 2 1]</code></pre></div><div><span id="reverse" name="reverse"></span><h3><i>4.4.8 &nbsp;&nbsp; reverse!</i></h3></div><div><p><code>reverse!</code> arranges array elements in reverse</p></div><div class="code"><pre><code class="clojure">(&lt;&lt; (reverse! (ova [1 2 3 4 5 6 7 8 9])))
-=&gt; [9 8 7 6 5 4 3 2 1]</code></pre></div><div><span id="element-operations" name="element-operations"></span><h3>4.5 &nbsp;&nbsp; Element Operations</h3></div><div><p>Element operations are specific to manipulating the elements within the array.</p></div><div><span id="-0" name="-0"></span><h3><i>4.5.1 &nbsp;&nbsp; !!</i></h3></div><div><p><code>!!</code> sets the value of all selected indices to a specified value.</p></div><div class="code"><pre><code class="clojure">(&lt;&lt; (!! (ova [1 2 3 4 5 6 7 8 9]) 0 0))
+=&gt; [9 8 7 6 5 4 3 2 1]</code></pre></div><div><span id="reverse"></span><h3><i>4.4.8 &nbsp;&nbsp; reverse!</i></h3></div><div><p><code>reverse!</code> arranges array elements in reverse</p></div><div class="code"><pre><code class="clojure">(&lt;&lt; (reverse! (ova [1 2 3 4 5 6 7 8 9])))
+=&gt; [9 8 7 6 5 4 3 2 1]</code></pre></div><div><span id="element-operations"></span><h3>4.5 &nbsp;&nbsp; Element Operations</h3></div><div><p>Element operations are specific to manipulating the elements within the array.</p></div><div><span id="-0"></span><h3><i>4.5.1 &nbsp;&nbsp; !!</i></h3></div><div><p><code>!!</code> sets the value of all selected indices to a specified value.</p></div><div class="code"><pre><code class="clojure">(&lt;&lt; (!! (ova [1 2 3 4 5 6 7 8 9]) 0 0))
 =&gt; [0 2 3 4 5 6 7 8 9]
 
 
@@ -653,20 +654,20 @@
 
 
 (&lt;&lt; (!! (ova [1 2 3 4 5 6 7 8 9]) '(&gt; 4) 0))
-=&gt; [1 2 3 4 0 0 0 0 0]</code></pre></div><div><span id="map" name="map"></span><h3><i>4.5.2 &nbsp;&nbsp; map!</i></h3></div><div><p><code>map!</code> performs an operation on every element.</p></div><div class="code"><pre><code class="clojure">(&lt;&lt; (map! (ova [1 2 3 4 5 6 7 8 9])
+=&gt; [1 2 3 4 0 0 0 0 0]</code></pre></div><div><span id="map"></span><h3><i>4.5.2 &nbsp;&nbsp; map!</i></h3></div><div><p><code>map!</code> performs an operation on every element.</p></div><div class="code"><pre><code class="clojure">(&lt;&lt; (map! (ova [1 2 3 4 5 6 7 8 9])
           inc))
-=&gt; [2 3 4 5 6 7 8 9 10]</code></pre></div><div><span id="smap" name="smap"></span><h3><i>4.5.3 &nbsp;&nbsp; smap!</i></h3></div><div><p><code>smap!</code> performs an operation only on selected elements</p></div><div class="code"><pre><code class="clojure">(&lt;&lt; (smap! (ova [1 2 3 4 5 6 7 8 9])
+=&gt; [2 3 4 5 6 7 8 9 10]</code></pre></div><div><span id="smap"></span><h3><i>4.5.3 &nbsp;&nbsp; smap!</i></h3></div><div><p><code>smap!</code> performs an operation only on selected elements</p></div><div class="code"><pre><code class="clojure">(&lt;&lt; (smap! (ova [1 2 3 4 5 6 7 8 9])
            odd? inc))
-=&gt; [2 2 4 4 6 6 8 8 10]</code></pre></div><div><span id="map-indexed" name="map-indexed"></span><h3><i>4.5.4 &nbsp;&nbsp; map-indexed!</i></h3></div><div><p><code>map-indexed!</code> performs an operation with the element index as the second parameter on every element</p></div><div class="code"><pre><code class="clojure">(&lt;&lt; (map-indexed! (ova [1 2 3 4 5 6 7 8 9])
+=&gt; [2 2 4 4 6 6 8 8 10]</code></pre></div><div><span id="map-indexed"></span><h3><i>4.5.4 &nbsp;&nbsp; map-indexed!</i></h3></div><div><p><code>map-indexed!</code> performs an operation with the element index as the second parameter on every element</p></div><div class="code"><pre><code class="clojure">(&lt;&lt; (map-indexed! (ova [1 2 3 4 5 6 7 8 9])
                   +))
-=&gt; [1 3 5 7 9 11 13 15 17]</code></pre></div><div><span id="smap-indexed" name="smap-indexed"></span><h3><i>4.5.5 &nbsp;&nbsp; smap-indexed!</i></h3></div><div><p><code>smap-indexed!</code> performs an operation with the element index as the second parameter on selected elements</p></div><div class="code"><pre><code class="clojure">(&lt;&lt; (smap-indexed! (ova [1 2 3 4 5 6 7 8 9])
+=&gt; [1 3 5 7 9 11 13 15 17]</code></pre></div><div><span id="smap-indexed"></span><h3><i>4.5.5 &nbsp;&nbsp; smap-indexed!</i></h3></div><div><p><code>smap-indexed!</code> performs an operation with the element index as the second parameter on selected elements</p></div><div class="code"><pre><code class="clojure">(&lt;&lt; (smap-indexed! (ova [1 2 3 4 5 6 7 8 9])
                    odd? +))
-=&gt; [1 2 5 4 9 6 13 8 17]</code></pre></div><div><span id="-1" name="-1"></span><h3><i>4.5.6 &nbsp;&nbsp; !></i></h3></div><div><p>The threading array performs a series of operations on selected elements.</p></div><div class="code"><pre><code class="clojure">(&lt;&lt; (!&gt; (ova [1 2 3 4 5 6 7 8 9])
+=&gt; [1 2 5 4 9 6 13 8 17]</code></pre></div><div><span id="-1"></span><h3><i>4.5.6 &nbsp;&nbsp; !></i></h3></div><div><p>The threading array performs a series of operations on selected elements.</p></div><div class="code"><pre><code class="clojure">(&lt;&lt; (!&gt; (ova [1 2 3 4 5 6 7 8 9])
         odd?
         (* 10)
         (+ 5)))
-=&gt; [15 2 35 4 55 6 75 8 95]</code></pre></div><div><span id="element-watch-2" name="element-watch-2"></span><h3>4.6 &nbsp;&nbsp; Element Watch</h3></div><div><p>Watches can be set up so that. Instead of a normal ref/atom watch where there are four inputs to the watch function, the Element watch requires an additional input to distinguish which array a change has occured. The function signature looks like:</p></div><div class="code"><pre><code class="clojure">(fn [k o r p v]  ;; key, ova, ref, prev, current
-  (... do something ...))</code></pre></div><div><span id="get-elem-watch" name="get-elem-watch"></span><h3><i>4.6.1 &nbsp;&nbsp; get-elem-watch</i></h3></div><div><p><code>get-elem-watches</code> takes as input an <code>ova</code> and returns a map of element watches and their keys.</p></div><div><span id="add-elem-watch" name="add-elem-watch"></span><h3><i>4.6.2 &nbsp;&nbsp; add-elem-watch</i></h3></div><div><p><code>add-elem-watch</code> adds a watch function on all elements of an <code>ova</code>.</p></div><div class="code"><pre><code class="clojure">(def ov     (ova [1 2 3 4]))
+=&gt; [15 2 35 4 55 6 75 8 95]</code></pre></div><div><span id="element-watch-2"></span><h3>4.6 &nbsp;&nbsp; Element Watch</h3></div><div><p>Watches can be set up so that. Instead of a normal ref/atom watch where there are four inputs to the watch function, the Element watch requires an additional input to distinguish which array a change has occured. The function signature looks like:</p></div><div class="code"><pre><code class="clojure">(fn [k o r p v]  ;; key, ova, ref, prev, current
+  (... do something ...))</code></pre></div><div><span id="get-elem-watch"></span><h3><i>4.6.1 &nbsp;&nbsp; get-elem-watch</i></h3></div><div><p><code>get-elem-watches</code> takes as input an <code>ova</code> and returns a map of element watches and their keys.</p></div><div><span id="add-elem-watch"></span><h3><i>4.6.2 &nbsp;&nbsp; add-elem-watch</i></h3></div><div><p><code>add-elem-watch</code> adds a watch function on all elements of an <code>ova</code>.</p></div><div class="code"><pre><code class="clojure">(def ov     (ova [1 2 3 4]))
 (def watch  (atom []))
 (def cj-fn  (fn  [k o r p v]  ;; key, ova, ref, prev, current
               (swap! watch conj [p v])))
@@ -679,9 +680,9 @@
 =&gt; [11 12 13 14]
 
 (sort @watch)
-=&gt; [[1 11] [2 12] [3 13] [4 14]]</code></pre></div><div><span id="remove-elem-watch" name="remove-elem-watch"></span><h3><i>4.6.3 &nbsp;&nbsp; remove-elem-watch</i></h3></div><div><p><code>remove-elem-watch</code> cleares the element watch function to a <code>ova</code>.</p></div><div class="code"><pre><code class="clojure">(watch/clear ov :conj)
+=&gt; [[1 11] [2 12] [3 13] [4 14]]</code></pre></div><div><span id="remove-elem-watch"></span><h3><i>4.6.3 &nbsp;&nbsp; remove-elem-watch</i></h3></div><div><p><code>remove-elem-watch</code> cleares the element watch function to a <code>ova</code>.</p></div><div class="code"><pre><code class="clojure">(watch/clear ov :conj)
 (keys (watch/list ov))
-=&gt; nil</code></pre></div><div><span id="add-elem-change-watch" name="add-elem-change-watch"></span><h3><i>4.6.4 &nbsp;&nbsp; add-elem-change-watch</i></h3></div><div><p><code>add-elem-change-watch</code> only updates when part of the array changes. This is a really useful abstraction when the element is a big nested map. This is the same as <code>add-elem-watch</code> though an additional selector is needed to determine if the expected part of the element has change. Its usage can be seen in the <a href='#scoreboard-example'>example</a></p></div><div><span id="selection" name="selection"></span><h2><b>5 &nbsp;&nbsp; Selection</b></h2></div><div><p>There are a number of ways elements in an <code>ova</code> can be selected. The library uses custom syntax to provide a shorthand for element selection. We use the function <code>indices</code> in order to give an examples of how searches can be expressed. Most of the functions like <code>select</code>, <code>remove!</code>, <code>filter!</code>, <code>smap!</code>, <code>smap-indexed!</code>, and convenience macros are all built on top of the <code>indices</code> function and so can be used accordingly once the convention is understood.</p></div><div><span id="by-index" name="by-index"></span><h3>5.1 &nbsp;&nbsp; by index</h3></div><div><p>The most straight-forward being the index itself, represented using a number.</p></div><div class="code"><pre><code class="clojure">(def ov (ova [{:v 0, :a {:c 4}}    ;; 0
+=&gt; nil</code></pre></div><div><span id="add-elem-change-watch"></span><h3><i>4.6.4 &nbsp;&nbsp; add-elem-change-watch</i></h3></div><div><p><code>add-elem-change-watch</code> only updates when part of the array changes. This is a really useful abstraction when the element is a big nested map. This is the same as <code>add-elem-watch</code> though an additional selector is needed to determine if the expected part of the element has change. Its usage can be seen in the <a href='#scoreboard-example'>example</a></p></div><div><span id="selection"></span><h2><b>5 &nbsp;&nbsp; Selection</b></h2></div><div><p>There are a number of ways elements in an <code>ova</code> can be selected. The library uses custom syntax to provide a shorthand for element selection. We use the function <code>indices</code> in order to give an examples of how searches can be expressed. Most of the functions like <code>select</code>, <code>remove!</code>, <code>filter!</code>, <code>smap!</code>, <code>smap-indexed!</code>, and convenience macros are all built on top of the <code>indices</code> function and so can be used accordingly once the convention is understood.</p></div><div><span id="by-index"></span><h3>5.1 &nbsp;&nbsp; by index</h3></div><div><p>The most straight-forward being the index itself, represented using a number.</p></div><div class="code"><pre><code class="clojure">(def ov (ova [{:v 0, :a {:c 4}}    ;; 0
               {:v 1, :a {:d 3}}    ;; 1
               {:v 2, :b {:c 2}}    ;; 2
               {:v 3, :b {:d 1}}])) ;; 3
@@ -693,9 +694,9 @@
 =&gt; [0]
 
 (indices ov 10)        ;; return indices of the 10th element
-=&gt; []</code></pre></div><div><span id="by-value" name="by-value"></span><h3>5.2 &nbsp;&nbsp; by value</h3></div><div><p>A less common way is to search for indices by value.</p></div><div class="code"><pre><code class="clojure">(indices ov            ;; return indices of elements matching term
+=&gt; []</code></pre></div><div><span id="by-value"></span><h3>5.2 &nbsp;&nbsp; by value</h3></div><div><p>A less common way is to search for indices by value.</p></div><div class="code"><pre><code class="clojure">(indices ov            ;; return indices of elements matching term
          {:v 0 :a {:c 4}})
-=&gt; [0]</code></pre></div><div><span id="by-predicate" name="by-predicate"></span><h3>5.3 &nbsp;&nbsp; by predicate</h3></div><div><p>Most of the time, predicates are used. They allow selection of any element returning a non-nil value when evaluated against the predicate. Predicates can take the form of functions, keywords or list representation.</p></div><div class="code"><pre><code class="clojure">(indices ov #(get % :a))   ;; retur indicies where (:a elem) is non-nil
+=&gt; [0]</code></pre></div><div><span id="by-predicate"></span><h3>5.3 &nbsp;&nbsp; by predicate</h3></div><div><p>Most of the time, predicates are used. They allow selection of any element returning a non-nil value when evaluated against the predicate. Predicates can take the form of functions, keywords or list representation.</p></div><div class="code"><pre><code class="clojure">(indices ov #(get % :a))   ;; retur indicies where (:a elem) is non-nil
 
 =&gt; [0 1]
 
@@ -713,7 +714,7 @@
 
 (indices ov '(:a))         ;; list form, same as #(:a %)
 
-=&gt; [0 1]</code></pre></div><div><span id="by-sets-or" name="by-sets-or"></span><h3>5.4 &nbsp;&nbsp; by sets (or)</h3></div><div><p>sets can be used to compose more complex searches by acting as an <code>union</code> operator over its members</p></div><div class="code"><pre><code class="clojure">(indices ov #{0 1})        ;; return indices 0 and 1
+=&gt; [0 1]</code></pre></div><div><span id="by-sets-or"></span><h3>5.4 &nbsp;&nbsp; by sets (or)</h3></div><div><p>sets can be used to compose more complex searches by acting as an <code>union</code> operator over its members</p></div><div class="code"><pre><code class="clojure">(indices ov #{0 1})        ;; return indices 0 and 1
 =&gt; [0 1]
 
 (indices ov #{:a 2})       ;; return indices of searching for both 2 and :a
@@ -721,7 +722,7 @@
 
 (indices ov #{'(:a)        ;; a more complex example
               #(= (:v %) 2)})
-=&gt; (just [0 1 2] :in-any-order)</code></pre></div><div><span id="by-vectors-and" name="by-vectors-and"></span><h3>5.5 &nbsp;&nbsp; by vectors (and)</h3></div><div><p>vectors can be used to combine predicates for more selective filtering of elements</p></div><div class="code"><pre><code class="clojure">(indices ov [:v 0])        ;; return indicies where (:a ele) = {:c 4}
+=&gt; (just [0 1 2] :in-any-order)</code></pre></div><div><span id="by-vectors-and"></span><h3>5.5 &nbsp;&nbsp; by vectors (and)</h3></div><div><p>vectors can be used to combine predicates for more selective filtering of elements</p></div><div class="code"><pre><code class="clojure">(indices ov [:v 0])        ;; return indicies where (:a ele) = {:c 4}
 =&gt; [0]
 
 (indices ov [:v '(= 0)])   ;; return indicies where (:a ele) = {:c 4}
@@ -742,7 +743,7 @@
 
 (indices ov #{[:a :c] 2})  ;; used within a set
 
-=&gt; (just [0 2] :in-any-order)</code></pre></div><div><span id="accessing-nested-elements" name="accessing-nested-elements"></span><h3>5.6 &nbsp;&nbsp; accessing nested elements</h3></div><div><p>When dealing with nested maps, a vector can be used instead of a keyword to specify rules of selection using nested elements</p></div><div class="code"><pre><code class="clojure">(indices ov [[:b :c] 2])   ;; with value
+=&gt; (just [0 2] :in-any-order)</code></pre></div><div><span id="accessing-nested-elements"></span><h3>5.6 &nbsp;&nbsp; accessing nested elements</h3></div><div><p>When dealing with nested maps, a vector can be used instead of a keyword to specify rules of selection using nested elements</p></div><div class="code"><pre><code class="clojure">(indices ov [[:b :c] 2])   ;; with value
 =&gt; [2]
 
 (indices ov [[:v] '(&lt; 3)]) ;; with predicate
@@ -750,11 +751,11 @@
 
 (indices ov [:v 2          ;; combining in vector
              [:b :c] 2])
-=&gt; [2]</code></pre></div><div><span id="scoreboard" name="scoreboard"></span><h2><b>6 &nbsp;&nbsp; Scoreboard</b></h2></div><div><span id="data-setup" name="data-setup"></span><h3>6.1 &nbsp;&nbsp; Data Setup</h3></div><div><p>A scoreboard is used to track player attempts, scores and high-scores</p></div><div class="code"><pre><code class="clojure">(def scoreboard
+=&gt; [2]</code></pre></div><div><span id="scoreboard"></span><h2><b>6 &nbsp;&nbsp; Scoreboard</b></h2></div><div><span id="data-setup"></span><h3>6.1 &nbsp;&nbsp; Data Setup</h3></div><div><p>A scoreboard is used to track player attempts, scores and high-scores</p></div><div class="code"><pre><code class="clojure">(def scoreboard
   (ova [{:name &quot;Bill&quot; :attempts 0 :score {:all ()}}
         {:name &quot;John&quot; :attempts 0 :score {:all ()}}
         {:name &quot;Sally&quot; :attempts 0 :score {:all ()}}
-        {:name &quot;Fred&quot;  :attempts 0 :score {:all ()}}]))</code></pre></div><div><span id="notifier-setup" name="notifier-setup"></span><h3>6.2 &nbsp;&nbsp; Notifier Setup</h3></div><div><p><code>hara.event</code> is used to listen for a <code>:log</code> signal and print out the <code>:msg</code> component of the event.</p></div><div class="code"><pre><code class="clojure">(require '[hara.event :as event])
+        {:name &quot;Fred&quot;  :attempts 0 :score {:all ()}}]))</code></pre></div><div><span id="notifier-setup"></span><h3>6.2 &nbsp;&nbsp; Notifier Setup</h3></div><div><p><code>hara.event</code> is used to listen for a <code>:log</code> signal and print out the <code>:msg</code> component of the event.</p></div><div class="code"><pre><code class="clojure">(require '[hara.event :as event])
 
 (event/deflistener print-logger
   :log
@@ -769,7 +770,7 @@
            :notify-high-score
            (fn [k o r p n]
              (event/signal [:log {:msg (str (:name @r) &quot; has a new highscore of &quot; n)}]))
-           {:select [:score :highest]})</code></pre></div><div><p>Of course, we could have added the <code>println</code> statement directly. However, in an actual application, events may be logged to file, emailed, beeped or read back to the user. Having a light-weight event signalling framework lets that decision be made much later</p></div><div><span id="high-scores" name="high-scores"></span><h3>6.3 &nbsp;&nbsp; High Scores</h3></div><div><p>Another watch is added to update the high score whenever it occurs.</p></div><div class="code"><pre><code class="clojure">(watch/add scoreboard
+           {:select [:score :highest]})</code></pre></div><div><p>Of course, we could have added the <code>println</code> statement directly. However, in an actual application, events may be logged to file, emailed, beeped or read back to the user. Having a light-weight event signalling framework lets that decision be made much later</p></div><div><span id="high-scores"></span><h3>6.3 &nbsp;&nbsp; High Scores</h3></div><div><p>Another watch is added to update the high score whenever it occurs.</p></div><div class="code"><pre><code class="clojure">(watch/add scoreboard
            :update-high-score
            (fn [k o r p n]
              (let [hs    [:score :highest]
@@ -779,7 +780,7 @@
                         (or (nil? high)
                             (&lt; high current)))
                  (dosync (alter r assoc-in hs current)))))
-           {:select [:score :all]})</code></pre></div><div><span id="game-simulation" name="game-simulation"></span><h3>6.4 &nbsp;&nbsp; Game Simulation</h3></div><div><p>Functions for simulation are defined with the following parameters:</p><ul><li><code>sim-game</code> and <code>sim-n-games</code> are used to update the scoreboard</li><li>the time to finish the game is randomised</li><li>the wait-time between subsequent games is randomised</li><li>the score they get is also randomised</li></ul></div><div class="code"><pre><code class="clojure">(defn sim-game [scoreboard name]
+           {:select [:score :all]})</code></pre></div><div><span id="game-simulation"></span><h3>6.4 &nbsp;&nbsp; Game Simulation</h3></div><div><p>Functions for simulation are defined with the following parameters:</p><ul><li><code>sim-game</code> and <code>sim-n-games</code> are used to update the scoreboard</li><li>the time to finish the game is randomised</li><li>the wait-time between subsequent games is randomised</li><li>the score they get is also randomised</li></ul></div><div class="code"><pre><code class="clojure">(defn sim-game [scoreboard name]
   ;; increment number of attempts
   (dosync (!&gt; scoreboard [:name name]
               (update-in [:attempts] inc)))
@@ -795,7 +796,7 @@
   (when (&gt; n 0)
     (Thread/sleep (rand-int 500))
     (sim-game scoreboard name)
-    (recur scoreboard name (dec n))))</code></pre></div><div><span id="multithreading" name="multithreading"></span><h3>6.5 &nbsp;&nbsp; Multithreading</h3></div><div><p>To demonstrate the use of ova within a multithreaded environment, we run the following simulation</p><ul><li>for each player on the scoreboard, they each play a random number of games simultaneously</li><li>the same scoreboard is used to keep track of state</li></ul></div><div class="code"><pre><code class="clojure">(defn sim! [scoreboard]
+    (recur scoreboard name (dec n))))</code></pre></div><div><span id="multithreading"></span><h3>6.5 &nbsp;&nbsp; Multithreading</h3></div><div><p>To demonstrate the use of ova within a multithreaded environment, we run the following simulation</p><ul><li>for each player on the scoreboard, they each play a random number of games simultaneously</li><li>the same scoreboard is used to keep track of state</li></ul></div><div class="code"><pre><code class="clojure">(defn sim! [scoreboard]
   (let [names (map :name scoreboard)]
     (doseq [nm names]
       (future (sim-n-games scoreboard nm (+ 5 (rand-int 5)))))))</code></pre></div><div><p>A sample simulation is show below:</p></div><div class="code"><pre><code class="clojure">(sim! scoreboard)

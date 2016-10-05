@@ -8,7 +8,7 @@
   <!-- Enable responsiveness on mobile devices-->
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
   <link rel="shortcut icon" href="favicon.ico">
-  <title>hara.group - generic typed collections</title>
+  <title>lucid.group - generic typed collections</title>
   <script src="js/highlight.min.js"></script>
   <script src="js/gumshoe.min.js"></script>
   <script src="js/smooth-scroll.min.js"></script>
@@ -18,8 +18,8 @@
   <link rel="stylesheet" href="css/syntax.css">
   <link rel="stylesheet" href="css/lanyon.css">
   <link rel="stylesheet" href="css/bolton.css">
-  <link rel="stylesheet" href="css/api.css">
-  <link rel="stylesheet" href="css/highlight.css">
+  <link rel="stylesheet" href="css/bolton-api.css">
+  <link rel="stylesheet" href="css/bolton-highlight.css">
   <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=PT+Serif:400,400italic,700|PT+Sans:400">
   
 </head>
@@ -34,6 +34,7 @@
 <!-- Toggleable sidebar -->
 <div class="sidebar" id="sidebar">
   <nav class="sidebar-nav">
+    <span>&nbsp;</span>
     <a class="sidebar-nav-item header" href="index.html"><img src="img/logo-white.png"/></a>
     <span>&nbsp;</span>
     <a class="sidebar-nav-item" href="hara-class.html">class</a><a class="sidebar-nav-item" href="hara-common.html">common</a><a class="sidebar-nav-item" href="hara-component.html">component</a><a class="sidebar-nav-item" href="hara-concurrent.html">concurrent</a><a class="sidebar-nav-item" href="hara-concurrent-ova.html">concurrent.ova</a><a class="sidebar-nav-item" href="hara-concurrent-procedure.html">concurrent.procedure</a><a class="sidebar-nav-item" href="hara-data.html">data</a><a class="sidebar-nav-item" href="hara-event.html">event</a><a class="sidebar-nav-item" href="hara-expression.html">expression</a><a class="sidebar-nav-item" href="hara-extend.html">extend</a><a class="sidebar-nav-item" href="hara-function.html">function</a><a class="sidebar-nav-item active" href="hara-group.html">group</a><a class="sidebar-nav-item" href="hara-io.html">io</a><a class="sidebar-nav-item" href="hara-io-file.html">io.file</a><a class="sidebar-nav-item" href="hara-io-scheduler.html">io.scheduler</a><a class="sidebar-nav-item" href="hara-io-watch.html">io.watch</a><a class="sidebar-nav-item" href="hara-namespace.html">namespace</a><a class="sidebar-nav-item" href="hara-object.html">object</a><a class="sidebar-nav-item" href="hara-reflect.html">reflect</a><a class="sidebar-nav-item" href="hara-sort.html">sort</a><a class="sidebar-nav-item" href="hara-string.html">string</a><a class="sidebar-nav-item" href="hara-test.html">test</a><a class="sidebar-nav-item" href="hara-time.html">time</a><a class="sidebar-nav-item" href="hara-zip.html">zip</a>
@@ -49,7 +50,7 @@
       <div class="masthead">
         <div class="container">
           <h3 class="masthead-title">
-            <span>hara.group</span>
+            <span>lucid.group</span>
             <small>generic typed collections</small>
           </h3>
         </div>
@@ -60,7 +61,7 @@
           <div class="heading">
             <div>
               <h5>Author: Chris Zheng&nbsp;&nbsp;<a href="mailto:z@caudate.me">(z@caudate.me)</a></h5>
-              <h5>Date: 04 October 2016</h5>
+              <h5>Date: 05 October 2016</h5>
               <h5>Repository: <a href="https://github.com/zcaudate/hara">https://github.com/zcaudate/hara</a></h5>
               <h5>Version: 2.4.5</h5></div></div>
           <hr/>
@@ -82,7 +83,7 @@
                 </ul>
               </nav>
           </div>
-          <div><span id="introduction" name="introduction"></span><h2><b>1 &nbsp;&nbsp; Introduction</b></h2></div><div><p><a href='https://github.com/zcaudate/hara/blob/master/src/hara/function.clj'>hara.group</a> allow definition of collections of the same type of items. </p></div><div><span id="installation" name="installation"></span><h3>1.1 &nbsp;&nbsp; Installation</h3></div><div><p>Add to <code>project.clj</code> dependencies:</p><pre><code>&#91;im.chit/hara.group &quot;2.4.5&quot;&#93;</code></pre><p>All functionality is in the <code>hara.group</code> namespace:</p></div><div class="code"><pre><code class="clojure">(use 'hara.group)</code></pre></div><div><span id="definitions" name="definitions"></span><h2><b>2 &nbsp;&nbsp; Definitions</b></h2></div><div><p>Groups and items are defined as follows:</p></div><div class="api"><span id="entry__hara_group__"></span><hr /><div><ul><li><a data-scroll="" href="#entry__hara_group__defgroup">defgroup</a></li><li><a data-scroll="" href="#entry__hara_group__defitem">defitem</a></li></ul><hr style="margin-bottom: 0" /><div><div class="entry"><span id="entry__hara_group__defgroup"></span><div class="entry-description"><h4><b>defgroup&nbsp<a data-scroll="" href="#entry__hara_group__">^</a></b></h4><p><i>creates a group of items</i></p></div><div class="entry-option"><h6><a href="https://github.com/zcaudate/hara/blob/master/src/hara/group.clj#L112-L126" target="_blank">v&nbsp;2.2</a></h6><div><input class="source-toggle" id="entry__pre_hara_group__defgroup" type="checkbox" /><label class="source-toggle" for="entry__pre_hara_group__defgroup"></label><pre class="source"><code class="clojure">(defmacro defgroup
+          <div><span id="introduction"></span><h2><b>1 &nbsp;&nbsp; Introduction</b></h2></div><div><p><a href='https://github.com/zcaudate/hara/blob/master/src/hara/function.clj'>hara.group</a> allow definition of collections of the same type of items. </p></div><div><span id="installation"></span><h3>1.1 &nbsp;&nbsp; Installation</h3></div><div><p>Add to <code>project.clj</code> dependencies:</p><pre><code>&#91;im.chit/hara.group &quot;2.4.5&quot;&#93;</code></pre><p>All functionality is in the <code>hara.group</code> namespace:</p></div><div class="code"><pre><code class="clojure">(use 'hara.group)</code></pre></div><div><span id="definitions"></span><h2><b>2 &nbsp;&nbsp; Definitions</b></h2></div><div><p>Groups and items are defined as follows:</p></div><div class="api"><span id="entry__hara_group__"></span><hr /><div><ul><li><a data-scroll="" href="#entry__hara_group__defgroup">defgroup</a></li><li><a data-scroll="" href="#entry__hara_group__defitem">defitem</a></li></ul><hr style="margin-bottom: 0" /><div><div class="entry"><span id="entry__hara_group__defgroup"></span><div class="entry-description"><h4><b>defgroup&nbsp<a data-scroll="" href="#entry__hara_group__">^</a></b></h4><p><i>creates a group of items</i></p></div><div class="entry-option"><h6><a href="https://github.com/zcaudate/hara/blob/master/src/hara/group.clj#L112-L126" target="_blank">v&nbsp;2.2</a></h6><div><input class="source-toggle" id="entry__pre_hara_group__defgroup" type="checkbox" /><label class="source-toggle" for="entry__pre_hara_group__defgroup"></label><pre class="source"><code class="clojure">(defmacro defgroup
   ([name] `(defgroup ~name {}))
   ([name m]
    `(def ~name (-> ~m
@@ -99,7 +100,7 @@
        (:var ~group)))</code></pre></div></div><pre><h6><i><a href="https://github.com/zcaudate/hara/blob/master/test/hara/group_test.clj#L22-L28" target="_blank">link</a></i></h6><code class="clojure">(-> (defitem people {:name :chris})
     deref
     list-items)
-=> [:andy :bob :chris]</code></pre></div></div></div></div><div><span id="methods" name="methods"></span><h2><b>3 &nbsp;&nbsp; Methods</b></h2></div><div><p>Methods for changing items in the defined group are:</p></div><div class="api"><span id="entry__hara_group__"></span><hr /><div><ul><li><a data-scroll="" href="#entry__hara_group__add_item">add-item</a></li><li><a data-scroll="" href="#entry__hara_group__append_items">append-items</a></li><li><a data-scroll="" href="#entry__hara_group__find_item">find-item</a></li><li><a data-scroll="" href="#entry__hara_group__group">group</a></li><li><a data-scroll="" href="#entry__hara_group__group_QMARK_">group?</a></li><li><a data-scroll="" href="#entry__hara_group__install_items">install-items</a></li><li><a data-scroll="" href="#entry__hara_group__list_items">list-items</a></li><li><a data-scroll="" href="#entry__hara_group__remove_item">remove-item</a></li></ul><hr style="margin-bottom: 0" /><div><div class="entry"><span id="entry__hara_group__add_item"></span><div class="entry-description"><h4><b>add-item&nbsp<a data-scroll="" href="#entry__hara_group__">^</a></b></h4><p><i>adds an item to the group</i></p></div><div class="entry-option"><h6><a href="https://github.com/zcaudate/hara/blob/master/src/hara/group.clj#L40-L50" target="_blank">v&nbsp;2.2</a></h6><div><input class="source-toggle" id="entry__pre_hara_group__add_item" type="checkbox" /><label class="source-toggle" for="entry__pre_hara_group__add_item"></label><pre class="source"><code class="clojure">(defn add-item
+=> [:andy :bob :chris]</code></pre></div></div></div></div><div><span id="methods"></span><h2><b>3 &nbsp;&nbsp; Methods</b></h2></div><div><p>Methods for changing items in the defined group are:</p></div><div class="api"><span id="entry__hara_group__"></span><hr /><div><ul><li><a data-scroll="" href="#entry__hara_group__add_item">add-item</a></li><li><a data-scroll="" href="#entry__hara_group__append_items">append-items</a></li><li><a data-scroll="" href="#entry__hara_group__find_item">find-item</a></li><li><a data-scroll="" href="#entry__hara_group__group">group</a></li><li><a data-scroll="" href="#entry__hara_group__group_QMARK_">group?</a></li><li><a data-scroll="" href="#entry__hara_group__install_items">install-items</a></li><li><a data-scroll="" href="#entry__hara_group__list_items">list-items</a></li><li><a data-scroll="" href="#entry__hara_group__remove_item">remove-item</a></li></ul><hr style="margin-bottom: 0" /><div><div class="entry"><span id="entry__hara_group__add_item"></span><div class="entry-description"><h4><b>add-item&nbsp<a data-scroll="" href="#entry__hara_group__">^</a></b></h4><p><i>adds an item to the group</i></p></div><div class="entry-option"><h6><a href="https://github.com/zcaudate/hara/blob/master/src/hara/group.clj#L40-L50" target="_blank">v&nbsp;2.2</a></h6><div><input class="source-toggle" id="entry__pre_hara_group__add_item" type="checkbox" /><label class="source-toggle" for="entry__pre_hara_group__add_item"></label><pre class="source"><code class="clojure">(defn add-item
   [{:keys [constructor key] :as group} data]
   (let [new (constructor data)
         tag (key new)
