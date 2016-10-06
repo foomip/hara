@@ -15,6 +15,9 @@
   
   (publish/copy-assets (publish/load-settings {:refresh true} PROJECT) PROJECT)
 
+  (:site (publish/load-settings {} PROJECT))
+  (theme/load-settings "stark" PROJECT)
+  
   (doseq [key (->> PROJECT :publish :files keys sort)] 
     (println "PUBLISHING:" key)
     (publish/publish key {} PROJECT))

@@ -8,7 +8,7 @@
   <!-- Enable responsiveness on mobile devices-->
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
   <link rel="shortcut icon" href="favicon.ico">
-  <title>lucid.zip - data traversal in style</title>
+  <title>hara.zip - data traversal in style</title>
   <script src="js/highlight.min.js"></script>
   <script src="js/gumshoe.min.js"></script>
   <script src="js/smooth-scroll.min.js"></script>
@@ -50,7 +50,7 @@
       <div class="masthead">
         <div class="container">
           <h3 class="masthead-title">
-            <span>lucid.zip</span>
+            <span>hara.zip</span>
             <small>data traversal in style</small>
           </h3>
         </div>
@@ -61,7 +61,7 @@
           <div class="heading">
             <div>
               <h5>Author: Chris Zheng&nbsp;&nbsp;<a href="mailto:z@caudate.me">(z@caudate.me)</a></h5>
-              <h5>Date: 05 October 2016</h5>
+              <h5>Date: 06 October 2016</h5>
               <h5>Repository: <a href="https://github.com/zcaudate/hara">https://github.com/zcaudate/hara</a></h5>
               <h5>Version: 2.4.5</h5></div></div>
           <hr/>
@@ -459,7 +459,7 @@
                        (conj v 100)
                        (+ v 100))))
     (root-node))
-=> [101 [102 [106 107 200] 103 200] [104 105 200] 200]</code></pre></div><div class="entry"><span id="entry__hara_zip__replace_left"></span><div class="entry-description"><h4><b>replace-left&nbsp<a data-scroll="" href="#entry__hara_zip__">^</a></b></h4><p><i>replace element left of the current position</i></p></div><div class="entry-option"><h6><a href="https://github.com/zcaudate/hara/blob/master/src/hara/zip/base.clj#L465-L486" target="_blank">v&nbsp;2.4</a></h6><div><input class="source-toggle" id="entry__pre_hara_zip__replace_left" type="checkbox" /><label class="source-toggle" for="entry__pre_hara_zip__replace_left"></label><pre class="source"><code class="clojure">(defn replace-left
+=> [101 [102 [106 107 200] 103 200] [104 105 200] 200]</code></pre></div><div class="entry"><span id="entry__hara_zip__replace_left"></span><div class="entry-description"><h4><b>replace-left&nbsp<a data-scroll="" href="#entry__hara_zip__">^</a></b></h4><p><i>replace element left of the current position</i></p></div><div class="entry-option"><h6><a href="https://github.com/zcaudate/hara/blob/master/src/hara/zip/base.clj#L465-L487" target="_blank">v&nbsp;2.4</a></h6><div><input class="source-toggle" id="entry__pre_hara_zip__replace_left" type="checkbox" /><label class="source-toggle" for="entry__pre_hara_zip__replace_left"></label><pre class="source"><code class="clojure">(defn replace-left
   [{:keys [left] :as zip} element]
   (cond (empty? left)
         (event/raise {:fn  :replace-left
@@ -471,12 +471,13 @@
         :else
         (-> zip
             (update-in [:left] #(->> % rest (cons element)))
+            (assoc :changed? true)
             (update-in [:meta :history] conj :replace-left))))</code></pre></div></div><pre><h6><i><a href="https://github.com/zcaudate/hara/blob/master/test/hara/zip/base_test.clj#L187-L194" target="_blank">link</a></i></h6><code class="clojure">(-> (vector-zip [1 2 3])
     (move-down)
     (move-right 2)
     (replace-left "10")
     (zip/cursor))
-=> '([1 "10" | 3])</code></pre></div><div class="entry"><span id="entry__hara_zip__replace_right"></span><div class="entry-description"><h4><b>replace-right&nbsp<a data-scroll="" href="#entry__hara_zip__">^</a></b></h4><p><i>replace element right of the current position</i></p></div><div class="entry-option"><h6><a href="https://github.com/zcaudate/hara/blob/master/src/hara/zip/base.clj#L488-L509" target="_blank">v&nbsp;2.4</a></h6><div><input class="source-toggle" id="entry__pre_hara_zip__replace_right" type="checkbox" /><label class="source-toggle" for="entry__pre_hara_zip__replace_right"></label><pre class="source"><code class="clojure">(defn replace-right
+=> '([1 "10" | 3])</code></pre></div><div class="entry"><span id="entry__hara_zip__replace_right"></span><div class="entry-description"><h4><b>replace-right&nbsp<a data-scroll="" href="#entry__hara_zip__">^</a></b></h4><p><i>replace element right of the current position</i></p></div><div class="entry-option"><h6><a href="https://github.com/zcaudate/hara/blob/master/src/hara/zip/base.clj#L489-L511" target="_blank">v&nbsp;2.4</a></h6><div><input class="source-toggle" id="entry__pre_hara_zip__replace_right" type="checkbox" /><label class="source-toggle" for="entry__pre_hara_zip__replace_right"></label><pre class="source"><code class="clojure">(defn replace-right
   [{:keys [right] :as zip} element]
   (cond (empty? right)
         (event/raise {:fn  :replace-right
@@ -488,6 +489,7 @@
         :else
         (-> zip
             (update-in [:right] #(->> % rest (cons element)))
+            (assoc :changed? true)
             (update-in [:meta :history] conj :replace-right))))</code></pre></div></div><pre><h6><i><a href="https://github.com/zcaudate/hara/blob/master/test/hara/zip/base_test.clj#L197-L204" target="_blank">link</a></i></h6><code class="clojure">(-> (vector-zip [1 2 3])
     (move-down)
     (move-right 2)

@@ -8,7 +8,7 @@
   <!-- Enable responsiveness on mobile devices-->
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
   <link rel="shortcut icon" href="favicon.ico">
-  <title>lucid.event - event signalling and conditional restart</title>
+  <title>hara.event - event signalling and conditional restart</title>
   <script src="js/highlight.min.js"></script>
   <script src="js/gumshoe.min.js"></script>
   <script src="js/smooth-scroll.min.js"></script>
@@ -50,7 +50,7 @@
       <div class="masthead">
         <div class="container">
           <h3 class="masthead-title">
-            <span>lucid.event</span>
+            <span>hara.event</span>
             <small>event signalling and conditional restart</small>
           </h3>
         </div>
@@ -61,7 +61,7 @@
           <div class="heading">
             <div>
               <h5>Author: Chris Zheng&nbsp;&nbsp;<a href="mailto:z@caudate.me">(z@caudate.me)</a></h5>
-              <h5>Date: 05 October 2016</h5>
+              <h5>Date: 06 October 2016</h5>
               <h5>Repository: <a href="https://github.com/zcaudate/hara">https://github.com/zcaudate/hara</a></h5>
               <h5>Version: 2.4.5</h5></div></div>
           <hr/>
@@ -326,8 +326,7 @@
 =&gt; [&quot;11&quot; &quot;12&quot; &quot;-&quot; &quot;14&quot;]
 
 (ints-to-strs-christian [1 2 666])
-=&gt; &quot;ARRRGHHH!&quot;</code></pre></div><div><p>It can be seen from this example that the <code>int-to-str</code> function can be reused without any changes. this would be extremely difficult to do with just <code>try/catch</code>.</p><p>For the still sceptical, I'm proposing a <strong>challenge</strong>: to reimplement <code>ints-to-strs-christian</code> without changing <code>unlucky-numbers</code> or <code>int-to-str</code> using only <code>try</code> and <code>catch</code>.</p></div><div><span id="guides"></span><h2><b>5 &nbsp;&nbsp; Guides</b></h2></div><div><span id="api-raise"></span><h3>5.1 &nbsp;&nbsp; raise</h3></div><div><p>The keyword <code>raise</code> is used to raise an 'issue'. At the simplest, when there is no <code>manage</code> blocks, <code>raise</code> just throws a <code>clojure.lang.ExceptionInfo</code> object</p></div><div class="code"><pre><code class="clojure">[[{:title &quot;raise is of type clojure.lang.ExceptionInfo&quot; :tag &quot;raise-type&quot;}]]
-(raise {:error true})
+=&gt; &quot;ARRRGHHH!&quot;</code></pre></div><div><p>It can be seen from this example that the <code>int-to-str</code> function can be reused without any changes. this would be extremely difficult to do with just <code>try/catch</code>.</p><p>For the still sceptical, I'm proposing a <strong>challenge</strong>: to reimplement <code>ints-to-strs-christian</code> without changing <code>unlucky-numbers</code> or <code>int-to-str</code> using only <code>try</code> and <code>catch</code>.</p></div><div><span id="guides"></span><h2><b>5 &nbsp;&nbsp; Guides</b></h2></div><div><span id="api-raise"></span><h3>5.1 &nbsp;&nbsp; raise</h3></div><div><p>The keyword <code>raise</code> is used to raise an 'issue'. At the simplest, when there is no <code>manage</code> blocks, <code>raise</code> just throws a <code>clojure.lang.ExceptionInfo</code> object</p></div><div class="code"><a id="raise-type"></a><pre><code class="clojure">(raise {:error true})
 =&gt; (throws clojure.lang.ExceptionInfo)</code></pre></div><div><p>The payload of the issue can be extracted using <code>ex-data</code></p></div><div class="code"><pre><code class="clojure">(try
   (raise {:error true})
   (catch clojure.lang.ExceptionInfo e
@@ -346,22 +345,15 @@
 
 
 (raise [:lvl-1 {:lvl-2 true :data &quot;data&quot;}])
- =&gt; (throws-info {:lvl-1 true :lvl-2 true :data &quot;data&quot;})</code></pre></div><div><span id="option--default"></span><h3>5.2 &nbsp;&nbsp; option/default</h3></div><div><p>Strategies for an unmanaged issue can be specified within the raise form:</p><ul><li><a href='#option-one'>e.</a> specifies two options and the specifies the default option as <code>:use-nil</code>.</li><li><a href='#option-two'>e.</a> sets the default as <code>:use-custom</code> with an argument of <code>10</code>.</li><li><a href='#option-none'>e.</a> shows that if there is no default selection, then an exception will be thrown as per previously seen:</li></ul></div><div class="code"><pre><code class="clojure">[[{:title &quot;default :use-nil&quot; :tag &quot;option-one&quot;}]]
-(raise :error
+ =&gt; (throws-info {:lvl-1 true :lvl-2 true :data &quot;data&quot;})</code></pre></div><div><span id="option--default"></span><h3>5.2 &nbsp;&nbsp; option/default</h3></div><div><p>Strategies for an unmanaged issue can be specified within the raise form:</p><ul><li><a href='#option-one'>e.</a> specifies two options and the specifies the default option as <code>:use-nil</code>.</li><li><a href='#option-two'>e.</a> sets the default as <code>:use-custom</code> with an argument of <code>10</code>.</li><li><a href='#option-none'>e.</a> shows that if there is no default selection, then an exception will be thrown as per previously seen:</li></ul></div><div class="code"><a id="option-one"></a><pre><code class="clojure">(raise :error
        (option :use-nil [] nil)
        (option :use-custom [n] n)
        (default :use-nil))
-=&gt; nil
-
-[[{:title &quot;default :use-custom&quot; :tag &quot;option-two&quot;}]]
-(raise :error
+=&gt; nil</code></pre></div><div class="code"><a id="option-two"></a><pre><code class="clojure">(raise :error
        (option :use-nil [] nil)
        (option :use-custom [n] n)
        (default :use-custom 10))
-=&gt; 10
-
-[[{:title &quot;no default&quot; :tag &quot;option-none&quot;}]]
-(raise :error
+=&gt; 10</code></pre></div><div class="code"><a id="option-none"></a><pre><code class="clojure">(raise :error
        (option :use-nil [] nil)
        (option :use-custom [n] n))
 =&gt; (throws-info {:error true})</code></pre></div><div><span id="manage--on"></span><h3>5.3 &nbsp;&nbsp; manage/on</h3></div><div><p>Raised issues can be resolved through use of <code>manage</code> blocks set up. The blocks set up execution scope, providing handlers and options to redirect program flow. A manage block looks like this:</p></div><div class="code"><pre><code class="clojure">(manage
@@ -434,56 +426,43 @@
      &quot;odd-number-exception&quot;)
  (finally
    (println &quot;Hello&quot;)))
-=&gt; &quot;odd-number-exception&quot; ;; Also prints &quot;Hello&quot;</code></pre></div><div><span id="special-forms"></span><h3>5.7 &nbsp;&nbsp; special forms</h3></div><div><p>There are five special forms that can be used within the <code>on</code> handler:</p><ul><li><a href='#api-continue'>continue</a></li><li><a href='#api-fail'>fail</a></li><li><a href='#api-choose'>choose</a></li><li><a href='#api-default'>default</a></li><li><a href='#api-escalate'>escalate</a></li></ul></div><div><span id="api-continue"></span><h3>5.8 &nbsp;&nbsp; continue</h3></div><div><p>The <code>continue</code> special form is used to continue the operation from the point that the <code>issue</code> was raised (<a href='#continue-using-nan'>e.</a>). It must be pointed out that this is impossible to do using the <code>try/catch</code> paradigm because the all the information from the stack will be lost.</p><p>  The <code>on</code> handler can take keys of the <code>payload</code> of the raised <code>issue</code> as parameters. In <a href='#continue-using-str'>e.</a>, a vector containing strings of the odd numbers are formed. Whereas in <a href='#continue-using-fractions'>e.</a>, the on handler puts in fractions instead.</p></div><div class="code"><pre><code class="clojure">[[{:title &quot;continue using nan&quot;}]]
-(manage
+=&gt; &quot;odd-number-exception&quot; ;; Also prints &quot;Hello&quot;</code></pre></div><div><span id="special-forms"></span><h3>5.7 &nbsp;&nbsp; special forms</h3></div><div><p>There are five special forms that can be used within the <code>on</code> handler:</p><ul><li><a href='#api-continue'>continue</a></li><li><a href='#api-fail'>fail</a></li><li><a href='#api-choose'>choose</a></li><li><a href='#api-default'>default</a></li><li><a href='#api-escalate'>escalate</a></li></ul></div><div><span id="api-continue"></span><h3>5.8 &nbsp;&nbsp; continue</h3></div><div><p>The <code>continue</code> special form is used to continue the operation from the point that the <code>issue</code> was raised (<a href='#continue-using-nan'>e.</a>). It must be pointed out that this is impossible to do using the <code>try/catch</code> paradigm because the all the information from the stack will be lost.</p><p>  The <code>on</code> handler can take keys of the <code>payload</code> of the raised <code>issue</code> as parameters. In <a href='#continue-using-str'>e.</a>, a vector containing strings of the odd numbers are formed. Whereas in <a href='#continue-using-fractions'>e.</a>, the on handler puts in fractions instead.</p></div><div class="code"><pre><code class="clojure">(manage
  (mapv half-int [1 2 3 4])
  (on :odd-number []
      (continue :nan)))
-=&gt; [:nan 1 :nan 2]
-
-[[{:title &quot;continue using str&quot;}]]
-(manage
+=&gt; [:nan 1 :nan 2]</code></pre></div><div class="code"><pre><code class="clojure">(manage
  (mapv half-int [1 2 3 4])
  (on :odd-number [value]
      (continue (str value))))
-=&gt; [&quot;1&quot; 1 &quot;3&quot; 2]
-
-[[{:title &quot;continue using fractions&quot;}]]
-(manage
+=&gt; [&quot;1&quot; 1 &quot;3&quot; 2]</code></pre></div><div class="code"><pre><code class="clojure">(manage
  (mapv half-int [1 2 3 4])
  (on :odd-number [value]
      (continue (/ value 2))))
-=&gt; [1/2 1 3/2 2]</code></pre></div><div><span id="api-fail"></span><h3>5.9 &nbsp;&nbsp; fail</h3></div><div><p>The <code>fail</code> special form will forcibly cause an exception to be thrown. It is used when there is no need to advise managers of situation. More data can be added to the failure (<a href='#fail-example'>e.</a>).</p></div><div class="code"><pre><code class="clojure">[[{:title &quot;failure&quot;}]]
-(manage
+=&gt; [1/2 1 3/2 2]</code></pre></div><div><span id="api-fail"></span><h3>5.9 &nbsp;&nbsp; fail</h3></div><div><p>The <code>fail</code> special form will forcibly cause an exception to be thrown. It is used when there is no need to advise managers of situation. More data can be added to the failure (<a href='#fail-example'>e.</a>).</p></div><div class="code"><pre><code class="clojure">(manage
   (mapv half-int [1 2 3 4])
   (on :odd-number []
     (fail [:unhandled :error])))
-=&gt; (throws-info {:value 1 :odd-number true :unhandled true :error true})</code></pre></div><div><span id="api-choose"></span><h3>5.10 &nbsp;&nbsp; choose</h3></div><div><p>The <code>choose</code> special form is used to jump to a <code>option</code>. A new function <code>half-int-b</code> (<a href='#half-int-b-definition'>e.</a>) is defined giving options to jump to within the <code>raise</code> form.</p></div><div class="code"><pre><code class="clojure">(defn half-int-b [n]
+=&gt; (throws-info {:value 1
+                 :odd-number true
+                 :unhandled true
+                 :error true})</code></pre></div><div><span id="api-choose"></span><h3>5.10 &nbsp;&nbsp; choose</h3></div><div><p>The <code>choose</code> special form is used to jump to a <code>option</code>. A new function <code>half-int-b</code> (<a href='#half-int-b-definition'>e.</a>) is defined giving options to jump to within the <code>raise</code> form.</p></div><div class="code"><pre><code class="clojure">(defn half-int-b [n]
     (if (= 0 (mod n 2))
       (quot n 2)
       (raise [:odd-number {:value n}]
              (option :use-nil [] nil)
              (option :use-nan [] :nan)
-             (option :use-custom [n] n))))</code></pre></div><div><p>Its usage can be seen in <a href='#choose-ex-1'>e.</a> where different paths can be chosen depending upon <code>:value</code>. An option can also be specified in the manage block (<a href='#choose-ex-2'>e.</a>). Options can also be overridden when specified in higher manage blocks (<a href='#choose-ex-3'>e.</a>). </p></div><div class="code"><pre><code class="clojure">[[{:title &quot;choosing different paths based on value&quot; :tag &quot;choose-ex-1&quot;}]]
-(manage
+             (option :use-custom [n] n))))</code></pre></div><div><p>Its usage can be seen in <a href='#choose-ex-1'>e.</a> where different paths can be chosen depending upon <code>:value</code>. An option can also be specified in the manage block (<a href='#choose-ex-2'>e.</a>). Options can also be overridden when specified in higher manage blocks (<a href='#choose-ex-3'>e.</a>). </p></div><div class="code"><a id="choose-ex-1"></a><pre><code class="clojure">(manage
  (mapv half-int-b [1 2 3 4])
  (on {:value 1} []
      (choose :use-nil))
  (on {:value 3} [value]
      (choose :use-custom (/ value 2))))
-=&gt; [nil 1 3/2 2]
-
-
-[[{:title &quot;choosing option within manage form&quot; :tag &quot;choose-ex-2&quot;}]]
-(manage
+=&gt; [nil 1 3/2 2]</code></pre></div><div class="code"><a id="choose-ex-2"></a><pre><code class="clojure">(manage
  (mapv half-int-b [1 2 3 4])
  (on :odd-number []
      (choose :use-empty))
  (option :use-empty [] []))
-=&gt; []
-
-[[{:title &quot;overwriting :use-nil within manage form&quot; :tag &quot;choose-ex-3&quot;}]]
-(manage
+=&gt; []</code></pre></div><div class="code"><a id="choose-ex-3"></a><pre><code class="clojure">(manage
  (mapv half-int-b [1 2 3 4])
  (on :odd-number []
      (choose :use-nil))
@@ -503,12 +482,8 @@
   (if (= 0 (mod n 2))
     (quot n 2)
     (raise [:odd-number {:value n}]
-           (default :use-empty))))</code></pre></div><div><p>The usage for <code>half-int-d</code> can be seen in (<a href='#d-alone'>e.</a> and <a href='#d-higher'>e.</a>) to show these particular cases.</p></div><div class="code"><pre><code class="clojure">[[{:title &quot;half-int-d alone&quot; :tag &quot;d-alone&quot;}]]
-(half-int-d 3)
-=&gt; (throws java.lang.Exception &quot;RAISE_CHOOSE: the label :use-empty has not been implemented&quot;)
-
-[[{:title &quot;half-int-d inside manage block&quot; :tag &quot;d-higher&quot;}]]
-(manage
+           (default :use-empty))))</code></pre></div><div><p>The usage for <code>half-int-d</code> can be seen in (<a href='#d-alone'>e.</a> and <a href='#d-higher'>e.</a>) to show these particular cases.</p></div><div class="code"><a id="d-alone"></a><pre><code class="clojure">(half-int-d 3)
+=&gt; (throws java.lang.Exception &quot;RAISE_CHOOSE: the label :use-empty has not been implemented&quot;)</code></pre></div><div class="code"><a id="d-higher"></a><pre><code class="clojure">(manage
  (mapv half-int-d [1 2 3 4])
  (option :use-empty [] [])
  (on :odd-number []
