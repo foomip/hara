@@ -29,3 +29,16 @@
 
   (watch/list (io/file "."))
   => {})
+
+(comment
+  
+  (watch/add (io/file ".") :save
+             (fn [f k _ [cmd file]]
+               (println cmd file)
+               (deliver *happy* [cmd (.getName file)]))
+             {:types #{:delete}
+              :recursive false
+              :filter  [".hara"]
+              :exclude [".git" "target"]})
+
+  )

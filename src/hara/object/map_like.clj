@@ -47,12 +47,18 @@
   `[(defmethod object/-meta-read ~cls
       [~'_]
       ~(let [read (cond (map? read) read
-
+                        
                         (= read :reflect)
                         `{:methods (key-selection (read/read-reflect-fields ~cls) ~include ~exclude)}
 
+                        
+                        (= read :all)
+                        `{:methods (-> (merge (read/read-all-getters ~cls read/+read-get-template+)
+                                              (read/read-all-getters ~cls read/+read-is-template+))
+                                       (key-selection ~include ~exclude))}
+                        
                         (or (nil? read)
-                            (= read :getters))
+                            (= read :class))
                         `{:methods (-> (merge (read/read-getters ~cls read/+read-get-template+)
                                               (read/read-getters ~cls read/+read-is-template+))
                                        (key-selection ~include ~exclude))})]
@@ -69,8 +75,12 @@
                (= methods :reflect)
                (assoc :methods `(write/write-reflect-fields ~cls))
 
-               (or (= methods :setters)
+               (= methods :all)
+               (assoc :methods `(write/write-all-setters ~cls))
+
+               (or (= write :class)
                    (nil? methods))
                (assoc :methods `(write/write-setters ~cls))))))
 
     (print/extend-print ~cls)])
+

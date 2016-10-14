@@ -266,3 +266,7 @@
 (fact "returns the earliest date out of a range of inputs"
   (t/earliest (Date. 0) (Date. 1000) (Date. 20000))
   => #inst "1970-01-01T00:00:00.000-00:00")
+
+(comment
+  (t/format (t/now) "HH MM dd")
+  )

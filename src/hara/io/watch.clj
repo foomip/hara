@@ -73,7 +73,7 @@
                  (.isDirectory file)
                  (-> watcher :options :recursive))
           (register-sub-directory watcher (.getPath file)))
-        (if (.isFile file)
+        (if-not (.isDirectory file)
           (process-event watcher kind file))))
     (.reset wkey)
     (recur watcher)))

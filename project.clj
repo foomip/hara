@@ -1,4 +1,4 @@
-(defproject im.chit/hara "2.4.6-SNAPSHOT"
+(defproject im.chit/hara "2.4.6"
   :description "patterns and utilities"
   :url "https://github.com/zcaudate/hara"
   :license {:name "The MIT License"
@@ -10,8 +10,7 @@
                                   [clj-http "2.1.0"]
                                   [org.eclipse.jgit "4.0.1.201506240215-r"]
                                   [joda-time "2.9.2"]]
-                   :plugins [[lein-repack "0.2.10"]
-                             [lein-hydrox "0.1.17"]]}}
+                   :plugins [[lein-repack "0.2.10"]]}}
   :publish {:theme  "bolton"
   
             :template {:author "Chris Zheng"

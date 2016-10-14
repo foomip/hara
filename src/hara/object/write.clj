@@ -24,21 +24,36 @@
                    (assoc out k {:type cls :fn ele})))
                {})))
 
+(defn create-write-method [ele prefix template]
+  [(-> (:name ele) (subs (count prefix)) case/spear-case keyword)
+   {:type (-> ele :params second)
+    :fn (eval (walk/postwalk-replace {'<method> (symbol (:name ele))}
+                                     template))}])
+
 (defn write-setters
   ""
   ([cls] (write-setters cls {:prefix "set"
+                                   :template '(fn <method> [obj val]
+                                                (. obj (<method> val))
+                                                obj)}))
+  ([cls {:keys [prefix template]}]
+   (->> [:method :instance (re-pattern (str "^" prefix ".+")) 2]
+        (reflect/query-class cls)
+        (reduce (fn [out ele]
+                  (conj out (create-write-method ele prefix template)))
+                {}))))
+
+(defn write-all-setters
+  ""
+  ([cls] (write-all-setters cls {:prefix "set"
                              :template '(fn <method> [obj val]
                                           (. obj (<method> val))
                                           obj)}))
   ([cls {:keys [prefix template]}]
    (->> [:method :instance (re-pattern (str "^" prefix ".+")) 2]
-        (reflect/query-class cls)
+        (reflect/query-hierarchy cls)
         (reduce (fn [out ele]
-                  (assoc out
-                         (-> (:name ele) (subs (count prefix)) case/spear-case keyword)
-                         {:type (-> ele :params second)
-                          :fn (eval (walk/postwalk-replace {'<method> (symbol (:name ele))}
-                                                                template))}))
+                  (conj out (create-write-method ele prefix template)))
                 {}))))
 
 (defn from-empty

@@ -42,11 +42,11 @@
 
 (defmethod time/-format [SimpleDateFormat PersistentArrayMap]
   [^SimpleDateFormat formatter ^PersistentHashMap m {:keys [timezone] :as opts}]
-  (time/-format formatter (map/from-map m {:type Calendar}) opts))
+  (time/-format formatter (map/from-map m {:type Calendar} opts) opts))
 
 (defmethod time/-format [SimpleDateFormat PersistentHashMap]
   [^SimpleDateFormat formatter ^PersistentHashMap m {:keys [timezone] :as opts}]
-  (time/-format formatter (map/from-map m {:type Calendar}) opts))
+  (time/-format formatter (map/from-map m {:type Calendar} opts) opts))
 
 (defmethod time/-parser SimpleDateFormat
   [s {:keys [timezone] :as opts}]

@@ -724,7 +724,7 @@ It can be seen that we can simulate the actual speed of outputs by keeping the s
 "To upgrade to `cronj` to `hara.io.scheduler`, all that needs to be done is to add to `project.clj` dependencies:
 
     [im.chit/hara.io.scheduler \"{{PROJECT.version}}\"]
-    [im.chit/hara.time.joda    \"{{PROJECT.version}}\"]
+    [joda    \"2.9.2\"]
 
 Apart from the initial call to include the scheduler, require the `hara.time.joda` namespace to load in all the protocol and multimethod hooks."
 

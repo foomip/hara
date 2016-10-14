@@ -27,7 +27,9 @@
           (if desc (str "\n    " (ansii/white "Info") "  \"" desc ""\") "")
           (str "\n    " (ansii/white "Form") "  " form)
           (str "\n   " (ansii/white "Check") "  " check)
-          (str "\n  " (ansii/white "Actual") "  " actual)))))
+          (str "\n  " (ansii/white "Actual") "  " (if (sequential? actual)
+                                                    (vec actual)
+                                                    actual))))))
 
 (defn print-thrown
   "" [{:keys [name ns line desc form] :as summary}]

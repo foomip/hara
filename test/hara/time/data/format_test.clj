@@ -12,6 +12,7 @@
 
 ^{:refer hara.time.data.format/format :added "2.2"}
 (fact "converts a date into a string"
+  
   (f/format (Date. 0) "HH MM dd Z" {:timezone "GMT" :cached true})
   => "00 01 01 +0000"
 
@@ -24,7 +25,11 @@
   (f/format (Timestamp. 0)
             "HH MM dd Z"
             {:timezone "PST"})
-  => "16 12 31 -0800")
+  => "16 12 31 -0800"
+
+  ^:hidden
+  (f/format (Date. 0) "HH MM dd Z")
+  => string?)
 
 ^{:refer hara.time.data.format/parse :added "2.2"}
 (fact "converts a string into a date"

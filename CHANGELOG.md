@@ -3,6 +3,22 @@ All notable changes to this project will be documented in this file. This change
 
 ## Versions
 
+## 2.4.6
+- integrated hara.time.joda
+- fix for hara.io.watch - https://github.com/zcaudate/hara/issues/27 
+- fix for hara.time - https://github.com/zcaudate/hara/issues/28
+
+## 2.4.5
+- added hara.zip
+- added hara.string.prose
+- added hara.io.project
+- updated docs
+
+## 2.4.2
+- added hara.test
+- added hara.io.file
+
+
 ## 2.3
 
 #### 2.3.3

@@ -26,6 +26,15 @@
 (def +read-get-template+
   {:prefix "get" :template +read-template+})
 
+(defn create-read-method [ele prefix template extra]
+  [(-> (:name ele)
+       (subs (count prefix))
+       case/spear-case
+       (str (or extra ""))
+       keyword)
+   (eval (walk/postwalk-replace {'<method> (symbol (:name ele))}
+                                template))])
+
 (defn read-getters
   ""
   ([cls] (read-getters cls +read-get-template+))
@@ -33,14 +42,17 @@
    (->> [:method :instance :public (re-pattern (str "^" prefix ".+")) 1]
         (reflect/query-class cls)
         (reduce (fn [out ele]
-                  (assoc out
-                         (-> (:name ele)
-                             (subs (count prefix))
-                             case/spear-case
-                             (str (or extra ""))
-                             keyword)
-                         (eval (walk/postwalk-replace {'<method> (symbol (:name ele))}
-                                                      template))))
+                  (conj out (create-read-method ele prefix template extra)))
+                {}))))
+
+(defn read-all-getters
+  ""
+  ([cls] (read-all-getters cls +read-get-template+))
+  ([cls {:keys [prefix template extra]}]
+   (->> [:method :instance :public (re-pattern (str "^" prefix ".+")) 1]
+        (reflect/query-hierarchy cls)
+        (reduce (fn [out ele]
+                  (conj out (create-read-method ele prefix template extra)))
                 {}))))
 
 (defn to-data
@@ -62,7 +74,7 @@
           to-vector (to-vector obj)
 
           methods (reduce-kv (fn [out k func]
-                               (if-let [v (func obj)]
+                               (if-some [v (func obj)]
                                  (assoc out k (to-data v))
                                  out))
                              {}

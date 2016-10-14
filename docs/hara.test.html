@@ -8,7 +8,7 @@
   <!-- Enable responsiveness on mobile devices-->
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
   <link rel="shortcut icon" href="favicon.ico">
-  <title>hara - patterns and utilities</title>
+  <title>hara.<@=title> - <@=subtitle></title>
   <script src="js/highlight.min.js"></script>
   <script src="js/gumshoe.min.js"></script>
   <script src="js/smooth-scroll.min.js"></script>
@@ -21,9 +21,8 @@
   <link rel="stylesheet" href="css/bolton-api.css">
   <link rel="stylesheet" href="css/bolton-highlight.css">
   <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=PT+Serif:400,400italic,700|PT+Sans:400">
-
+  
 </head>
-
 
   <body class="theme-base-08">
     <span id="page-top"></span>
@@ -44,14 +43,15 @@
   </nav>
 </div>
 
+
     <!-- Wrap is the content to shift when toggling the sidebar. We wrap the
          content to avoid any CSS collisions with our real content. -->
     <div class="wrap">
       <div class="masthead">
         <div class="container">
           <h3 class="masthead-title">
-            <span>hara</span>
-            <small>patterns and utilities</small>
+            <span>hara.<@=title></span>
+            <small><@=subtitle></small>
           </h3>
         </div>
       </div>
@@ -61,10 +61,20 @@
           <div class="heading">
             <div>
               <h5>Author: Chris Zheng&nbsp;&nbsp;<a href="mailto:z@caudate.me">(z@caudate.me)</a></h5>
-              <h5>Date: 06 October 2016</h5>
+              <h5>Date: 09 October 2016</h5>
               <h5>Repository: <a href="https://github.com/zcaudate/hara">https://github.com/zcaudate/hara</a></h5>
-              <h5>Version: 2.4.6</h5></div></div>
+              <h5>Version: 2.4.6-SNAPSHOT</h5></div></div>
           <hr/>
+          <div class="outline">
+            <div class="toc">
+              <nav data-gumshoe-header>
+                <ul data-gumshoe>
+                  <a data-scroll class="top" href="#page-top">TOP</a>
+                  
+                </ul>
+              </nav>
+            </div>
+          </div>
 
           <div class="toc">
               <nav>
@@ -73,7 +83,71 @@
                 </ul>
               </nav>
           </div>
-          <div class="figure"><a id="img-img--logo-png"></a><div class="img"><img line="{:row 4, :col 1, :end-row 4, :end-col 55}" src="img/logo.png" style="float: right" /></div><p></p></div><div><h1>Welcome</h1><h3>What is It?</h3><p><a href='https://github.com/zcaudate/hara'>hara</a> is a set of libraries extending <code>clojure.core</code>, a little bit like <a href='http://www.boost.org'>boost</a> but without the compilation time.</p><h3>Why was it made?</h3><p>Apart from <a href='http://www.clojure.org'>clojure</a> itself, the language lacks a big, monolithic, kitchen-sink type codebase. <a href='https://github.com/zcaudate/hara'>hara</a> aims to fill that gap.</p><h3>Who is this targeting?</h3><p>All JVM Clojure developers.</p><h3>When was this started?</h3><p>The first pieces of the current codebase was committed in 2012. Since then, the project has grown organically based on need and interest.</p><h3>Where has it been used?</h3><p>In many places. Mostly to write libraries that keep this <a href='https://github.com/zcaudate/lucidity'>maintainable</a>. </p><h3>How to begin?</h3><p>That's a good question. It really depends on what is being built. There's a fair amount of documentation already so please jump in and start exploring.</p><h3>Okay, lets go!</h3><p>List of current libraries:</p><ul><li><a href='hara-class.html'>hara.class</a> - functions for reasoning about classes</li><li><a href='hara-common.html'>hara.common</a> - primitives declarations and functions</li><li><a href='hara-component.html'>hara.component</a> - constructing composable systems</li><li><a href='hara-concurrent.html'>hara.concurrent</a> - methods and datastructures for concurrency</li><li><a href='hara-concurrent-ova.html'>hara.concurrent.ova</a> - shared mutable state</li><li><a href='hara-concurrent.procedure.html'>hara.concurrent.procedure</a> - controllable execution</li><li><a href='hara-data.html'>hara.data</a> - maps and representations of data</li><li><a href='hara-event.html'>hara.event</a> - event signalling and conditional restart</li><li><a href='hara-expression.html'>hara.expression</a> - interchange between code and data</li><li><a href='hara-extend.html'>hara.extend</a> - macros for extensible objects</li><li><a href='hara-function.html'>hara.function</a> - reasoning about functions</li><li><a href='hara-group.html'>hara.group</a> - generic typed collections</li><li><a href='hara-io.html'>hara.io</a> - tools for files and io operations</li><li><a href='hara-io-file.html'>hara.io.file</a> - tools for the file system</li><li><a href='hara-io-scheduler.html'>hara.io.scheduler</a> - easy and intuitive task scheduling</li><li><a href='hara-io-watch.html'>hara.io.watch</a> - watch for filesystem changes</li><li><a href='hara-namespace.html'>hara.namespace</a> - utilities for namespace manipulation</li><li><a href='hara-object.html'>hara.object</a> - think data, escape encapsulation</li><li><a href='hara-reflect.html'>hara.reflect</a> - java reflection made easy</li><li><a href='hara-sort.html'>hara.sort</a> - micellaneous sorting functions</li><li><a href='hara-string.html'>hara.string</a> - methods for string manipulation</li><li><a href='hara-test.html'>hara.test</a> - easy to use test framework</li><li><a href='hara-time.html'>hara.time</a> - time as a clojure map</li><li><a href='hara-zip.html'>hara.zip</a> - data traversal in style</li></ul></div>
+          <div class="code"><pre><code class="clojure">(ns/import hara.test.checker.base
+           [throws exactly satisfies anything]
+
+           hara.test.checker.collection
+           [contains just contains-in just-in throws-info]
+
+           hara.test.checker.logic
+           [any all is-not]
+
+           hara.test.form
+           [fact facts =&gt;]
+           
+           hara.test.runner
+           [run run-namespace])
+
+(defn print-options
+  &quot;&quot;
+  ([] (print-options :help))
+  ([opts]
+   (cond (set? opts)
+         (alter-var-root #'common/*print*
+                         (constantly opts))
+
+         (= :help opts)
+         #{:help :current :default :list :disable :reset :all}
+
+         (= :current opts) common/*print*
+         
+         (= :default opts)
+         #{:print-thrown :print-failure :print-bulk}
+         
+         (= :list opts)
+         #{:print-thrown :print-success :print-facts :print-facts-success :print-failure :print-bulk}
+
+         (= :disable opts)
+         (alter-var-root #'common/*print* (constantly #{}))
+         
+         (= :reset opts)
+         (alter-var-root #'common/*print* (constantly #(print-options :default)))
+         
+         (= :all opts)
+         (alter-var-root #'common/*print* (constantly (print-options :list))))))
+
+(defn process-args
+  &quot;&quot;
+  [args]
+  (-&gt;&gt; (map read-string args)
+       (map (fn [x]
+              (cond (symbol? x)
+                    (keyword (name x))
+
+                    (keyword? x) x
+
+                    (string? x) (keyword x))))
+       set))
+
+(defn -main
+  &quot;&quot;
+  ([&amp; args]
+   (let [args (process-args args)
+         {:keys [thrown failed] :as stats} (run)
+         res (+ thrown failed)]
+     (if (get args :exit)
+       (System/exit res)
+       res))))</code></pre></div>
         </div>
       </div>
     </div>
@@ -81,6 +155,7 @@
     <label for="sidebar-checkbox" class="sidebar-toggle"></label>
 
   </body>
+
   <script>
   if (true) {
     (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
