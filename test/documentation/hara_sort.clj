@@ -1,9 +1,6 @@
 (ns documentation.hara-sort)
 
-[[:chapter {:title "Introduction"}]]
-
-"
-[hara.sort](https://github.com/zcaudate/hara/blob/master/src/hara/sort.clj) contain functions and utilities for sorting algorithms."
+"[hara.sort](https://github.com/zcaudate/hara/blob/master/src/hara/sort.clj) contain functions and utilities for sorting algorithms."
 
 
 [[:chapter {:title "sort.hierarchical" :link "hara.sort.hierarchical"}]]

@@ -15,7 +15,6 @@
 
 
 
-
 [[:chapter {:title "data.seq" :link "hara.data.seq"}]]
 
 "Add to `project.clj` dependencies:
@@ -38,7 +37,6 @@
 **hara.data.nested** contain functions for updating nested hashmaps."
 
 [[:api {:namespace "hara.data.nested" :title ""}]]
-
 
 
 
@@ -99,8 +97,6 @@
 [[:api {:namespace "hara.data.record" :title ""}]]
 
 
-
-
 [[:chapter {:title "data.path" :link "hara.data.path"}]]
 
 "Add to `project.clj` dependencies:
@@ -110,4 +106,15 @@
 **hara.data.path**concerns itself with the translation between data contained in a nested versus data contained in a single map with paths as keys."
 
 [[:api {:namespace "hara.data.path" :link "hara.data.path"}]]
+
+
+[[:chapter {:title "data.transform" :link "hara.data.transform"}]]
+
+"Add to `project.clj` dependencies:
+
+    [im.chit/hara.data.map \"{{PROJECT.version}}\"]
+
+**hara.data.transform** contain functions for transforming maps"
+
+[[:api {:namespace "hara.data.transform" :title ""}]]
 

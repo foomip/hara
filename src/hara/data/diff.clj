@@ -80,13 +80,32 @@
        diff))))
 
 (defn merge-or-replace
-  ""
+  "If both are maps then merge, otherwis replace
+ 
+   (merge-or-replace {:a {:b {:c 2}}} {:a {:b {:c 3 :d 4}}})
+   => {:a {:b {:c 3 :d 4}}}"
+  {:added "2.1"}
   [x v]
   (cond (and (hash-map? x)
              (hash-map? v))
         (nested/merge-nested x v)
 
         :else v))
+
+(defn changed
+  "Outputs what has changed between the two maps
+ 
+   (changes {:a {:b {:c 3 :d 4}}}
+            {:a {:b {:c 3}}})
+   => {:a {:b {:d 4}}}"
+  {:added "2.4"}
+  [new old]
+  (->> (diff new old)
+       ((juxt :> :+))
+       (apply merge)
+       (reduce-kv (fn [out ks v]
+                    (assoc-in out ks v))
+                  {})))
 
 (defn patch
   "Use the diff to convert one map to another in the forward

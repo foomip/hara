@@ -1,4 +1,4 @@
-(ns hara.concurrent.procedure.retry_test
+(ns hara.concurrent.procedure.retry-test
   (:use hara.test)
   (:require [hara.concurrent.procedure.retry :refer :all]))
 
@@ -75,16 +75,16 @@
              [:a :b {}]
              (ex-info "hello" {:cats 11}))
       second)
-  => (contains [:a :b (contains
-                       {:handlers
-                        (contains
-                         [(contains {:on {:cats odd?}, :apply fn?, :wait fn?})])
-                        :on java.lang.Throwable,
-                        :count 1,
-                        :state {:types {clojure.lang.ExceptionInfo 1},
-                                :b 2,
-                                :a 1},
-                        :limit 10,
-                        :wait 100})]))
+  => (contains-in
+      [:a :b 
+       {:handlers
+        [{:on {:cats odd?}, :apply fn?, :wait fn?}]
+        :on java.lang.Throwable,
+        :count 1,
+        :state {:types {clojure.lang.ExceptionInfo 1},
+                :b 2,
+                :a 1},
+        :limit 10,
+        :wait 100}]))
 
 

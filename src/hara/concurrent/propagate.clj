@@ -8,38 +8,64 @@
 (def nothing ::nothing)
 
 (defn nothing?
-  "" [x]
+  "checks if the value is nothing
+ 
+   (nothing? nil) => false
+ 
+   (nothing? :hara.concurrent.propagate/nothing)
+   => true"
+  {:added "2.1"}
+  [x]
   (= x nothing))
 
 (defn straight-through
-  "" [& [x]] x)
+  "passes the first input through
+ 
+   (straight-through 1) => 1
+ 
+   (straight-through 1 2 3) => 1"
+  {:added "2.1"}
+  [& [x]] x)
 
 (defn cell-state
-  ""
+  "prepares the state of the cell
+ 
+   (cell-state {:label \"a\" :content \"hello\" :ref-fn atom})
+   => (just {:label clojure.lang.Atom
+             :content clojure.lang.Atom
+             :propagators clojure.lang.Atom})"
+  {:added "2.1"}
   [{:keys [label content ref-fn]}]
-  (do {:label       (atom label)
-       :content     ((or ref-fn atom) content)
-       :propagators (atom #{})}))
+  {:label       label
+   :content     ((or ref-fn atom) content)
+   :propagators (atom #{})})
 
 (defn propagator-state
-  ""
+  "prepares the state of the propagator"
+  {:added "2.1"}
   [{:keys [label in-cells out-cell tf tdamp concurrent]}]
-  (do {:label      (atom label)
+  (do {:label      label
        :in-cells   (atom in-cells)
        :out-cell   (atom out-cell)
-       :tf         (atom tf)
-       :tdamp      (atom (or tdamp =))
-       :concurrent (atom concurrent)}))
+       :tf         tf
+       :tdamp      (or tdamp =)
+       :concurrent concurrent}))
 
 (defprotocol IPropagate
   (propagate [pg]))
 
-(defmacro with-concurrent
-  "" [flag & body]
-  `(if ~flag (do ~body) (future ~body)))
-
 (defn propagation-transfer
-  "" [in-vals {:keys [tf tdamp out-cell] :as pg}]
+  "propagates values to the out-cells according to transfer function
+   
+   (def out-cell (cell))
+ 
+   (propagation-transfer
+    [1 2 3]
+    {:tf + :tdamp = :out-cell out-cell})
+ 
+   @out-cell => 6"
+  {:added "2.1"}
+  [in-vals {:keys [tf tdamp out-cell]}]
   (let [out (if-not (some nothing? in-vals)
               (suppress (apply tf in-vals) nothing)
               nothing)]
@@ -48,7 +74,9 @@
       (out-cell out))))
 
 (defn format-cells
-  "" [{:keys [label] :as cell}]
+  "styles the cells so they become easier to read"
+  {:added "2.1"}
+  [{:keys [label] :as cell}]
   (or label
       (format "{%s}" (.hashCode ^Object cell))))
 

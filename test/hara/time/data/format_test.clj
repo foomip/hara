@@ -27,28 +27,42 @@
             {:timezone "PST"})
   => "16 12 31 -0800"
 
-  ^:hidden
   (f/format (Date. 0) "HH MM dd Z")
   => string?)
 
 ^{:refer hara.time.data.format/parse :added "2.2"}
 (fact "converts a string into a date"
-  (f/parse "00 00 01 01 01 1989 +0000" "ss mm HH dd MM yyyy Z" {:type Date :timezone "GMT"})
+  (f/parse "00 00 01 01 01 1989 +0000"
+           "ss mm HH dd MM yyyy Z"
+           {:type Date :timezone "GMT"})
   => #inst "1989-01-01T01:00:00.000-00:00"
 
-  (-> (f/parse "00 00 01 01 01 1989 -0800" "ss mm HH dd MM yyyy Z"
+  (-> (f/parse "00 00 01 01 01 1989 -0800"
+               "ss mm HH dd MM yyyy Z"
                {:type Calendar})
-      (map/to-map {:timezone "GMT"} common/+default-keys+))
-  {:type java.util.GregorianCalendar, :timezone "GMT", :long 599648400000,
-   :year 1989, :month 1, :day 1, :hour 9, :minute 0, :second 0, :millisecond 0}
+      (map/to-map {:timezone "GMT"}
+                  common/+default-keys+))
+  => {:type java.util.GregorianCalendar,
+      :timezone "GMT",
+      :long 599648400000,
+      :year 1989,
+      :month 1, :day 1,
+      :hour 9, :minute 0,
+      :second 0, :millisecond 0}
 
 
-  (-> (f/parse "00 00 01 01 01 1989 +0000" "ss mm HH dd MM yyyy Z"
+  (-> (f/parse "00 00 01 01 01 1989 +0000"
+               "ss mm HH dd MM yyyy Z"
                {:type Timestamp})
-      (map/to-map {:timezone "Asia/Kolkata"} common/+default-keys+))
-  => {:type java.sql.Timestamp, :timezone "Asia/Kolkata", :long 599619600000,
-      :year 1989, :month 1, :day 1, :hour 6,
-      :minute 30, :second 0, :millisecond 0})
+      (map/to-map {:timezone "Asia/Kolkata"}
+                  common/+default-keys+))
+  => {:type java.sql.Timestamp,
+      :timezone "Asia/Kolkata",
+      :long 599619600000,
+      :year 1989,
+      :month 1, :day 1,
+      :hour 6, :minute 30,
+      :second 0, :millisecond 0})
 
 (env/init
  {:java {:major 1 :minor 8}}

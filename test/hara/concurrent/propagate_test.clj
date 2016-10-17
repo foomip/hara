@@ -2,6 +2,45 @@
   (:use hara.test)
   (:require [hara.concurrent.propagate :refer :all]))
 
+^{:refer hara.concurrent.propagate/nothing? :added "2.1"}
+(fact "checks if the value is nothing"
+
+  (nothing? nil) => false
+
+  (nothing? :hara.concurrent.propagate/nothing)
+  => true)
+
+^{:refer hara.concurrent.propagate/straight-through :added "2.1"}
+(fact "passes the first input through"
+
+  (straight-through 1) => 1
+
+  (straight-through 1 2 3) => 1)
+
+^{:refer hara.concurrent.propagate/cell-state :added "2.1"}
+(fact "prepares the state of the cell"
+
+  (cell-state {:label "a" :content "hello" :ref-fn atom})
+  => (just {:label clojure.lang.Atom
+            :content clojure.lang.Atom
+            :propagators clojure.lang.Atom}))
+
+^{:refer hara.concurrent.propagate/propagator-state :added "2.1"}
+(fact "prepares the state of the propagator")
+
+^{:refer hara.concurrent.propagate/propagation-transfer :added "2.1"}
+(fact "propagates values to the out-cells according to transfer function"
+  
+  (def out-cell (cell))
+
+  (propagation-transfer
+   [1 2 3]
+   {:tf + :tdamp = :out-cell out-cell})
+
+  @out-cell => 6)
+
+^{:refer hara.concurrent.propagate/format-cells :added "2.1"}
+(fact "styles the cells so they become easier to read")
 
 ^{:refer hara.concurrent.propagate/cell :added "2.1"}
 (fact "creates a propogation cell"

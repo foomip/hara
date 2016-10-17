@@ -6,7 +6,7 @@
    (has-quotes? \"\\\"hello\\\"\")
    => true"
   {:added "2.4"}
-  [s]
+  [^String s]
   (and (.startsWith s "\"")
        (.endsWith s "\"")))
 
@@ -22,9 +22,13 @@
     s))
 
 (defn whitespace?
-  ""
+  "checks if the string is all whitespace
+ 
+   (whitespace? \"        \")
+   => true"
+  {:added "2.4"}
   [s]
-  (or (= "" s) (re-find #"^[\s\t]+$" s)))
+  (boolean (or (= "" s) (re-find #"^[\s\t]+$" s))))
 
 (defn escape-dollars
   "for regex purposes, escape dollar signs in strings
@@ -32,7 +36,7 @@
    (escape-dollars \"$\")
    => string?"
   {:added "2.4"}
-  [s]
+  [^String s]
   (.replaceAll s "\\$" "\\\\\\$"))
 
 (defn escape-newlines
@@ -41,7 +45,7 @@
    (escape-newlines \"\\\n\")
    => \"\\n\""
   {:added "2.4"}
-  [s]
+  [^String s]
   (.replaceAll s "\\n" "\\\\n"))
 
 (defn escape-escapes
@@ -50,7 +54,7 @@
    (escape-escapes \"\\\n\")
    => \"\\\n\""
   {:added "2.4"}
-  [s]
+  [^String s]
   (.replaceAll s "(\\\\)([A-Za-z])" "$1$1$2"))
 
 (defn escape-quotes
@@ -59,5 +63,5 @@
    (escape-quotes \"\\\"hello\\\"\")
    => \"\\\"hello\\\"\""
   {:added "2.4"}
-  [s]
+  [^String s]
   (.replaceAll s "(\\\\)?\"" "$1$1\\\\\\\""))

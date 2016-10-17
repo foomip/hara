@@ -173,9 +173,12 @@
 
 ^{:refer hara.time/now :added "2.2"}
 (fact "returns the current datetime"
+  (t/now)
+  => #(instance? (t/default-type) %)
+  
   (t/now {:type Date})
   => #(instance? Date %)
-  ^:hidden
+  
   (t/now {:type Calendar})
   => #(instance? Calendar %))
 
@@ -191,17 +194,29 @@
 
 ^{:refer hara.time/equal :added "2.2"}
 (fact "compares dates, retruns true if all inputs are the same"
-  (t/equal 1 (Date. 1) (common/calendar (Date. 1) (TimeZone/getTimeZone "GMT")))
+  (t/equal 1
+           (Date. 1)
+           (common/calendar
+            (Date. 1)
+            (TimeZone/getTimeZone "GMT")))
   => true)
 
 ^{:refer hara.time/before :added "2.2"}
 (fact "compare dates, returns true if t1 is before t2, etc"
-  (t/before 0 (Date. 1) (common/calendar (Date. 2) (TimeZone/getTimeZone "GMT")))
+  (t/before 0
+            (Date. 1)
+            (common/calendar
+             (Date. 2)
+             (TimeZone/getTimeZone "GMT")))
   => true)
 
 ^{:refer hara.time/after :added "2.2"}
 (fact "compare dates, returns true if t1 is after t2, etc"
-  (t/after 2 (Date. 1) (common/calendar (Date. 0) (TimeZone/getTimeZone "GMT")))
+  (t/after 2
+           (Date. 1)
+           (common/calendar
+            (Date. 0)
+            (TimeZone/getTimeZone "GMT")))
   => true)
 
 ^{:refer hara.time/plus :added "2.2"}
@@ -210,12 +225,27 @@
   => #inst "1970-01-15T00:00:00.000-00:00"
 
   (t/plus (Date. 0) 1000)
-  => #inst "1970-01-01T00:00:01.000-00:00")
+  => #inst "1970-01-01T00:00:01.000-00:00"
+  
+  (t/plus (java.util.Date. 0)
+          {:years 10 :months 1 :weeks 4 :days 2})
+  => #inst "1980-03-02T00:00:00.000-00:00")
 
 ^{:refer hara.time/minus :added "2.2"}
 (fact "substracts a duration from the time"
   (t/minus (Date. 0) {:years 1})
-  => #inst "1969-01-01T00:00:00.000-00:00")
+  => #inst "1969-01-01T00:00:00.000-00:00"
+  
+  (-> (t/from-map {:type java.time.ZonedDateTime
+                   :timezone "GMT",
+                   :year 1970, :month 1, :day 1,
+                   :hour 0, :minute 0, :second 0, :millisecond 0})
+      (t/minus    {:years 10 :months 1 :weeks 4 :days 2})
+      (t/to-map {:timezone "GMT"}))
+  => {:type java.time.ZonedDateTime, :timezone "GMT",
+      :long -320803200000
+      :year 1959, :month 11, :day 2,
+      :hour 0, :minute 0, :second 0, :millisecond 0})
 
 ^{:refer hara.time/adjust :added "2.2"}
 (fact "adjust fields of a particular time"

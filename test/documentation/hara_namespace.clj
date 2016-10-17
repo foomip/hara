@@ -1,7 +1,5 @@
 (ns documentation.hara-namespace)
 
-[[:chapter {:title "Introduction"}]]
-
 "`hara.namespace` contain namespace functions and utilities"
 
 [[:chapter {:title "namespace.eval"

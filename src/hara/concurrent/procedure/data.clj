@@ -24,7 +24,11 @@
   (.write w (str v)))
 
 (defn registry
-  ""
+  "creates a registry for running threads
+ 
+   (into {} (registry))
+   => (contains {:store clojure.lang.Atom})"
+  {:added "2.2"}
   [] (ProcedureRegistry. (atom {})))
 
 (defrecord ProcedureCache [store]
@@ -50,7 +54,11 @@
   (.write w (str v)))
 
 (defn cache
-  ""
+  "creates a cache for procedure results
+ 
+   (into {} (cache))
+   => (contains {:store clojure.lang.Atom})"
+  {:added "2.2"}
   []  (ProcedureCache. (atom {})))
 
 (prefer-method print-method

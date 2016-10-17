@@ -31,14 +31,17 @@
   => {})
 
 (comment
+
+  (def ^:dynamic *happy* (promise))
   
   (watch/add (io/file ".") :save
              (fn [f k _ [cmd file]]
-               (println cmd file)
-               (deliver *happy* [cmd (.getName file)]))
-             {:types #{:delete}
+               (println cmd file))
+             {;;:types #{:delete :create :modify}
               :recursive false
               :filter  [".hara"]
               :exclude [".git" "target"]})
-
+  
+  (watch/list (io/file "."))
+  (watch/remove (io/file ".") :save)
   )

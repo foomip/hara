@@ -195,12 +195,14 @@
   (.write w (str v)))
 
 (defn ova
-  "constructs an ova instance
+  "constructs an instance of an ova
  
    (ova []) ;=> #ova []
+ 
    (ova [1 2 3]) ;=>  #ova [1 2 3]
-   (ova [{:id :1} {:id :2}]) ;=> #ova [{:id :1} {:id :2}]
-   "
+ 
+   (<< (ova [{:id :1} {:id :2}]))
+   => [{:id :1} {:id :2}]"
   {:added "2.1"}
   ([] (Ova. (ova-state)))
   ([coll]
@@ -246,12 +248,12 @@
   ova)
 
 (defn init!
-  "re-initialises the ova to either an empty array or the second argument`coll`
+  "sets elements within an ova
  
-       
    (def o (ova []))
-   (dosync (init! o [{:id :1 :val 1} {:id :2 :val 1}]))
-   (persistent! o)
+   (->> (init! o [{:id :1 :val 1} {:id :2 :val 1}])
+        (dosync)
+        (<<))
    => [{:val 1, :id :1} {:val 1, :id :2}]"
   {:added "2.1"}
   ([ova]
@@ -290,7 +292,30 @@
                            ova)))))
 
 (defn selectv
-  ""
+  "grabs the selected ova entries as vector
+ 
+   (def o (ova [{:id :1 :val 1} {:id :2 :val 1}
+                {:id :3 :val 2} {:id :4 :val 2}]))
+   
+   (selectv o)              ;; no filters
+   => [{:id :1, :val 1}  
+       {:id :2, :val 1}
+       {:id :3, :val 2}
+       {:id :4, :val 2}]
+   
+   (selectv o 0)            ;; by index
+   => [{:id :1 :val 1}] 
+ 
+   (selectv o [:val even?])    ;; by shorthand function
+   => [{:id :3 :val 2}
+       {:id :4 :val 2}]
+   
+   (selectv o [:id '((name)    ;; by shorthand expression
+                     (bigint)
+                     (odd?))])
+   => [{:id :1 :val 1}
+       {:id :3 :val 2}]"
+  {:added "2.1"}
   ([ova]
       (persistent! ova))
   ([ova pchk]
@@ -523,12 +548,14 @@
 
 (defn clone
   "creates an exact copy of the ova, including its watches
+ 
    (def o (ova (range 10)))
    (watch/set o {:a (fn [_ _ _ _ _])})
    
-   (def o-clone (clone o))
-   (persistent! o-clone) => (range 10)
-   (watch/list o-clone) => (just {:a fn?})"
+   (def other (clone o))
+   
+   (<< other) => (<< o)
+   (watch/list other) => (just {:a fn?})"
   {:added "2.1"}
   [old]
   (let [ova (ova old)]

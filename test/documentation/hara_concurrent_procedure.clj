@@ -28,9 +28,13 @@
 - the id of the process (used for identification)
 - other running instances of the proces"
 
-[[:chapter {:title "API" :link "hara.concurrent.procedure"}]]
+[[:chapter {:title "API"
+            :link "hara.concurrent.procedure"
+            :only ["defprocedure" "procedure" "kill"]}]]
 
-[[:api {:namespace "hara.concurrent.procedure" :title ""}]]
+[[:api {:namespace "hara.concurrent.procedure"
+        :title ""
+        :only ["defprocedure" "procedure" "kill"]}]]
 
 [[:chapter {:title "Features"}]]
 

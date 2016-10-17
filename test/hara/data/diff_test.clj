@@ -61,6 +61,20 @@
       :> {[:a :d] 3}
       :< {[:a :d] 4}})
 
+^{:refer hara.data.diff/merge-or-replace :added "2.1"}
+(fact "If both are maps then merge, otherwis replace"
+
+  (merge-or-replace {:a {:b {:c 2}}} {:a {:b {:c 3 :d 4}}})
+  => {:a {:b {:c 3 :d 4}}})
+
+
+^{:refer hara.data.diff/changed :added "2.4"}
+(fact "Outputs what has changed between the two maps"
+
+  (changes {:a {:b {:c 3 :d 4}}}
+           {:a {:b {:c 3}}})
+  => {:a {:b {:d 4}}})
+
 ^{:refer hara.data.diff/patch :added "2.1"}
 (fact "Use the diff to convert one map to another in the forward
   direction based upon changes between the two."

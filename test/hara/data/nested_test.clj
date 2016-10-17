@@ -81,8 +81,8 @@
 ^{:refer hara.data.nested/clean-nested :added "2.1"}
 (fact "Returns a associative with nils and empty hash-maps removed."
 
-   (clean-nested {:a {:b {:c {}}}})
-   => {}
+  (clean-nested {:a {:b {:c {}}}})
+  => {}
 
-   (clean-nested {:a {:b {:c {} :d 1 :e nil}}})
-   => {:a {:b {:d 1}}})
+  (clean-nested {:a {:b {:c {} :d 1 :e nil}}})
+  => {:a {:b {:d 1}}})

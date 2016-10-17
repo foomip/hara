@@ -66,7 +66,8 @@
   (.write w (str v)))
 
 (defn wrap-exception
-  ""
+  "creates a handler for retrying computation"
+  {:added "2.2"}
   [f]
   (fn [{:keys [retry arglist] :as instance} args]
     (try (f instance args)
@@ -78,7 +79,16 @@
                                             :data e})))))))
 
 (defn invoke-base
-  ""
+  "constructs a standard procedure
+ 
+   (def proc {:handler +
+              :result (promise)})
+   
+   (invoke-base proc [1 2 3])
+ 
+   @(:result proc)
+   => {:type :success, :data 6}"
+  {:added "2.2"}
   [instance args]
   (let [result (apply (:handler instance) args)]
 
@@ -86,7 +96,8 @@
                                  :data result})))
 
 (defn invoke-procedure
-  ""
+  "the full invocation for the procedure, incorporating middleware and retry"
+  {:added "2.2"}
   [{:keys [id-fn handler arglist time] :as procedure} & args]
   (let [_          (if (< (count arglist) (count args))
                      (throw (Exception.
@@ -174,7 +185,25 @@
   (.write w (str v)))
 
 (defn procedure
-  "creates"
+  "creates a procedure for computation
+ 
+   @((procedure {:name \"ID\"
+                 :handler (fn [id params instance]
+                            ; (println (-> instance :retry :count))
+                            (if (= 5 (-> instance :retry :count))
+                              (-> instance :retry :count)
+                              (throw (Exception.))))
+                :retry {:handle [{:on #{Exception}
+                                   :apply   (fn [state e])
+                                   :limit   (fn [state count])
+                                   :wait    (fn [state count])}]
+                         :count 0
+                         :state  {:a 1 :b 2}
+                         :limit 10
+                         :wait  100}}
+               [:id :params :instance])
+     \"ID\" {} {:mode :async :cached false})
+   => 5"
   {:added "2.2"}
   ([tk arglist]
    (cond (fn? tk)
@@ -186,7 +215,22 @@
              (map->Procedure)))))
 
 (defmacro defprocedure
-  ""
+  "defining a procedure
+ 
+   (defprocedure hello {:mode :sync}
+     []
+     (Thread/sleep 1000)
+     :DONE)
+
+   (defprocedure print-hello
+     {:id-fn :timestamp
+      :arglist [:timestamp :params :instance]
+      :params {:b 2}}
+     [t params instance]
+     (println \"INSTANCE: \" instance)
+     (Thread/sleep 500)
+     (println \"ENDED\" t))"
+  {:added "2.2"}
   [name defaults & body]
   (let [defaults (cond (vector? defaults)
                        {:arglist defaults}
@@ -194,3 +238,16 @@
                        defaults)
         arglist  (:arglist defaults)]
     `(def ~name (procedure (merge {:handler (fn ~@body)} ~defaults) ~arglist))))
+
+(defn kill
+  "kills a running procedure
+   (def proc ((procedure {:name \"hello\"
+                          :id :1
+                          :handler (fn [] (Thread/sleep 1000000000))} [])))
+ 
+   (Thread/sleep 100)
+   (kill proc)
+   => true"
+  {:added "2.2"}
+  [{:keys [registry name id]}]
+  (registry/kill registry name id))

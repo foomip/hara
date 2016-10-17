@@ -1,18 +1,29 @@
 (ns hara.data.transform
   (:require [hara.data.nested :as nested]
             [hara.data.map :as map]
-            [clojure.string :as string]))
+            [clojure.string :as string])
+  (:refer-clojure :exclude [apply]))
 
 (defn template-rel
-  ""
+  "creates the id for a relation
+ 
+   (template-rel [:authority :username])
+   => :<authority/username>"
+  {:added "2.4"}
   [v]
   (->> (map name v)
        (string/join "/")
-       (format "<%s>")
        keyword))
 
 (defn forward-rel
-  ""
+  "returns the template for a forward relation
+ 
+   (forward-rel {:authority {:username [:user]
+                             :password [:pass]}})
+   
+   => {:authority {:username :<authority/username>,
+                   :password :<authority/password>}}"
+  {:added "2.4"}
   ([trans] (forward-rel trans [] {}))
   ([trans kv out]
    (reduce-kv (fn [out k v]
@@ -26,7 +37,12 @@
               trans)))
 
 (defn backward-rel
-  ""
+  "returns the template for a back relation
+   
+   (backward-rel {:authority {:username [:user]
+                              :password [:pass]}})
+   => {:user :<authority/username>, :pass :<authority/password>}"
+  {:added "2.4"}
   ([trans] (backward-rel trans [] {}))
   ([trans kv out]
    (reduce-kv (fn [out k v]
@@ -39,38 +55,48 @@
               out
               trans)))
 
-(defn full-rel
-  ""
-  [trans]
-  [(forward-rel trans)
-   (backward-rel trans)])
-
-(defn collect-paths
-  ""
-  ([m] (collect-paths m [] {}))
+(defn collect
+  "collects nested keys for transform
+   
+   (collect {:authority {:username :<authority/username>,
+                         :password :<authority/password>}})
+   => {:<authority/username> [:authority :username],
+       :<authority/password> [:authority :password]}"
+  {:added "2.4"}
+  ([m] (collect m [] {}))
   ([m kv out]
    (reduce-kv (fn [out k v]
                 (cond (map? v)
-                      (collect-paths v (conj kv k) out)
+                      (collect  v (conj kv k) out)
 
                       :else
                       (assoc out v (conj kv k))))
               out
               m)))
 
-(defn collect-rel
-  ""
-  [rel]
-  (->> (map collect-paths rel)
-       (apply merge-with vector)))
+(defn relation
+  "creates template for the transform relationship
+ 
+   (relation {:authority {:username [:user]
+                          :password [:pass]}})
+   => {:<authority/username> [[:authority :username] [:user]],
+       :<authority/password> [[:authority :password] [:pass]]}"
+  {:added "2.4"}
+  [trans]
+  (let [rel [(forward-rel trans)
+             (backward-rel trans)]]
+    (->> (map collect rel)
+         (apply merge-with vector))))
 
-(collect-rel
- (full-rel {:authority {:username [:user]
-                        :password [:pass]}}))
-{:<authority/username> [[:authority :username] [:user]], :<authority/password> [[:authority :password] [:pass]]}
 
-(defn apply-rel
-  ""
+(defn apply
+  "applies the relation to a map
+ 
+   (apply {:user \"chris\" :pass \"hello\"}
+          {:<authority/username> [[:authority :username] [:user]],
+           :<authority/password> [[:authority :password] [:pass]]})
+   => {:authority {:username \"chris\", :password \"hello\"}}"
+  {:added "2.4"}
   [m rel]
   (reduce-kv (fn [out k [to from]]
                (let [v (get-in m from)]
@@ -80,8 +106,14 @@
              m
              rel))
 
-(defn retract-rel
-  ""
+(defn retract
+  "retracts the relation from the map
+ 
+   (retract {:authority {:username \"chris\", :password \"hello\"}}
+            {:<authority/username> [[:authority :username] [:user]],
+             :<authority/password> [[:authority :password] [:pass]]})
+   => {:user \"chris\" :pass \"hello\"}"
+  {:added "2.4"}
   [m rel]
   (reduce-kv (fn [out k [to from]]
                (let [v (get-in m to)]
@@ -90,67 +122,3 @@
                      (map/dissoc-in to))))
              m
              rel))
-
-(comment
-
-  (->> {:authority {:username [:user]
-                    :password [:pass]}}
-       (full-rel)
-       (collect-rel)
-       (apply-rel {:user "chris" :pass "hello"})
-       )
-  (->> {:authority {:username [:user]
-                    :password [:pass]}}
-       (full-rel)
-       (collect-rel)
-       (retract-rel {:authority {:username "chris"
-                                 :password "hello"}}))
-
-  [(forward-rel
-    {:authority {:username [:user]
-                 :password [:pass]}})
-   (backward-rel
-    {:authority {:username [:user]
-                 :password [:pass]}})]
-  => [{:authority {:username :<authority/username>
-                   :password :<authority/password>}}
-      {:user :<authority/username>
-       :pass :<authority/password>}]
-
-  [(forward-rel
-    {:user [:authority :username]
-     :pass [:authority :password]})
-   (backward-rel
-    {:user [:authority :username]
-     :pass [:authority :password]})]
-  => [{:user :<user>
-       :pass :<pass>}
-      {:authority {:username :<user>
-                   :password :<pass>}}]
-
-
-  (def rel [{:user :<user>}
-            {:username :<user>}])
-
-  {:<user> [[:user]
-            [:username]]}
-
-  (defn forward [rel]
-    (fn [m]
-      ))
-
-
-
-  (defn collect [rel]
-    (->> (map collect-paths rel)
-         (apply merge-with vector)))
-
-  (merge-with vector
-              (collect-paths forward)
-              (collect-paths ))
-
-  (vals (merge-with vector
-                    (collect-paths {:user :<user>})
-                    (collect-paths {:username :<user>})))
-
-  )

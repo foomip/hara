@@ -14,17 +14,23 @@
   (strip-quotes "\"hello\"")
   => "hello")
 
-^{:refer hara.string.prose/escape-newlines :added "2.4"}
-(fact "makes sure that newlines are printable"
+^{:refer hara.string.prose/whitespace? :added "2.4"}
+(fact "checks if the string is all whitespace"
 
-  (escape-newlines "\\n")
-  => "\\n")
+  (whitespace? "        ")
+  => true)
 
 ^{:refer hara.string.prose/escape-dollars :added "2.4"}
 (fact "for regex purposes, escape dollar signs in strings"
 
   (escape-dollars "$")
   => string?)
+
+^{:refer hara.string.prose/escape-newlines :added "2.4"}
+(fact "makes sure that newlines are printable"
+
+  (escape-newlines "\\n")
+  => "\\n")
 
 ^{:refer hara.string.prose/escape-escapes :added "2.4"}
 (fact "makes sure that newlines are printable"
