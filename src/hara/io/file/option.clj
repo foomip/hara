@@ -141,7 +141,20 @@
          open-options))
 
 (defn option
-  ""
+  "shows all options for file operations
+ 
+   (option)
+   => (contains [:atomic-move :create-new
+                 :skip-siblings :read :continue
+                 :create :terminate :copy-attributes
+                 :append :truncate-existing :sync
+                 :follow-links :delete-on-close :write
+                 :dsync :replace-existing :sparse
+                 :nofollow-links :skip-subtree])
+ 
+   (option :read)
+   => java.nio.file.StandardOpenOption/READ"
+  {:added "2.4"}
   ([] (keys all-options))
   ([k]
    (all-options k)))

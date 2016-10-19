@@ -12,8 +12,6 @@
 
 [[:api {:namespace "hara.class.checks" :title ""}]]
 
-[[:chapter {:title "class.enum" :link "hara.class.enum"}]]
-
 "Add to `project.clj` dependencies:
 
     [im.chit/hara.class.enum \"{{PROJECT.version}}\"]

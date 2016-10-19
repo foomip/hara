@@ -14,45 +14,154 @@
 ^{:refer hara.io.file/select :added "2.4"}
 (fact "selects all the files in a directory"
 
-  (select "src")
-  => vector?)
+  (->> (select "../hara/src/hara/io/file")
+       (map #(relativize "../hara/src/hara" %))
+       (map str)
+       (sort))
+  => ["io/file/attribute.clj"
+      "io/file/common.clj"
+      "io/file/filter.clj"
+      "io/file/option.clj"
+      "io/file/path.clj"
+      "io/file/reader.clj"
+      "io/file/walk.clj"])
 
 ^{:refer hara.io.file/permissions :added "2.4"}
-(fact "returns the permissions for a given file"
+(comment "returns the permissions for a given file"
 
   (permissions "src")
-  => string?)
+  => "rwxr-xr-x")
 
 ^{:refer hara.io.file/shorthand :added "2.4"}
-(fact "returns the permissions for a given file"
+(fact "returns the shorthand string for a given entry"
 
   (shorthand "src")
-  => "d")
+  => "d"
+
+  (shorthand "project.clj")
+  => "-")
+
+^{:refer hara.io.file/directory? :added "2.4"}
+(fact "checks whether a file is a directory"
+
+  (directory? "src")
+  => true
+
+  (directory? "project.clj")
+  => false)
+
+^{:refer hara.io.file/executable? :added "2.4"}
+(fact "checks whether a file is executable"
+
+  (executable? "project.clj")
+  => false
+
+  (executable? "/usr/bin/whoami")
+  => true)
+
+^{:refer hara.io.file/exists? :added "2.4"}
+(fact "checks whether a file exists"
+
+  (exists? "project.clj")
+  => true
+
+  (exists? "NON.EXISTENT")
+  => false)
+
+^{:refer hara.io.file/hidden? :added "2.4"}
+(fact "checks whether a file is hidden"
+
+  (hidden? ".gitignore")
+  => true
+
+  (hidden? "project.clj")
+  => false)
+
+^{:refer hara.io.file/file? :added "2.4"}
+(fact "checks whether a file is not a link or directory"
+
+  (file? "project.clj")
+  => true
+
+  (file? "src")
+  => false)
+
+^{:refer hara.io.file/link? :added "2.4"}
+(fact "checks whether a file is a link"
+
+  (link? "project.clj")
+  => false
+
+  (delete "project.bak.clj")
+  (link? (create-symlink "project.bak.clj"
+                         "project.clj"))
+  => true)
+
+^{:refer hara.io.file/readable? :added "2.4"}
+(fact "checks whether a file is readable"
+
+  (readable? "project.clj")
+  => true)
+
+^{:refer hara.io.file/writable? :added "2.4"}
+(fact "checks whether a file is writable"
+
+  (writable? "project.clj")
+  => true)
+
+^{:refer hara.io.file/code :added "2.4"}
+(fact "takes a file and returns a lazy seq of top-level forms"
+
+  (->> (code "../hara/src/hara/io/file.clj")
+       first
+       (take 2))
+  => '(ns hara.io.file))
+
 
 ^{:refer hara.io.file/list :added "2.4"}
-(fact "lists the files and attributes for a given directory"
+(comment "lists the files and attributes for a given directory"
 
   (list "src")
-  => (contains {(str (path "src")) string?
-                (str (path "src/hara")) string?})
+  => {"/Users/chris/Development/chit/hara/src" "rwxr-xr-x/d",
+      "/Users/chris/Development/chit/hara/src/hara" "rwxr-xr-x/d"}
 
-  (list "src" {:recursive true})
-  => map?)
+  (list "../hara/src/hara/io" {:recursive true})
+  => {"/Users/chris/Development/chit/hara/src/hara/io" "rwxr-xr-x/d",
+      "/Users/chris/Development/chit/hara/src/hara/io/file/reader.clj" "rw-r--r--/-",
+      "/Users/chris/Development/chit/hara/src/hara/io/project.clj" "rw-r--r--/-",
+      "/Users/chris/Development/chit/hara/src/hara/io/file/filter.clj" "rw-r--r--/-",
+      ... ...
+      "/Users/chris/Development/chit/hara/src/hara/io/file/path.clj" "rw-r--r--/-",
+      "/Users/chris/Development/chit/hara/src/hara/io/file/walk.clj" "rw-r--r--/-",
+      "/Users/chris/Development/chit/hara/src/hara/io/file.clj" "rw-r--r--/-"})
 
 ^{:refer hara.io.file/copy :added "2.4"}
 (fact "copies all specified files from one to another"
 
-  (copy "src" ".src" {:include [".clj"]})
+  (copy "src" ".src" {:include [".clj"]})  
   => map?
 
-  ^:hidden
   (delete ".src"))
+
+^{:refer hara.io.file/copy-single :added "2.4"}
+(comment "copies a single file to a destination"
+
+  (copy-single "project.clj"
+               "project.clj.bak"
+               {:options #{:replace-existing}})
+  ;;=> #path:"/Users/chris/Development/chit/hara/project.clj.bak"
+
+  (delete "project.clj.bak"))
+
 
 ^{:refer hara.io.file/move :added "2.4"}
 (fact "moves a file or directory"
 
+  (do (move "shortlist" ".shortlist")
+      (move ".shortlist" "shortlist"))
+  
   (move ".non-existent" ".moved")
-  => (throws))
+  => {})
 
 ^{:refer hara.io.file/delete :added "2.4"}
 (fact "copies all specified files from one to another"
@@ -71,7 +180,6 @@
       (directory? ".hello/.world/.foo"))
   => true
 
-  ^:hidden
   (delete ".hello/.world/.foo"))
 
 ^{:refer hara.io.file/create-symlink :added "2.4"}
@@ -85,10 +193,11 @@
   (delete "project.lnk"))
 
 ^{:refer hara.io.file/create-tmpdir :added "2.4"}
-(fact "creates a temp directory on the filesystem"
+(comment "creates a temp directory on the filesystem"
 
   (create-tmpdir)
-  => path?)
+  ;;=> #path:"/var/folders/d6/yrjldmsd4jd1h0nm970wmzl40000gn/T/4870108199331749225"
+ )
 
 ^{:refer hara.io.file/parent :added "2.4"}
 (fact "returns the parent of the path"
@@ -103,32 +212,9 @@
                    "hello/world.html"))
   => "world.html")
 
-^{:refer hara.io.file/directory? :added "2.4"}
-(fact "checks whether a file is a directory")
-
-^{:refer hara.io.file/executable? :added "2.4"}
-(fact "checks whether a file is executable")
-
-^{:refer hara.io.file/exists? :added "2.4"}
-(fact "checks whether a file exists")
-
-^{:refer hara.io.file/hidden? :added "2.4"}
-(fact "checks whether a file is hidden")
-
-^{:refer hara.io.file/file? :added "2.4"}
-(fact "checks whether a file is not a link or directory")
-
-^{:refer hara.io.file/link? :added "2.4"}
-(fact "checks whether a file is a link")
-
-^{:refer hara.io.file/readable? :added "2.4"}
-(fact "checks whether a file is readable")
-
-^{:refer hara.io.file/writable? :added "2.4"}
-(fact "checks whether a file is writable")
-
-^{:refer hara.io.file/code :added "2.4"}
-(fact "takes a file and returns a lazy seq of top-level forms")
-
 ^{:refer hara.io.file/write :added "2.4"}
-(fact "writes a stream to a path")
+(fact "writes a stream to a path"
+
+  (-> (java.io.FileInputStream. "project.clj")
+      (write "project.clj"
+             {:options #{:replace-existing}})))

@@ -8,8 +8,10 @@
              [string-like :as string-like]
              [vector-like :as vector-like]]))
 
-(ns/import hara.object.read   [to-data meta-read read-getters read-all-getters read-reflect-fields]
-           hara.object.write  [from-data meta-write write-setters write-all-setters write-reflect-fields])
+(ns/import hara.object.read   
+           [to-data meta-read read-getters read-all-getters read-reflect-fields]
+           hara.object.write  
+           [from-data meta-write write-setters write-all-setters write-reflect-fields])
 
 (defmacro string-like
   ""

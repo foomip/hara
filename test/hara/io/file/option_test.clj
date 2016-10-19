@@ -48,3 +48,18 @@
                      :others-read
                      :others-execute])
   => "455")
+
+^{:refer hara.io.file.option/option :added "2.4"}
+(fact "shows all options for file operations"
+
+  (option)
+  => (contains [:atomic-move :create-new
+                :skip-siblings :read :continue
+                :create :terminate :copy-attributes
+                :append :truncate-existing :sync
+                :follow-links :delete-on-close :write
+                :dsync :replace-existing :sparse
+                :nofollow-links :skip-subtree])
+
+  (option :read)
+  => java.nio.file.StandardOpenOption/READ)

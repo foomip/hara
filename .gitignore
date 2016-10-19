@@ -14,3 +14,7 @@ pom.xml.asc
 .#*
 .nrepl-port
 *#
+project.bak
+project.bak.clj
+project.clj.bak
+*.bak.html

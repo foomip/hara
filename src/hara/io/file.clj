@@ -12,7 +12,7 @@
            (java.nio.file.attribute FileAttribute FileTime PosixFilePermissions))
   (:refer-clojure :exclude [list]))
 
-(ns/import hara.io.file.path [section path path?]
+(ns/import hara.io.file.path [section path path? to-file]
            hara.io.file.attribute [attributes set-attributes]
            hara.io.file.reader [reader-types]
            hara.io.file.option [option])
@@ -35,8 +35,17 @@
 (defn select
   "selects all the files in a directory
  
-   (select \"src\")
-   => vector?"
+   (->> (select \"../hara/src/hara/io/file\")
+        (map #(relativize \"../hara/src/hara\" %))
+        (map str)
+        (sort))
+   => [\"io/file/attribute.clj\"
+       \"io/file/common.clj\"
+      \"io/file/filter.clj\"
+       \"io/file/option.clj\"
+       \"io/file/path.clj\"
+       \"io/file/reader.clj\"
+       \"io/file/walk.clj\"]"
   {:added "2.4"}
   ([root]
    (select root nil))
@@ -47,7 +56,7 @@
   "returns the permissions for a given file
  
    (permissions \"src\")
-   => string?"
+   => \"rwxr-xr-x\""
   {:added "2.4"}
   [path]
   (let [path (path/path path)]
@@ -56,10 +65,13 @@
          (PosixFilePermissions/toString))))
 
 (defn shorthand
-  "returns the permissions for a given file
+  "returns the shorthand string for a given entry
  
    (shorthand \"src\")
-   => \"d\""
+   => \"d\"
+ 
+   (shorthand \"project.clj\")
+   => \"-\""
   {:added "2.4"}
   [path]
   (let [path (path/path path)]
@@ -75,11 +87,18 @@
   "lists the files and attributes for a given directory
  
    (list \"src\")
-   => (contains {(str (path \"src\")) string?
-                 (str (path \"src/hara\")) string?})
+   => {\"/Users/chris/Development/chit/hara/src\" \"rwxr-xr-x/d\",
+       \"/Users/chris/Development/chit/hara/src/hara\" \"rwxr-xr-x/d\"}
  
-   (list \"src\" {:recursive true})
-   => map?"
+   (list \"../hara/src/hara/io\" {:recursive true})
+   => {\"/Users/chris/Development/chit/hara/src/hara/io\" \"rwxr-xr-x/d\",
+       \"/Users/chris/Development/chit/hara/src/hara/io/file/reader.clj\" \"rw-r--r--/-\",
+       \"/Users/chris/Development/chit/hara/src/hara/io/project.clj\" \"rw-r--r--/-\",
+       \"/Users/chris/Development/chit/hara/src/hara/io/file/filter.clj\" \"rw-r--r--/-\",
+       ... ...
+       \"/Users/chris/Development/chit/hara/src/hara/io/file/path.clj\" \"rw-r--r--/-\",
+       \"/Users/chris/Development/chit/hara/src/hara/io/file/walk.clj\" \"rw-r--r--/-\",
+       \"/Users/chris/Development/chit/hara/src/hara/io/file.clj\" \"rw-r--r--/-\"}"
   {:added "2.4"}
   ([root] (list root {}))
   ([root opts]
@@ -101,6 +120,7 @@
   "copies all specified files from one to another
  
    (copy \"src\" \".src\" {:include [\".clj\"]})
+   
    => map?
  
    "
@@ -126,26 +146,10 @@
                 (merge {:target (path/path target)
                         :directory copy-fn
                         :file copy-fn
+                        :with #{:root}
                         :accumulator (atom {})
                         :accumulate #{}}
                        opts)))))
-
-(defn move
-  "moves a file or directory
- 
-   (move \".non-existent\" \".moved\")
-   => (throws)"
-  {:added "2.4"}
-  ([source target]
-   (move source target {}))
-  ([source target opts]
-   (if-not (:simulate opts)
-     (Files/move (path/path source)
-                 (path/path target)
-                 (->> [:atomic-move]
-                      (or (:options opts))
-                      (mapv option/option)
-                      (into-array CopyOption))))))
 
 (defn delete
   "copies all specified files from one to another
@@ -167,9 +171,47 @@
      (walk/walk root
                 (merge {:directory {:post delete-fn}
                         :file delete-fn
+                        :with #{:root}
                         :accumulator (atom #{})
                         :accumulate #{}}
                        opts)))))
+
+(defn move
+  "moves a file or directory
+ 
+   (do (move \"shortlist\" \".shortlist\")
+       (move \".shortlist\" \"shortlist\"))
+   
+   (move \".non-existent\" \".moved\")
+   => {}"
+  {:added "2.4"}
+  ([source target]
+   (move source target {}))
+  ([source target opts]
+   (let [move-fn (fn [{:keys [root path attrs target accumulator simulate]}]
+                   (let [rel   (.relativize ^Path root path)
+                         dest  (.resolve ^Path target rel)
+                         copts (->> [:atomic-move]
+                                    (or (:options opts))
+                                    (mapv option/option)
+                                    (into-array CopyOption))]
+                     (when-not simulate
+                       (Files/createDirectories (.getParent dest) attr/*empty*)
+                       (Files/move ^Path path ^Path dest copts))
+                     (swap! accumulator
+                            assoc
+                            (str path)
+                            (str dest))))
+         results (walk/walk source
+                            (merge {:target (path/path target)
+                                    :recursive true
+                                    :file move-fn
+                                    :with #{:root}
+                                    :accumulator (atom {})
+                                    :accumulate #{}}
+                                   opts))]
+     (delete source opts)
+     results)))
 
 (defn create-directory
   "creates a directory on the filesystem
@@ -206,7 +248,8 @@
   "creates a temp directory on the filesystem
  
    (create-tmpdir)
-   => path?"
+   ;;=> #path:\"/var/folders/d6/yrjldmsd4jd1h0nm970wmzl40000gn/T/4870108199331749225\"
+  "
   {:added "2.4"}
   ([]
    (create-tmpdir ""))
@@ -233,55 +276,104 @@
   (.relativize (path/path path1) (path/path path2)))
 
 (defn directory?
-  "checks whether a file is a directory"
+  "checks whether a file is a directory
+ 
+   (directory? \"src\")
+   => true
+ 
+   (directory? \"project.clj\")
+   => false"
   {:added "2.4"}
   [path]
   (Files/isDirectory (path/path path) common/*no-follow*))
 
 (defn executable?
-  "checks whether a file is executable"
+  "checks whether a file is executable
+ 
+   (executable? \"project.clj\")
+   => false
+ 
+   (executable? \"/usr/bin/whoami\")
+   => true"
   {:added "2.4"}
   [path]
   (Files/isExecutable (path/path path)))
 
 (defn exists?
-  "checks whether a file exists"
+  "checks whether a file exists
+ 
+   (exists? \"project.clj\")
+   => true
+ 
+   (exists? \"NON.EXISTENT\")
+   => false"
   {:added "2.4"}
   [path]
   (Files/exists (path/path path) common/*no-follow*))
 
 (defn hidden?
-  "checks whether a file is hidden"
+  "checks whether a file is hidden
+ 
+   (hidden? \".gitignore\")
+   => true
+ 
+   (hidden? \"project.clj\")
+   => false"
   {:added "2.4"}
   [path]
   (Files/isHidden (path/path path)))
 
 (defn file?
-  "checks whether a file is not a link or directory"
+  "checks whether a file is not a link or directory
+ 
+   (file? \"project.clj\")
+   => true
+ 
+   (file? \"src\")
+   => false"
   {:added "2.4"}
   [path]
   (Files/isRegularFile (path/path path) common/*no-follow*))
 
 (defn link?
-  "checks whether a file is a link"
+  "checks whether a file is a link
+ 
+   (link? \"project.clj\")
+   => false
+ 
+   (delete \"project.bak.clj\")
+   (link? (create-symlink \"project.bak.clj\"
+                          \"project.clj\"))
+   => true"
   {:added "2.4"}
   [path]
   (Files/isSymbolicLink (path/path path)))
 
 (defn readable?
-  "checks whether a file is readable"
+  "checks whether a file is readable
+ 
+   (readable? \"project.clj\")
+   => true"
   {:added "2.4"}
   [path]
   (Files/isReadable (path/path path)))
 
 (defn writable?
-  "checks whether a file is writable"
+  "checks whether a file is writable
+ 
+   (writable? \"project.clj\")
+   => true"
   {:added "2.4"}
   [path]
   (Files/isWritable (path/path path)))
 
 (defn code
-  "takes a file and returns a lazy seq of top-level forms"
+  "takes a file and returns a lazy seq of top-level forms
+ 
+   (->> (code \"../hara/src/hara/io/file.clj\")
+        first
+        (take 2))
+   => '(ns hara.io.file)"
   {:added "2.4"}
   [path]
   (let [reader (reader :pushback path)]
@@ -290,7 +382,14 @@
                                   (catch Throwable e))))))
 
 (defn copy-single
-  ""
+  "copies a single file to a destination
+ 
+   (copy-single \"project.clj\"
+                \"project.clj.bak\"
+                {:options #{:replace-existing}})
+   ;;=> #path:\"/Users/chris/Development/chit/hara/project.clj.bak\"
+   "
+  {:added "2.4"}
   ([source target]
    (copy-single source target {}))
   ([source target opts]
@@ -301,7 +400,11 @@
                     (into-array CopyOption)))))
 
 (defn write
-  "writes a stream to a path"
+  "writes a stream to a path
+ 
+   (-> (java.io.FileInputStream. \"project.clj\")
+      (write \"project.clj\"
+              {:options #{:replace-existing}}))"
   {:added "2.4"}
   ([stream path]
    (write stream path {}))

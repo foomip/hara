@@ -123,10 +123,6 @@
   (t/to-length {:days 1})
   => 86400000)
 
-^{:refer hara.time/duration :added "2.2"}
-(fact "calculates the duration between two intervals")
-
-
 ^{:refer hara.time/year :added "2.2"}
 (fact "accesses the year representated by the instant"
   (t/year 0 {:timezone "GMT"}) => 1970

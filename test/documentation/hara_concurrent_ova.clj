@@ -25,6 +25,13 @@
 
 "Coordination in multi-threaded applications have always been a pain. Most times situations are usally coordinated using a external store like a database or a cache. `hara.concurrent.ova` provides an easy to use interface for array data. The actual `ova` datastructure is a `ref` containing a `vector` containing ref and so it has a small footprint and is small."
 
+[[:chapter {:title "Index"}]]
+
+[[:api {:title ""
+        :namespace "hara.concurrent.ova"
+        :exclude ["delete-indices" "get-filtered"]
+        :display #{:tags}}]]
+
 [[:chapter {:title "API"}]]
 
 [[:section {:title "Data"}]]
@@ -177,3 +184,4 @@
 [[:chapter {:title "Scoreboard"}]]
 
 [[:file {:src "test/documentation/hara_concurrent_ova/scoreboard.clj"}]]
+

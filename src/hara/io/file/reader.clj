@@ -9,22 +9,39 @@
            (java.nio.charset Charset)))
 
 (defn charset-default
-  ""
+  "returns the default charset
+   
+   (charset-default)
+   => \"UTF-8\""
+  {:added "2.4"}
   []
   (str (Charset/defaultCharset)))
 
 (defn charset-list
-  ""
+  "returns the list of available charset
+   
+   (charset-list)
+   => (\"Big5\" \"Big5-HKSCS\" ... \"x-windows-iso2022jp\")"
+  {:added "2.4"}
   []
   (keys (Charset/availableCharsets)))
 
 (defn charset
-  ""
+  "constructs a charset object from a string
+   (charset \"UTF-8\")
+   => java.nio.charset.Charset"
+  {:added "2.4"}
   [s]
   (Charset/forName s))
 
 (defmulti reader
-  ""
+  "creates a reader for a given input
+ 
+   (-> (reader :pushback \"project.clj\")
+       (read)
+       second)
+   => 'im.chit/hara"
+  {:added "2.4"}
   (fn [type path opts] type))
 
 (defmethod reader :buffered
@@ -68,6 +85,12 @@
   (StringReader. ^String io))
 
 (defn reader-types
-  ""
+  "returns the types of readers
+ 
+   (reader-types)
+   => (contains [:input-stream :buffered :file
+                 :string :pushback :char-array
+                 :piped :line-number])"
+  {:added "2.4"}
   []
-  (keys (.getMethodTable reader)))
+  (keys (.getMethodTable ^clojure.lang.MultiFn reader)))

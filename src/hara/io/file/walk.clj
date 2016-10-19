@@ -30,7 +30,7 @@
   [{:keys [root path attrs] :as m} {:keys [tag] :as single}]
   (boolean (case tag
              :fn      (let [f (:fn single)]
-                        (f m))
+                        (f path))
              :pattern (let [pat (:pattern single)]
                         (if-not (= (str root) (str path))
                           (->> (str root)
@@ -103,7 +103,9 @@
         run?   (match-filter m)
         result (try
                  (when run?
-                   (if (accumulate :files)
+                   (if (and (accumulate :files)
+                            (->> (into-array [(option/option :nofollow-links)])
+                                 (Files/isRegularFile path)))
                      (swap! (:accumulator m) conj path))
                    (if f (f m)))
                  :continue
@@ -170,11 +172,11 @@
                       depth
                       Integer/MAX_VALUE)
         root        (path/path root)
-        accumulate  (or accumulate #{:files})
+        accumulate  (or accumulate #{:files :directories})
         accumulator (or accumulator (atom []))
         include   (map filter/characterise-filter include)
         exclude   (map filter/characterise-filter exclude)
-        with      (or with #{:root})
+        with      (or with #{})
         state     (merge m {:root root
                             :directory directory
                             :depth depth  

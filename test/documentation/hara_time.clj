@@ -8,27 +8,22 @@
 
 [[:chapter {:title "Introduction"}]]
 
-"
-[hara.time](https://github.com/zcaudate/hara/blob/master/src/hara/time.clj) is a unified framework for representating time on the JVM."
+"[hara.time](https://github.com/zcaudate/hara/blob/master/src/hara/time.clj) is a unified framework for representating time on the JVM."
 
 [[:section {:title "Installation"}]]
 
-"
-Add to `project.clj` dependencies:
+"Add to `project.clj` dependencies:
 
     [im.chit/hara.time \"{{PROJECT.version}}\"]
 
-All functionality is contained in the `hara.time` namespace.
-"
+All functionality is contained in the `hara.time` namespace."
 
 (comment
   (require '[hara.time :as t]))
 
-
 [[:section {:title "Motivation"}]]
 
-"
-`hara.time` provides a compact interface for dealing with the different representation of time available on the jvm. The library sticks to the following principles of how an interface around dates should be exposed:
+"`hara.time` provides a compact interface for dealing with the different representation of time available on the jvm. The library sticks to the following principles of how an interface around dates should be exposed:
 
 - it should be consistent, so that there may be a common language between all time implementions.
 - it should be extensible, so that new implemention can be added easily
@@ -47,20 +42,27 @@ Clojure libraries for time are:
 - [clojure.java-time](https://github.com/dm3/clojure.java-time) is a wrapper around the jdk1.8 `java.time` package.
 - [duckling](https://github.com/wit-ai/duckling) is a super amazing library for temporal expressions
 
-Ignoring [duckling](https://github.com/wit-ai/duckling), which is about ten years ahead of it's time, the other three implementations faithfully wrap the underlying time library. While there are advantages in such an apprach, design decisions at the object level may impact the usability at the wrapper level.
+`hara.time` comes at the problem by providing a core set of operations and representations of time, allowing for many different implementions of time to speak the same language."
+[[:chapter {:title "Index"}]]
 
-`hara.time` comes at the problem from a slightly different angle. A core set of operations and representations of time is abstracted out of each implementation, allowing for many different implementions of time to speak the same language. The library may not be as feature complete as the rest, but provides a generic and very extensible framework for time manipulation.
+[[:api {:title ""
+        :namespace "hara.time"
+        :exclude ["duration?"
+                  "instant?"
+                  "representation"
+                  "representation?"
+                  "time-meta"
+                  "to-length"
+                  "wrap-proxy"]
+        :display #{:tags}}]]
 
-An example of extensiblity can be seen with [hara.time.joda](https://github.com/zcaudate/hara.time.joda), an add-on package for `hara.time` for [joda-time](http://www.joda.org/joda-time/) compatibility.
-"
-
-[[:chapter {:title "Data"}]]
+[[:chapter {:title "API"}]]
 
 [[:section {:title "Representation"}]]
 
 [[:api {:namespace "hara.time"
         :title ""
-        :only ["now" "default-type" "default-timezone"]}]]
+        :only ["now" "epoch" "default-type" "default-timezone"]}]]
 
 "We can start off with the easiest call:"
 
@@ -179,8 +181,6 @@ An example of extensiblity can be seen with [hara.time.joda](https://github.com/
 
 "Because the API is based on protocols, it is very easy to extend. For an example of how other date libraries can be added to the framework, please see [hara.time.joda](https://github.com/zcaudate/hara/blob/master/src/hara/time/joda/) for how [joda-time](http://www.joda.org/joda-time/) was added."
 
-[[:chapter {:title "API"}]]
-
 [[:section {:title "Accessors"}]]
 
 "Date accessors are provided to access singular values of time, as well vector representation for selected fields"
@@ -196,4 +196,3 @@ An example of extensiblity can be seen with [hara.time.joda](https://github.com/
 [[:api {:namespace "hara.time"
         :title ""
         :only ["plus" "minus" "equal" "before" "after" "latest" "earliest" "adjust" "truncate"]}]]
-

@@ -24,7 +24,9 @@
   
   (publish/publish "hara-reflect" {:refresh true} PROJECT)
   (publish/publish "hara-zip" {} PROJECT)
-  (publish/publish "hara-data" {} PROJECT)
+  (publish/publish "hara-concurrent-ova" {} PROJECT)
+  (publish/publish "har-aio-file" {} PROJECT)
+  (publish/publish "hara-time" {} PROJECT)
   (publish/publish "index" {} PROJECT)
   
   (doseq [m (map second (-> PROJECT
