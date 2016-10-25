@@ -232,6 +232,11 @@
                      (catch Throwable t)))
        (first)))
 
+(defn from-cursor [arr]
+  (-> (vector-zip arr)
+      (find-next  #(= '| %))
+      (delete-right)))
+
 (defn prewalk
   "emulates clojure.walk/prewalk behavior with zipper
    

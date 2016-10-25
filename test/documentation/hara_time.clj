@@ -40,7 +40,7 @@ Clojure libraries for time are:
 - [clj-time](https://github.com/clj-time/clj-time) wraps joda and is the standard for dealing with time in clojure
 - [clojure.joda-time](https://github.com/dm3/clojure.joda-time) is another wrapper around joda time
 - [clojure.java-time](https://github.com/dm3/clojure.java-time) is a wrapper around the jdk1.8 `java.time` package.
-- [duckling](https://github.com/wit-ai/duckling) is a super amazing library for temporal expressions
+- [duckling](https://github.com/wit-ai/duckling) is a library for temporal expressions
 
 `hara.time` comes at the problem by providing a core set of operations and representations of time, allowing for many different implementions of time to speak the same language."
 [[:chapter {:title "Index"}]]

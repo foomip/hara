@@ -161,6 +161,8 @@ Where `A`, `B` and `N` are numbers; `E1` and `E2` are expressions. All seven ele
 
 "The simulation is then run from `T1` to `T2` and the results are shown instantaneously"
 
+(def sch1 (scheduler {:print-task print-task}))
+
 (simulate sch1
           {:start T1
            :end   T2})
@@ -388,7 +390,6 @@ Apart from the initial call to include the scheduler, require the `hara.time.jod
             {:clock {:type "org.joda.time.DateTime"
                      :interval 2}}))
   (sch/start! sch)
-
 
   ;;>#<DateTime 2016-03-07T07:47:04.000+05:30>
   ;;>#<DateTime 2016-03-07T07:47:04.000+05:30>

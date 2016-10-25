@@ -254,13 +254,13 @@
 
 "Execution is not an issue in a synchronous world; it occurs with the ticking of the system clock and there are no other processes that are able to affect the world, we can establish a link between the **past** and the **future** because there is no **present** as such in terms of what is happening right now. It just doesn't exist, or rather we don't need to account for it in order to build our programs. In the synchronous world, there is no difference between a function and a lookup table of inputs and outputs"
 
-[[:image {:src "img/hara_concurrent_procedure/synchronous.png" :height "500px" :title "The Synchronous World"}]]
+[[:image {:src "img/hara_concurrent_procedure/synchronous.png" :width "40%" :title "The Synchronous World"}]]
 
 [[:subsection {:title "Concurrent Execution"}]]
 
 "In the concurrent world things happen very differently; or rather, things are required to be accounted very differently in order for a program to succeed. Time the conquerer is the master behind all calculation. To neglect time is a idealistic and will ultimately result in failure."
 
-[[:image {:src "img/hara_concurrent_procedure/concurrent.png" :height "500px" :title "The Concurrent World"}]]
+[[:image {:src "img/hara_concurrent_procedure/concurrent.png" :width "80%" :title "The Concurrent World"}]]
 
 [[:subsection {:title "Coordination of Concurrent Execution"}]]
 

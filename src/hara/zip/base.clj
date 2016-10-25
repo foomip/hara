@@ -399,7 +399,7 @@
   [zip key op]
   (-> zip
       (update-in [key] rest)
-      (assoc :changed? true?)
+      (assoc :changed? true)
       (add-history [op])))
 
 (defn delete-left
