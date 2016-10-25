@@ -21,7 +21,7 @@
 (fact "prepares the state of the cell"
 
   (cell-state {:label "a" :content "hello" :ref-fn atom})
-  => (just {:label clojure.lang.Atom
+  => (just {:label "a"
             :content clojure.lang.Atom
             :propagators clojure.lang.Atom}))
 

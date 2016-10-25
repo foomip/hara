@@ -170,7 +170,7 @@
 ^{:refer hara.time/now :added "2.2"}
 (fact "returns the current datetime"
   (t/now)
-  => #(instance? (t/default-type) %)
+  ;; => #(instance? (t/default-type) %)
   
   (t/now {:type Date})
   => #(instance? Date %)

@@ -14,11 +14,12 @@
 ^{:refer hara.io.file/select :added "2.4"}
 (fact "selects all the files in a directory"
 
-  (->> (select "../hara/src/hara/io/file")
+  (->> (select "../hara/src/hara/io/file" )
        (map #(relativize "../hara/src/hara" %))
        (map str)
        (sort))
-  => ["io/file/attribute.clj"
+  => ["io/file"
+      "io/file/attribute.clj"
       "io/file/common.clj"
       "io/file/filter.clj"
       "io/file/option.clj"

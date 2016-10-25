@@ -112,7 +112,7 @@ All functionality is found contained in the `hara.zip` namespace"
   (-> (zip/from-cursor '[| 1 2])
       (zip/move-left)
       (zip/cursor))
-  => ([| 1 2]))
+  => '([| 1 2]))
 
 "Whilst deletions and replacements will."
 

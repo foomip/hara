@@ -86,8 +86,7 @@
   (let [rel [(forward-rel trans)
              (backward-rel trans)]]
     (->> (map collect rel)
-         (apply merge-with vector))))
-
+         (clojure.core/apply merge-with vector))))
 
 (defn apply
   "applies the relation to a map

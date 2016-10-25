@@ -46,7 +46,7 @@
 
 ^{:refer hara.time.data.duration/to-fixed-length :added "2.2"}
 (fact "converts a duration map to a duration in milliseconds"
-  (to-fixed-length {:days 1 :hours 3)}
+  (to-fixed-length {:days 1 :hours 3})
   => 97200000
 
   (to-fixed-length {:weeks 2 :days 7 :hours 53})

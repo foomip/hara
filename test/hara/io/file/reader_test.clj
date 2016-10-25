@@ -22,7 +22,7 @@
 ^{:refer hara.io.file.reader/reader :added "2.4"}
 (fact "creates a reader for a given input"
 
-  (-> (reader :pushback "project.clj")
+  (-> (reader :pushback "project.clj" {})
       (read)
       second)
   => 'im.chit/hara)

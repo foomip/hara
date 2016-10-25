@@ -71,7 +71,7 @@
 ^{:refer hara.data.diff/changed :added "2.4"}
 (fact "Outputs what has changed between the two maps"
 
-  (changes {:a {:b {:c 3 :d 4}}}
+  (changed {:a {:b {:c 3 :d 4}}}
            {:a {:b {:c 3}}})
   => {:a {:b {:d 4}}})
 

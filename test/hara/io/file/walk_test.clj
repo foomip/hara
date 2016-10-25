@@ -21,7 +21,7 @@
   (match-single {:path (path/path "src/hara/test.clj")}
                 {:tag :fn
                  :fn (fn [m]
-                       (re-find #"hara" (str (:path m))))})
+                       (re-find #"hara" (str m)))})
   => true)
 
 ^{:refer hara.io.file.walk/match-filter :added "2.4"}
