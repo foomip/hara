@@ -163,7 +163,7 @@
   {:added "2.4"}
   ([root] (delete root {}))
   ([root opts]
-   (let [delete-fn (fn [{:keys [path attrs accumulator simulate]}]
+   (let [delete-fn (fn [{:keys [path attrs accumulator simulate]}]  
                      (try (if-not simulate
                             (Files/delete path))
                           (swap! accumulator conj (str path))
@@ -205,6 +205,8 @@
          results (walk/walk source
                             (merge {:target (path/path target)
                                     :recursive true
+                                    :directory (fn [{:keys [path]}]
+                                                   (prn path))
                                     :file move-fn
                                     :with #{:root}
                                     :accumulator (atom {})
@@ -393,8 +395,8 @@
   ([source target]
    (copy-single source target {}))
   ([source target opts]
-   (Files/copy (path/path source)
-               (path/path target)
+   (Files/copy ^Path (path/path source)
+               ^Path (path/path target)
                (->> (:options opts)
                     (mapv option/option)
                     (into-array CopyOption)))))
@@ -410,7 +412,7 @@
    (write stream path {}))
   ([stream path opts]
    (Files/copy stream
-               (path/path path)
+               ^Path (path/path path)
                (->> (:options opts)
                     (mapv option/option)
                     (into-array CopyOption)))))

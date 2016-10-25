@@ -2,7 +2,6 @@
   (:use hara.test)
   (:require [hara.event :refer :all]))
 
-
 "Two macros - `raise` and `manage` work together in creating the illusion of allowing code to seemingly jump around between higher and lower level functions. This in reality is not the case at all. We revisit the analogy of the worker who comes across something in their everyday routine that they cannot process."
 
 [[:section {:title "The dumb throw"}]]

@@ -3,51 +3,56 @@
   (:require [hara.event :refer :all]))
 
 ^{:refer hara.event/clear-listeners :added "2.2"}
-(fact "empties all event listeners")
+(comment "empties all event listeners"
+
+  (clear-listeners)
+  ;; all defined listeners will be cleared 
+  )
 
 ^{:refer hara.event/list-listeners :added "2.2"}
-(fact "shows all event listeners")
+(fact "shows all event listeners"
+
+  (deflistener hello-listener :msg
+    [msg]
+    (str "recieved " msg))
+  
+  (list-listeners)
+  => (contains-in [{:id 'hara.event-test/hello-listener,
+                    :checker :msg}]))
 
 ^{:refer hara.event/install-listener :added "2.2"}
-(fact "adds an event listener, use deflistener instead")
+(fact "adds an event listener, `deflistener` can also be used"
+  
+  (install-listener 'hello
+                    :msg
+                    (fn [{:keys [msg]}]
+                      (str "recieved " msg)))
+
+  (list-listeners)
+  => (contains-in [{:id 'hello
+                    :checker :msg}]))
 
 ^{:refer hara.event/uninstall-listener :added "2.2"}
 (fact "installs a global signal listener"
-
-  (def ^:dynamic *global* (atom {}))
-
-  (deflistener count-listener :log
-    [msg]
-    (swap! *global* update-in [:counts] (fnil #(conj % (count msg)) [])))
-  (uninstall-listener count-listener)
-
-  (signal [:log {:msg "Hello World"}])
-  (raise  [:log {:msg "How are you?"}]
-          (option :nil [] nil)
-          (default :nil))
-
-  @*global*
-  => {})
+  
+  (uninstall-listener 'hello
+                      'hara.event-test/hello-listener))
 
 ^{:refer hara.event/deflistener :added "2.2"}
 (fact "installs a global signal listener"
 
-  (def ^:dynamic *global* (atom {}))
+  (def ^:dynamic counts (atom {}))
 
   (deflistener count-listener :log
     [msg]
-    (swap! *global* update-in [:counts] (fnil #(conj % (count msg)) [])))
+    (swap! counts update-in [:counts] (fnil #(conj % (count msg)) [])))
 
   (signal [:log {:msg "Hello World"}])
-  (raise  [:log {:msg "How are you?"}]
-          (option :nil [] nil)
-          (default :nil))
 
-  @*global*
-  => {:counts [11 12]}
+  (signal [:log {:msg "How are you?"}])
 
-  ^:hidden
-  (uninstall-listener count-listener))
+  @counts
+  => {:counts [11 12]})
 
 ^{:refer hara.event/signal :added "2.2"}
 (fact "signals an event that is sent to, it does not do anything by itself"
@@ -58,16 +63,23 @@
     e
     e)
 
-  (signal :anything) => '({:id hara.event-test/hello :result {:anything true}})
+  (signal :anything)
+  => '({:id hara.event-test/hello :result {:anything true}}))
 
-  ^:hidden
-  (uninstall-listener hello))
+^{:refer hara.event/with-temp-listener :added "2.4"}
+(fact "used for isolating and testing signaling"
+  
+  (with-temp-listener [{:id string?}
+                       (fn [e] "world")]
+    (signal {:id "hello"}))
+  => '({:result "world", :id :temp}))
 
 ^{:refer hara.event/raise :added "2.2"}
 (fact "raise an issue, like throw but can be conditionally managed as well as automatically resolved:"
 
   (raise  [:error {:msg "A problem."}])
-  => (throws)
+  => (throws-info {:error true
+                   :msg "A problem."})
 
   (raise [:error {:msg "A resolvable problem"}]
          (option :something [] 42)
@@ -77,7 +89,7 @@
 ^{:refer hara.event/manage :added "2.2"}
 (fact "manages a raised issue, like try but is continuable:"
 
-  (manage [1 2 (raise {:error "should be 3"})]
+  (manage [1 2 (raise :error)]
           (on :error
               _
               3))
@@ -86,7 +98,7 @@
 ^{:refer hara.event/continue :added "2.2"}
 (fact "used within a manage form to continue on with a particular value"
 
-  (manage [1 2 (raise {:error "should be 3"})]
+  (manage [1 2 (raise :error)]
           (on :error
               _
               (continue 3)))
@@ -126,7 +138,8 @@
           (on :error
               _
               (escalate :escalated)))
-  => (throws))
+  => (throws-info {:error true
+                   :escalated true}))
 
 ^{:refer hara.event/fail :added "2.2"}
 (fact "used within a manage form to definitively fail the system"
@@ -135,12 +148,4 @@
           (on :error
               _
               (fail :failed)))
-  => (throws))
-
-^{:refer hara.event/with-temp-listener :added "2.4"}
-(fact "used for isolating and testing signaling"
-  
-  (with-temp-listener [{:id string?}
-                       (fn [e] "world")]
-    (signal {:id "hello"}))
-  => '({:result "world", :id :temp}))
+  => (throws-info {:error true}))

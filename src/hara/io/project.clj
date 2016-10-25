@@ -67,8 +67,7 @@
                   (merge opts)
                   (update-in [:exclude]
                              conj
-                             (fn [{:keys [path] :as m}]
-                               (fs/link? path))))
+                             fs/link?))
          result (->> paths
                      (map #(fs/path (:root project) %))
                      (mapcat #(fs/select % filt))

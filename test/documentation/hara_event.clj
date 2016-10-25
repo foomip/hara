@@ -4,157 +4,251 @@
 
 [[:chapter {:title "Introduction"}]]
 
-"
-[hara.event](https://github.com/zcaudate/hara/blob/master/src/hara/event.clj) aims to provide more loosely coupled code through two mechanisms:
+"[hara.event](https://github.com/zcaudate/hara/blob/master/src/hara/event.clj) aims to provide more loosely coupled code through two mechanisms:
 
-- a global eventing system for decoupilng of side-effecting
-- a conditional restart framework that hooks into the eventing system.
+- a signalling framework for normal operations
+- a conditional restart framework for abnormal operations
 
-`hara.event` was originally developed as a [separate library](https://github.com/zcaudate/ribol) but has been included as part of the larger [hara](https://github.com/zcaudate/hara) codebase. The main addition to the original library has been the inclusion of the eventing system as it was felt that there should be an integrated way of dealing with side-effecting calls such as logging, indexing, emails and many other tasks within both normal and abnormal program flows.
-"
+The two paradigms have been combined into a single library because they share a number of similarities in terms of both the communication of system information as well as the need for passive listener. However, abnormal operations are alot trickier to resolve and requires more attention to detail."
 
 [[:section {:title "Installation"}]]
 
-"Add to `project.clj` dependencies:
+"
+Add to `project.clj` dependencies:
 
-    [im.chit/hara.event \"{{PROJECT.version}}\"]"
-
-"All functionality is found contained in the `hara.event` namespace"
-
-(comment  (use 'hara.event))
-
-[[:section {:title "Motivation"}]]
-
-"For those that are not familiar with restart systems (most well know in Common Lisp), they can be thought of as an issue resolution system or `try++/catch++`. In `hara.event`, we use the term `issues` to differentiate them from `exceptions`. The difference is purely semantic: `issues` are `managed` whilst `exceptions` are `caught`. They all refer to abnormal program flow. Conditional restarts provide a way for the top-level application to more cleanly deal with *Type 2* exceptions."
+    [im.chit/hara.event \"{{PROJECT.version}}\"]
+"
 
 [[:section {:title "Other Libraries"}]]
 
 "
-There are currently three other conditional restart libraries for clojure, in the more traditional Common Lisp style syntax:
+There are currently three other conditional restart libraries for clojure:
 
-- [errorkit](https://github.com/richhickey/clojure-contrib/blob/master/src/main/clojure/clojure/contrib/error_kit.clj) was the first and provided the guiding architecture for this library.
-
-- [swell](https://github.com/hugoduncan/swell) and [conditions](https://github.com/bwo/conditions) have been written to work with [slingshot](https://github.com/scgilardi/slingshot).
+- [errorkit](https://github.com/richhickey/clojure-contrib/blob/master/src/main/clojure/clojure/contrib/error_kit.clj)
+- [swell](https://github.com/hugoduncan/swell) 
+- [conditions](https://github.com/bwo/conditions) works with [slingshot](https://github.com/scgilardi/slingshot).
 "
 
-[[:chapter {:title "API" :link "hara.event"}]]
+[[:chapter {:title "Index"}]]
 
-[[:api {:namespace "hara.event" :title ""}]]
+[[:api {:title "Signal API"
+        :namespace "hara.event"
+        :display #{:tags}
+        :only ["deflistener"
+               "signal"
+               "clear-listeners"
+               "install-listener"
+               "list-listeners"
+               "uninstall-listener"
+               "with-temp-listener"]}]]
 
-[[:chapter {:title "Event Management"}]]
+[[:api {:title "Conditional API"
+        :namespace "hara.event"
+        :display #{:tags}
+        :only ["choose"
+               "continue"
+               "default"
+               "escalate"
+               "fail"
+               "manage"
+               "option"
+               "raise"]}]]
 
-[[:section {:title "Listeners and Managers"}]]
+[[:chapter {:title "Signals"}]]
 
-"
-In any program, we see the following patterns
+"`hara.event` contains a flexible signaling and listener framework. This allows for decoupling of side-effecting functions. In normal program flow, there may be instances where an event in a system requires additional processing that is adjunct to the core:
 
-- side effects occur within both abnormal and normal program flow (usually logging)
-- side-effecting libraries coupled to the main logic (logback, email systems, alerts)
-- usually some sort of logging has to be done on abnormal program flow
+- logging
+- printing on screen
+- sending an email
+- creating audio/visual effects
+- writing to a queue, database or cache
 
-`hara.event` provides for listeners and managers:
+The signalling framework allows for the specification of signals type. This enables loose coupling between the core and libraries providing functionality for side effects, enabling the most flexible implementation for signaling. As all information surrounding a signal is represented using data, listeners that provide actual resolution can be attached and detached without too much effort. In this way the core becomes lighter and is stripped of dependencies."
 
-- Listeners act on events they have jurisdiction over for both `signal` and `raise` calls. All listeners participate.
-- Managers act in a hierarchical fashion where if an issue is raised, the closest manager will handle the issue.
+[[:image {:src "img/hara_event/signal_pathway.png"}]]
 
-An example is provided below:
-"
+[[:section {:title "Basics"}]]
 
-[[:image {:src "img/hara_event/event_pathway.png" :title "example pathways" :width "100%"}]]
-
-"
-The only difference between `signal` and `raise` calls is that `signal` does not trigger `manage` handlers. Both calls will trigger any compatible listener. The listers and managers act in a horizontal/vertical or only/all fashion to provide for better decoupilng of functionality within the code base.
-"
-
-[[:section {:title "Listener Syntax"}]]
-
-"`deflistener` installs a signal listener with a precondition for activation. For example, in the case below, if there is a `:log` in body of the signalled (or raised) event, then `event` will be printed."
+"`signal` typically just informs its listeners with a given set of information. An example of this can be seen here:"
 
 (comment
-  (deflistener print-listener :log
-    event
-    (println event)))
+  (signal {:web true :log true :msg "hello"})
+  => ())
 
-[[:section {:title "Signal Syntax"}]]
-
-"`signal` typically just informs its listeners with a given set of information:"
+"It can also be written like this for shorthand:"
 
 (comment
-  (signal {:everything-is-good true :input-data 3 :log true}))
+  (signal [:web :log {:msg "hello"}])
+  => ())
 
-"If the previous `deflistener` was defined, then this call will activate a print statement."
-
-[[:section {:title "Raise Syntax"}]]
-
-"Instead of `throw`, a new form `raise` is introduced ([e.{{raise-syntax}}](#raise-syntax)):
-"
+"A signal by itself does not do anything. It requires a listener to be defined in order to process the signal:"
 
 (comment
-  (raise {:input-not-string true :input-data 3}     ;; issue payload
-         (option :use-na [] "NA")                   ;; option 1
-         (option :use-custom [n] n)                 ;; option 2
-         (default :use-custom "nil"))               ;; default choice
+  (deflistener log-print-listener :log
+    e
+    (println "LOG:" e))
+
+  (signal [:web :log {:msg "hello"}])
+  => ({:result nil,
+       :id documentation.hara-event/log-print-listener})
+  ;; LOG: {:web true, :log true, :msg hello}
+  )
+
+"A second listener will result in `signal` triggering two calls"
+
+(comment
+  (deflistener web-print-listener :web
+    e
+    (println "WEB:" e))
+
+  (signal [:web :log {:msg "hello"}])
+  => ({:result nil, :id documentation.hara-event/web-print-listener}
+      {:result nil, :id documentation.hara-event/log-print-listener})
+  ;; LOG: {:web true, :log true, :msg hello}
+  ;; WEB: {:web true, :log true, :msg hello}
+  )
+
+"Whereas another signal without an attached data listener will not trigger:"
+
+(comment
+  (signal [:db {:msg "hello"}])
+  => ())
+
+"This can be resolved by adding another listener:"
+
+(comment
+  (deflistener db-print-listener :db
+    e
+    (println "DB:" e)))
+
+(comment
+  (signal [:db {:msg "hello"}])
+  => ({:result nil, :id documentation.hara-event/db-print-listener})
+  ;; DB: {:db true, :msg hello}
 )
 
-"
-`raise` differs to `throw` in a few ways:
+[[:section {:title "API"}]]
 
-- issues are of type `clojure.lang.ExceptionInfo`.
-- the payload is a `hash-map`.
-- **optional**: multiple `option` handlers can be specified.
-- **optional**: a `default` choice can be specified.
-"
+[[:api {:title ""
+        :namespace "hara.event"
+        :only ["deflistener"
+               "signal"
+               "clear-listeners"
+               "install-listener"
+               "list-listeners"
+               "uninstall-listener"
+               "with-temp-listener"]}]]
 
-[[:section {:title "Manage Syntax"}]]
+[[:chapter {:title "Conditionals"}]]
 
-"Instead of the `try/catch` combination, `manage/on` is used ([e.{{manage-syntax}}](#manage-syntax))."
+"`hara.event` also provides for a conditional framework. It also can be thought of as an issue resolution system or `try++/catch++`. There are many commonalities between the signalling framework as well as the conditional framework. Because the framework deals with abnormal program flow, there has to berichness in semantics in order to resolve the different types of issues that may occur. The diagram below shows how the two frameworks fit together."
 
-(comment
-  (manage (complex-operation)
-          (on :node-working [node-name]
-              (choose :wait-for-node))
-          (on :node-failed [node-name]
-              (choose :reinit-node))
-          (on :database-down []
-              (choose :use-database backup-database))
-          (on :core-failed []
-              (terminate-everything)))
-)
+[[:image {:src "img/hara_event/event_pathway.png" :width "100%"}]]
 
-"Issues are managed through `on` handlers within a `manage` block. If any `issue` is raised with the manage block, it is passed to each handler. There are six ways that a handler can deal with a raised issue:
+[[:section {:title "API"}]]
 
-- directly (same as `try/catch`)
-- using `continue` to keep going with a given value
-- using `choose` to specify an option
-- using `escalate` to notify higher level managers
-- using `default` to allow the issue to resolve itself
-- using `fail` to throw an exception
+[[:api {:title ""
+        :namespace "hara.event"
+        :only ["choose"
+               "continue"
+               "default"
+               "escalate"
+               "fail"
+               "manage"
+               "raise"]}]]
 
-Using these six different different issue resolution directives, the programmer has the richness of language to craft complex process control flow strategies without mixing logic handling code in the middle tier. Restarts can also create new ways of thinking about the problem beyond the standard `throw/catch` mechanism and offer more elegant ways to build programs and workflows.
-"
+[[:section {:title "Basics"}]]
 
-[[:chapter {:title "Quickstart"}]]
+"In this demonstration, we look at how code bloat problems using `throw/try/catch` could be reduced using `raise/manage/on`. Two functions are defined:
 
-[[:file {:src "test/documentation/hara_event/unlucky_numbers.clj"}]]
+- `value-check` which takes a number as input, throwing a `RuntimeException` when it sees an input that it doe not like. 
+- `value-to-string` which takes a number as input, and returns it's string"
 
-[[:chapter {:title "Guides"}]]
+(defn value-check [n]
+  (cond (= n 13)
+        (raise {:type :unlucky
+                :value n})
 
-[[:file {:src "test/documentation/hara_event/api.clj"}]]
+        (= n 7)
+        (raise {:type :lucky
+                :value n})
+        
+        (= n 666)
+        (raise {:type :the-devil
+                :value n})
+
+        :else n))
+
+(defn value-to-string [n]
+  (str (value-check n)))
+
+"uses of `value-to-string` are as follows:"
+
+(fact
+  (value-to-string 1)
+  => "1"
+
+  (value-to-string 666)
+  => (throws-info {:value 666
+                   :type :the-devil}))
+
+"The advantage of using conditionals instead of the standard java `throw/catch` framework is that problems can be isolated to a particular scope without affecting other code that had already been built on top. When we map `value-to-string` to a range of values, if the inputs are small enough then there is no problem:"
+
+(fact
+  (mapv value-to-string (range 3))
+  => ["0" "1" "2"])
+
+"However, if the inputs are wide enough to contain something out of the ordinary, then there is an exception."
+
+(fact
+  (mapv value-to-string (range 10))
+  => (throws-info {:value 7
+                   :type :lucky}))
+
+[[:section {:title "Exceptions"}]]
+
+"`manage` is the top level form for handling exceptions to normal program flow. The usage of this form is:"
+
+(fact
+  (manage
+   (mapv value-to-string (range 10))
+   (on {:type :lucky} e
+       "LUCKY-NUMBER-FOUND"))
+  => "LUCKY-NUMBER-FOUND")
+
+"This is the same mechanism as `try/catch`, which `manage` replacing `try` and `on` replacing `catch`. The difference is that there is more richness in semantics. The key form being `continue`:"
+
+(fact
+  (manage
+   (mapv value-to-string (range 10))
+   (on {:type :lucky}
+       []
+       (continue "LUCKY-NUMBER-FOUND")))
+  => ["0" "1" "2" "3" "4" "5" "6"
+      "LUCKY-NUMBER-FOUND" "8" "9"])
+
+"`continue` is special because it operates at the scope where the exception was raised. This type of handling cannot be replicated using the standard `try/catch` mechanism. Generally, exceptions that occur at lower levels propagate to the upper levels. This usually results in a complete reset of the system. `continue` allows for lower-level exceptions to be handled with much more grace because the scope is pin-pointed to where `raise` was called."
+
+"Furthermore, there may be exceptions that require more attention and so `continue` can only be used when it is needed."
+
+(defn values-to-string [inputs]
+  (manage
+   (mapv value-to-string inputs)
+   (on :value
+       [type value]
+       (cond (= type :the-devil)
+             "OH NO!"
+
+             :else (continue type)))))
+
+(fact
+  (values-to-string (range 6 14))
+  => ["6" ":lucky" "8" "9" "10" "11" "12" ":unlucky"]
+  
+  (values-to-string [1 2 666])
+  => "OH NO!")
 
 [[:chapter {:title "Strategies"}]]
 
 [[:file {:src "test/documentation/hara_event/strategies.clj"}]]
-
-[[:chapter {:title "Implementation"}]]
-
-[[:file {:src "test/documentation/hara_event/implementation.clj"}]]
-
-[[:chapter {:title "Links and Resources"}]]
-
-"
-Here are some more links and resources on the web:
-
-- [beyond exception handling](http://www.gigamonkeys.com/book/beyond-exception-handling-conditions-and-restarts.html) - Peter Seibel's chapter on conditional restarts
-- [why exceptions should cascade like stylesheets](http://z.caudate.me/why-exceptions-are-like-stylesheets/) - original article on the philosophy behind [ribol](http://www.github.com/zcaudate/ribol)
-- [the power of abstraction](http://www.youtube.com/watch?v=GDVAHA0oyJU) - excellent talk by Barbara Liskov
-"

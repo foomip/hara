@@ -91,8 +91,10 @@
   "helper function, triggers after visiting a directory"
   {:added "2.4"}
   [m]
-  (if-let [f (get-in m [:directory :post])]
-    (f m))
+  (let [f (get-in m [:directory :post])
+        run? (match-filter m)]
+    (when (and f run?)
+      (f m)))
   (option/option :continue))
 
 (defn visit-file

@@ -27,26 +27,19 @@
   "creates a schedular from handlers, or both handlers and config"
   {:added "2.2"}
   ([handlers] (scheduler handlers {}))
-    ([handlers config] (scheduler handlers config {}))
-    ([handlers config global]
-     (component/system
-      {:array     [{:constructor (array/seed-fn handlers)
-                    :initialiser array/initialise} :cache :registry :ticker]
-       :clock     [clock/clock :ticker]
-       :ticker    [(fn [_] (atom {:time nil :array nil}))]
-       :registry  [(fn [_] (data/registry))]
-       :cache     [(fn [_] (data/cache))]}
-      (-> global
-          (update-in [:array] nested/merge-nested config)
-          (nested/merge-nil-nested *defaults*))
-      "scheduler")))
-
-(defn create
-  "function for use with the component framework."
-  {:added "2.2"}
-  [handlers]
-  (fn [config]
-    (scheduler handlers {} config)))
+  ([handlers config] (scheduler handlers config {}))
+  ([handlers config global]
+   (component/system
+    {:array     [{:constructor (array/seed-fn handlers)
+                  :initialiser array/initialise} :cache :registry :ticker]
+     :clock     [clock/clock :ticker]
+     :ticker    [(fn [_] (atom {:time nil :array nil}))]
+     :registry  [(fn [_] (data/registry))]
+     :cache     [(fn [_] (data/cache))]}
+    (-> global
+        (update-in [:array] nested/merge-nested config)
+        (nested/merge-nil-nested *defaults*))
+    "scheduler")))
 
 (defn start!
   "starts the scheduler"
@@ -213,32 +206,36 @@
        (get name)
        vals)))
 
+(defn get-instance
+  [scheduler name id]
+  (-> scheduler
+       :registry
+       :store
+       deref
+       (get-in [name id])))
+
 (defn kill-instance
   "kills a single instance of the running task"
   {:added "2.2"}
   [scheduler name id]
-  (registry/kill (:registry scheduler) name id))
+  (-> (get-instance scheduler name id)
+      (procedure/kill)))
 
 (defn kill-instances
   "kills all instances of the running task"
-  {:added "2.2"}
-  [{:keys [registry] :as scheduler} name]
-  (doall (for [inst (registry/list-instances registry name)]
-           (registry/kill registry name (:id inst)))))
-
-(defn kill-all
-  "kills all instances of all tasks in the scheduler"
-  {:added "2.2"}
-  [{:keys [registry] :as scheduler}]
-  (doall (for [tsk  (list-tasks scheduler)
-               inst (registry/list-instances registry (:name tsk))]
-           (registry/kill registry (:name tsk) (:id inst)))))
+  {:added "2.4"}
+  ([scheduler]
+   (vec (for [inst (list-instances scheduler)]
+          (procedure/kill inst))))
+  ([scheduler name]
+   (vec (for [inst (list-instances scheduler name)]
+          (procedure/kill inst)))))
 
 (defn shutdown!
   "forcibly shuts down the scheduler, immediately killing all running threads"
   {:added "2.2"}
   [scheduler]
-  (kill-all scheduler)
+  (kill-instances scheduler)
   (stop! scheduler))
 
 (defn restart!

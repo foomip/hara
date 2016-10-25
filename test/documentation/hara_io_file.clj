@@ -125,20 +125,33 @@ Add to `project.clj` dependencies:
 
   ;; copying the src directory, :recursive is true by default
   (copy "src" ".src" {:recursive false})
-
+  => {"src" ".src",
+      "src/hara" ".src/hara"}
+  
   ;; delete the .src directory, :recursive is true by default
-  (delete ".src" {:recursive false}))
+  (delete ".src" {:recursive false})
+  => #{"/Users/chris/Development/chit/hara/.src/hara"
+       "/Users/chris/Development/chit/hara/.src"})
 
 [[:section {:title "simulate"}]]
 
-"When the `:simulate` flag is set, the operation is not performed but will output a list of files that will be affected."
+"When the `:simulate` flag is set, the operation is not performed but will output as if the operation has been done."
 
 (comment
   (copy "src" ".src" {:simulate true})
+  => {"src" ".src",
+      "src/hara" ".src/hara"}
 
   (move "src" ".src" {:simulate true})
-
-  (delete "src" ".src" {:simulate true}))
+  => {"/Users/chris/Development/chit/hara/src/hara/data.clj"
+      "/Users/chris/Development/chit/hara/.src/hara/data.clj",
+      ... ...
+      "/Users/chris/Development/chit/hara/src/hara/time/data/coerce.clj"
+      "/Users/chris/Development/chit/hara/.src/hara/time/data/coerce.clj"}
+  
+  (delete ".src" {:simulate true})
+  => #{"/Users/chris/Development/chit/hara/.src/hara"
+       "/Users/chris/Development/chit/hara/.src"})
 
 [[:section {:title "filter"}]]
 
@@ -198,41 +211,72 @@ Add to `project.clj` dependencies:
   ;; /Users/chris/Development/chit/hara/src/hara/class/multi.clj
   )
 
-"The `:directory` key takes either a function which will run whenever a directory is visited:"
+"The `:directory` option takes either a function or a map of function which will run whenever a directory is visited:"
 
 (comment
   
   (select "src" {:include ["/class"]               
-                 :directory (fn [{:keys [path]}] (println (str path)))})
+                 :directory (fn [{:keys [path]}]
+                              (println (str path)))})
   
   ;; /Users/chris/Development/chit/hara/src/hara/class
 
+  (select "src" {:include ["/class"]               
+                 :directory {:pre  (fn [{:keys [path]}]
+                                     (println "PRE" (str path)))
+                             :post (fn [{:keys [path]}]
+                                     (println "POST "(str path)))}})
+  
+  ;; PRE /Users/chris/Development/chit/hara/src/hara/class
+  ;; POST  /Users/chris/Development/chit/hara/src/hara/class
+)
 
-  )
-
-""
-
-"
-- `:directory`
-- `:file`
-- `:root`
-- `:with`
-- `:options`"
-
-
-[[:section {:title "accumulator"}]]
+"`:options` are passed in for `move` and `copy`"
 
 (comment
 
-  (let [gather-fn (fn [{:keys [path attrs accumulator]}]
-                    (swap! accumulator
-                           conj
-                           (str path)))]
-    (select root
-            (merge {:depth 1
-                    :directory gather-fn
-                    :file gather-fn
-                    :accumulator (atom {})
-                    :accumulate #{}
-                    :with #{}}
-                   opts))))
+  ;; `:replace-existing` replaces an existing file if it exists.
+  ;; `:copy-attributes`  copy attributes to the new file.
+  
+  (copy "project.clj" "project.clj.bak"
+        {:options [:replace-existing
+                   :copy-attributes]})
+
+  ;; `:atomic-move` moves the file as an atomic file system operation.
+  
+  (move "project.clj.bak" "project.clj" 
+        {:options [:replace-existing
+                   :atomic-move]}))
+
+"`:with` is either `#{:root}` to include the root path or `#{}` to not include the root path. It is set to `#{:root}` for `copy`, `move` and `delete`. It is set to `#{}` for `list` and `select`."
+
+[[:section {:title "accumulator"}]]
+
+"`:accumulator` sets the atom that contains the accumulated values during the walk:"
+
+(comment
+  
+  (let [acc (atom [])]
+    
+    (select "src/hara/class"  {:accumulator acc})
+    
+    (select "src/hara/common" {:accumulator acc})
+    
+    (map #(str (relativize "src/hara" %))
+         @acc))
+  => ("class"
+      "class/checks.clj"
+      "class/enum.clj"
+      "class/inheritance.clj"
+      "class/multi.clj"
+      "common"
+      "common/checks.clj"
+      "common/error.clj"
+      "common/hash.clj"
+      "common/pretty.clj"
+      "common/primitives.clj"
+      "common/state.clj"
+      "common/string.clj"
+      "common/watch.clj"))
+
+"For more examples of how it is used, please see the source code for `copy`, `delete` `list` and `move`."
