@@ -8,11 +8,6 @@
 "
 [hara.object](https://github.com/zcaudate/hara/blob/master/src/hara/object.clj) is a library for converting java classes into clojure data types. It is somewhat like the `bean` command but enables more control and customisation of the output."
 
-"Libraries that rely on `hara.object` for exposing functionality:
-- [gita](https://github.com/zcaudate/gita)
-- [gulfstream](https://github.com/helpshift/gulfstream)
-"
-
 [[:section {:title "Installation"}]]
 
 "
@@ -25,17 +20,12 @@ Add to `project.clj` dependencies:
 (comment (require '[hara.object :as object]))
 
 
-[[:chapter {:title "API" :link "hara.object"}]]
+[[:section {:title "Motivation"}]]
 
-[[:api {:namespace "hara.object" :title ""}]]
-
-
-[[:chapter {:title "Philosophy"}]]
-
-"`hara.object` works at the level of meta-programming. As explained in the previous section, there is a correspondence between a class and the data with the class. Below shows a simple example of the concept of `Dog` as an `Object` and as data:
+"`hara.object` works at the level of meta-programming. Below shows a simple example of the concept of `Dog` as an `Object` and as data:
 "
 
-[[:image {:src "img/hara_object/dog.png" :width "600px" :title "Class as Data"}]]
+[[:image {:src "img/hara_object/dog.png" :width "90%" :title "Class as Data"}]]
 
 "There are advantages of using pure data for the representation of the `Dog` concept.
 
@@ -45,179 +35,25 @@ Add to `project.clj` dependencies:
 
 In this way, many objects can be turned into maps/data for consumption by clojure methods. This makes working with many big java libraries much easier before."
 
+[[:chapter {:title "Index"}]]
 
-[[:chapter {:title "string-like"}]]
+[[:api {:namespace "hara.object" 
+        :title ""
+        :display #{:tags}}]]
 
-"
-It is best to look at a real world example of how to use such a library.
+[[:chapter {:title "API"}]]
 
-[gita](https://www.github.com/zcaudate/gita) is a wrapper around the popular [jgit](https://eclipse.org/jgit/) project. Due to the enormous amount of functionality around [git](http://www.git.org), it is very difficult to manually write a wrapper around the entire suite. The novelty of [gita](https://www.github.com/zcaudate/gita) is that it uses [hara.object](https://www.github.com/zcaudate/hara) for customisation of the wrapper interface in such a way that the entire functionality of the main `org.eclipse.jgit.api.Git` class is accessible and usable in a clojure compatible convention.
-"
+[[:section {:title "Core"}]]
 
-"`hara.object` is based on a very simple idea of treating objects as being `string-like` or a `map-like` . What is meant by `string-like` is that the object can be represented into a string. The reverse, that the object can be constructed from a string is not always true but there are very few exceptions."
+[[:api {:namespace "hara.object" 
+        :title ""
+        :only ["map-like" "string-like" "vector-like" "meta-read" "meta-write"]}]]
 
-[[:section {:title "File"}]]
+[[:section {:title "Fields"}]]
 
-"An example is shown below when we use the `string-like` macro to extend the functionality to `java.io.File`."
+[[:api {:namespace "hara.object" 
+        :title ""
+        :only ["to-data" "from-data" "read-all-getters" 
+               "read-getters" "read-reflect-fields"
+               "write-all-setters" "write-reflect-fields" "write-setters"]}]]
 
-(object/string-like
- java.io.File
- {:tag "path"
-  :read (fn [f] (.getPath f))
-  :write (fn [^String path] (java.io.File. path))})
-
-"The three keys that are important in the map are:
-
-- `:tag` identifying the type of data
-- `:to` which converts the object to string
-- `:from`, a function taking two paramters that constructs the object out of a string
-
-Constructing a File object, notice that the output is different from before:"
-
-(java.io.File. "/home") ;;=> #path "/home"
-
-"Now that stringlike has been extended to `java.io.File`, generic data conversion methods can be used. `to-data` converts the object to a string:"
-
-(object/to-data (java.io.File. "/home")) ;;=> "/home"
-
-"`from-data` converts a string back into an instance of a `File`."
-
-(object/from-data "/home" java.io.File)  ;;=> #path "/home"
-
-[[:section {:title "Repository"}]]
-
-"`string-like` is implementated for `jgit` classes in [gita](https://github.com/zcaudate/gita/src/gita/interop/string_like.clj). The example below shows the `Repository` object:"
-
-(object/string-like
- org.eclipse.jgit.lib.Repository
- {:tag   "repo"
-  :read     (fn [^org.eclipse.jgit.lib.Repository repo]
-              (-> repo (.getDirectory) object/to-data))
-  :write    (fn [^String path]
-              (org.eclipse.jgit.internal.storage.file.FileRepository. path))})
-
-"It's usage can be seen:"
-
-(object/from-data "/home" org.eclipse.jgit.lib.Repository) ;;=> #repo "/home"
-
-"What this allows is for back and forth coercion of similar types of objects using a very generic framework. We see the back and forth conversion of a string to a File and Repository object below:"
-
-(-> "/home"
-    (object/from-data java.io.File)
-    (object/to-data)
-    (object/from-data org.eclipse.jgit.lib.Repository)
-    (object/to-data))
-;;=> "/home"
-
-[[:section {:title "Enums"}]]
-
-"Enumerations are considered to be stringlike. Therefore `to-data` is used to convert a enum constants to a string represention"
-
-(object/to-data java.lang.Thread$State/NEW)
-;;=> "NEW"
-
-"`from-data` is used to convert a string back into the enum represention"
-
-(object/from-data "NEW" java.lang.Thread$State)
-;;=> #enum[java.lang.Thread$State NEW]
-
-(fact
-  (object/from-data "NON-EXISTENT" java.lang.Thread$State)
-  => (throws))
-
-[[:chapter {:title "vector-like"}]]
-
-"Classes that behave like lists and collections can be extended with the `vector-like` attribute. Note that class arrays, `java.lang.Iterable`, `java.util.Iterator` and `java.util.AbstractCollection` are automatically converted to a vector of things:"
-
-(object/vector-like
- org.eclipse.jgit.revwalk.RevWalk
- {:tag "commits"
-  :read (fn [^org.eclipse.jgit.revwalk.RevWalk walk]
-          (->> walk (.iterator) object/to-data))})
-
-[[:chapter {:title "map-like"}]]
-
-"Classes are containers of fields and methods. Therefore, they can be considered map-like because instances of the class contain fields that hold data about its state. [hara.reflect](hara-reflect.html) allows access of fields through the [delegate](hara-reflect.html#delegate) function. However, it has been found that this is a little too overpowered and a more subtle way would be to use the `getter` and `setter` methods."
-
-[[:section {:title "Primitives"}]]
-
-"`hara.object` accesses class information through the class getters:"
-
-(-> (object/read-getters org.eclipse.jgit.api.Status)
-    (keys)
-    (sort))
-;;=> (:added :changed :class :clean? :conflicting :conflicting-stage-state :ignored-not-in-index :missing :modified :removed :uncommitted-changes :uncommitted-changes! :untracked :untracked-folders)
-
-"And sets data through class setters. In the case for `Status`, because it is readonly, there are no setters to show"
-
-(-> (object/write-setters org.eclipse.jgit.api.Status)
-    (keys)
-    (sort))
-;;=> ()
-
-"`read-getters` and `read-reflect-fields` can be used on any object:"
-
-(-> (object/read-reflect-fields "abc")
-    (keys)
-    (sort))
-;=> (:case-insensitive-order :hash :serial-persistent-fields :serial-version-uid :value)
-
-[[:section {:title "map-like"}]]
-
-"As for stringlike classes, maplike classes can also be seen to be extended in [gita](https://github.com/zcaudate/gita/src/gita/interop/map_like.clj). Below are examples of classes that have been extended:"
-
-(object/map-like
- org.eclipse.jgit.revwalk.RevCommit
- {:tag "commit"
-  :include [:commit-time :name :author-ident :full-message]})
-
-"Important keys are `:tag` and either `:include` which only includes tha getter keys listed or `:exclude`, which includes all the keys except those listed. For the extension of `RevCommit`, only four keys are chosen. The `:author-ident` key is a `Personident` object and also needs to be extended:"
-
-(object/map-like
- org.eclipse.jgit.lib.PersonIdent
- {:tag "person"
-  :exclude [:time-zone]})
-
-"Once classes have been extended, the typical usage would be to wrap a function returning the object wtih a `to-data` call. An example of this can be seen [here](https://github.com/zcaudate/gita#working-locally---add-commit-log-and-rm), where a call to `git :commit` returns a `RevCommit` object which then is converted into a hashmap via the `to-data` wrapper:"
-
-(comment
-  (git :commit :message "Added Hello.txt")
-  ;;=> {:commit-time 1425683330,
-  ;;    :name "9f1177ad928d7dea2afedd58b1fb7192b3523a6c",
-  ;;    :author-ident {:email-address "z@caudate.me",
-  ;;                   :name "Chris Zheng",
-  ;;                   :time-zone-offset 330,
-  ;;                   :when #inst "2015-03-06T23:08:50.000-00:00"},
-  ;;    :full-message "Added Hello.txt"}
-  )
-
-"Notice that the datastructure is nested. Both `RevCommit` and `PersonIdent` have been turned into generic clojure maps in the format specified through `extend-maplike`. Most of [gita](https://github.com/zcaudate/gita) has been implementated in this way."
-
-[[:section {:title "extension"}]]
-
-"For more flexibility of output, classes extend `hara.protocol.object/-meta-read` and `hara.protocol.object/-meta-write`. The use would the same method name without prefix `-` in the `hara.object` namespace. An example of this is found [here](https://github.com/zcaudate/gita/blob/master/src/gita/interop/status.clj) where the `org.eclipse.jgit.api.Status` is extended:"
-
-(comment
-  (ns gita.interop.status
-    (:require [hara.object :as object])
-    (:import org.eclipse.jgit.api.Status))
-
-  (object/map-like
-   org.eclipse.jgit.api.Status
-   {:tag "status"
-    :display (fn [m]
-               (reduce-kv (fn [out k v]
-                            (if (and (or (instance? java.util.Collection v)
-                                         (instance? java.util.Map v))
-                                     (empty? v))
-                              out
-                              (assoc out k v)))
-                          {}
-                          m))}))
-
-"An example of how is is used can be seen in the `gita` readme:"
-
-(comment
-  (git :status)
-  => {:clean? false, :uncommitted-changes! false, :untracked #{"hello.txt"}}
- )

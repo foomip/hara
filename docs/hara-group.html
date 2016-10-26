@@ -61,9 +61,9 @@
           <div class="heading">
             <div>
               <h5>Author: Chris Zheng&nbsp;&nbsp;<a href="mailto:z@caudate.me">(z@caudate.me)</a></h5>
-              <h5>Date: 14 October 2016</h5>
+              <h5>Date: 26 October 2016</h5>
               <h5>Repository: <a href="https://github.com/zcaudate/hara">https://github.com/zcaudate/hara</a></h5>
-              <h5>Version: 2.4.6</h5></div></div>
+              <h5>Version: 2.4.7</h5></div></div>
           <hr/>
           <div class="outline">
             <div class="toc">
@@ -83,7 +83,7 @@
                 </ul>
               </nav>
           </div>
-          <div><span id="introduction"></span><h2><b>1 &nbsp;&nbsp; Introduction</b></h2></div><div><p><a href='https://github.com/zcaudate/hara/blob/master/src/hara/function.clj'>hara.group</a> allow definition of collections of the same type of items. </p></div><div><span id="installation"></span><h3>1.1 &nbsp;&nbsp; Installation</h3></div><div><p>Add to <code>project.clj</code> dependencies:</p><pre><code>&#91;im.chit/hara.group &quot;2.4.6&quot;&#93;</code></pre><p>All functionality is in the <code>hara.group</code> namespace:</p></div><div class="code"><pre><code class="clojure">(use 'hara.group)</code></pre></div><div><span id="definitions"></span><h2><b>2 &nbsp;&nbsp; Definitions</b></h2></div><div><p>Groups and items are defined as follows:</p></div><div class="api"><span id="entry__hara_group__"></span><hr /><div><ul><li><a data-scroll="" href="#entry__hara_group__defgroup">defgroup</a></li><li><a data-scroll="" href="#entry__hara_group__defitem">defitem</a></li></ul><hr style="margin-bottom: 0" /><div><div class="entry"><span id="entry__hara_group__defgroup"></span><div class="entry-description"><h4><b>defgroup&nbsp<a data-scroll="" href="#entry__hara_group__">^</a></b></h4><p><i>creates a group of items</i></p></div><div class="entry-option"><h6><a href="https://github.com/zcaudate/hara/blob/master/src/hara/group.clj#L112-L126" target="_blank">v&nbsp;2.2</a></h6><div><input class="source-toggle" id="entry__pre_hara_group__defgroup" type="checkbox" /><label class="source-toggle" for="entry__pre_hara_group__defgroup"></label><pre class="source"><code class="clojure">(defmacro defgroup
+          <div><span id="introduction"></span><h2><b>1 &nbsp;&nbsp; Introduction</b></h2></div><div><p><a href='https://github.com/zcaudate/hara/blob/master/src/hara/function.clj'>hara.group</a> allow definition of collections of the same type of items. </p></div><div><span id="installation"></span><h3>1.1 &nbsp;&nbsp; Installation</h3></div><div><p>Add to <code>project.clj</code> dependencies:</p><pre><code>&#91;im.chit/hara.group &quot;2.4.7&quot;&#93;</code></pre><p>All functionality is in the <code>hara.group</code> namespace:</p></div><div class="code"><pre><code class="clojure">(use 'hara.group)</code></pre></div><div><span id="definitions"></span><h2><b>2 &nbsp;&nbsp; Definitions</b></h2></div><div><p>Groups and items are defined as follows:</p></div><div class="api"><span id="entry__hara_group__"></span><hr /><div><ul><li><a data-scroll="" href="#entry__hara_group__defgroup">defgroup</a></li><li><a data-scroll="" href="#entry__hara_group__defitem">defitem</a></li></ul><hr style="margin-bottom: 0" /><div><div class="entry"><span id="entry__hara_group__defgroup"></span><div class="entry-description"><h4><b>defgroup&nbsp<a data-scroll="" href="#entry__hara_group__">^</a></b></h4><p><i>creates a group of items</i></p></div><div class="entry-option"><h6><a href="https://github.com/zcaudate/hara/blob/master/src/hara/group.clj#L112-L126" target="_blank">v&nbsp;2.2</a></h6><div><input class="source-toggle" id="entry__pre_hara_group__defgroup" type="checkbox" /><label class="source-toggle" for="entry__pre_hara_group__defgroup"></label><pre class="source"><code class="clojure">(defmacro defgroup
   ([name] `(defgroup ~name {}))
   ([name m]
    `(def ~name (-> ~m

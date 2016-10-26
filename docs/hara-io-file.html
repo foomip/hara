@@ -61,9 +61,9 @@
           <div class="heading">
             <div>
               <h5>Author: Chris Zheng&nbsp;&nbsp;<a href="mailto:z@caudate.me">(z@caudate.me)</a></h5>
-              <h5>Date: 20 October 2016</h5>
+              <h5>Date: 26 October 2016</h5>
               <h5>Repository: <a href="https://github.com/zcaudate/hara">https://github.com/zcaudate/hara</a></h5>
-              <h5>Version: 2.4.6</h5></div></div>
+              <h5>Version: 2.4.7</h5></div></div>
           <hr/>
           <div class="outline">
             <div class="toc">
@@ -83,7 +83,7 @@
                 </ul>
               </nav>
           </div>
-          <div><span id="introduction"></span><h2><b>1 &nbsp;&nbsp; Introduction</b></h2></div><div><p><a href='https://github.com/zcaudate/hara/blob/master/src/hara/io/file.clj'>hara.io.file</a> contain functions and utilities for file system manipulation using the <code>java.nio.file</code> package. Efforts have been made to allow filesystem operations to be as easy and straightforward to use as possible.</p></div><div><span id="installation"></span><h3>1.1 &nbsp;&nbsp; Installation</h3></div><div><p>Add to <code>project.clj</code> dependencies:</p><pre><code>&#91;im.chit/hara.io.file &quot;2.4.6&quot;&#93;</code></pre></div><div><span id="motivation"></span><h3>1.2 &nbsp;&nbsp; Motivation</h3></div><div><p>There are a couple of other filesystem libraries for clojure:</p><ul><li><a href='https://github.com/raynes/fs'>fs</a> - based on <code>java.io</code> and <code>clojure.java.io</code>.</li><li><a href='https://github.com/pjstadig/nio'>nio</a> - extends <code>clojure.java.io</code> functions to java.nio classes</li><li><a href='https://github.com/ToBeReplaced/nio.file'>nio.file</a> - an early wrapper for <code>java.nio.file</code>.</li></ul><p><a href='https://github.com/zcaudate/hara/blob/master/src/hara/io/file.clj'>hara.io.file</a> aims to provide consistency of reporting for file operations. Operations are designed using the <a href='https://docs.oracle.com/javase/7/docs/api/java/nio/file/FileVisitor.html'>FileVisitor</a> pattern. Therefore file and directory manipulation are considered as bulk operations by default.</p></div><div><span id="index"></span><h2><b>2 &nbsp;&nbsp; Index</b></h2></div><div class="api"><span id="entry__hara_io_file__"></span><hr /><div><ul><li><a data-scroll="" href="#entry__hara_io_file__attributes">attributes</a></li><li><a data-scroll="" href="#entry__hara_io_file__code">code</a></li><li><a data-scroll="" href="#entry__hara_io_file__copy">copy</a></li><li><a data-scroll="" href="#entry__hara_io_file__copy_single">copy-single</a></li><li><a data-scroll="" href="#entry__hara_io_file__create_directory">create-directory</a></li><li><a data-scroll="" href="#entry__hara_io_file__create_symlink">create-symlink</a></li><li><a data-scroll="" href="#entry__hara_io_file__create_tmpdir">create-tmpdir</a></li><li><a data-scroll="" href="#entry__hara_io_file__delete">delete</a></li><li><a data-scroll="" href="#entry__hara_io_file__directory_QMARK_">directory?</a></li><li><a data-scroll="" href="#entry__hara_io_file__executable_QMARK_">executable?</a></li><li><a data-scroll="" href="#entry__hara_io_file__exists_QMARK_">exists?</a></li><li><a data-scroll="" href="#entry__hara_io_file__file_QMARK_">file?</a></li><li><a data-scroll="" href="#entry__hara_io_file__hidden_QMARK_">hidden?</a></li><li><a data-scroll="" href="#entry__hara_io_file__link_QMARK_">link?</a></li><li><a data-scroll="" href="#entry__hara_io_file__list">list</a></li><li><a data-scroll="" href="#entry__hara_io_file__move">move</a></li><li><a data-scroll="" href="#entry__hara_io_file__option">option</a></li><li><a data-scroll="" href="#entry__hara_io_file__parent">parent</a></li><li><a data-scroll="" href="#entry__hara_io_file__path">path</a></li><li><a data-scroll="" href="#entry__hara_io_file__path_QMARK_">path?</a></li><li><a data-scroll="" href="#entry__hara_io_file__permissions">permissions</a></li><li><a data-scroll="" href="#entry__hara_io_file__readable_QMARK_">readable?</a></li><li><a data-scroll="" href="#entry__hara_io_file__reader">reader</a></li><li><a data-scroll="" href="#entry__hara_io_file__reader_types">reader-types</a></li><li><a data-scroll="" href="#entry__hara_io_file__relativize">relativize</a></li><li><a data-scroll="" href="#entry__hara_io_file__section">section</a></li><li><a data-scroll="" href="#entry__hara_io_file__select">select</a></li><li><a data-scroll="" href="#entry__hara_io_file__set_attributes">set-attributes</a></li><li><a data-scroll="" href="#entry__hara_io_file__shorthand">shorthand</a></li><li><a data-scroll="" href="#entry__hara_io_file__to_file">to-file</a></li><li><a data-scroll="" href="#entry__hara_io_file__writable_QMARK_">writable?</a></li><li><a data-scroll="" href="#entry__hara_io_file__write">write</a></li></ul></div></div><div><span id="api"></span><h2><b>3 &nbsp;&nbsp; API</b></h2></div><div><span id="path"></span><h3>3.1 &nbsp;&nbsp; Path</h3></div><div><p>Methods that construct and operate on the <code>java.nio.file.Path</code> object.</p></div><div class="api"><span id="entry__hara_io_file__"></span><hr /><div><ul><li><a data-scroll="" href="#entry__hara_io_file__path">path</a></li><li><a data-scroll="" href="#entry__hara_io_file__path_QMARK_">path?</a></li><li><a data-scroll="" href="#entry__hara_io_file__section">section</a></li><li><a data-scroll="" href="#entry__hara_io_file__parent">parent</a></li><li><a data-scroll="" href="#entry__hara_io_file__relativize">relativize</a></li><li><a data-scroll="" href="#entry__hara_io_file__to_file">to-file</a></li></ul><hr style="margin-bottom: 0" /><div><div class="entry"><span id="entry__hara_io_file__path"></span><div class="entry-description"><h4><b>path&nbsp<a data-scroll="" href="#entry__hara_io_file__">^</a></b></h4><p><i>creates a `java.nio.file.Path object</i></p></div><div class="entry-option"><h6><a href="https://github.com/zcaudate/hara/blob/master/src/hara/io/file/path.clj#L36-L71" target="_blank">v&nbsp;2.4</a></h6><div><input class="source-toggle" id="entry__pre_hara_io_file__path" type="checkbox" /><label class="source-toggle" for="entry__pre_hara_io_file__path"></label><pre class="source"><code class="clojure">(defn path
+          <div><span id="introduction"></span><h2><b>1 &nbsp;&nbsp; Introduction</b></h2></div><div><p><a href='https://github.com/zcaudate/hara/blob/master/src/hara/io/file.clj'>hara.io.file</a> contain functions and utilities for file system manipulation using the <code>java.nio.file</code> package. Efforts have been made to allow filesystem operations to be as easy and straightforward to use as possible.</p></div><div><span id="installation"></span><h3>1.1 &nbsp;&nbsp; Installation</h3></div><div><p>Add to <code>project.clj</code> dependencies:</p><pre><code>&#91;im.chit/hara.io.file &quot;2.4.7&quot;&#93;</code></pre></div><div><span id="motivation"></span><h3>1.2 &nbsp;&nbsp; Motivation</h3></div><div><p>There are a couple of other filesystem libraries for clojure:</p><ul><li><a href='https://github.com/raynes/fs'>fs</a> - based on <code>java.io</code> and <code>clojure.java.io</code>.</li><li><a href='https://github.com/pjstadig/nio'>nio</a> - extends <code>clojure.java.io</code> functions to java.nio classes</li><li><a href='https://github.com/ToBeReplaced/nio.file'>nio.file</a> - an early wrapper for <code>java.nio.file</code>.</li></ul><p><a href='https://github.com/zcaudate/hara/blob/master/src/hara/io/file.clj'>hara.io.file</a> aims to provide consistency of reporting for file operations. Operations are designed using the <a href='https://docs.oracle.com/javase/7/docs/api/java/nio/file/FileVisitor.html'>FileVisitor</a> pattern. Therefore file and directory manipulation are considered as bulk operations by default.</p></div><div><span id="index"></span><h2><b>2 &nbsp;&nbsp; Index</b></h2></div><div class="api"><span id="entry__hara_io_file__"></span><hr /><div><ul><li><a data-scroll="" href="#entry__hara_io_file__attributes">attributes</a></li><li><a data-scroll="" href="#entry__hara_io_file__code">code</a></li><li><a data-scroll="" href="#entry__hara_io_file__copy">copy</a></li><li><a data-scroll="" href="#entry__hara_io_file__copy_single">copy-single</a></li><li><a data-scroll="" href="#entry__hara_io_file__create_directory">create-directory</a></li><li><a data-scroll="" href="#entry__hara_io_file__create_symlink">create-symlink</a></li><li><a data-scroll="" href="#entry__hara_io_file__create_tmpdir">create-tmpdir</a></li><li><a data-scroll="" href="#entry__hara_io_file__delete">delete</a></li><li><a data-scroll="" href="#entry__hara_io_file__directory_QMARK_">directory?</a></li><li><a data-scroll="" href="#entry__hara_io_file__executable_QMARK_">executable?</a></li><li><a data-scroll="" href="#entry__hara_io_file__exists_QMARK_">exists?</a></li><li><a data-scroll="" href="#entry__hara_io_file__file_QMARK_">file?</a></li><li><a data-scroll="" href="#entry__hara_io_file__hidden_QMARK_">hidden?</a></li><li><a data-scroll="" href="#entry__hara_io_file__link_QMARK_">link?</a></li><li><a data-scroll="" href="#entry__hara_io_file__list">list</a></li><li><a data-scroll="" href="#entry__hara_io_file__move">move</a></li><li><a data-scroll="" href="#entry__hara_io_file__option">option</a></li><li><a data-scroll="" href="#entry__hara_io_file__parent">parent</a></li><li><a data-scroll="" href="#entry__hara_io_file__path">path</a></li><li><a data-scroll="" href="#entry__hara_io_file__path_QMARK_">path?</a></li><li><a data-scroll="" href="#entry__hara_io_file__permissions">permissions</a></li><li><a data-scroll="" href="#entry__hara_io_file__readable_QMARK_">readable?</a></li><li><a data-scroll="" href="#entry__hara_io_file__reader">reader</a></li><li><a data-scroll="" href="#entry__hara_io_file__reader_types">reader-types</a></li><li><a data-scroll="" href="#entry__hara_io_file__relativize">relativize</a></li><li><a data-scroll="" href="#entry__hara_io_file__section">section</a></li><li><a data-scroll="" href="#entry__hara_io_file__select">select</a></li><li><a data-scroll="" href="#entry__hara_io_file__set_attributes">set-attributes</a></li><li><a data-scroll="" href="#entry__hara_io_file__shorthand">shorthand</a></li><li><a data-scroll="" href="#entry__hara_io_file__to_file">to-file</a></li><li><a data-scroll="" href="#entry__hara_io_file__writable_QMARK_">writable?</a></li><li><a data-scroll="" href="#entry__hara_io_file__write">write</a></li></ul></div></div><div><span id="api"></span><h2><b>3 &nbsp;&nbsp; API</b></h2></div><div><span id="path"></span><h3>3.1 &nbsp;&nbsp; Path</h3></div><div><p>Methods that construct and operate on the <code>java.nio.file.Path</code> object.</p></div><div class="api"><span id="entry__hara_io_file__"></span><hr /><div><ul><li><a data-scroll="" href="#entry__hara_io_file__path">path</a></li><li><a data-scroll="" href="#entry__hara_io_file__path_QMARK_">path?</a></li><li><a data-scroll="" href="#entry__hara_io_file__section">section</a></li><li><a data-scroll="" href="#entry__hara_io_file__parent">parent</a></li><li><a data-scroll="" href="#entry__hara_io_file__relativize">relativize</a></li><li><a data-scroll="" href="#entry__hara_io_file__to_file">to-file</a></li></ul><hr style="margin-bottom: 0" /><div><div class="entry"><span id="entry__hara_io_file__path"></span><div class="entry-description"><h4><b>path&nbsp<a data-scroll="" href="#entry__hara_io_file__">^</a></b></h4><p><i>creates a `java.nio.file.Path object</i></p></div><div class="entry-option"><h6><a href="https://github.com/zcaudate/hara/blob/master/src/hara/io/file/path.clj#L36-L71" target="_blank">v&nbsp;2.4</a></h6><div><input class="source-toggle" id="entry__pre_hara_io_file__path" type="checkbox" /><label class="source-toggle" for="entry__pre_hara_io_file__path"></label><pre class="source"><code class="clojure">(defn path
   ([x]
    (cond (instance? Path x)
          x
@@ -135,10 +135,10 @@
 (str (section "src" "hara/time.clj"))
 => "src/hara/time.clj"</code></pre></div><div class="entry"><span id="entry__hara_io_file__parent"></span><div class="entry-description"><h4><b>parent&nbsp<a data-scroll="" href="#entry__hara_io_file__">^</a></b></h4><p><i>returns the parent of the path</i></p></div><div class="entry-option"><h6><a href="https://github.com/zcaudate/hara/blob/master/src/hara/io/file.clj#L261-L268" target="_blank">v&nbsp;2.4</a></h6><div><input class="source-toggle" id="entry__pre_hara_io_file__parent" type="checkbox" /><label class="source-toggle" for="entry__pre_hara_io_file__parent"></label><pre class="source"><code class="clojure">(defn parent
   [path]
-  (.getParent (path/path path)))</code></pre></div></div><pre><h6><i><a href="https://github.com/zcaudate/hara/blob/master/test/hara/io/file_test.clj#L203-L206" target="_blank">link</a></i></h6><code class="clojure">(str (parent "/hello/world.html"))
+  (.getParent (path/path path)))</code></pre></div></div><pre><h6><i><a href="https://github.com/zcaudate/hara/blob/master/test/hara/io/file_test.clj#L204-L207" target="_blank">link</a></i></h6><code class="clojure">(str (parent "/hello/world.html"))
 => "/hello"</code></pre></div><div class="entry"><span id="entry__hara_io_file__relativize"></span><div class="entry-description"><h4><b>relativize&nbsp<a data-scroll="" href="#entry__hara_io_file__">^</a></b></h4><p><i>returns the relationship between two paths</i></p></div><div class="entry-option"><h6><a href="https://github.com/zcaudate/hara/blob/master/src/hara/io/file.clj#L270-L278" target="_blank">v&nbsp;2.4</a></h6><div><input class="source-toggle" id="entry__pre_hara_io_file__relativize" type="checkbox" /><label class="source-toggle" for="entry__pre_hara_io_file__relativize"></label><pre class="source"><code class="clojure">(defn relativize
   [path1 path2]
-  (.relativize (path/path path1) (path/path path2)))</code></pre></div></div><pre><h6><i><a href="https://github.com/zcaudate/hara/blob/master/test/hara/io/file_test.clj#L209-L213" target="_blank">link</a></i></h6><code class="clojure">(str (relativize "hello"
+  (.relativize (path/path path1) (path/path path2)))</code></pre></div></div><pre><h6><i><a href="https://github.com/zcaudate/hara/blob/master/test/hara/io/file_test.clj#L210-L214" target="_blank">link</a></i></h6><code class="clojure">(str (relativize "hello"
                  "hello/world.html"))
 => "world.html"</code></pre></div><div class="entry"><span id="entry__hara_io_file__to_file"></span><div class="entry-description"><h4><b>to-file&nbsp<a data-scroll="" href="#entry__hara_io_file__">^</a></b></h4><p><i>creates a java.io.File object</i></p></div><div class="entry-option"><h6><a href="https://github.com/zcaudate/hara/blob/master/src/hara/io/file/path.clj#L99-L106" target="_blank">v&nbsp;2.4</a></h6><div><input class="source-toggle" id="entry__pre_hara_io_file__to_file" type="checkbox" /><label class="source-toggle" for="entry__pre_hara_io_file__to_file"></label><pre class="source"><code class="clojure">(defn to-file
   [^Path path]
@@ -183,7 +183,7 @@
   (let [path (path/path path)]
     (->> common/*no-follow*
          (Files/getPosixFilePermissions path)
-         (PosixFilePermissions/toString))))</code></pre></div></div><pre><h6><i><a href="https://github.com/zcaudate/hara/blob/master/test/hara/io/file_test.clj#L30-L33" target="_blank">link</a></i></h6><code class="clojure">(permissions "src")
+         (PosixFilePermissions/toString))))</code></pre></div></div><pre><h6><i><a href="https://github.com/zcaudate/hara/blob/master/test/hara/io/file_test.clj#L31-L34" target="_blank">link</a></i></h6><code class="clojure">(permissions "src")
 => "rwxr-xr-x"</code></pre></div><div class="entry"><span id="entry__hara_io_file__shorthand"></span><div class="entry-description"><h4><b>shorthand&nbsp<a data-scroll="" href="#entry__hara_io_file__">^</a></b></h4><p><i>returns the shorthand string for a given entry</i></p></div><div class="entry-option"><h6><a href="https://github.com/zcaudate/hara/blob/master/src/hara/io/file.clj#L67-L84" target="_blank">v&nbsp;2.4</a></h6><div><input class="source-toggle" id="entry__pre_hara_io_file__shorthand" type="checkbox" /><label class="source-toggle" for="entry__pre_hara_io_file__shorthand"></label><pre class="source"><code class="clojure">(defn shorthand
   [path]
   (let [path (path/path path)]
@@ -193,43 +193,43 @@
           (Files/isSymbolicLink path)
           "l"
           
-          :else "-")))</code></pre></div></div><pre><h6><i><a href="https://github.com/zcaudate/hara/blob/master/test/hara/io/file_test.clj#L36-L42" target="_blank">link</a></i></h6><code class="clojure">(shorthand "src")
+          :else "-")))</code></pre></div></div><pre><h6><i><a href="https://github.com/zcaudate/hara/blob/master/test/hara/io/file_test.clj#L37-L43" target="_blank">link</a></i></h6><code class="clojure">(shorthand "src")
 => "d"
 
 (shorthand "project.clj")
 => "-"</code></pre></div><div class="entry"><span id="entry__hara_io_file__directory_QMARK_"></span><div class="entry-description"><h4><b>directory?&nbsp<a data-scroll="" href="#entry__hara_io_file__">^</a></b></h4><p><i>checks whether a file is a directory</i></p></div><div class="entry-option"><h6><a href="https://github.com/zcaudate/hara/blob/master/src/hara/io/file.clj#L280-L290" target="_blank">v&nbsp;2.4</a></h6><div><input class="source-toggle" id="entry__pre_hara_io_file__directory_QMARK_" type="checkbox" /><label class="source-toggle" for="entry__pre_hara_io_file__directory_QMARK_"></label><pre class="source"><code class="clojure">(defn directory?
   [path]
-  (Files/isDirectory (path/path path) common/*no-follow*))</code></pre></div></div><pre><h6><i><a href="https://github.com/zcaudate/hara/blob/master/test/hara/io/file_test.clj#L45-L51" target="_blank">link</a></i></h6><code class="clojure">(directory? "src")
+  (Files/isDirectory (path/path path) common/*no-follow*))</code></pre></div></div><pre><h6><i><a href="https://github.com/zcaudate/hara/blob/master/test/hara/io/file_test.clj#L46-L52" target="_blank">link</a></i></h6><code class="clojure">(directory? "src")
 => true
 
 (directory? "project.clj")
 => false</code></pre></div><div class="entry"><span id="entry__hara_io_file__executable_QMARK_"></span><div class="entry-description"><h4><b>executable?&nbsp<a data-scroll="" href="#entry__hara_io_file__">^</a></b></h4><p><i>checks whether a file is executable</i></p></div><div class="entry-option"><h6><a href="https://github.com/zcaudate/hara/blob/master/src/hara/io/file.clj#L292-L302" target="_blank">v&nbsp;2.4</a></h6><div><input class="source-toggle" id="entry__pre_hara_io_file__executable_QMARK_" type="checkbox" /><label class="source-toggle" for="entry__pre_hara_io_file__executable_QMARK_"></label><pre class="source"><code class="clojure">(defn executable?
   [path]
-  (Files/isExecutable (path/path path)))</code></pre></div></div><pre><h6><i><a href="https://github.com/zcaudate/hara/blob/master/test/hara/io/file_test.clj#L54-L60" target="_blank">link</a></i></h6><code class="clojure">(executable? "project.clj")
+  (Files/isExecutable (path/path path)))</code></pre></div></div><pre><h6><i><a href="https://github.com/zcaudate/hara/blob/master/test/hara/io/file_test.clj#L55-L61" target="_blank">link</a></i></h6><code class="clojure">(executable? "project.clj")
 => false
 
 (executable? "/usr/bin/whoami")
 => true</code></pre></div><div class="entry"><span id="entry__hara_io_file__exists_QMARK_"></span><div class="entry-description"><h4><b>exists?&nbsp<a data-scroll="" href="#entry__hara_io_file__">^</a></b></h4><p><i>checks whether a file exists</i></p></div><div class="entry-option"><h6><a href="https://github.com/zcaudate/hara/blob/master/src/hara/io/file.clj#L304-L314" target="_blank">v&nbsp;2.4</a></h6><div><input class="source-toggle" id="entry__pre_hara_io_file__exists_QMARK_" type="checkbox" /><label class="source-toggle" for="entry__pre_hara_io_file__exists_QMARK_"></label><pre class="source"><code class="clojure">(defn exists?
   [path]
-  (Files/exists (path/path path) common/*no-follow*))</code></pre></div></div><pre><h6><i><a href="https://github.com/zcaudate/hara/blob/master/test/hara/io/file_test.clj#L63-L69" target="_blank">link</a></i></h6><code class="clojure">(exists? "project.clj")
+  (Files/exists (path/path path) common/*no-follow*))</code></pre></div></div><pre><h6><i><a href="https://github.com/zcaudate/hara/blob/master/test/hara/io/file_test.clj#L64-L70" target="_blank">link</a></i></h6><code class="clojure">(exists? "project.clj")
 => true
 
 (exists? "NON.EXISTENT")
 => false</code></pre></div><div class="entry"><span id="entry__hara_io_file__file_QMARK_"></span><div class="entry-description"><h4><b>file?&nbsp<a data-scroll="" href="#entry__hara_io_file__">^</a></b></h4><p><i>checks whether a file is not a link or directory</i></p></div><div class="entry-option"><h6><a href="https://github.com/zcaudate/hara/blob/master/src/hara/io/file.clj#L328-L338" target="_blank">v&nbsp;2.4</a></h6><div><input class="source-toggle" id="entry__pre_hara_io_file__file_QMARK_" type="checkbox" /><label class="source-toggle" for="entry__pre_hara_io_file__file_QMARK_"></label><pre class="source"><code class="clojure">(defn file?
   [path]
-  (Files/isRegularFile (path/path path) common/*no-follow*))</code></pre></div></div><pre><h6><i><a href="https://github.com/zcaudate/hara/blob/master/test/hara/io/file_test.clj#L81-L87" target="_blank">link</a></i></h6><code class="clojure">(file? "project.clj")
+  (Files/isRegularFile (path/path path) common/*no-follow*))</code></pre></div></div><pre><h6><i><a href="https://github.com/zcaudate/hara/blob/master/test/hara/io/file_test.clj#L82-L88" target="_blank">link</a></i></h6><code class="clojure">(file? "project.clj")
 => true
 
 (file? "src")
 => false</code></pre></div><div class="entry"><span id="entry__hara_io_file__hidden_QMARK_"></span><div class="entry-description"><h4><b>hidden?&nbsp<a data-scroll="" href="#entry__hara_io_file__">^</a></b></h4><p><i>checks whether a file is hidden</i></p></div><div class="entry-option"><h6><a href="https://github.com/zcaudate/hara/blob/master/src/hara/io/file.clj#L316-L326" target="_blank">v&nbsp;2.4</a></h6><div><input class="source-toggle" id="entry__pre_hara_io_file__hidden_QMARK_" type="checkbox" /><label class="source-toggle" for="entry__pre_hara_io_file__hidden_QMARK_"></label><pre class="source"><code class="clojure">(defn hidden?
   [path]
-  (Files/isHidden (path/path path)))</code></pre></div></div><pre><h6><i><a href="https://github.com/zcaudate/hara/blob/master/test/hara/io/file_test.clj#L72-L78" target="_blank">link</a></i></h6><code class="clojure">(hidden? ".gitignore")
+  (Files/isHidden (path/path path)))</code></pre></div></div><pre><h6><i><a href="https://github.com/zcaudate/hara/blob/master/test/hara/io/file_test.clj#L73-L79" target="_blank">link</a></i></h6><code class="clojure">(hidden? ".gitignore")
 => true
 
 (hidden? "project.clj")
 => false</code></pre></div><div class="entry"><span id="entry__hara_io_file__link_QMARK_"></span><div class="entry-description"><h4><b>link?&nbsp<a data-scroll="" href="#entry__hara_io_file__">^</a></b></h4><p><i>checks whether a file is a link</i></p></div><div class="entry-option"><h6><a href="https://github.com/zcaudate/hara/blob/master/src/hara/io/file.clj#L340-L352" target="_blank">v&nbsp;2.4</a></h6><div><input class="source-toggle" id="entry__pre_hara_io_file__link_QMARK_" type="checkbox" /><label class="source-toggle" for="entry__pre_hara_io_file__link_QMARK_"></label><pre class="source"><code class="clojure">(defn link?
   [path]
-  (Files/isSymbolicLink (path/path path)))</code></pre></div></div><pre><h6><i><a href="https://github.com/zcaudate/hara/blob/master/test/hara/io/file_test.clj#L90-L98" target="_blank">link</a></i></h6><code class="clojure">(link? "project.clj")
+  (Files/isSymbolicLink (path/path path)))</code></pre></div></div><pre><h6><i><a href="https://github.com/zcaudate/hara/blob/master/test/hara/io/file_test.clj#L91-L99" target="_blank">link</a></i></h6><code class="clojure">(link? "project.clj")
 => false
 
 (delete "project.bak.clj")
@@ -237,16 +237,16 @@
                        "project.clj"))
 => true</code></pre></div><div class="entry"><span id="entry__hara_io_file__readable_QMARK_"></span><div class="entry-description"><h4><b>readable?&nbsp<a data-scroll="" href="#entry__hara_io_file__">^</a></b></h4><p><i>checks whether a file is readable</i></p></div><div class="entry-option"><h6><a href="https://github.com/zcaudate/hara/blob/master/src/hara/io/file.clj#L354-L361" target="_blank">v&nbsp;2.4</a></h6><div><input class="source-toggle" id="entry__pre_hara_io_file__readable_QMARK_" type="checkbox" /><label class="source-toggle" for="entry__pre_hara_io_file__readable_QMARK_"></label><pre class="source"><code class="clojure">(defn readable?
   [path]
-  (Files/isReadable (path/path path)))</code></pre></div></div><pre><h6><i><a href="https://github.com/zcaudate/hara/blob/master/test/hara/io/file_test.clj#L101-L104" target="_blank">link</a></i></h6><code class="clojure">(readable? "project.clj")
+  (Files/isReadable (path/path path)))</code></pre></div></div><pre><h6><i><a href="https://github.com/zcaudate/hara/blob/master/test/hara/io/file_test.clj#L102-L105" target="_blank">link</a></i></h6><code class="clojure">(readable? "project.clj")
 => true</code></pre></div><div class="entry"><span id="entry__hara_io_file__writable_QMARK_"></span><div class="entry-description"><h4><b>writable?&nbsp<a data-scroll="" href="#entry__hara_io_file__">^</a></b></h4><p><i>checks whether a file is writable</i></p></div><div class="entry-option"><h6><a href="https://github.com/zcaudate/hara/blob/master/src/hara/io/file.clj#L363-L370" target="_blank">v&nbsp;2.4</a></h6><div><input class="source-toggle" id="entry__pre_hara_io_file__writable_QMARK_" type="checkbox" /><label class="source-toggle" for="entry__pre_hara_io_file__writable_QMARK_"></label><pre class="source"><code class="clojure">(defn writable?
   [path]
-  (Files/isWritable (path/path path)))</code></pre></div></div><pre><h6><i><a href="https://github.com/zcaudate/hara/blob/master/test/hara/io/file_test.clj#L107-L110" target="_blank">link</a></i></h6><code class="clojure">(writable? "project.clj")
+  (Files/isWritable (path/path path)))</code></pre></div></div><pre><h6><i><a href="https://github.com/zcaudate/hara/blob/master/test/hara/io/file_test.clj#L108-L111" target="_blank">link</a></i></h6><code class="clojure">(writable? "project.clj")
 => true</code></pre></div></div></div></div><div><span id="io"></span><h3>3.3 &nbsp;&nbsp; IO</h3></div><div class="api"><span id="entry__hara_io_file__"></span><hr /><div><ul><li><a data-scroll="" href="#entry__hara_io_file__code">code</a></li><li><a data-scroll="" href="#entry__hara_io_file__reader">reader</a></li><li><a data-scroll="" href="#entry__hara_io_file__reader_types">reader-types</a></li><li><a data-scroll="" href="#entry__hara_io_file__write">write</a></li></ul><hr style="margin-bottom: 0" /><div><div class="entry"><span id="entry__hara_io_file__code"></span><div class="entry-description"><h4><b>code&nbsp<a data-scroll="" href="#entry__hara_io_file__">^</a></b></h4><p><i>takes a file and returns a lazy seq of top-level forms</i></p></div><div class="entry-option"><h6><a href="https://github.com/zcaudate/hara/blob/master/src/hara/io/file.clj#L372-L384" target="_blank">v&nbsp;2.4</a></h6><div><input class="source-toggle" id="entry__pre_hara_io_file__code" type="checkbox" /><label class="source-toggle" for="entry__pre_hara_io_file__code"></label><pre class="source"><code class="clojure">(defn code
   [path]
   (let [reader (reader :pushback path)]
     (take-while identity
                 (repeatedly #(try (read reader)
-                                  (catch Throwable e))))))</code></pre></div></div><pre><h6><i><a href="https://github.com/zcaudate/hara/blob/master/test/hara/io/file_test.clj#L113-L118" target="_blank">link</a></i></h6><code class="clojure">(->> (code "../hara/src/hara/io/file.clj")
+                                  (catch Throwable e))))))</code></pre></div></div><pre><h6><i><a href="https://github.com/zcaudate/hara/blob/master/test/hara/io/file_test.clj#L114-L119" target="_blank">link</a></i></h6><code class="clojure">(->> (code "../hara/src/hara/io/file.clj")
      first
      (take 2))
 => '(ns hara.io.file)</code></pre></div><div class="entry"><span id="entry__hara_io_file__reader"></span><div class="entry-description"><h4><b>reader&nbsp<a data-scroll="" href="#entry__hara_io_file__">^</a></b></h4><p><i>creates a reader for a given input</i></p></div><div class="entry-option"><h6><a href="https://github.com/zcaudate/hara/blob/master/src/hara/io/file.clj#L20-L33" target="_blank">v&nbsp;2.4</a></h6><div><input class="source-toggle" id="entry__pre_hara_io_file__reader" type="checkbox" /><label class="source-toggle" for="entry__pre_hara_io_file__reader"></label><pre class="source"><code class="clojure">(defn reader
@@ -271,14 +271,14 @@
                ^Path (path/path path)
                (->> (:options opts)
                     (mapv option/option)
-                    (into-array CopyOption)))))</code></pre></div></div><pre><h6><i><a href="https://github.com/zcaudate/hara/blob/master/test/hara/io/file_test.clj#L216-L220" target="_blank">link</a></i></h6><code class="clojure">(-> (java.io.FileInputStream. "project.clj")
+                    (into-array CopyOption)))))</code></pre></div></div><pre><h6><i><a href="https://github.com/zcaudate/hara/blob/master/test/hara/io/file_test.clj#L217-L221" target="_blank">link</a></i></h6><code class="clojure">(-> (java.io.FileInputStream. "project.clj")
     (write "project.clj"
            {:options #{:replace-existing}}))</code></pre></div></div></div></div><div><span id="create"></span><h3>3.4 &nbsp;&nbsp; Create</h3></div><div class="api"><span id="entry__hara_io_file__"></span><hr /><div><ul><li><a data-scroll="" href="#entry__hara_io_file__create_directory">create-directory</a></li><li><a data-scroll="" href="#entry__hara_io_file__create_symlink">create-symlink</a></li><li><a data-scroll="" href="#entry__hara_io_file__create_tmpdir">create-tmpdir</a></li></ul><hr style="margin-bottom: 0" /><div><div class="entry"><span id="entry__hara_io_file__create_directory"></span><div class="entry-description"><h4><b>create-directory&nbsp<a data-scroll="" href="#entry__hara_io_file__">^</a></b></h4><p><i>creates a directory on the filesystem</i></p></div><div class="entry-option"><h6><a href="https://github.com/zcaudate/hara/blob/master/src/hara/io/file.clj#L218-L231" target="_blank">v&nbsp;2.4</a></h6><div><input class="source-toggle" id="entry__pre_hara_io_file__create_directory" type="checkbox" /><label class="source-toggle" for="entry__pre_hara_io_file__create_directory"></label><pre class="source"><code class="clojure">(defn create-directory
   ([path]
    (create-directory path {}))
   ([path attrs]
    (Files/createDirectories (path/path path)
-                            (attr/map->attr-array attrs))))</code></pre></div></div><pre><h6><i><a href="https://github.com/zcaudate/hara/blob/master/test/hara/io/file_test.clj#L177-L183" target="_blank">link</a></i></h6><code class="clojure">(do (create-directory ".hello/.world/.foo")
+                            (attr/map->attr-array attrs))))</code></pre></div></div><pre><h6><i><a href="https://github.com/zcaudate/hara/blob/master/test/hara/io/file_test.clj#L178-L184" target="_blank">link</a></i></h6><code class="clojure">(do (create-directory ".hello/.world/.foo")
     (directory? ".hello/.world/.foo"))
 => true
 
@@ -288,13 +288,13 @@
   ([path link-to attrs]
    (Files/createSymbolicLink (path/path path)
                              (path/path link-to)
-                             (attr/map->attr-array attrs))))</code></pre></div></div><pre><h6><i><a href="https://github.com/zcaudate/hara/blob/master/test/hara/io/file_test.clj#L186-L193" target="_blank">link</a></i></h6><code class="clojure">(do (create-symlink "project.lnk" "project.clj")
+                             (attr/map->attr-array attrs))))</code></pre></div></div><pre><h6><i><a href="https://github.com/zcaudate/hara/blob/master/test/hara/io/file_test.clj#L187-L194" target="_blank">link</a></i></h6><code class="clojure">(do (create-symlink "project.lnk" "project.clj")
     (link? "project.lnk"))
 => true</code></pre></div><div class="entry"><span id="entry__hara_io_file__create_tmpdir"></span><div class="entry-description"><h4><b>create-tmpdir&nbsp<a data-scroll="" href="#entry__hara_io_file__">^</a></b></h4><p><i>creates a temp directory on the filesystem</i></p></div><div class="entry-option"><h6><a href="https://github.com/zcaudate/hara/blob/master/src/hara/io/file.clj#L249-L259" target="_blank">v&nbsp;2.4</a></h6><div><input class="source-toggle" id="entry__pre_hara_io_file__create_tmpdir" type="checkbox" /><label class="source-toggle" for="entry__pre_hara_io_file__create_tmpdir"></label><pre class="source"><code class="clojure">(defn create-tmpdir
   ([]
    (create-tmpdir ""))
   ([prefix]
-   (Files/createTempDirectory prefix (make-array FileAttribute 0))))</code></pre></div></div><pre><h6><i><a href="https://github.com/zcaudate/hara/blob/master/test/hara/io/file_test.clj#L196-L200" target="_blank">link</a></i></h6><code class="clojure">(create-tmpdir)
+   (Files/createTempDirectory prefix (make-array FileAttribute 0))))</code></pre></div></div><pre><h6><i><a href="https://github.com/zcaudate/hara/blob/master/test/hara/io/file_test.clj#L197-L201" target="_blank">link</a></i></h6><code class="clojure">(create-tmpdir)
 ;;=> #path:"/var/folders/d6/yrjldmsd4jd1h0nm970wmzl40000gn/T/4870108199331749225"</code></pre></div></div></div></div><div><span id="operation"></span><h3>3.5 &nbsp;&nbsp; Operation</h3></div><div class="api"><span id="entry__hara_io_file__"></span><hr /><div><ul><li><a data-scroll="" href="#entry__hara_io_file__copy">copy</a></li><li><a data-scroll="" href="#entry__hara_io_file__copy_single">copy-single</a></li><li><a data-scroll="" href="#entry__hara_io_file__delete">delete</a></li><li><a data-scroll="" href="#entry__hara_io_file__list">list</a></li><li><a data-scroll="" href="#entry__hara_io_file__move">move</a></li><li><a data-scroll="" href="#entry__hara_io_file__option">option</a></li><li><a data-scroll="" href="#entry__hara_io_file__select">select</a></li></ul><hr style="margin-bottom: 0" /><div><div class="entry"><span id="entry__hara_io_file__copy"></span><div class="entry-description"><h4><b>copy&nbsp<a data-scroll="" href="#entry__hara_io_file__">^</a></b></h4><p><i>copies all specified files from one to another</i></p></div><div class="entry-option"><h6><a href="https://github.com/zcaudate/hara/blob/master/src/hara/io/file.clj#L119-L152" target="_blank">v&nbsp;2.4</a></h6><div><input class="source-toggle" id="entry__pre_hara_io_file__copy" type="checkbox" /><label class="source-toggle" for="entry__pre_hara_io_file__copy"></label><pre class="source"><code class="clojure">(defn copy
   ([source target]
    (copy source target {}))
@@ -320,7 +320,7 @@
                         :with #{:root}
                         :accumulator (atom {})
                         :accumulate #{}}
-                       opts)))))</code></pre></div></div><pre><h6><i><a href="https://github.com/zcaudate/hara/blob/master/test/hara/io/file_test.clj#L139-L144" target="_blank">link</a></i></h6><code class="clojure">(copy "src" ".src" {:include [".clj"]})  
+                       opts)))))</code></pre></div></div><pre><h6><i><a href="https://github.com/zcaudate/hara/blob/master/test/hara/io/file_test.clj#L140-L145" target="_blank">link</a></i></h6><code class="clojure">(copy "src" ".src" {:include [".clj"]})  
 => map?
 
 (delete ".src")</code></pre></div><div class="entry"><span id="entry__hara_io_file__copy_single"></span><div class="entry-description"><h4><b>copy-single&nbsp<a data-scroll="" href="#entry__hara_io_file__">^</a></b></h4><p><i>copies a single file to a destination</i></p></div><div class="entry-option"><h6><a href="https://github.com/zcaudate/hara/blob/master/src/hara/io/file.clj#L386-L402" target="_blank">v&nbsp;2.4</a></h6><div><input class="source-toggle" id="entry__pre_hara_io_file__copy_single" type="checkbox" /><label class="source-toggle" for="entry__pre_hara_io_file__copy_single"></label><pre class="source"><code class="clojure">(defn copy-single
@@ -331,7 +331,7 @@
                ^Path (path/path target)
                (->> (:options opts)
                     (mapv option/option)
-                    (into-array CopyOption)))))</code></pre></div></div><pre><h6><i><a href="https://github.com/zcaudate/hara/blob/master/test/hara/io/file_test.clj#L147-L154" target="_blank">link</a></i></h6><code class="clojure">(copy-single "project.clj"
+                    (into-array CopyOption)))))</code></pre></div></div><pre><h6><i><a href="https://github.com/zcaudate/hara/blob/master/test/hara/io/file_test.clj#L148-L155" target="_blank">link</a></i></h6><code class="clojure">(copy-single "project.clj"
              "project.clj.bak"
              {:options #{:replace-existing}})
 ;;=> #path:"/Users/chris/Development/chit/hara/project.clj.bak"
@@ -339,7 +339,7 @@
 (delete "project.clj.bak")</code></pre></div><div class="entry"><span id="entry__hara_io_file__delete"></span><div class="entry-description"><h4><b>delete&nbsp<a data-scroll="" href="#entry__hara_io_file__">^</a></b></h4><p><i>copies all specified files from one to another</i></p></div><div class="entry-option"><h6><a href="https://github.com/zcaudate/hara/blob/master/src/hara/io/file.clj#L154-L177" target="_blank">v&nbsp;2.4</a></h6><div><input class="source-toggle" id="entry__pre_hara_io_file__delete" type="checkbox" /><label class="source-toggle" for="entry__pre_hara_io_file__delete"></label><pre class="source"><code class="clojure">(defn delete
   ([root] (delete root {}))
   ([root opts]
-   (let [delete-fn (fn [{:keys [path attrs accumulator simulate]}]
+   (let [delete-fn (fn [{:keys [path attrs accumulator simulate]}]  
                      (try (if-not simulate
                             (Files/delete path))
                           (swap! accumulator conj (str path))
@@ -350,7 +350,7 @@
                         :with #{:root}
                         :accumulator (atom #{})
                         :accumulate #{}}
-                       opts)))))</code></pre></div></div><pre><h6><i><a href="https://github.com/zcaudate/hara/blob/master/test/hara/io/file_test.clj#L167-L174" target="_blank">link</a></i></h6><code class="clojure">(do (copy "src" ".src" {:include [".clj"]})
+                       opts)))))</code></pre></div></div><pre><h6><i><a href="https://github.com/zcaudate/hara/blob/master/test/hara/io/file_test.clj#L168-L175" target="_blank">link</a></i></h6><code class="clojure">(do (copy "src" ".src" {:include [".clj"]})
     (delete ".src" {:include ["test.clj"]}))
 => #{(str (path ".src/hara/test.clj"))}
   
@@ -370,7 +370,7 @@
                         :accumulator (atom {})
                         :accumulate #{}
                         :with #{}}
-                       opts)))))</code></pre></div></div><pre><h6><i><a href="https://github.com/zcaudate/hara/blob/master/test/hara/io/file_test.clj#L122-L136" target="_blank">link</a></i></h6><code class="clojure">(list "src")
+                       opts)))))</code></pre></div></div><pre><h6><i><a href="https://github.com/zcaudate/hara/blob/master/test/hara/io/file_test.clj#L123-L137" target="_blank">link</a></i></h6><code class="clojure">(list "src")
 => {"/Users/chris/Development/chit/hara/src" "rwxr-xr-x/d",
     "/Users/chris/Development/chit/hara/src/hara" "rwxr-xr-x/d"}
 
@@ -411,7 +411,7 @@
                                     :accumulate #{}}
                                    opts))]
      (delete source opts)
-     results)))</code></pre></div></div><pre><h6><i><a href="https://github.com/zcaudate/hara/blob/master/test/hara/io/file_test.clj#L158-L164" target="_blank">link</a></i></h6><code class="clojure">(do (move "shortlist" ".shortlist")
+     results)))</code></pre></div></div><pre><h6><i><a href="https://github.com/zcaudate/hara/blob/master/test/hara/io/file_test.clj#L159-L165" target="_blank">link</a></i></h6><code class="clojure">(do (move "shortlist" ".shortlist")
     (move ".shortlist" "shortlist"))
   
 (move ".non-existent" ".moved")
@@ -432,11 +432,12 @@
   ([root]
    (select root nil))
   ([root opts]
-   (walk/walk root opts)))</code></pre></div></div><pre><h6><i><a href="https://github.com/zcaudate/hara/blob/master/test/hara/io/file_test.clj#L15-L27" target="_blank">link</a></i></h6><code class="clojure">(->> (select "../hara/src/hara/io/file")
+   (walk/walk root opts)))</code></pre></div></div><pre><h6><i><a href="https://github.com/zcaudate/hara/blob/master/test/hara/io/file_test.clj#L15-L28" target="_blank">link</a></i></h6><code class="clojure">(->> (select "../hara/src/hara/io/file" )
      (map #(relativize "../hara/src/hara" %))
      (map str)
      (sort))
-=> ["io/file/attribute.clj"
+=> ["io/file"
+    "io/file/attribute.clj"
     "io/file/common.clj"
     "io/file/filter.clj"
     "io/file/option.clj"
@@ -545,6 +546,7 @@
                  :atomic-move]})</code></pre></div><div><p><code>:with</code> is either <code>#{:root}</code> to include the root path or <code>#{}</code> to not include the root path. It is set to <code>#{:root}</code> for <code>copy</code>, <code>move</code> and <code>delete</code>. It is set to <code>#{}</code> for <code>list</code> and <code>select</code>.</p></div><div><span id="accumulator"></span><h3>4.5 &nbsp;&nbsp; accumulator</h3></div><div><p><code>:accumulator</code> sets the atom that contains the accumulated values during the walk:</p></div><div class="code"><pre><code class="clojure">(let [acc (atom [])]
   
   (select &quot;src/hara/class&quot;  {:accumulator acc})
+  
   (select &quot;src/hara/common&quot; {:accumulator acc})
   
   (map #(str (relativize &quot;src/hara&quot; %))
@@ -562,7 +564,7 @@
     &quot;common/primitives.clj&quot;
     &quot;common/state.clj&quot;
     &quot;common/string.clj&quot;
-    &quot;common/watch.clj&quot;)</code></pre></div>
+    &quot;common/watch.clj&quot;)</code></pre></div><div><p>For more examples of how it is used, please see the source code for <code>copy</code>, <code>delete</code> <code>list</code> and <code>move</code>.</p></div>
         </div>
       </div>
     </div>

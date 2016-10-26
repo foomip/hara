@@ -61,16 +61,16 @@
           <div class="heading">
             <div>
               <h5>Author: Chris Zheng&nbsp;&nbsp;<a href="mailto:z@caudate.me">(z@caudate.me)</a></h5>
-              <h5>Date: 14 October 2016</h5>
+              <h5>Date: 26 October 2016</h5>
               <h5>Repository: <a href="https://github.com/zcaudate/hara">https://github.com/zcaudate/hara</a></h5>
-              <h5>Version: 2.4.6</h5></div></div>
+              <h5>Version: 2.4.7</h5></div></div>
           <hr/>
           <div class="outline">
             <div class="toc">
               <nav data-gumshoe-header>
                 <ul data-gumshoe>
                   <a data-scroll class="top" href="#page-top">TOP</a>
-                  <li><a class="chapter" data-scroll="" href="#introduction"><h4>1 &nbsp; Introduction</h4></a><a class="section" data-scroll="" href="#installation"><h5><i>1.1 &nbsp; Installation</i></h5></a></li><li><a class="chapter" data-scroll="" href="#api"><h4>2 &nbsp; API</h4></a><a class="section" data-scroll="" href="#entry__hara_object__from_data"><h5><i>from-data</i></h5></a><a class="section" data-scroll="" href="#entry__hara_object__map_like"><h5><i>map-like</i></h5></a><a class="section" data-scroll="" href="#entry__hara_object__meta_read"><h5><i>meta-read</i></h5></a><a class="section" data-scroll="" href="#entry__hara_object__meta_write"><h5><i>meta-write</i></h5></a><a class="section" data-scroll="" href="#entry__hara_object__read_all_getters"><h5><i>read-all-getters</i></h5></a><a class="section" data-scroll="" href="#entry__hara_object__read_getters"><h5><i>read-getters</i></h5></a><a class="section" data-scroll="" href="#entry__hara_object__read_reflect_fields"><h5><i>read-reflect-fields</i></h5></a><a class="section" data-scroll="" href="#entry__hara_object__string_like"><h5><i>string-like</i></h5></a><a class="section" data-scroll="" href="#entry__hara_object__to_data"><h5><i>to-data</i></h5></a><a class="section" data-scroll="" href="#entry__hara_object__vector_like"><h5><i>vector-like</i></h5></a><a class="section" data-scroll="" href="#entry__hara_object__write_all_setters"><h5><i>write-all-setters</i></h5></a><a class="section" data-scroll="" href="#entry__hara_object__write_reflect_fields"><h5><i>write-reflect-fields</i></h5></a><a class="section" data-scroll="" href="#entry__hara_object__write_setters"><h5><i>write-setters</i></h5></a></li><li><a class="chapter" data-scroll="" href="#philosophy"><h4>3 &nbsp; Philosophy</h4></a></li><li><a class="chapter" data-scroll="" href="#string-like"><h4>4 &nbsp; string-like</h4></a><a class="section" data-scroll="" href="#file"><h5><i>4.1 &nbsp; File</i></h5></a><a class="section" data-scroll="" href="#repository"><h5><i>4.2 &nbsp; Repository</i></h5></a><a class="section" data-scroll="" href="#enums"><h5><i>4.3 &nbsp; Enums</i></h5></a></li><li><a class="chapter" data-scroll="" href="#vector-like"><h4>5 &nbsp; vector-like</h4></a></li><li><a class="chapter" data-scroll="" href="#map-like"><h4>6 &nbsp; map-like</h4></a><a class="section" data-scroll="" href="#primitives"><h5><i>6.1 &nbsp; Primitives</i></h5></a><a class="section" data-scroll="" href="#map-like-0"><h5><i>6.2 &nbsp; map-like</i></h5></a><a class="section" data-scroll="" href="#extension"><h5><i>6.3 &nbsp; extension</i></h5></a></li>
+                  <li><a class="chapter" data-scroll="" href="#introduction"><h4>1 &nbsp; Introduction</h4></a><a class="section" data-scroll="" href="#installation"><h5><i>1.1 &nbsp; Installation</i></h5></a><a class="section" data-scroll="" href="#motivation"><h5><i>1.2 &nbsp; Motivation</i></h5></a></li><li><a class="chapter" data-scroll="" href="#index"><h4>2 &nbsp; Index</h4></a></li><li><a class="chapter" data-scroll="" href="#api"><h4>3 &nbsp; API</h4></a><a class="section" data-scroll="" href="#core"><h5><i>3.1 &nbsp; Core</i></h5></a><a class="section" data-scroll="" href="#fields"><h5><i>3.2 &nbsp; Fields</i></h5></a></li>
                 </ul>
               </nav>
             </div>
@@ -79,77 +79,76 @@
           <div class="toc">
               <nav>
                 <ul>
-                  <li><a class="chapter" data-scroll="" href="#introduction"><h4>1 &nbsp; Introduction</h4></a><a class="section" data-scroll="" href="#installation"><h5><i>1.1 &nbsp; Installation</i></h5></a></li><li><a class="chapter" data-scroll="" href="#api"><h4>2 &nbsp; API</h4></a><a class="section" data-scroll="" href="#entry__hara_object__from_data"><h5><i>from-data</i></h5></a><a class="section" data-scroll="" href="#entry__hara_object__map_like"><h5><i>map-like</i></h5></a><a class="section" data-scroll="" href="#entry__hara_object__meta_read"><h5><i>meta-read</i></h5></a><a class="section" data-scroll="" href="#entry__hara_object__meta_write"><h5><i>meta-write</i></h5></a><a class="section" data-scroll="" href="#entry__hara_object__read_all_getters"><h5><i>read-all-getters</i></h5></a><a class="section" data-scroll="" href="#entry__hara_object__read_getters"><h5><i>read-getters</i></h5></a><a class="section" data-scroll="" href="#entry__hara_object__read_reflect_fields"><h5><i>read-reflect-fields</i></h5></a><a class="section" data-scroll="" href="#entry__hara_object__string_like"><h5><i>string-like</i></h5></a><a class="section" data-scroll="" href="#entry__hara_object__to_data"><h5><i>to-data</i></h5></a><a class="section" data-scroll="" href="#entry__hara_object__vector_like"><h5><i>vector-like</i></h5></a><a class="section" data-scroll="" href="#entry__hara_object__write_all_setters"><h5><i>write-all-setters</i></h5></a><a class="section" data-scroll="" href="#entry__hara_object__write_reflect_fields"><h5><i>write-reflect-fields</i></h5></a><a class="section" data-scroll="" href="#entry__hara_object__write_setters"><h5><i>write-setters</i></h5></a></li><li><a class="chapter" data-scroll="" href="#philosophy"><h4>3 &nbsp; Philosophy</h4></a></li><li><a class="chapter" data-scroll="" href="#string-like"><h4>4 &nbsp; string-like</h4></a><a class="section" data-scroll="" href="#file"><h5><i>4.1 &nbsp; File</i></h5></a><a class="section" data-scroll="" href="#repository"><h5><i>4.2 &nbsp; Repository</i></h5></a><a class="section" data-scroll="" href="#enums"><h5><i>4.3 &nbsp; Enums</i></h5></a></li><li><a class="chapter" data-scroll="" href="#vector-like"><h4>5 &nbsp; vector-like</h4></a></li><li><a class="chapter" data-scroll="" href="#map-like"><h4>6 &nbsp; map-like</h4></a><a class="section" data-scroll="" href="#primitives"><h5><i>6.1 &nbsp; Primitives</i></h5></a><a class="section" data-scroll="" href="#map-like-0"><h5><i>6.2 &nbsp; map-like</i></h5></a><a class="section" data-scroll="" href="#extension"><h5><i>6.3 &nbsp; extension</i></h5></a></li>
+                  <li><a class="chapter" data-scroll="" href="#introduction"><h4>1 &nbsp; Introduction</h4></a><a class="section" data-scroll="" href="#installation"><h5><i>1.1 &nbsp; Installation</i></h5></a><a class="section" data-scroll="" href="#motivation"><h5><i>1.2 &nbsp; Motivation</i></h5></a></li><li><a class="chapter" data-scroll="" href="#index"><h4>2 &nbsp; Index</h4></a></li><li><a class="chapter" data-scroll="" href="#api"><h4>3 &nbsp; API</h4></a><a class="section" data-scroll="" href="#core"><h5><i>3.1 &nbsp; Core</i></h5></a><a class="section" data-scroll="" href="#fields"><h5><i>3.2 &nbsp; Fields</i></h5></a></li>
                 </ul>
               </nav>
           </div>
-          <div><span id="introduction"></span><h2><b>1 &nbsp;&nbsp; Introduction</b></h2></div><div><p><a href='https://github.com/zcaudate/hara/blob/master/src/hara/object.clj'>hara.object</a> is a library for converting java classes into clojure data types. It is somewhat like the <code>bean</code> command but enables more control and customisation of the output.</p></div><div><p>Libraries that rely on <code>hara.object</code> for exposing functionality:</p><ul><li><a href='https://github.com/zcaudate/gita'>gita</a></li><li><a href='https://github.com/helpshift/gulfstream'>gulfstream</a></li></ul></div><div><span id="installation"></span><h3>1.1 &nbsp;&nbsp; Installation</h3></div><div><p>Add to <code>project.clj</code> dependencies:</p><pre><code>&#91;im.chit/hara.object &quot;2.4.6&quot;&#93;</code></pre></div><div><p>All functionality is found contained in the <code>hara.object</code> namespace</p></div><div class="code"><pre><code class="clojure">(require '[hara.object :as object])</code></pre></div><div><span id="api"></span><h2><b>2 &nbsp;&nbsp; API</b></h2></div><div class="api"><span id="entry__hara_object__"></span><hr /><div><ul><li><a data-scroll="" href="#entry__hara_object__from_data">from-data</a></li><li><a data-scroll="" href="#entry__hara_object__map_like">map-like</a></li><li><a data-scroll="" href="#entry__hara_object__meta_read">meta-read</a></li><li><a data-scroll="" href="#entry__hara_object__meta_write">meta-write</a></li><li><a data-scroll="" href="#entry__hara_object__read_all_getters">read-all-getters</a></li><li><a data-scroll="" href="#entry__hara_object__read_getters">read-getters</a></li><li><a data-scroll="" href="#entry__hara_object__read_reflect_fields">read-reflect-fields</a></li><li><a data-scroll="" href="#entry__hara_object__string_like">string-like</a></li><li><a data-scroll="" href="#entry__hara_object__to_data">to-data</a></li><li><a data-scroll="" href="#entry__hara_object__vector_like">vector-like</a></li><li><a data-scroll="" href="#entry__hara_object__write_all_setters">write-all-setters</a></li><li><a data-scroll="" href="#entry__hara_object__write_reflect_fields">write-reflect-fields</a></li><li><a data-scroll="" href="#entry__hara_object__write_setters">write-setters</a></li></ul><hr style="margin-bottom: 0" /><div><div class="entry"><span id="entry__hara_object__from_data"></span><div class="entry-description"><h4><b>from-data&nbsp<a data-scroll="" href="#entry__hara_object__">^</a></b></h4><p><i></i></p></div><div class="entry-option"><h6><i class="error version">NONE</i></h6><div><input class="source-toggle" id="entry__pre_hara_object__from_data" type="checkbox" /><label class="source-toggle" for="entry__pre_hara_object__from_data"></label><pre class="source"><code class="clojure">(defn from-data
-  [arg ^Class cls]
-  (let [^Class targ (type arg)]
-    (cond
-      ;; If there is a direct match
-      (reflect-util/param-arg-match cls targ)
-      arg
-
-      ;; If there is a vector
-      (and (vector? arg)
-           (.isArray cls))
-      (let [cls (.getComponentType cls)]
-        (->> arg
-             (map #(from-data % cls))
-             (into-array cls)))
-
-      :else
-      (let [{:keys [from-clojure from-string from-vector] :as mobj} (meta-write cls)]
-        (cond
-
-          from-clojure (from-clojure arg)
-
-          ;; If input is a string and there is a from-string method
-          (and (string? arg) from-string)
-          (from-string arg)
-
-          ;; If input is a string and there is a from-string method
-          (and (vector? arg) from-vector)
-          (from-vector arg)
-
-          ;; If the input is a map
-          (map? arg)
-          (from-map arg cls)
-
-          :else
-          (throw (Exception. (format "Problem converting %s to %s" arg targ))))))))</code></pre></div></div><pre class="error"><h6>example not found</h6><code></code></pre></div><div class="entry"><span id="entry__hara_object__map_like"></span><div class="entry-description"><h4><b>map-like&nbsp<a data-scroll="" href="#entry__hara_object__">^</a></b></h4><p><i></i></p></div><div class="entry-option"><h6><i class="error version">NONE</i></h6><div><input class="source-toggle" id="entry__pre_hara_object__map_like" type="checkbox" /><label class="source-toggle" for="entry__pre_hara_object__map_like"></label><pre class="source"><code class="clojure">(defmacro map-like
+          <div><span id="introduction"></span><h2><b>1 &nbsp;&nbsp; Introduction</b></h2></div><div><p><a href='https://github.com/zcaudate/hara/blob/master/src/hara/object.clj'>hara.object</a> is a library for converting java classes into clojure data types. It is somewhat like the <code>bean</code> command but enables more control and customisation of the output.</p></div><div><span id="installation"></span><h3>1.1 &nbsp;&nbsp; Installation</h3></div><div><p>Add to <code>project.clj</code> dependencies:</p><pre><code>&#91;im.chit/hara.object &quot;2.4.7&quot;&#93;</code></pre></div><div><p>All functionality is found contained in the <code>hara.object</code> namespace</p></div><div class="code"><pre><code class="clojure">(require '[hara.object :as object])</code></pre></div><div><span id="motivation"></span><h3>1.2 &nbsp;&nbsp; Motivation</h3></div><div><p><code>hara.object</code> works at the level of meta-programming. Below shows a simple example of the concept of <code>Dog</code> as an <code>Object</code> and as data:</p></div><div class="figure"><a id="class-as-data"></a><h4><i>fig.1  &nbsp;-&nbsp; Class as Data</i></h4><div class="img"><img line="{:row 28, :col 1, :end-row 28, :end-col 80}" src="img/hara_object/dog.png" title="Class as Data" width="90%" /></div><p></p></div><div><p>There are advantages of using pure data for the representation of the <code>Dog</code> concept.</p><ul><li>generic methods con be used to manipulate the data</li><li>the entire structure is transparent is better for reasoning</li><li>simpler representation (though at the cost of Type Correctness)</li></ul><p>In this way, many objects can be turned into maps/data for consumption by clojure methods. This makes working with many big java libraries much easier before.</p></div><div><span id="index"></span><h2><b>2 &nbsp;&nbsp; Index</b></h2></div><div class="api"><span id="entry__hara_object__"></span><hr /><div><ul><li><a data-scroll="" href="#entry__hara_object__from_data">from-data</a></li><li><a data-scroll="" href="#entry__hara_object__map_like">map-like</a></li><li><a data-scroll="" href="#entry__hara_object__meta_read">meta-read</a></li><li><a data-scroll="" href="#entry__hara_object__meta_write">meta-write</a></li><li><a data-scroll="" href="#entry__hara_object__read_all_getters">read-all-getters</a></li><li><a data-scroll="" href="#entry__hara_object__read_getters">read-getters</a></li><li><a data-scroll="" href="#entry__hara_object__read_reflect_fields">read-reflect-fields</a></li><li><a data-scroll="" href="#entry__hara_object__string_like">string-like</a></li><li><a data-scroll="" href="#entry__hara_object__to_data">to-data</a></li><li><a data-scroll="" href="#entry__hara_object__vector_like">vector-like</a></li><li><a data-scroll="" href="#entry__hara_object__write_all_setters">write-all-setters</a></li><li><a data-scroll="" href="#entry__hara_object__write_reflect_fields">write-reflect-fields</a></li><li><a data-scroll="" href="#entry__hara_object__write_setters">write-setters</a></li></ul></div></div><div><span id="api"></span><h2><b>3 &nbsp;&nbsp; API</b></h2></div><div><span id="core"></span><h3>3.1 &nbsp;&nbsp; Core</h3></div><div class="api"><span id="entry__hara_object__"></span><hr /><div><ul><li><a data-scroll="" href="#entry__hara_object__map_like">map-like</a></li><li><a data-scroll="" href="#entry__hara_object__string_like">string-like</a></li><li><a data-scroll="" href="#entry__hara_object__vector_like">vector-like</a></li><li><a data-scroll="" href="#entry__hara_object__meta_read">meta-read</a></li><li><a data-scroll="" href="#entry__hara_object__meta_write">meta-write</a></li></ul><hr style="margin-bottom: 0" /><div><div class="entry"><span id="entry__hara_object__map_like"></span><div class="entry-description"><h4><b>map-like&nbsp<a data-scroll="" href="#entry__hara_object__">^</a></b></h4><p><i>creates an accessibility layer for map-like objects</i></p></div><div class="entry-option"><h6><a href="https://github.com/zcaudate/hara/blob/master/src/hara/object.clj#L23-L28" target="_blank">v&nbsp;2.3</a></h6><div><input class="source-toggle" id="entry__pre_hara_object__map_like" type="checkbox" /><label class="source-toggle" for="entry__pre_hara_object__map_like"></label><pre class="source"><code class="clojure">(defmacro map-like
   [& {:as classes}]
   `(vector ~@(map (fn [[cls opts]]
                     `(map-like/extend-map-like ~cls ~opts))
-                  classes)))</code></pre></div></div><pre class="error"><h6>example not found</h6><code></code></pre></div><div class="entry"><span id="entry__hara_object__meta_read"></span><div class="entry-description"><h4><b>meta-read&nbsp<a data-scroll="" href="#entry__hara_object__">^</a></b></h4><p><i></i></p></div><div class="entry-option"><h6><i class="error version">NONE</i></h6><div><input class="source-toggle" id="entry__pre_hara_object__meta_read" type="checkbox" /><label class="source-toggle" for="entry__pre_hara_object__meta_read"></label><pre class="source"><code class="clojure">(defn meta-read
-  [^Class cls]
-  (assoc (object/-meta-read cls) :class cls))</code></pre></div></div><pre class="error"><h6>example not found</h6><code></code></pre></div><div class="entry"><span id="entry__hara_object__meta_write"></span><div class="entry-description"><h4><b>meta-write&nbsp<a data-scroll="" href="#entry__hara_object__">^</a></b></h4><p><i></i></p></div><div class="entry-option"><h6><i class="error version">NONE</i></h6><div><input class="source-toggle" id="entry__pre_hara_object__meta_write" type="checkbox" /><label class="source-toggle" for="entry__pre_hara_object__meta_write"></label><pre class="source"><code class="clojure">(defn meta-write
-  [^Class cls]
-  (assoc (object/-meta-write cls) :class cls))</code></pre></div></div><pre class="error"><h6>example not found</h6><code></code></pre></div><div class="entry"><span id="entry__hara_object__read_all_getters"></span><div class="entry-description"><h4><b>read-all-getters&nbsp<a data-scroll="" href="#entry__hara_object__">^</a></b></h4><p><i></i></p></div><div class="entry-option"><h6><i class="error version">NONE</i></h6><div><input class="source-toggle" id="entry__pre_hara_object__read_all_getters" type="checkbox" /><label class="source-toggle" for="entry__pre_hara_object__read_all_getters"></label><pre class="source"><code class="clojure">(defn read-all-getters
-  ([cls] (read-all-getters cls +read-get-template+))
-  ([cls {:keys [prefix template extra]}]
-   (->> [:method :instance :public (re-pattern (str "^" prefix ".+")) 1]
-        (reflect/query-hierarchy cls)
-        (reduce (fn [out ele]
-                  (conj out (create-read-method ele prefix template extra)))
-                {}))))</code></pre></div></div><pre class="error"><h6>example not found</h6><code></code></pre></div><div class="entry"><span id="entry__hara_object__read_getters"></span><div class="entry-description"><h4><b>read-getters&nbsp<a data-scroll="" href="#entry__hara_object__">^</a></b></h4><p><i></i></p></div><div class="entry-option"><h6><i class="error version">NONE</i></h6><div><input class="source-toggle" id="entry__pre_hara_object__read_getters" type="checkbox" /><label class="source-toggle" for="entry__pre_hara_object__read_getters"></label><pre class="source"><code class="clojure">(defn read-getters
-  ([cls] (read-getters cls +read-get-template+))
-  ([cls {:keys [prefix template extra]}]
-   (->> [:method :instance :public (re-pattern (str "^" prefix ".+")) 1]
-        (reflect/query-class cls)
-        (reduce (fn [out ele]
-                  (conj out (create-read-method ele prefix template extra)))
-                {}))))</code></pre></div></div><pre class="error"><h6>example not found</h6><code></code></pre></div><div class="entry"><span id="entry__hara_object__read_reflect_fields"></span><div class="entry-description"><h4><b>read-reflect-fields&nbsp<a data-scroll="" href="#entry__hara_object__">^</a></b></h4><p><i></i></p></div><div class="entry-option"><h6><i class="error version">NONE</i></h6><div><input class="source-toggle" id="entry__pre_hara_object__read_reflect_fields" type="checkbox" /><label class="source-toggle" for="entry__pre_hara_object__read_reflect_fields"></label><pre class="source"><code class="clojure">(defn read-reflect-fields
-  [cls]
-  (->> (reflect/query-class cls [:field])
-       (map (juxt (comp keyword case/spear-case :name)
-                  identity))
-       (into {})))</code></pre></div></div><pre class="error"><h6>example not found</h6><code></code></pre></div><div class="entry"><span id="entry__hara_object__string_like"></span><div class="entry-description"><h4><b>string-like&nbsp<a data-scroll="" href="#entry__hara_object__">^</a></b></h4><p><i></i></p></div><div class="entry-option"><h6><i class="error version">NONE</i></h6><div><input class="source-toggle" id="entry__pre_hara_object__string_like" type="checkbox" /><label class="source-toggle" for="entry__pre_hara_object__string_like"></label><pre class="source"><code class="clojure">(defmacro string-like
+                  classes)))</code></pre></div></div><pre><h6><i><a href="https://github.com/zcaudate/hara/blob/master/test/hara/object_test.clj#L6-L30" target="_blank">link</a></i></h6><code class="clojure">(object/map-like
+ org.eclipse.jgit.revwalk.RevCommit
+ {:tag "commit"
+  :include [:commit-time :name :author-ident :full-message]})
+
+(object/map-like
+ org.eclipse.jgit.lib.PersonIdent
+ {:tag "person"
+  :exclude [:time-zone]})
+
+  
+(object/map-like
+ org.eclipse.jgit.api.Status
+ {:tag "status"
+  :display (fn [m]
+             (reduce-kv (fn [out k v]
+                          (if (and (or (instance? java.util.Collection v)
+                                       (instance? java.util.Map v))
+                                   (empty? v))
+                            out
+                            (assoc out k v)))
+                        {}
+                        m))})</code></pre></div><div class="entry"><span id="entry__hara_object__string_like"></span><div class="entry-description"><h4><b>string-like&nbsp<a data-scroll="" href="#entry__hara_object__">^</a></b></h4><p><i>creates an accessibility layer for string-like objects</i></p></div><div class="entry-option"><h6><a href="https://github.com/zcaudate/hara/blob/master/src/hara/object.clj#L16-L21" target="_blank">v&nbsp;2.3</a></h6><div><input class="source-toggle" id="entry__pre_hara_object__string_like" type="checkbox" /><label class="source-toggle" for="entry__pre_hara_object__string_like"></label><pre class="source"><code class="clojure">(defmacro string-like
   [& {:as classes}]
   `(vector ~@(map (fn [[cls opts]]
                     `(string-like/extend-string-like ~cls ~opts))
-                  classes)))</code></pre></div></div><pre class="error"><h6>example not found</h6><code></code></pre></div><div class="entry"><span id="entry__hara_object__to_data"></span><div class="entry-description"><h4><b>to-data&nbsp<a data-scroll="" href="#entry__hara_object__">^</a></b></h4><p><i></i></p></div><div class="entry-option"><h6><i class="error version">NONE</i></h6><div><input class="source-toggle" id="entry__pre_hara_object__to_data" type="checkbox" /><label class="source-toggle" for="entry__pre_hara_object__to_data"></label><pre class="source"><code class="clojure">(defn to-data
+                  classes)))</code></pre></div></div><pre><h6><i><a href="https://github.com/zcaudate/hara/blob/master/test/hara/object_test.clj#L33-L50" target="_blank">link</a></i></h6><code class="clojure">(string-like
+ java.io.File
+ {:tag "path"
+  :read (fn [f] (.getPath f))
+  :write (fn [^String path] (java.io.File. path))})
+
+(to-data (java.io.File. "/home"))
+=> "/home"
+
+(from-data "/home" java.io.File)
+=> java.io.File
+
+;; Enums are automatically string-like
+  
+(to-data java.lang.Thread$State/NEW)
+=> "NEW"</code></pre></div><div class="entry"><span id="entry__hara_object__vector_like"></span><div class="entry-description"><h4><b>vector-like&nbsp<a data-scroll="" href="#entry__hara_object__">^</a></b></h4><p><i>creates an accessibility layer for vector-like objects</i></p></div><div class="entry-option"><h6><a href="https://github.com/zcaudate/hara/blob/master/src/hara/object.clj#L30-L35" target="_blank">v&nbsp;2.3</a></h6><div><input class="source-toggle" id="entry__pre_hara_object__vector_like" type="checkbox" /><label class="source-toggle" for="entry__pre_hara_object__vector_like"></label><pre class="source"><code class="clojure">(defmacro vector-like
+  [& {:as classes}]
+  `(vector ~@(map (fn [[cls opts]]
+                    `(vector-like/extend-vector-like ~cls ~opts))
+                  classes)))</code></pre></div></div><pre><h6><i><a href="https://github.com/zcaudate/hara/blob/master/test/hara/object_test.clj#L53-L59" target="_blank">link</a></i></h6><code class="clojure">(object/vector-like
+ org.eclipse.jgit.revwalk.RevWalk
+ {:tag "commits"
+  :read (fn [^org.eclipse.jgit.revwalk.RevWalk walk]
+          (->> walk (.iterator) object/to-data))})</code></pre></div><div class="entry"><span id="entry__hara_object__meta_read"></span><div class="entry-description"><h4><b>meta-read&nbsp<a data-scroll="" href="#entry__hara_object__">^</a></b></h4><p><i>accesses the read-attributes of an object</i></p></div><div class="entry-option"><h6><a href="https://github.com/zcaudate/hara/blob/master/src/hara/object/read.clj#L7-L10" target="_blank">v&nbsp;2.3</a></h6><div><input class="source-toggle" id="entry__pre_hara_object__meta_read" type="checkbox" /><label class="source-toggle" for="entry__pre_hara_object__meta_read"></label><pre class="source"><code class="clojure">(defn meta-read
+  [^Class cls]
+  (assoc (object/-meta-read cls) :class cls))</code></pre></div></div><pre><h6><i><a href="https://github.com/zcaudate/hara/blob/master/test/hara/object/read_test.clj#L29-L34" target="_blank">link</a></i></h6><code class="clojure">(read/meta-read Pet)
+=> (contains-in {:class test.Pet
+                 :methods {:name fn?
+                           :species fn?}})</code></pre></div><div class="entry"><span id="entry__hara_object__meta_write"></span><div class="entry-description"><h4><b>meta-write&nbsp<a data-scroll="" href="#entry__hara_object__">^</a></b></h4><p><i>accesses the write-attributes of an object</i></p></div><div class="entry-option"><h6><a href="https://github.com/zcaudate/hara/blob/master/src/hara/object/write.clj#L10-L13" target="_blank">v&nbsp;2.3</a></h6><div><input class="source-toggle" id="entry__pre_hara_object__meta_write" type="checkbox" /><label class="source-toggle" for="entry__pre_hara_object__meta_write"></label><pre class="source"><code class="clojure">(defn meta-write
+  [^Class cls]
+  (assoc (object/-meta-write cls) :class cls))</code></pre></div></div><pre><h6><i><a href="https://github.com/zcaudate/hara/blob/master/test/hara/object/write_test.clj#L12-L19" target="_blank">link</a></i></h6><code class="clojure">(write/meta-write DogBuilder)
+=> (contains {:class test.DogBuilder
+              :empty fn?,
+              :methods (contains
+                        {:name
+                         (contains {:type java.lang.String, :fn fn?})})})</code></pre></div></div></div></div><div><span id="fields"></span><h3>3.2 &nbsp;&nbsp; Fields</h3></div><div class="api"><span id="entry__hara_object__"></span><hr /><div><ul><li><a data-scroll="" href="#entry__hara_object__to_data">to-data</a></li><li><a data-scroll="" href="#entry__hara_object__from_data">from-data</a></li><li><a data-scroll="" href="#entry__hara_object__read_all_getters">read-all-getters</a></li><li><a data-scroll="" href="#entry__hara_object__read_getters">read-getters</a></li><li><a data-scroll="" href="#entry__hara_object__read_reflect_fields">read-reflect-fields</a></li><li><a data-scroll="" href="#entry__hara_object__write_all_setters">write-all-setters</a></li><li><a data-scroll="" href="#entry__hara_object__write_reflect_fields">write-reflect-fields</a></li><li><a data-scroll="" href="#entry__hara_object__write_setters">write-setters</a></li></ul><hr style="margin-bottom: 0" /><div><div class="entry"><span id="entry__hara_object__to_data"></span><div class="entry-description"><h4><b>to-data&nbsp<a data-scroll="" href="#entry__hara_object__">^</a></b></h4><p><i>creates the object from a string or map</i></p></div><div class="entry-option"><h6><a href="https://github.com/zcaudate/hara/blob/master/src/hara/object/read.clj#L58-L96" target="_blank">v&nbsp;2.3</a></h6><div><input class="source-toggle" id="entry__pre_hara_object__to_data" type="checkbox" /><label class="source-toggle" for="entry__pre_hara_object__to_data"></label><pre class="source"><code class="clojure">(defn to-data
   [obj]
   (let [cls (type obj)
         {:keys [to-clojure to-string to-map to-vector methods]} (meta-read cls)]
@@ -186,11 +185,73 @@
           (instance? java.util.AbstractCollection obj)
           (to-data (.iterator ^java.util.AbstractCollection obj))
 
-          :else obj)))</code></pre></div></div><pre class="error"><h6>example not found</h6><code></code></pre></div><div class="entry"><span id="entry__hara_object__vector_like"></span><div class="entry-description"><h4><b>vector-like&nbsp<a data-scroll="" href="#entry__hara_object__">^</a></b></h4><p><i></i></p></div><div class="entry-option"><h6><i class="error version">NONE</i></h6><div><input class="source-toggle" id="entry__pre_hara_object__vector_like" type="checkbox" /><label class="source-toggle" for="entry__pre_hara_object__vector_like"></label><pre class="source"><code class="clojure">(defmacro vector-like
-  [& {:as classes}]
-  `(vector ~@(map (fn [[cls opts]]
-                    `(vector-like/extend-vector-like ~cls ~opts))
-                  classes)))</code></pre></div></div><pre class="error"><h6>example not found</h6><code></code></pre></div><div class="entry"><span id="entry__hara_object__write_all_setters"></span><div class="entry-description"><h4><b>write-all-setters&nbsp<a data-scroll="" href="#entry__hara_object__">^</a></b></h4><p><i></i></p></div><div class="entry-option"><h6><i class="error version">NONE</i></h6><div><input class="source-toggle" id="entry__pre_hara_object__write_all_setters" type="checkbox" /><label class="source-toggle" for="entry__pre_hara_object__write_all_setters"></label><pre class="source"><code class="clojure">(defn write-all-setters
+          :else obj)))</code></pre></div></div><pre><h6><i><a href="https://github.com/zcaudate/hara/blob/master/test/hara/object/read_test.clj#L37-L42" target="_blank">link</a></i></h6><code class="clojure">(read/to-data "hello")
+=> "hello"
+  
+(read/to-data (write/from-map {:name "hello" :species "dog"} Pet))
+=> {:name "hello", :species "dog"}</code></pre></div><div class="entry"><span id="entry__hara_object__from_data"></span><div class="entry-description"><h4><b>from-data&nbsp<a data-scroll="" href="#entry__hara_object__">^</a></b></h4><p><i>creates the object from data</i></p></div><div class="entry-option"><h6><a href="https://github.com/zcaudate/hara/blob/master/src/hara/object/write.clj#L86-L122" target="_blank">v&nbsp;2.3</a></h6><div><input class="source-toggle" id="entry__pre_hara_object__from_data" type="checkbox" /><label class="source-toggle" for="entry__pre_hara_object__from_data"></label><pre class="source"><code class="clojure">(defn from-data
+  [arg ^Class cls]
+  (let [^Class targ (type arg)]
+    (cond
+      ;; If there is a direct match
+      (reflect-util/param-arg-match cls targ)
+      arg
+
+      ;; If there is a vector
+      (and (vector? arg)
+           (.isArray cls))
+      (let [cls (.getComponentType cls)]
+        (->> arg
+             (map #(from-data % cls))
+             (into-array cls)))
+
+      :else
+      (let [{:keys [from-clojure from-string from-vector] :as mobj} (meta-write cls)]
+        (cond
+
+          from-clojure (from-clojure arg)
+
+          ;; If input is a string and there is a from-string method
+          (and (string? arg) from-string)
+          (from-string arg)
+
+          ;; If input is a string and there is a from-string method
+          (and (vector? arg) from-vector)
+          (from-vector arg)
+
+          ;; If the input is a map
+          (map? arg)
+          (from-map arg cls)
+
+          :else
+          (throw (Exception. (format "Problem converting %s to %s" arg targ))))))))</code></pre></div></div><pre><h6><i><a href="https://github.com/zcaudate/hara/blob/master/test/hara/object/write_test.clj#L68-L71" target="_blank">link</a></i></h6><code class="clojure">(-> (write/from-data ["hello"] (Class/forName "[Ljava.lang.String;"))
+    seq)
+=> ["hello"]</code></pre></div><div class="entry"><span id="entry__hara_object__read_all_getters"></span><div class="entry-description"><h4><b>read-all-getters&nbsp<a data-scroll="" href="#entry__hara_object__">^</a></b></h4><p><i>returns fields of an object and base classes</i></p></div><div class="entry-option"><h6><a href="https://github.com/zcaudate/hara/blob/master/src/hara/object/read.clj#L48-L56" target="_blank">v&nbsp;2.3</a></h6><div><input class="source-toggle" id="entry__pre_hara_object__read_all_getters" type="checkbox" /><label class="source-toggle" for="entry__pre_hara_object__read_all_getters"></label><pre class="source"><code class="clojure">(defn read-all-getters
+  ([cls] (read-all-getters cls +read-get-template+))
+  ([cls {:keys [prefix template extra]}]
+   (->> [:method :instance :public (re-pattern (str "^" prefix ".+")) 1]
+        (reflect/query-hierarchy cls)
+        (reduce (fn [out ele]
+                  (conj out (create-read-method ele prefix template extra)))
+                {}))))</code></pre></div></div><pre><h6><i><a href="https://github.com/zcaudate/hara/blob/master/test/hara/object/read_test.clj#L22-L25" target="_blank">link</a></i></h6><code class="clojure">(-> (read/read-all-getters Dog)
+    keys)
+=> [:class :name :species]</code></pre></div><div class="entry"><span id="entry__hara_object__read_getters"></span><div class="entry-description"><h4><b>read-getters&nbsp<a data-scroll="" href="#entry__hara_object__">^</a></b></h4><p><i>returns fields of an object through getter methods</i></p></div><div class="entry-option"><h6><a href="https://github.com/zcaudate/hara/blob/master/src/hara/object/read.clj#L38-L46" target="_blank">v&nbsp;2.3</a></h6><div><input class="source-toggle" id="entry__pre_hara_object__read_getters" type="checkbox" /><label class="source-toggle" for="entry__pre_hara_object__read_getters"></label><pre class="source"><code class="clojure">(defn read-getters
+  ([cls] (read-getters cls +read-get-template+))
+  ([cls {:keys [prefix template extra]}]
+   (->> [:method :instance :public (re-pattern (str "^" prefix ".+")) 1]
+        (reflect/query-class cls)
+        (reduce (fn [out ele]
+                  (conj out (create-read-method ele prefix template extra)))
+                {}))))</code></pre></div></div><pre><h6><i><a href="https://github.com/zcaudate/hara/blob/master/test/hara/object/read_test.clj#L16-L19" target="_blank">link</a></i></h6><code class="clojure">(-> (read/read-getters Dog)
+    keys)
+=> [:name :species]</code></pre></div><div class="entry"><span id="entry__hara_object__read_reflect_fields"></span><div class="entry-description"><h4><b>read-reflect-fields&nbsp<a data-scroll="" href="#entry__hara_object__">^</a></b></h4><p><i>fields of an object from reflection</i></p></div><div class="entry-option"><h6><a href="https://github.com/zcaudate/hara/blob/master/src/hara/object/read.clj#L12-L18" target="_blank">v&nbsp;2.3</a></h6><div><input class="source-toggle" id="entry__pre_hara_object__read_reflect_fields" type="checkbox" /><label class="source-toggle" for="entry__pre_hara_object__read_reflect_fields"></label><pre class="source"><code class="clojure">(defn read-reflect-fields
+  [cls]
+  (->> (reflect/query-class cls [:field])
+       (map (juxt (comp keyword case/spear-case :name)
+                  identity))
+       (into {})))</code></pre></div></div><pre><h6><i><a href="https://github.com/zcaudate/hara/blob/master/test/hara/object/read_test.clj#L10-L13" target="_blank">link</a></i></h6><code class="clojure">(-> (read/read-reflect-fields Dog)
+    keys)
+=> [:name :species]</code></pre></div><div class="entry"><span id="entry__hara_object__write_all_setters"></span><div class="entry-description"><h4><b>write-all-setters&nbsp<a data-scroll="" href="#entry__hara_object__">^</a></b></h4><p><i>write all setters of an object and base classes</i></p></div><div class="entry-option"><h6><a href="https://github.com/zcaudate/hara/blob/master/src/hara/object/write.clj#L46-L57" target="_blank">v&nbsp;2.3</a></h6><div><input class="source-toggle" id="entry__pre_hara_object__write_all_setters" type="checkbox" /><label class="source-toggle" for="entry__pre_hara_object__write_all_setters"></label><pre class="source"><code class="clojure">(defn write-all-setters
   ([cls] (write-all-setters cls {:prefix "set"
                              :template '(fn <method> [obj val]
                                           (. obj (<method> val))
@@ -200,14 +261,20 @@
         (reflect/query-hierarchy cls)
         (reduce (fn [out ele]
                   (conj out (create-write-method ele prefix template)))
-                {}))))</code></pre></div></div><pre class="error"><h6>example not found</h6><code></code></pre></div><div class="entry"><span id="entry__hara_object__write_reflect_fields"></span><div class="entry-description"><h4><b>write-reflect-fields&nbsp<a data-scroll="" href="#entry__hara_object__">^</a></b></h4><p><i></i></p></div><div class="entry-option"><h6><i class="error version">NONE</i></h6><div><input class="source-toggle" id="entry__pre_hara_object__write_reflect_fields" type="checkbox" /><label class="source-toggle" for="entry__pre_hara_object__write_reflect_fields"></label><pre class="source"><code class="clojure">(defn write-reflect-fields
+                {}))))</code></pre></div></div><pre><h6><i><a href="https://github.com/zcaudate/hara/blob/master/test/hara/object/write_test.clj#L37-L42" target="_blank">link</a></i></h6><code class="clojure">(write/write-all-setters Dog)
+=> {}
+
+(keys (write/write-all-setters DogBuilder))
+=> [:name]</code></pre></div><div class="entry"><span id="entry__hara_object__write_reflect_fields"></span><div class="entry-description"><h4><b>write-reflect-fields&nbsp<a data-scroll="" href="#entry__hara_object__">^</a></b></h4><p><i>write fields of an object from reflection</i></p></div><div class="entry-option"><h6><a href="https://github.com/zcaudate/hara/blob/master/src/hara/object/write.clj#L17-L25" target="_blank">v&nbsp;2.3</a></h6><div><input class="source-toggle" id="entry__pre_hara_object__write_reflect_fields" type="checkbox" /><label class="source-toggle" for="entry__pre_hara_object__write_reflect_fields"></label><pre class="source"><code class="clojure">(defn write-reflect-fields
   [cls]
   (->> (reflect/query-class cls [:field])
        (reduce (fn [out ele]
                  (let [k (-> ele :name case/spear-case keyword)
                        cls (.getType (get-in ele [:all :delegate]))]
                    (assoc out k {:type cls :fn ele})))
-               {})))</code></pre></div></div><pre class="error"><h6>example not found</h6><code></code></pre></div><div class="entry"><span id="entry__hara_object__write_setters"></span><div class="entry-description"><h4><b>write-setters&nbsp<a data-scroll="" href="#entry__hara_object__">^</a></b></h4><p><i></i></p></div><div class="entry-option"><h6><i class="error version">NONE</i></h6><div><input class="source-toggle" id="entry__pre_hara_object__write_setters" type="checkbox" /><label class="source-toggle" for="entry__pre_hara_object__write_setters"></label><pre class="source"><code class="clojure">(defn write-setters
+               {})))</code></pre></div></div><pre><h6><i><a href="https://github.com/zcaudate/hara/blob/master/test/hara/object/write_test.clj#L22-L25" target="_blank">link</a></i></h6><code class="clojure">(-> (write/write-reflect-fields Dog)
+    keys)
+=> [:name :species]</code></pre></div><div class="entry"><span id="entry__hara_object__write_setters"></span><div class="entry-description"><h4><b>write-setters&nbsp<a data-scroll="" href="#entry__hara_object__">^</a></b></h4><p><i>write fields of an object through setter methods</i></p></div><div class="entry-option"><h6><a href="https://github.com/zcaudate/hara/blob/master/src/hara/object/write.clj#L33-L44" target="_blank">v&nbsp;2.3</a></h6><div><input class="source-toggle" id="entry__pre_hara_object__write_setters" type="checkbox" /><label class="source-toggle" for="entry__pre_hara_object__write_setters"></label><pre class="source"><code class="clojure">(defn write-setters
   ([cls] (write-setters cls {:prefix "set"
                                    :template '(fn <method> [obj val]
                                                 (. obj (<method> val))
@@ -217,67 +284,11 @@
         (reflect/query-class cls)
         (reduce (fn [out ele]
                   (conj out (create-write-method ele prefix template)))
-                {}))))</code></pre></div></div><pre class="error"><h6>example not found</h6><code></code></pre></div></div></div></div><div><span id="philosophy"></span><h2><b>3 &nbsp;&nbsp; Philosophy</b></h2></div><div><p><code>hara.object</code> works at the level of meta-programming. As explained in the previous section, there is a correspondence between a class and the data with the class. Below shows a simple example of the concept of <code>Dog</code> as an <code>Object</code> and as data:</p></div><div class="figure"><a id="class-as-data"></a><h4><i>fig.1  &nbsp;-&nbsp; Class as Data</i></h4><div class="img"><img line="{:row 38, :col 1, :end-row 38, :end-col 82}" src="img/hara_object/dog.png" title="Class as Data" width="600px" /></div><p></p></div><div><p>There are advantages of using pure data for the representation of the <code>Dog</code> concept.</p><ul><li>generic methods con be used to manipulate the data</li><li>the entire structure is transparent is better for reasoning</li><li>simpler representation (though at the cost of Type Correctness)</li></ul><p>In this way, many objects can be turned into maps/data for consumption by clojure methods. This makes working with many big java libraries much easier before.</p></div><div><span id="string-like"></span><h2><b>4 &nbsp;&nbsp; string-like</b></h2></div><div><p>It is best to look at a real world example of how to use such a library.</p><p><a href='https://www.github.com/zcaudate/gita'>gita</a> is a wrapper around the popular <a href='https://eclipse.org/jgit/'>jgit</a> project. Due to the enormous amount of functionality around <a href='http://www.git.org'>git</a>, it is very difficult to manually write a wrapper around the entire suite. The novelty of <a href='https://www.github.com/zcaudate/gita'>gita</a> is that it uses <a href='https://www.github.com/zcaudate/hara'>hara.object</a> for customisation of the wrapper interface in such a way that the entire functionality of the main <code>org.eclipse.jgit.api.Git</code> class is accessible and usable in a clojure compatible convention.</p></div><div><p><code>hara.object</code> is based on a very simple idea of treating objects as being <code>string-like</code> or a <code>map-like</code> . What is meant by <code>string-like</code> is that the object can be represented into a string. The reverse, that the object can be constructed from a string is not always true but there are very few exceptions.</p></div><div><span id="file"></span><h3>4.1 &nbsp;&nbsp; File</h3></div><div><p>An example is shown below when we use the <code>string-like</code> macro to extend the functionality to <code>java.io.File</code>.</p></div><div class="code"><pre><code class="clojure">(object/string-like
- java.io.File
- {:tag &quot;path&quot;
-  :read (fn [f] (.getPath f))
-  :write (fn [^String path] (java.io.File. path))})</code></pre></div><div><p>The three keys that are important in the map are:</p><ul><li><code>:tag</code> identifying the type of data</li><li><code>:to</code> which converts the object to string</li><li><code>:from</code>, a function taking two paramters that constructs the object out of a string</li></ul><p>Constructing a File object, notice that the output is different from before:</p></div><div class="code"><pre><code class="clojure">(java.io.File. &quot;/home&quot;) ;;=&gt; #path &quot;/home&quot;</code></pre></div><div><p>Now that stringlike has been extended to <code>java.io.File</code>, generic data conversion methods can be used. <code>to-data</code> converts the object to a string:</p></div><div class="code"><pre><code class="clojure">(object/to-data (java.io.File. &quot;/home&quot;)) ;;=&gt; &quot;/home&quot;</code></pre></div><div><p><code>from-data</code> converts a string back into an instance of a <code>File</code>.</p></div><div class="code"><pre><code class="clojure">(object/from-data &quot;/home&quot; java.io.File)  ;;=&gt; #path &quot;/home&quot;</code></pre></div><div><span id="repository"></span><h3>4.2 &nbsp;&nbsp; Repository</h3></div><div><p><code>string-like</code> is implementated for <code>jgit</code> classes in <a href='https://github.com/zcaudate/gita/src/gita/interop/string_like.clj'>gita</a>. The example below shows the <code>Repository</code> object:</p></div><div class="code"><pre><code class="clojure">(object/string-like
- org.eclipse.jgit.lib.Repository
- {:tag   &quot;repo&quot;
-  :read     (fn [^org.eclipse.jgit.lib.Repository repo]
-              (-&gt; repo (.getDirectory) object/to-data))
-  :write    (fn [^String path]
-              (org.eclipse.jgit.internal.storage.file.FileRepository. path))})</code></pre></div><div><p>It's usage can be seen:</p></div><div class="code"><pre><code class="clojure">(object/from-data &quot;/home&quot; org.eclipse.jgit.lib.Repository) ;;=&gt; #repo &quot;/home&quot;</code></pre></div><div><p>What this allows is for back and forth coercion of similar types of objects using a very generic framework. We see the back and forth conversion of a string to a File and Repository object below:</p></div><div class="code"><pre><code class="clojure">(-&gt; &quot;/home&quot;
-    (object/from-data java.io.File)
-    (object/to-data)
-    (object/from-data org.eclipse.jgit.lib.Repository)
-    (object/to-data))
-;;=&gt; &quot;/home&quot;</code></pre></div><div><span id="enums"></span><h3>4.3 &nbsp;&nbsp; Enums</h3></div><div><p>Enumerations are considered to be stringlike. Therefore <code>to-data</code> is used to convert a enum constants to a string represention</p></div><div class="code"><pre><code class="clojure">(object/to-data java.lang.Thread$State/NEW)
-;;=&gt; &quot;NEW&quot;</code></pre></div><div><p><code>from-data</code> is used to convert a string back into the enum represention</p></div><div class="code"><pre><code class="clojure">(object/from-data &quot;NEW&quot; java.lang.Thread$State)
-;;=&gt; #enum[java.lang.Thread$State NEW]</code></pre></div><div class="code"><pre><code class="clojure">(object/from-data &quot;NON-EXISTENT&quot; java.lang.Thread$State)
-=&gt; (throws)</code></pre></div><div><span id="vector-like"></span><h2><b>5 &nbsp;&nbsp; vector-like</b></h2></div><div><p>Classes that behave like lists and collections can be extended with the <code>vector-like</code> attribute. Note that class arrays, <code>java.lang.Iterable</code>, <code>java.util.Iterator</code> and <code>java.util.AbstractCollection</code> are automatically converted to a vector of things:</p></div><div class="code"><pre><code class="clojure">(object/vector-like
- org.eclipse.jgit.revwalk.RevWalk
- {:tag &quot;commits&quot;
-  :read (fn [^org.eclipse.jgit.revwalk.RevWalk walk]
-          (-&gt;&gt; walk (.iterator) object/to-data))})</code></pre></div><div><span id="map-like"></span><h2><b>6 &nbsp;&nbsp; map-like</b></h2></div><div><p>Classes are containers of fields and methods. Therefore, they can be considered map-like because instances of the class contain fields that hold data about its state. <a href='hara-reflect.html'>hara.reflect</a> allows access of fields through the <a href='hara-reflect.html#delegate'>delegate</a> function. However, it has been found that this is a little too overpowered and a more subtle way would be to use the <code>getter</code> and <code>setter</code> methods.</p></div><div><span id="primitives"></span><h3>6.1 &nbsp;&nbsp; Primitives</h3></div><div><p><code>hara.object</code> accesses class information through the class getters:</p></div><div class="code"><pre><code class="clojure">(-&gt; (object/read-getters org.eclipse.jgit.api.Status)
-    (keys)
-    (sort))
-;;=&gt; (:added :changed :class :clean? :conflicting :conflicting-stage-state :ignored-not-in-index :missing :modified :removed :uncommitted-changes :uncommitted-changes! :untracked :untracked-folders)</code></pre></div><div><p>And sets data through class setters. In the case for <code>Status</code>, because it is readonly, there are no setters to show</p></div><div class="code"><pre><code class="clojure">(-&gt; (object/write-setters org.eclipse.jgit.api.Status)
-    (keys)
-    (sort))
-;;=&gt; ()</code></pre></div><div><p><code>read-getters</code> and <code>read-reflect-fields</code> can be used on any object:</p></div><div class="code"><pre><code class="clojure">(-&gt; (object/read-reflect-fields &quot;abc&quot;)
-    (keys)
-    (sort))
-;=&gt; (:case-insensitive-order :hash :serial-persistent-fields :serial-version-uid :value)</code></pre></div><div><span id="map-like-0"></span><h3>6.2 &nbsp;&nbsp; map-like</h3></div><div><p>As for stringlike classes, maplike classes can also be seen to be extended in <a href='https://github.com/zcaudate/gita/src/gita/interop/map_like.clj'>gita</a>. Below are examples of classes that have been extended:</p></div><div class="code"><pre><code class="clojure">(object/map-like
- org.eclipse.jgit.revwalk.RevCommit
- {:tag &quot;commit&quot;
-  :include [:commit-time :name :author-ident :full-message]})</code></pre></div><div><p>Important keys are <code>:tag</code> and either <code>:include</code> which only includes tha getter keys listed or <code>:exclude</code>, which includes all the keys except those listed. For the extension of <code>RevCommit</code>, only four keys are chosen. The <code>:author-ident</code> key is a <code>Personident</code> object and also needs to be extended:</p></div><div class="code"><pre><code class="clojure">(object/map-like
- org.eclipse.jgit.lib.PersonIdent
- {:tag &quot;person&quot;
-  :exclude [:time-zone]})</code></pre></div><div><p>Once classes have been extended, the typical usage would be to wrap a function returning the object wtih a <code>to-data</code> call. An example of this can be seen <a href='https://github.com/zcaudate/gita#working-locally&mdash;add-commit-log-and-rm'>here</a>, where a call to <code>git :commit</code> returns a <code>RevCommit</code> object which then is converted into a hashmap via the <code>to-data</code> wrapper:</p></div><div class="code"><pre><code class="clojure">(git :commit :message &quot;Added Hello.txt&quot;)
-;;=&gt; {:commit-time 1425683330,
-;;    :name &quot;9f1177ad928d7dea2afedd58b1fb7192b3523a6c&quot;,
-;;    :author-ident {:email-address &quot;z@caudate.me&quot;,
-;;                   :name &quot;Chris Zheng&quot;,
-;;                   :time-zone-offset 330,
-;;                   :when #inst &quot;2015-03-06T23:08:50.000-00:00&quot;},
-;;    :full-message &quot;Added Hello.txt&quot;}</code></pre></div><div><p>Notice that the datastructure is nested. Both <code>RevCommit</code> and <code>PersonIdent</code> have been turned into generic clojure maps in the format specified through <code>extend-maplike</code>. Most of <a href='https://github.com/zcaudate/gita'>gita</a> has been implementated in this way.</p></div><div><span id="extension"></span><h3>6.3 &nbsp;&nbsp; extension</h3></div><div><p>For more flexibility of output, classes extend <code>hara.protocol.object/-meta-read</code> and <code>hara.protocol.object/-meta-write</code>. The use would the same method name without prefix <code>-</code> in the <code>hara.object</code> namespace. An example of this is found <a href='https://github.com/zcaudate/gita/blob/master/src/gita/interop/status.clj'>here</a> where the <code>org.eclipse.jgit.api.Status</code> is extended:</p></div><div class="code"><pre><code class="clojure">(ns gita.interop.status
-  (:require [hara.object :as object])
-  (:import org.eclipse.jgit.api.Status))
+                {}))))</code></pre></div></div><pre><h6><i><a href="https://github.com/zcaudate/hara/blob/master/test/hara/object/write_test.clj#L28-L33" target="_blank">link</a></i></h6><code class="clojure">(write/write-setters Dog)
+=> {}
 
-(object/map-like
- org.eclipse.jgit.api.Status
- {:tag &quot;status&quot;
-  :display (fn [m]
-             (reduce-kv (fn [out k v]
-                          (if (and (or (instance? java.util.Collection v)
-                                       (instance? java.util.Map v))
-                                   (empty? v))
-                            out
-                            (assoc out k v)))
-                        {}
-                        m))})</code></pre></div><div><p>An example of how is is used can be seen in the <code>gita</code> readme:</p></div><div class="code"><pre><code class="clojure">(git :status)
-=&gt; {:clean? false, :uncommitted-changes! false, :untracked #{&quot;hello.txt&quot;}}</code></pre></div>
+(keys (write/write-setters DogBuilder))
+=> [:name]</code></pre></div></div></div></div>
         </div>
       </div>
     </div>
