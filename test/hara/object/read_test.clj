@@ -1,6 +1,7 @@
 (ns hara.object.read-test
   (:use hara.test)
   (:require [hara.object.read :as read]
+            [hara.object.write :as write]
             [hara.protocol.object :as object]
             [hara.reflect :as reflect]
             [hara.object.base-test])

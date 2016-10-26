@@ -33,7 +33,7 @@
                     :checker :msg}]))
 
 ^{:refer hara.event/uninstall-listener :added "2.2"}
-(fact "installs a global signal listener"
+(comment "installs a global signal listener"
   
   (uninstall-listener 'hello
                       'hara.event-test/hello-listener))

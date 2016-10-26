@@ -5,18 +5,18 @@
 ^{:refer hara.object/map-like :added "2.3"}
 (fact "creates an accessibility layer for map-like objects"
 
-  (object/map-like
+  (map-like
    org.eclipse.jgit.revwalk.RevCommit
    {:tag "commit"
     :include [:commit-time :name :author-ident :full-message]})
 
-  (object/map-like
+  (map-like
    org.eclipse.jgit.lib.PersonIdent
    {:tag "person"
     :exclude [:time-zone]})
 
   
-  (object/map-like
+  (map-like
    org.eclipse.jgit.api.Status
    {:tag "status"
     :display (fn [m]
@@ -52,9 +52,9 @@
 ^{:refer hara.object/vector-like :added "2.3"}
 (fact "creates an accessibility layer for vector-like objects"
 
-  (object/vector-like
+  (vector-like
    org.eclipse.jgit.revwalk.RevWalk
    {:tag "commits"
     :read (fn [^org.eclipse.jgit.revwalk.RevWalk walk]
-            (->> walk (.iterator) object/to-data))}))
+            (->> walk (.iterator) to-data))}))
 
