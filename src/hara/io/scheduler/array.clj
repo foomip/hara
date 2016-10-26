@@ -16,7 +16,8 @@
   (.write w (str v)))
 
 (defn build-handler
-  "" [name props config]
+  ""
+  [name props config]
   (let [procmap (cond (fn? props)
                       {:name   name
                        :handler props}
@@ -32,20 +33,23 @@
     (procedure/procedure procmap [:timestamp :params :instance])))
 
 (defn build-handlers
-  "" [handlers config]
+  ""
+  [handlers config]
   (reduce-kv (fn [out name props]
                (conj out (build-handler name props config)))
              []
              handlers))
 
 (defn seed-fn
-  "" [handlers]
+  ""
+  [handlers]
   (fn [config]
     (map->TaskArray
      {:handlers (ova/ova (build-handlers handlers config))})))
 
 (defn initialise
-  "" [{:keys [handlers registry cache ticker] :as arr}]
+  ""
+  [{:keys [handlers registry cache ticker] :as arr}]
   ;; watch for changes in ticker
   (add-watch ticker :trigger
              (fn [_ _ _ {:keys [time array params instance] :as result}]

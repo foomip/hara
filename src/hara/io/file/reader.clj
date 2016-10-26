@@ -37,7 +37,7 @@
 (defmulti reader
   "creates a reader for a given input
  
-   (-> (reader :pushback \"project.clj\")
+   (-> (reader :pushback \"project.clj\" {})
        (read)
        second)
    => 'im.chit/hara"

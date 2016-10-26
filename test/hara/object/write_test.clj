@@ -61,8 +61,11 @@
                                     {:name "happy" :species "cat"}]}
       (write/from-map Person)
       (read/to-data))
-  => {:name "chris", :age 30, :pets [{:name "slurp", :species "dog"}
-                                     {:name "happy", :species "cat"}]})
+  => (contains-in
+      {:name "chris",
+       :age 30,
+       :pets [{:name "slurp"}
+              {:name "happy"}]}))
 
 ^{:refer hara.object.write/from-data :added "2.3"}
 (fact "creates the object from data"

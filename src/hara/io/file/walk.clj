@@ -24,7 +24,7 @@
    (match-single {:path (path/path \"src/hara/test.clj\")}
                  {:tag :fn
                   :fn (fn [m]
-                        (re-find #\"hara\" (str (:path m))))})
+                        (re-find #\"hara\" (str m)))})
    => true"
   {:added "2.4"}
   [{:keys [root path attrs] :as m} {:keys [tag] :as single}]

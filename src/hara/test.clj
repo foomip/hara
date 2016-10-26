@@ -19,7 +19,22 @@
            [run run-namespace])
 
 (defn print-options
-  ""
+  "output options for test results
+ 
+   (print-options)
+   => #{:disable :reset :default :all :list :current :help}
+ 
+   (print-options :default)
+   => #{:print-bulk :print-failure :print-thrown}
+ 
+   (print-options :all)
+   => #{:print-bulk
+        :print-facts-success
+        :print-failure
+        :print-thrown
+        :print-facts
+        :print-success}"
+  {:added "2.4"}
   ([] (print-options :help))
   ([opts]
    (cond (set? opts)
@@ -47,7 +62,8 @@
          (alter-var-root #'common/*print* (constantly (print-options :list))))))
 
 (defn process-args
-  ""
+  "processes input arguments"
+  {:added "2.4"}
   [args]
   (->> (map read-string args)
        (map (fn [x]
@@ -60,7 +76,8 @@
        set))
 
 (defn -main
-  ""
+  "main entry point for leiningen"
+  {:added "2.4"}
   ([& args]
    (let [args (process-args args)
          {:keys [thrown failed] :as stats} (run)

@@ -21,7 +21,8 @@
   [s _]
   (DateTimeZone/forID s))
 
-(defn from-map [{:keys [millisecond second minute hour day month year timezone]}]
+(defn from-map
+  "" [{:keys [millisecond second minute hour day month year timezone]}]
   (DateTime. ^int year ^int month ^int day ^int hour ^int minute ^int second ^int millisecond 
              ^DateTimeZone (coerce/coerce-zone timezone {:type DateTimeZone})))
 

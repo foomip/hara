@@ -8,14 +8,26 @@
             [hara.reflect.util :as reflect-util]))
 
 (defn meta-write
-  ""
+  "accesses the write-attributes of an object
+ 
+   (write/meta-write DogBuilder)
+   => (contains {:class test.DogBuilder
+                 :empty fn?,
+                 :methods (contains
+                           {:name
+                            (contains {:type java.lang.String, :fn fn?})})})"
+  {:added "2.3"}
   [^Class cls]
   (assoc (object/-meta-write cls) :class cls))
 
 (declare from-data)
 
 (defn write-reflect-fields
-  ""
+  "write fields of an object from reflection
+   (-> (write/write-reflect-fields Dog)
+       keys)
+   => [:name :species]"
+  {:added "2.3"}
   [cls]
   (->> (reflect/query-class cls [:field])
        (reduce (fn [out ele]
@@ -24,14 +36,21 @@
                    (assoc out k {:type cls :fn ele})))
                {})))
 
-(defn create-write-method [ele prefix template]
+(defn create-write-method
+  "" [ele prefix template]
   [(-> (:name ele) (subs (count prefix)) case/spear-case keyword)
    {:type (-> ele :params second)
     :fn (eval (walk/postwalk-replace {'<method> (symbol (:name ele))}
                                      template))}])
 
 (defn write-setters
-  ""
+  "write fields of an object through setter methods
+   (write/write-setters Dog)
+   => {}
+ 
+   (keys (write/write-setters DogBuilder))
+   => [:name]"
+  {:added "2.3"}
   ([cls] (write-setters cls {:prefix "set"
                                    :template '(fn <method> [obj val]
                                                 (. obj (<method> val))
@@ -44,7 +63,13 @@
                 {}))))
 
 (defn write-all-setters
-  ""
+  "write all setters of an object and base classes
+   (write/write-all-setters Dog)
+   => {}
+ 
+   (keys (write/write-all-setters DogBuilder))
+   => [:name]"
+  {:added "2.3"}
   ([cls] (write-all-setters cls {:prefix "set"
                              :template '(fn <method> [obj val]
                                           (. obj (<method> val))
@@ -57,7 +82,19 @@
                 {}))))
 
 (defn from-empty
-  ""
+  "creates the object from an empty object constructor
+   (write/from-empty {:name \"chris\" :pet \"dog\"}
+                     (fn [_] (java.util.Hashtable.))
+                     {:name {:type String
+                             :fn (fn [obj v]
+                                   (.put obj \"hello\" (keyword v))
+                                   obj)}
+                      :pet  {:type String
+                            :fn (fn [obj v]
+                                   (.put obj \"pet\" (keyword v))
+                                   obj)}})
+   => {\"pet\" :dog, \"hello\" :chris}"
+  {:added "2.3"}
   [m empty methods]
   (let [obj (empty m)]
     (reduce-kv (fn [obj k v]
@@ -68,7 +105,14 @@
                m)))
 
 (defn from-map
-  ""
+  "creates the object from a map
+   (-> {:name \"chris\" :age 30 :pets [{:name \"slurp\" :species \"dog\"}
+                                     {:name \"happy\" :species \"cat\"}]}
+       (write/from-map Person)
+       (read/to-data))
+   => {:name \"chris\", :age 30, :pets [{:name \"slurp\", :species \"dog\"}
+                                      {:name \"happy\", :species \"cat\"}]}"
+  {:added "2.3"}
   [m ^Class cls]
   (let [m (if-let [rels (get object/*transform* type)]
             (data/transform-in m rels)
@@ -84,7 +128,11 @@
           (map/-from-map m cls))))
 
 (defn from-data
-  ""
+  "creates the object from data
+   (-> (write/from-data [\"hello\"] (Class/forName \"[Ljava.lang.String;\"))
+       seq)
+   => [\"hello\"]"
+  {:added "2.3"}
   [arg ^Class cls]
   (let [^Class targ (type arg)]
     (cond

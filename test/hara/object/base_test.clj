@@ -15,16 +15,6 @@
   [_]
   {:to-map (read/read-reflect-fields DogBuilder)})
 
-(defmethod object/-meta-write Pet
-  [_]
-  {:from-map (fn [m] (case (:species m)
-                       "dog" (write/from-map m Dog)
-                       "cat" (write/from-map m Cat)))})
-
-(defmethod object/-meta-read Pet
-  [_]
-  {:methods (read/read-getters Pet)})
-
 (defmethod object/-meta-read Dog
   [_]
   {:methods (read/read-getters Dog)})
@@ -43,6 +33,16 @@
   [_]
   {:from-map (fn [m] (Cat. (:name m)))})
 
+
+(defmethod object/-meta-write Pet
+  [_]
+  {:from-map (fn [m] (case (:species m)
+                       "dog" (write/from-map m Dog)
+                       "cat" (write/from-map m Cat)))})
+
+(defmethod object/-meta-read Pet
+  [_]
+  {:methods (read/read-getters Pet)})
 (defmethod object/-meta-write PersonBuilder
   [_]
   {:empty (fn [_] (PersonBuilder.))

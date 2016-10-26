@@ -4,7 +4,8 @@
             [hara.reflect.util :as util]))
 
 (defn get-name
-  "" [v]
+  ""
+  [v]
   (let [names (map :name v)]
     (assert (and (apply = names)
                  (first names))
@@ -12,14 +13,16 @@
     (first names)))
 
 (defn to-element-array
-  "" [m0]
+  ""
+  [m0]
   (for [[k1 m1] (seq m0)
         [k2 m2] (seq m1)
         [k3 v]  (seq m2)]
     v))
 
 (defn multi-element
-  "" [m v]
+  ""
+  [m v]
   (element {:tag :multi
             :name (get-name v)
             :array v
@@ -31,7 +34,8 @@
     (multi-element m v)))
 
 (defn to-element-map-path
-  "" [ele]
+  ""
+  [ele]
   (let [tag (:tag ele)
         params (:params ele)]
     (cond (= (:tag ele) :field)
@@ -60,7 +64,8 @@
   (map element-params (:array mele)))
 
 (defn elegible-candidates
-  "" [prelim aparams]
+  ""
+  [prelim aparams]
   (->> prelim
        (map (fn [[_ v]] v))
        (filter (fn [ele]
@@ -69,7 +74,8 @@
                          (map list (:params ele) aparams))))))
 
 (defn find-method-candidate
-  "" [mele aparams]
+  ""
+  [mele aparams]
   (let [tag (if (= "new" (:name mele)) :constructor :method)
         prelim (get-in (:lookup mele) [tag (count aparams)])]
     (or (get prelim aparams)
@@ -79,14 +85,16 @@
               ele)))))
 
 (defn find-field-candidate
-  "" [mele aparams]
+  ""
+  [mele aparams]
   (if-let [ele (get-in (:lookup mele) [:field 0 []])]
     (and (or (= 0 (count aparams))
              (and (= 1 (count aparams))
                   (util/param-arg-match (:type ele) (first aparams)))))))
 
 (defn find-candidate
-  "" [mele aparams]
+  ""
+  [mele aparams]
   (or (find-method-candidate mele aparams)
       (find-field-candidate mele aparams)
       (throw (Exception. (format "Cannot find a suitable candidate function, need %s, invoked with %s."

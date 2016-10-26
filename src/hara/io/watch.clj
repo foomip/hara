@@ -21,7 +21,8 @@
 (def kind-lookup  (zipmap event-kinds event-types))
 
 (defn pattern
-  "" [s]
+  ""
+  [s]
   (-> s
       (string/replace #"\." "\\\\\\Q.\\\\\\E")
       (string/replace #"\*" ".+")
@@ -46,7 +47,8 @@
     watcher))
 
 (defn process-event
-  "" [watcher kind ^java.io.File file]
+  ""
+  [watcher kind ^java.io.File file]
   (let [{:keys [options callback excludes filters kinds]} watcher
         filepath (.getPath file)
         filename (.getName file)]
@@ -58,7 +60,8 @@
         :sync  (callback (kind-lookup kind) file)))))
 
 (defn run-watcher
-  "" [watcher]
+  ""
+  [watcher]
   (let [^java.nio.file.WatchKey wkey
         (.take ^java.nio.file.WatchService (:service watcher))]
     (doseq [^java.nio.file.WatchEvent event (.pollEvents wkey)
@@ -79,7 +82,8 @@
     (recur watcher)))
 
 (defn start-watcher
-  "" [watcher]
+  ""
+  [watcher]
   (let [{:keys [types filter exclude include]} (:options watcher)
         ^java.nio.file.WatchService service (.newWatchService (FileSystems/getDefault))
         seen    (atom #{})
@@ -101,7 +105,8 @@
     (assoc watcher :running (future (run-watcher watcher)))))
 
 (defn stop-watcher
-  "" [watcher]
+  ""
+  [watcher]
   (.close ^java.nio.file.WatchService (:service watcher))
   (future-cancel (:running watcher))
   (dissoc watcher :running :service :seen))
@@ -147,13 +152,15 @@
               (merge-nil options *defaults*))))
 
 (defn watch-callback
-  "" [f root k]
+  ""
+  [f root k]
   (fn [type file]
     (f root k nil [type file])))
 
 
 (defn add-io-watch
-  "" [obj k f opts]
+  ""
+  [obj k f opts]
   (let [path (.getCanonicalPath ^java.io.File obj)
           _    (if-let [wt (get-in @*filewatchers* [path k :watcher])]
                  (-remove-watch obj k nil))
@@ -163,7 +170,8 @@
       obj))
 
 (defn list-io-watch
-  "" [obj _]
+  ""
+  [obj _]
   (let [path (.getCanonicalPath ^java.io.File  obj)]
       (->> path (get @*filewatchers*)
            (reduce-kv (fn [i k v]
@@ -171,7 +179,8 @@
                       {}))))
 
 (defn remove-io-watch
-  "" [obj k _]
+  ""
+  [obj k _]
   (let [path (.getCanonicalPath ^java.io.File obj)
         wt   (get-in @*filewatchers* [path k :watcher])]
     (if-not (nil? wt)

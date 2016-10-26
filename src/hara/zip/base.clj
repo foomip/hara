@@ -49,7 +49,12 @@
                  :meta (zipper-meta meta)})))
 
 (defn seq-zip
-  "constructs a sequence zipper"
+  "constructs a sequence zipper
+ 
+   (seq-zip '(1 2 3 4 5))
+   => (contains {:left (),
+                 :right '((1 2 3 4 5)),
+                 :parent :top})"
   {:added "2.4"}
   [root]
   (zipper root {:branch?   seq?
@@ -57,7 +62,12 @@
                 :make-node identity}))
 
 (defn vector-zip
-  "constructs a vector based zipper"
+  "constructs a vector based zipper
+ 
+   (vector-zip [1 2 3 4 5])
+   => (contains {:left (),
+                 :right '([1 2 3 4 5])
+                 :parent :top})"
   {:added "2.4"}
   [root]
   (zipper root {:branch? vector?
@@ -86,11 +96,10 @@
 
 (defn left-node
   "element directly left of current position
-   
-   (-> (vector-zip 1)
-       (move-right)
+ 
+   (-> (zip/from-cursor '[1 2 3 | 4])
        (left-node))
-   => 1"
+   => 3"
   {:added "2.4"}
   [zip]
   (first (:left zip)))
@@ -98,9 +107,9 @@
 (defn right-node
   "element directly right of current position
  
-   (-> (vector-zip 1)
+   (-> (zip/from-cursor '[1 2 3 | 4])
        (right-node))
-   => 1"
+   => 4"
   {:added "2.4"}
   [zip]
   (first (:right zip)))
@@ -108,10 +117,7 @@
 (defn left-nodes
   "all elements left of current position
    
-   (-> (vector-zip [1 2 3 4])
-       (move-down)
-       (move-right)
-       (move-right)
+   (-> (zip/from-cursor '[1 2 | 3 4])
        (left-nodes))
    => '(1 2)"
   {:added "2.4"}
@@ -121,10 +127,7 @@
 (defn right-nodes
   "all elements right of current position
    
-   (-> (vector-zip [1 2 3 4])
-       (move-down)
-       (move-right)
-       (move-right)
+   (-> (zip/from-cursor '[1 2 | 3 4])
        (right-nodes))
    => '(3 4)"
   {:added "2.4"}
@@ -133,49 +136,88 @@
 
 (defn siblings
   "all elements left and right of current position
-   
-   (-> (vector-zip [1 2 3 4])
-       (move-down)
-       (move-right)
-       (move-right)
+ 
+   (-> (zip/from-cursor '[1 2 | 3 4])
        (siblings))
-   => '(1 2 3 4)"
+   => '(1 2 3 4)
+   
+   (-> (zip/from-cursor '[1 [2 | 3] 4])
+       (siblings))
+   => '(2 3)"
   {:added "2.4"}
   [{:keys [left right] :as zip}]
   (concat (reverse left) right))
 
 (defn left-most?
-  "check if at left-most point of a branch"
+  "check if at left-most point of a branch
+ 
+   (-> (zip/from-cursor [1 2 ['| 3 4]])
+       (left-most?))
+   => true"
   {:added "2.4"}
   [zip]
   (empty? (:left zip)))
 
 (defn right-most?
-  "check if at right-most point of a branch"
+  "check if at right-most point of a branch
+ 
+   (-> (zip/from-cursor '[1 2 [3 4 |]])
+       (right-most?))
+   => true"
   {:added "2.4"}
   [zip]
   (empty? (:right zip)))
 
 (defn move-left?
-  "check if can move left from current position"
+  "check if can move left from current position
+ 
+   (-> (zip/from-cursor '[1 2 [3 | 4]])
+       (move-left?))
+   => true
+   
+   (-> (zip/from-cursor '[1 2 [| 3 4]])
+       (move-left?))
+   => false"
   {:added "2.4"}
   [zip]
   (not (empty? (:left zip))))
 
 (defn move-right?
-  "check if can move right from current position"
+  "check if can move right from current position
+ 
+   (-> (zip/from-cursor '[1 2 [3 | 4]])
+       (move-right?))
+   => true
+   
+   (-> (zip/from-cursor '[1 2 [3 4 |]])
+       (move-right?))
+   => false"
   {:added "2.4"}
   [zip]
   (not (empty? (:right zip))))
 
 (defn top-most?
-  "check if at top-most point of the tree"
+  "check if at top-most point of the tree
+ 
+   (-> (zip/from-cursor [1 2 [3 4 '|]])
+       (top-most?))
+   => false
+ 
+   (-> (zip/from-cursor '[1 2 [3 4 |]])
+       (move-up)
+       (move-up)
+       (top-most?))
+   => true"
   {:added "2.4"}
   [zip]
   (= :top (:parent zip)))
 
 (defn bottom-most?
-  "check if at bottom-most point of a branch"
+  "check if at bottom-most point of a branch
+ 
+   (-> (zip/from-cursor '[1 2 [3 4 |]])
+       (bottom-most?))
+   => true"
   {:added "2.4"}
   [zip]
   (or (empty? (:right zip))
@@ -183,13 +225,25 @@
             (first (:right zip))))))
 
 (defn move-up?
-  "check if can move up from current position"
+  "check if can move up from current position
+ 
+   (-> (zip/from-cursor '[1 2 [3 4 |]])
+       (move-up?))
+   => true"
   {:added "2.4"}
   [zip]
   (not= :top (:parent zip)))
 
 (defn move-down?
-  "check if can move down from current position"
+  "check if can move down from current position
+ 
+   (-> (zip/from-cursor '[1 2 [3 4 |]])
+       (move-down?))
+   => false
+ 
+   (-> (zip/from-cursor '[1 2 | [3 4]])
+       (move-down?))
+   => true"
   {:added "2.4"}
   [zip]
   (and (move-right? zip)
@@ -198,7 +252,12 @@
 
 
 (defn move-left
-  "move left from current position"
+  "move left from current position
+ 
+   (-> (zip/from-cursor '[1 2 [3 4 |]])
+       (move-left)
+       (zip/cursor))
+   => '([1 2 [3 | 4]])"
   {:added "2.4"}
   ([{:keys [left right] :as zip}]
    (cond (empty? left)
@@ -219,7 +278,12 @@
    (nth (iterate move-left zip) num)))
 
 (defn move-left-most
-  "move to left-most point of current branch"
+  "move to left-most point of current branch
+   
+   (-> (zip/from-cursor '[1 2 [3 4 |]])
+       (move-left-most)
+       (zip/cursor))
+   => '([1 2 [| 3 4]])"
   {:added "2.4"}
   [zip]
   (cond (move-left? zip)
@@ -228,7 +292,12 @@
         :else zip))
 
 (defn move-right
-  "move right from current position"
+  "move right from current position
+ 
+   (-> (zip/from-cursor '[1 2 [| 3 4]])
+       (move-right)
+       (zip/cursor))
+   => '([1 2 [3 | 4]])"
   {:added "2.4"}
   ([{:keys [left right] :as zip}]
    (cond (empty? right)
@@ -249,7 +318,12 @@
    (nth (iterate move-right zip) num)))
 
 (defn move-right-most
-  "move to right-most point of current branch"
+  "move to right-most point of current branch
+ 
+   (-> (zip/from-cursor '[1 2 [| 3 4]])
+       (move-right-most)
+       (zip/cursor))
+   => '([1 2 [3 4 |]])"
   {:added "2.4"}
   [zip]
   (cond (move-right? zip)
@@ -258,7 +332,12 @@
         :else zip))
 
 (defn move-up
-  "move up from current position"
+  "move up from current position
+ 
+   (-> (zip/from-cursor '[1 2 [| 3 4]])
+       (move-up)
+       (zip/cursor))
+   => '([1 2 | [3 4]])"
   {:added "2.4"}
   ([zip]
    (cond (top-most? zip)
@@ -287,7 +366,12 @@
    (nth (iterate move-up zip) num)))
 
 (defn move-top-most
-  "move to top-most point of the tree"
+  "move to top-most point of the tree
+ 
+   (-> (zip/from-cursor '[1 2 [| 3 4]])
+       (move-top-most)
+       (zip/cursor))
+   => '(| [1 2 [3 4]])"
   {:added "2.4"}
   [zip]
   (if (top-most? zip)
@@ -296,7 +380,12 @@
     (recur (move-up zip))))
 
 (defn move-down
-  "move down from current position"
+  "move down from current position
+ 
+   (-> (zip/from-cursor '[1 2 | [3 4]])
+       (move-down)
+       (zip/cursor))
+   => '([1 2 [| 3 4]])"
   {:added "2.4"}
   ([zip]
    (cond (right-most? zip)
@@ -330,7 +419,12 @@
    (nth (iterate move-down zip) num)))
 
 (defn move-bottom-most
-  "move to bottom-most point of current branch"
+  "move to bottom-most point of current branch
+ 
+   (-> (zip/from-cursor '[1 2 | [[3] 4]])
+       (move-bottom-most)
+       (zip/cursor))
+   => '([1 2 [[| 3] 4]])"
   {:added "2.4"}
   [zip]
   (if (bottom-most? zip)
@@ -350,11 +444,10 @@
 (defn insert-left
   "insert element/s left of the current position
  
-   (-> (vector-zip [1 2 3])
-       (move-down)
+   (-> (zip/from-cursor '[1 2  [[| 3] 4]])
        (insert-left 1 2 3)
        (zip/cursor))
-   => '([1 2 3 | 1 2 3])"
+   => '([1 2 [[1 2 3 | 3] 4]])"
   {:added "2.4"}
   ([zip element]
    (cond (top-most? zip)
@@ -373,8 +466,7 @@
 (defn insert-right
   "insert element/s right of the current position
  
-   (-> (vector-zip [1 2 3])
-       (move-down)
+   (-> (zip/from-cursor '[| 1 2 3])
        (insert-right 1 2 3)
        (zip/cursor))
    => '([| 3 2 1 1 2 3])"
@@ -405,9 +497,7 @@
 (defn delete-left
   "delete element/s left of the current position
  
-   (-> (vector-zip [1 2 3])
-       (move-down)
-       (move-right 2)
+   (-> (zip/from-cursor '[1 2 | 3])
        (delete-left)
        (zip/cursor))
    => '([1 | 3])"
@@ -435,9 +525,7 @@
 (defn delete-right
   "delete element/s right of the current position
  
-   (-> (vector-zip [1 2 3])
-       (move-down)
-       (move-right 2)
+   (-> (zip/from-cursor '[1 2 | 3])
        (delete-right)
        (zip/cursor))
    => '([1 2 |])"
@@ -465,9 +553,7 @@
 (defn replace-left
   "replace element left of the current position
  
-   (-> (vector-zip [1 2 3])
-       (move-down)
-       (move-right 2)
+   (-> (zip/from-cursor '[1 2 | 3])
        (replace-left \"10\")
        (zip/cursor))
    => '([1 \"10\" | 3])"
@@ -489,9 +575,7 @@
 (defn replace-right
   "replace element right of the current position
  
-   (-> (vector-zip [1 2 3])
-       (move-down)
-       (move-right 2)
+   (-> (zip/from-cursor '[1 2 | 3])
        (replace-right \"10\")
        (zip/cursor))
    => '([1 2 | \"10\"])"

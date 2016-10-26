@@ -35,13 +35,14 @@
 (defn select
   "selects all the files in a directory
  
-   (->> (select \"../hara/src/hara/io/file\")
+   (->> (select \"../hara/src/hara/io/file\" )
         (map #(relativize \"../hara/src/hara\" %))
         (map str)
         (sort))
-   => [\"io/file/attribute.clj\"
-       \"io/file/common.clj\"
-      \"io/file/filter.clj\"
+   => [\"io/file\"
+       \"io/file/attribute.clj\"
+      \"io/file/common.clj\"
+       \"io/file/filter.clj\"
        \"io/file/option.clj\"
        \"io/file/path.clj\"
        \"io/file/reader.clj\"
@@ -119,11 +120,10 @@
 (defn copy
   "copies all specified files from one to another
  
-   (copy \"src\" \".src\" {:include [\".clj\"]})
-   
+   (copy \"src\" \".src\" {:include [\".clj\"]})  
    => map?
  
-   "
+   (delete \".src\")"
   {:added "2.4"}
   ([source target]
    (copy source target {}))
@@ -222,7 +222,7 @@
        (directory? \".hello/.world/.foo\"))
    => true
  
-   "
+   (delete \".hello/.world/.foo\")"
   {:added "2.4"}
   ([path]
    (create-directory path {}))
@@ -390,7 +390,8 @@
                 \"project.clj.bak\"
                 {:options #{:replace-existing}})
    ;;=> #path:\"/Users/chris/Development/chit/hara/project.clj.bak\"
-   "
+ 
+   (delete \"project.clj.bak\")"
   {:added "2.4"}
   ([source target]
    (copy-single source target {}))

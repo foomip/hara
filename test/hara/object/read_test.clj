@@ -36,8 +36,9 @@
 
 ^{:refer hara.object.read/to-data :added "2.3"}
 (fact "creates the object from a string or map"
+  
   (read/to-data "hello")
   => "hello"
   
   (read/to-data (write/from-map {:name "hello" :species "dog"} Pet))
-  => {:name "hello", :species "dog"})
+  => (contains {:name "hello"}))

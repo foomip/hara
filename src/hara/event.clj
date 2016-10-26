@@ -13,13 +13,25 @@
 (defonce ^:dynamic *issue-optmap* {})
 
 (defn clear-listeners
-  "empties all event listeners"
+  "empties all event listeners
+ 
+   (clear-listeners)
+   ;; all defined listeners will be cleared 
+   "
   {:added "2.2"}
   []
   (reset! *signal-manager* (common/manager)))
 
 (defn list-listeners
-  "shows all event listeners"
+  "shows all event listeners
+ 
+   (deflistener hello-listener :msg
+     [msg]
+     (str \"recieved \" msg))
+   
+   (list-listeners)
+   => (contains-in [{:id 'hara.event-test/hello-listener,
+                     :checker :msg}])"
   {:added "2.2"}
   ([]
    (common/list-handlers @*signal-manager*))
@@ -27,7 +39,16 @@
    (common/list-handlers @*signal-manager* checker)))
 
 (defn install-listener
-  "adds an event listener, use deflistener instead"
+  "adds an event listener, `deflistener` can also be used
+   
+   (install-listener 'hello
+                     :msg
+                     (fn [{:keys [msg]}]
+                       (str \"recieved \" msg)))
+ 
+   (list-listeners)
+   => (contains-in [{:id 'hello
+                     :checker :msg}])"
   {:added "2.2"}
   [id checker handler]
   (swap! *signal-manager*
@@ -36,21 +57,9 @@
 
 (defn uninstall-listener
   "installs a global signal listener
- 
-   (def ^:dynamic *global* (atom {}))
- 
-   (deflistener count-listener :log
-     [msg]
-     (swap! *global* update-in [:counts] (fnil #(conj % (count msg)) [])))
-   (uninstall-listener count-listener)
- 
-   (signal [:log {:msg \"Hello World\"}])
-   (raise  [:log {:msg \"How are you?\"}]
-           (option :nil [] nil)
-           (default :nil))
- 
-   @*global*
-   => {}"
+   
+   (uninstall-listener 'hello
+                       'hara.event-test/hello-listener)"
   {:added "2.2"}
   [id]
   (do (swap! *signal-manager* common/remove-handler id)
@@ -64,21 +73,18 @@
 (defmacro deflistener
   "installs a global signal listener
  
-   (def ^:dynamic *global* (atom {}))
+   (def ^:dynamic counts (atom {}))
  
    (deflistener count-listener :log
      [msg]
-     (swap! *global* update-in [:counts] (fnil #(conj % (count msg)) [])))
+     (swap! counts update-in [:counts] (fnil #(conj % (count msg)) [])))
  
    (signal [:log {:msg \"Hello World\"}])
-   (raise  [:log {:msg \"How are you?\"}]
-           (option :nil [] nil)
-           (default :nil))
  
-   @*global*
-   => {:counts [11 12]}
+   (signal [:log {:msg \"How are you?\"}])
  
-   "
+   @counts
+   => {:counts [11 12]}"
   {:added "2.2"}
   [name checker bindings & more]
   (let [sym    (str  (.getName *ns*) "/" name)
@@ -96,9 +102,8 @@
      e
      e)
  
-   (signal :anything) => '({:id hara.event-test/hello :result {:anything true}})
- 
-   "
+   (signal :anything)
+   => '({:id hara.event-test/hello :result {:anything true}})"
   {:added "2.2"}
   [data]
   `(let [ndata#   (common/expand-data ~data)]
@@ -108,7 +113,7 @@
 (defmacro continue
   "used within a manage form to continue on with a particular value
  
-   (manage [1 2 (raise {:error \"should be 3\"})]
+   (manage [1 2 (raise :error)]
            (on :error
                _
                (continue 3)))
@@ -157,7 +162,7 @@
            (on :error
                _
                (fail :failed)))
-   => (throws)"
+   => (throws-info {:error true})"
   {:added "2.2"}
   ([] {:type :fail :data {}})
   ([data]
@@ -170,7 +175,8 @@
            (on :error
                _
                (escalate :escalated)))
-   => (throws)"
+   => (throws-info {:error true
+                    :escalated true})"
   {:added "2.2"}
   [data & forms]
   (let [[data forms]
@@ -186,7 +192,8 @@
   "raise an issue, like throw but can be conditionally managed as well as automatically resolved:
  
    (raise  [:error {:msg \"A problem.\"}])
-   => (throws)
+   => (throws-info {:error true
+                    :msg \"A problem.\"})
  
    (raise [:error {:msg \"A resolvable problem\"}]
           (option :something [] 42)
@@ -208,7 +215,7 @@
 (defmacro manage
   "manages a raised issue, like try but is continuable:
  
-   (manage [1 2 (raise {:error \"should be 3\"})]
+   (manage [1 2 (raise :error)]
            (on :error
                _
                3))

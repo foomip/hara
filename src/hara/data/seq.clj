@@ -2,6 +2,7 @@
 
 (defn positions
   "find positions of elements matching the predicate
+ 
    (positions even? [5 5 4 4 3 3 2 2])
    => [2 3 6 7]"
   {:added "2.2"}
@@ -13,6 +14,7 @@
 
 (defn remove-index
   "removes element at the specified index
+ 
    (remove-index [:a :b :c :d] 2)
    => [:a :b :d]"
   {:added "2.2"}

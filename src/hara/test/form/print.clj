@@ -5,7 +5,8 @@
             [clojure.string :as string]))
 
 (defn print-success
-  "" [{:keys [name ns line desc form check] :as summary}]
+  ""
+  [{:keys [name ns line desc form check] :as summary}]
   (let [name (if name (str name " @ ") "")
         file (-> (string/split (str ns) #"\.") last munge (str ".clj"))
         line (if line (str ":" line) "")]
@@ -17,7 +18,8 @@
           (str "\n   " (ansii/white "Check") "  " check)))))
 
 (defn print-failure
-  "" [{:keys [name ns line desc form check actual] :as summary}]
+  ""
+  [{:keys [name ns line desc form check actual] :as summary}]
   (let [name (if name (str name " @ ") "")
         file (-> (string/split (str ns) #"\.") last munge (str ".clj"))
         line (if line (str ":" line) "")]
@@ -32,7 +34,8 @@
                                                     actual))))))
 
 (defn print-thrown
-  "" [{:keys [name ns line desc form] :as summary}]
+  ""
+  [{:keys [name ns line desc form] :as summary}]
   (let [name (if name (str name " @ ") "")
         file (-> (string/split (str ns) #"\.") last munge (str ".clj"))
         line (if line (str ":" line) "")]
@@ -43,7 +46,8 @@
           (str "\n    " (ansii/white "Form") "  " form)))))
 
 (defn print-fact
-  "" [{:keys [name ns line desc refer] :as meta}  results]
+  ""
+  [{:keys [name ns line desc refer] :as meta}  results]
   (let [name   (if name (str name " @ ") "")
         file   (-> (string/split (str ns) #"\.") last munge (str ".clj"))
         line   (if line (str ":" line) "")
@@ -71,7 +75,8 @@
               ""))))))
 
 (defn print-summary
-  "" [{:keys [files thrown facts checks passed failed] :as result}]
+  ""
+  [{:keys [files thrown facts checks passed failed] :as result}]
   (let [npassed (count passed)
         nchecks (count checks)
         nfailed (count failed)

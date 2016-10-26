@@ -216,11 +216,11 @@
 (defn clean-nested
   "Returns a associative with nils and empty hash-maps removed.
  
-    (clean-nested {:a {:b {:c {}}}})
-    => {}
+   (clean-nested {:a {:b {:c {}}}})
+   => {}
  
-    (clean-nested {:a {:b {:c {} :d 1 :e nil}}})
-    => {:a {:b {:d 1}}}"
+   (clean-nested {:a {:b {:c {} :d 1 :e nil}}})
+   => {:a {:b {:d 1}}}"
   {:added "2.1"}
   ([m] (clean-nested m (constantly false)))
   ([m prchk]

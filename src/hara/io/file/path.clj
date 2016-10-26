@@ -34,20 +34,31 @@
         :else s))
 
 (defn path
-  "returns a java.nio.file.Path object
+  "creates a `java.nio.file.Path object
+   
+  (path \"project.clj\")
+  ;;=> #path:\"/Users/chris/Development/chit/hara/project.clj\"
  
-   (str (path \"~\"))
-   => common/*home*
+  (path (path \"project.clj\"))       ;; idempotent
+  ;;=> #path:\"/Users/chris/Development/chit/hara/project.clj\"
  
-   (str (path \"~/../shared/data\"))
-   => (str (->> (re-pattern common/*sep*)
-                (string/split common/*home*)
-                (butlast)
-                (string/join \"/\"))
-           \"/shared/data\")
+  (path \"~\")                       ;; tilda
+  ;;=> #path:\"/Users/chris\"
+  
+  (path \"src\" \"hara/time.clj\")      ;; multiple arguments
+  ;;=> #path:\"/Users/chris/Development/chit/hara/src/hara/time.clj\"
  
-   (str (path [\"hello\" \"world.txt\"]))
-   => (str common/*cwd* \"/hello/world.txt\")"
+  (path [\"src\" \"hara\" \"time.clj\"])  ;; vector 
+  ;;=> #path:\"/Users/chris/Development/chit/hara/src/hara/time.clj\"
+ 
+  (path (java.io.File.              ;; java.io.File object 
+         \"src/hara/time.clj\"))
+  ;;=> #path:\"/Users/chris/Development/chit/hara/src/hara/time.clj\"
+ 
+  (path (java.net.URI.              ;; java.net.URI object 
+         \"file:///Users/chris/Development/chit/hara/project.clj\"))
+  ;;=> #path:\"/Users/chris/Development/chit/hara/project.clj\"
+  "
   {:added "2.4"}
   ([x]
    (cond (instance? Path x)
@@ -80,10 +91,13 @@
   (instance? Path x))
 
 (defn section
-  "creates a path object without normalisation
+  "path object without normalisation
  
-   (str (section \"home\"))
-   => \"home\""
+   (str (section \"project.clj\"))
+   => \"project.clj\"
+   
+   (str (section \"src\" \"hara/time.clj\"))
+   => \"src/hara/time.clj\""
   {:added "2.4"}
   ([s & more]
    (Paths/get s (into-array String more))))
@@ -99,8 +113,9 @@
 (defn to-file
   "creates a java.io.File object
  
-   (str (to-file (section \"home\")))
-   => \"home\""
+   (to-file (section \"project.clj\"))
+   => (all java.io.File
+           #(-> % str (= \"project.clj\")))"
   {:added "2.4"}
   [^Path path]
   (.toFile path))

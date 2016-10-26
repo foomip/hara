@@ -18,8 +18,7 @@
 (defn node
   "accesses the node directly right of the cursor
  
-   (-> (vector-zip [1 2 3])
-       (find-next even?)
+   (-> (from-cursor [1 '| 2 3])
        (node))
    => 2"
   {:added "2.4"}
@@ -27,25 +26,49 @@
   (base/right-node zip))
 
 (defn left
-  "move cursor left"
+  "move cursor left
+   
+   (-> (from-cursor [1 '| 2 3])
+       (left)
+       (cursor))
+   => '([| 1 2 3])"
   {:added "2.4"}
   [zip]
   (base/move-left zip))
 
 (defn right
-  "move cursor right"
+  "move cursor right
+   (-> (from-cursor [1 '| 2 3])
+       (right)
+       (cursor))
+   => '([1 2 | 3])"
   {:added "2.4"}
   [zip]
   (base/move-right zip))
 
 (defn up
-  "move cursor up"
+  "move cursor up
+   
+   (-> (from-cursor [1 '| 2 3])
+       (up)
+       (cursor))
+   => '(| [1 2 3])
+ 
+   (-> (from-cursor [1 [['| 2] 3]])
+       (up)
+       (cursor))
+   => '([1 [| [2] 3]])"
   {:added "2.4"}
   [zip]
   (base/move-up zip))
 
 (defn down
-  "move cursor down"
+  "move cursor down
+ 
+   (-> (from-cursor '[1 [| [2] 3]])
+       (down)
+       (cursor))
+   => '([1 [[| 2] 3]])"
   {:added "2.4"}
   [zip]
   (base/move-down zip))
@@ -138,12 +161,11 @@
 (defn next
   "move cursor through the tree in depth first order
    
-   (->> (vector-zip [1 [2 [6 7] 3] [4 5]])
+   (->> (from-cursor '[| 1 [2 [6 7] 3] [4 5]])
         (iterate next)
-        (drop 1)
-        (take 11)
+        (take-while identity)
         (map node))
-   => '(1 [2 [6 7] 3] 2 [6 7] 6 7 3 [4 5] 4 5 nil)"
+   => '(1 [2 [6 7] 3] 2 [6 7] 6 7 3 [4 5] 4 5)"
   {:added "2.4"}
   [zip]
   (cond (nil? zip) nil
@@ -173,8 +195,7 @@
 (defn prev
   "move cursor in reverse through the tree in depth first order
  
-   (->> (vector-zip [1 [2 [6 7] 3] [4 5]])
-        (end)
+   (->> (from-cursor '[1 [2 [6 7] 3] [4 | 5]])
         (iterate prev)
         (take 10)
         (map node))
@@ -204,8 +225,7 @@
    (-> (vector-zip [1 [2 [6 7] 3] [4 5]])
        (find-next #(= 7 %))
        (cursor))
-   => '([1 [2 [6 | 7] 3] [4 5]])
-   "
+   => '([1 [2 [6 | 7] 3] [4 5]])"
   {:added "2.4"}
   [zip pred]
   (->> (iterate next zip)
@@ -218,8 +238,7 @@
 (defn find-prev
   "move cursor through the tree in reverse order to the last matching element
  
-   (-> (vector-zip [1 [2 [6 7] 3] [4 5]])
-       (find-next #(= 7 %))
+   (-> (from-cursor '[1 [2 [6 | 7] 3] [4 5]])
        (find-prev even?)
        (cursor))
    => '([1 [2 [| 6 7] 3] [4 5]])"
@@ -232,7 +251,13 @@
                      (catch Throwable t)))
        (first)))
 
-(defn from-cursor [arr]
+(defn from-cursor
+  "returns a zipper given a data structure with | as the cursor
+ 
+   (from-cursor '[1 2 3 | 4])
+   => (contains {:left '(3 2 1),
+                 :right '(4)})"
+  {:added "2.4"} [arr]
   (-> (vector-zip arr)
       (find-next  #(= '| %))
       (delete-right)))

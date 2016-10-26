@@ -11,7 +11,7 @@
     {:id-fn (constantly :hello)}
     [])
    => :hello"
-  {:added "2.2"} 
+  {:added "2.2"}
   [f]
   (fn [instance args]
     (let [instance (update-in instance [:id]
@@ -155,14 +155,18 @@
                     :id :1
                     :handler (fn [] (Thread/sleep 1000000000))} []))
  
-       (map :id (registry/list-instances registry/*default-registry* \"hello\")))
+       (map :id (registry/list-instances
+                 registry/*default-registry*
+                 \"hello\")))
    => '(:1)
  
    (do ((procedure {:name \"hello\"
                     :id :1
                     :interrupt true
                     :handler (fn [] :FAST)} []))
-       (map :id (registry/list-instances registry/*default-registry* \"hello\")))
+       (map :id (registry/list-instances
+                registry/*default-registry*
+                 \"hello\")))
    => ()"
   {:added "2.2"}
   [f]

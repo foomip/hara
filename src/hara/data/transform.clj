@@ -8,7 +8,7 @@
   "creates the id for a relation
  
    (template-rel [:authority :username])
-   => :<authority/username>"
+   = :authority/username"
   {:added "2.4"}
   [v]
   (->> (map name v)
@@ -21,8 +21,8 @@
    (forward-rel {:authority {:username [:user]
                              :password [:pass]}})
    
-   => {:authority {:username :<authority/username>,
-                   :password :<authority/password>}}"
+   = {:authority {:username :authority/username,
+                  :password :authority/password}}"
   {:added "2.4"}
   ([trans] (forward-rel trans [] {}))
   ([trans kv out]
@@ -41,7 +41,7 @@
    
    (backward-rel {:authority {:username [:user]
                               :password [:pass]}})
-   => {:user :<authority/username>, :pass :<authority/password>}"
+   = {:user :authority/username, :pass :authority/password}"
   {:added "2.4"}
   ([trans] (backward-rel trans [] {}))
   ([trans kv out]
@@ -58,10 +58,10 @@
 (defn collect
   "collects nested keys for transform
    
-   (collect {:authority {:username :<authority/username>,
-                         :password :<authority/password>}})
-   => {:<authority/username> [:authority :username],
-       :<authority/password> [:authority :password]}"
+   (collect {:authority {:username :authority/username,
+                         :password :authority/password}})
+   = {:authority/username [:authority :username],
+       :authority/password [:authority :password]}"
   {:added "2.4"}
   ([m] (collect m [] {}))
   ([m kv out]
@@ -79,8 +79,8 @@
  
    (relation {:authority {:username [:user]
                           :password [:pass]}})
-   => {:<authority/username> [[:authority :username] [:user]],
-       :<authority/password> [[:authority :password] [:pass]]}"
+   = {:authority/username [[:authority :username] [:user]],
+       :authority/password [[:authority :password] [:pass]]}"
   {:added "2.4"}
   [trans]
   (let [rel [(forward-rel trans)
@@ -92,9 +92,9 @@
   "applies the relation to a map
  
    (apply {:user \"chris\" :pass \"hello\"}
-          {:<authority/username> [[:authority :username] [:user]],
-           :<authority/password> [[:authority :password] [:pass]]})
-   => {:authority {:username \"chris\", :password \"hello\"}}"
+          {:authority/username [[:authority :username] [:user]],
+           :authority/password [[:authority :password] [:pass]]})
+   = {:authority {:username \"chris\", :password \"hello\"}}"
   {:added "2.4"}
   [m rel]
   (reduce-kv (fn [out k [to from]]
@@ -109,9 +109,9 @@
   "retracts the relation from the map
  
    (retract {:authority {:username \"chris\", :password \"hello\"}}
-            {:<authority/username> [[:authority :username] [:user]],
-             :<authority/password> [[:authority :password] [:pass]]})
-   => {:user \"chris\" :pass \"hello\"}"
+            {:authority/username [[:authority :username] [:user]],
+             :authority/password [[:authority :password] [:pass]]})
+   = {:user \"chris\" :pass \"hello\"}"
   {:added "2.4"}
   [m rel]
   (reduce-kv (fn [out k [to from]]

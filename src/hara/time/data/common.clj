@@ -44,7 +44,13 @@
     (.setTime date)))
 
 (defn default-type
-  "accesses the default type for datetime"
+  "accesses the default type for datetime
+   
+   (default-type) ;; getter
+   => clojure.lang.PersistentArrayMap
+ 
+   (default-type Long) ;; setter
+   => java.lang.Long"
   {:added "2.2"}
   ([] *default-type*)
   ([cls]
@@ -52,13 +58,22 @@
                    (constantly cls))))
 
 (defn local-timezone
-  "returns the current timezone as a string"
+  "returns the current timezone as a string
+ 
+   (local-timezone)
+   => \"Asia/Ho_Chi_Minh\""
   {:added "2.2"}
   []
   (.getID (TimeZone/getDefault)))
 
 (defn default-timezone
-  "accesses the default timezone as a string"
+  "accesses the default timezone as a string
+          
+   (default-timezone)  ;; getter
+   => \"Asia/Ho_Chi_Minh\"
+ 
+   (default-timezone \"GMT\")  ;; setter
+   => \"GMT\""
   {:added "2.2"}
   ([]
    (or *default-timezone*
