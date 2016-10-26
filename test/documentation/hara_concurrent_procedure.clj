@@ -158,50 +158,60 @@
 
 "We can look at the function's execution through it's `:runtime` and `:registry` keys. We can reuse the previous definition of `hello` to create two long running functions:"
 
-(def a (hello {:name "hello" :sleep 100000 :mode :async :id "instance-a"}))
-(def b (hello {:name "hello" :sleep 100000 :mode :async :id "instance-b"}))
+(comment
+  (def a (hello {:name "hello" :sleep 100000 :mode :async :id "instance-a"}))
+  (def b (hello {:name "hello" :sleep 100000 :mode :async :id "instance-b"})))
 
 "Now that we have the instances of execution, we can view when it has been started:"
-
-(:runtime a)
-;; => #<Atom@9cab002: {:started #inst "2015-12-10T05:56:17.685-00:00"}>
-
+(comment
+  (:runtime a)
+  ;; => #<Atom@9cab002: {:started #inst "2015-12-10T05:56:17.685-00:00"}>
+  )
 "As well as access all running instances through a global registry:"
 
-(:registry a)
-;; => #reg {"hello" ("instance-b" "instance-a")}
+(comment
+  (:registry a)
+  ;; => #reg {"hello" ("instance-b" "instance-a")}
+  )
 
 "We can stop the execution of `instance a`:"
 
-(comment (require '[hara.concurrent.procedure.registry :as registry]))
+(comment
+  (require '[hara.concurrent.procedure.registry :as registry])
 
-(registry/kill (:registry a) "hello" "instance-a")
-;; => true
+  (registry/kill (:registry a) "hello" "instance-a")
+  ;; => true
+  )
 
 "A check will reveal that `instance b` is still running"
 
-(:registry a)
-;; => #reg {"hello" ("instance-b")}
+(comment
+  (:registry a)
+  ;; => #reg {"hello" ("instance-b")}
+)
 
 "`instance-b` is accessible from `instance-a`:"
 
-(-> a :registry deref (get "hello") (get "instance-b"))
-;; => #proc[instance-b]{:args (nil),
-;; :input ({:name "hello", :mode :async, :id "instance-b", :sleep 100000}), :mode :async,
-;; :runtime {:started #inst "2015-12-10T06:02:21.752-00:00"},
-;; :interrupt false, :timestamp #inst "2015-12-10T06:02:21.752-00:00",
-;; :result :waiting, :name "hello"}
+(comment
+  (-> a :registry deref (get "hello") (get "instance-b"))
+  ;; => #proc[instance-b]{:args (nil),
+  ;; :input ({:name "hello", :mode :async, :id "instance-b", :sleep 100000}), :mode :async,
+  ;; :runtime {:started #inst "2015-12-10T06:02:21.752-00:00"},
+  ;; :interrupt false, :timestamp #inst "2015-12-10T06:02:21.752-00:00",
+  ;; :result :waiting, :name "hello"}
+  )
 
 "As well as to be killed from from `instance-a`:"
 
-(registry/kill (:registry a) "hello" "instance-b")
-;; => true
+(comment
+  (registry/kill (:registry a) "hello" "instance-b")
+  ;; => true
+)
 
-""
-
-(:registry a)
+(comment
+  (:registry a)
 ;; => #reg {}
-
+)
 "This is very useful for coordinating strategies between execution instances."
 
 [[:section {:title "Identity and Caching"}]]

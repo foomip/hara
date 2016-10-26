@@ -3,6 +3,11 @@ All notable changes to this project will be documented in this file. This change
 
 ## Versions
 
+## 2.4.7
+- updated docs
+- fixes to scheduler, procedure
+- added function and tests for zip
+
 ## 2.4.6
 - integrated hara.time.joda
 - fix for hara.io.watch - https://github.com/zcaudate/hara/issues/27 
