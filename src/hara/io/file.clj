@@ -7,15 +7,39 @@
              [reader :as reader]
              [walk :as walk]]
             [hara.namespace.import :as ns]
+            [clojure.string :as string]
             [hara.string.case :as case])
-  (:import (java.nio.file CopyOption DirectoryNotEmptyException Files FileSystems LinkOption Path)
-           (java.nio.file.attribute FileAttribute FileTime PosixFilePermissions))
+  (:import (java.nio.file CopyOption
+                          DirectoryNotEmptyException
+                          Files
+                          FileSystems
+                          LinkOption
+                          OpenOption
+                          Path)
+           (java.nio.file.attribute FileAttribute
+                                    FileTime
+                                    PosixFilePermissions))
   (:refer-clojure :exclude [list]))
 
 (ns/import hara.io.file.path [section path path? to-file]
            hara.io.file.attribute [attributes set-attributes]
            hara.io.file.reader [reader-types]
            hara.io.file.option [option])
+
+(defn file-type
+  "encodes the type of file as a keyword
+ 
+   (file-type \"hello.clj\")
+   => :clj
+ 
+   (file-type \"hello.java\")
+   => :java"
+  {:added "1.2"}
+  [file]
+  (-> (str file)
+      (string/split #"\.")
+      last
+      keyword))
 
 (defn reader
   "creates a reader for a given input
@@ -31,6 +55,99 @@
    (reader type input {}))
   ([type input opts]
    (reader/reader type input opts)))
+
+
+(defn directory?
+  "checks whether a file is a directory
+ 
+   (directory? \"src\")
+   => true
+ 
+   (directory? \"project.clj\")
+   => false"
+  {:added "2.4"}
+  [path]
+  (Files/isDirectory (path/path path) common/*no-follow*))
+
+(defn executable?
+  "checks whether a file is executable
+ 
+   (executable? \"project.clj\")
+   => false
+ 
+   (executable? \"/usr/bin/whoami\")
+   => true"
+  {:added "2.4"}
+  [path]
+  (Files/isExecutable (path/path path)))
+
+(defn exists?
+  "checks whether a file exists
+ 
+   (exists? \"project.clj\")
+   => true
+ 
+   (exists? \"NON.EXISTENT\")
+   => false"
+  {:added "2.4"}
+  [path]
+  (Files/exists (path/path path) common/*no-follow*))
+
+(defn hidden?
+  "checks whether a file is hidden
+ 
+   (hidden? \".gitignore\")
+   => true
+ 
+   (hidden? \"project.clj\")
+   => false"
+  {:added "2.4"}
+  [path]
+  (Files/isHidden (path/path path)))
+
+(defn file?
+  "checks whether a file is not a link or directory
+ 
+   (file? \"project.clj\")
+   => true
+ 
+   (file? \"src\")
+   => false"
+  {:added "2.4"}
+  [path]
+  (Files/isRegularFile (path/path path) common/*no-follow*))
+
+(defn link?
+  "checks whether a file is a link
+ 
+   (link? \"project.clj\")
+   => false
+ 
+   (delete \"project.bak.clj\")
+   (link? (create-symlink \"project.bak.clj\"
+                          \"project.clj\"))
+   => true"
+  {:added "2.4"}
+  [path]
+  (Files/isSymbolicLink (path/path path)))
+
+(defn readable?
+  "checks whether a file is readable
+ 
+   (readable? \"project.clj\")
+   => true"
+  {:added "2.4"}
+  [path]
+  (Files/isReadable (path/path path)))
+
+(defn writable?
+  "checks whether a file is writable
+ 
+   (writable? \"project.clj\")
+   => true"
+  {:added "2.4"}
+  [path]
+  (Files/isWritable (path/path path)))
 
 (defn select
   "selects all the files in a directory
@@ -176,6 +293,11 @@
                         :accumulate #{}}
                        opts)))))
 
+(defn empty-directory?
+  "" [path]
+  (and (directory? path)
+       (= 1 (count (list path)))))
+
 (defn move
   "moves a file or directory
  
@@ -205,14 +327,14 @@
          results (walk/walk source
                             (merge {:target (path/path target)
                                     :recursive true
-                                    :directory (fn [{:keys [path]}]
-                                                   (prn path))
+                                    :directory {:post (fn [{:keys [path]}]
+                                                        (if (empty-directory? path)
+                                                          (delete path opts)))}
                                     :file move-fn
                                     :with #{:root}
                                     :accumulator (atom {})
                                     :accumulate #{}}
                                    opts))]
-     (delete source opts)
      results)))
 
 (defn create-directory
@@ -277,98 +399,6 @@
   [path1 path2]
   (.relativize (path/path path1) (path/path path2)))
 
-(defn directory?
-  "checks whether a file is a directory
- 
-   (directory? \"src\")
-   => true
- 
-   (directory? \"project.clj\")
-   => false"
-  {:added "2.4"}
-  [path]
-  (Files/isDirectory (path/path path) common/*no-follow*))
-
-(defn executable?
-  "checks whether a file is executable
- 
-   (executable? \"project.clj\")
-   => false
- 
-   (executable? \"/usr/bin/whoami\")
-   => true"
-  {:added "2.4"}
-  [path]
-  (Files/isExecutable (path/path path)))
-
-(defn exists?
-  "checks whether a file exists
- 
-   (exists? \"project.clj\")
-   => true
- 
-   (exists? \"NON.EXISTENT\")
-   => false"
-  {:added "2.4"}
-  [path]
-  (Files/exists (path/path path) common/*no-follow*))
-
-(defn hidden?
-  "checks whether a file is hidden
- 
-   (hidden? \".gitignore\")
-   => true
- 
-   (hidden? \"project.clj\")
-   => false"
-  {:added "2.4"}
-  [path]
-  (Files/isHidden (path/path path)))
-
-(defn file?
-  "checks whether a file is not a link or directory
- 
-   (file? \"project.clj\")
-   => true
- 
-   (file? \"src\")
-   => false"
-  {:added "2.4"}
-  [path]
-  (Files/isRegularFile (path/path path) common/*no-follow*))
-
-(defn link?
-  "checks whether a file is a link
- 
-   (link? \"project.clj\")
-   => false
- 
-   (delete \"project.bak.clj\")
-   (link? (create-symlink \"project.bak.clj\"
-                          \"project.clj\"))
-   => true"
-  {:added "2.4"}
-  [path]
-  (Files/isSymbolicLink (path/path path)))
-
-(defn readable?
-  "checks whether a file is readable
- 
-   (readable? \"project.clj\")
-   => true"
-  {:added "2.4"}
-  [path]
-  (Files/isReadable (path/path path)))
-
-(defn writable?
-  "checks whether a file is writable
- 
-   (writable? \"project.clj\")
-   => true"
-  {:added "2.4"}
-  [path]
-  (Files/isWritable (path/path path)))
-
 (defn code
   "takes a file and returns a lazy seq of top-level forms
  
@@ -396,6 +426,7 @@
   ([source target]
    (copy-single source target {}))
   ([source target opts]
+   (create-directory (parent target))
    (Files/copy ^Path (path/path source)
                ^Path (path/path target)
                (->> (:options opts)
@@ -417,3 +448,29 @@
                (->> (:options opts)
                     (mapv option/option)
                     (into-array CopyOption)))))
+
+(defn input-stream
+  "opens a file as an input-stream
+ 
+   (input-stream \"project.clj\")"
+  {:added "2.4"}
+  ([path]
+   (input-stream path {}))
+  ([path opts]
+   (Files/newInputStream (path/path path)
+                         (->> (:options opts)
+                              (mapv option/option)
+                              (into-array OpenOption)))))
+
+(defn output-stream
+  "opens a file as an output-stream
+ 
+   (output-stream \"project.clj\")"
+  {:added "2.4"}
+  ([path]
+   (output-stream path {}))
+  ([path opts]
+   (Files/newOutputStream (path/path path)
+                          (->> (:options opts)
+                               (mapv option/option)
+                               (into-array OpenOption)))))

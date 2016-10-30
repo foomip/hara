@@ -3,6 +3,15 @@
   (:require [hara.io.file :refer :all])
   (:refer-clojure :exclude [list]))
 
+^{:refer hara.io.file/file-type :added "1.2"}
+(fact "encodes the type of file as a keyword"
+
+  (file-type "hello.clj")
+  => :clj
+
+  (file-type "hello.java")
+  => :java)
+
 ^{:refer hara.io.file/reader :added "2.4"}
 (fact "creates a reader for a given input"
 
@@ -219,3 +228,13 @@
   (-> (java.io.FileInputStream. "project.clj")
       (write "project.clj"
              {:options #{:replace-existing}})))
+
+^{:refer hara.io.file/input-stream :added "2.4"}
+(comment "opens a file as an input-stream"
+
+  (input-stream "project.clj"))
+
+^{:refer hara.io.file/output-stream :added "2.4"}
+(comment "opens a file as an output-stream"
+
+  (output-stream "project.clj"))

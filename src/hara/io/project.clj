@@ -9,9 +9,14 @@
    (let [path  (fs/path path)
          root  (.getParent path)
          pform (read-string (slurp (str path)))
-         [_ name version] (take 3 pform)
+         [_ full version] (take 3 pform)
+         [label group] (if-let [nsp (namespace full)]
+                         [nsp (name full)]
+                         [full full])
          proj  (->> (drop 3 pform)
-                    (concat [:name name
+                    (concat [:full full
+                             :name label
+                             :group group
                              :version version
                              :root (str root)])
                     (apply hash-map))

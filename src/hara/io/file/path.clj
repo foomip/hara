@@ -79,7 +79,7 @@
          :else
          (throw (Exception. (format "Input %s is not of the correct format" x)))))
   ([s & more]
-   (.normalize (Paths/get (normalise (str s)) (into-array String more)))))
+   (.normalize (Paths/get (normalise (str s)) (into-array String (map str more))))))
 
 (defn path?
   "checks to see if the object is of type Path

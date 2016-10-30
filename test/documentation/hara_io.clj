@@ -12,6 +12,16 @@
 
 [[:api {:namespace "hara.io.ansii" :title ""}]]
 
+[[:chapter {:title "io.archive" :link "hara.io.archive"}]]
+
+"Add to `project.clj` dependencies:
+
+    [im.chit/hara.io.archive \"{{PROJECT.version}}\"]
+
+**hara.io.archive** allows an easy interface for working with zip files"
+
+[[:api {:namespace "hara.io.archive" :title ""}]]
+
 [[:chapter {:title "io.classloader" :link "hara.io.classloader"}]]
 
 "Add to `project.clj` dependencies:
@@ -21,7 +31,6 @@
 **hara.io.classloader** provides an easier interface for working with jvm classloaders"
 
 [[:api {:namespace "hara.io.classloader" :title ""}]]
-
 
 [[:chapter {:title "io.environment" :link "hara.io.environment"}]]
 

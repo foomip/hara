@@ -39,3 +39,11 @@
                      (:title m)
                      (:title m)
                      (:subtitle m)))))
+
+(comment
+  (def PROJ (hara.io.project/project "/Users/chris/Development/chit/hara/project.clj"))
+
+  (./import 'hara.io.file PROJ)
+  (./import 'hara.io.archive PROJ)
+  (publish/publish)
+  (./publish  "hara-io" {} PROJ))
