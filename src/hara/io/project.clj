@@ -10,12 +10,12 @@
          root  (.getParent path)
          pform (read-string (slurp (str path)))
          [_ full version] (take 3 pform)
-         [label group] (if-let [nsp (namespace full)]
-                         [nsp (name full)]
-                         [full full])
+         group    (or (namespace full)
+                      (str full))
+         artifact (name full)
          proj  (->> (drop 3 pform)
-                    (concat [:full full
-                             :name label
+                    (concat [:name full
+                             :artifact artifact
                              :group group
                              :version version
                              :root (str root)])

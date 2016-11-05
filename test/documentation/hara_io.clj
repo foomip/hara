@@ -32,6 +32,16 @@
 
 [[:api {:namespace "hara.io.classloader" :title ""}]]
 
+[[:chapter {:title "io.classpath" :link "hara.io.classpath"}]]
+
+"Add to `project.clj` dependencies:
+
+    [im.chit/hara.io.classpath \"{{PROJECT.version}}\"]
+
+**hara.io.classpath** provides allows resolution and searching of classes"
+
+[[:api {:namespace "hara.io.classpath" :title ""}]]
+
 [[:chapter {:title "io.environment" :link "hara.io.environment"}]]
 
 "Add to `project.clj` dependencies:

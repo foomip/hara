@@ -426,7 +426,9 @@
   ([source target]
    (copy-single source target {}))
   ([source target opts]
-   (create-directory (parent target))
+   (if-let [dir (parent target)]
+     (if-not (exists? dir)
+       (create-directory dir)))
    (Files/copy ^Path (path/path source)
                ^Path (path/path target)
                (->> (:options opts)

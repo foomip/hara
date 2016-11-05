@@ -2,7 +2,7 @@
   :description "patterns and utilities"
   :url "https://github.com/zcaudate/hara"
   :license {:name "The MIT License"
-            :url "http://http://opensource.org/licenses/MIT"}
+            :url "http://opensource.org/licenses/MIT"}
   :dependencies [[org.clojure/clojure "1.8.0"]]
   :aliases {"test" ["run" "-m" "hara.test" "exit"]}
   :profiles {:dev {:dependencies [[compojure "1.4.0"]

@@ -29,6 +29,8 @@
   (publish/publish "hara-time" {} PROJECT)
   (publish/publish "hara-event" {} PROJECT)
   (publish/publish "index" {} PROJECT)
+
+  (./doc ./import)
   
   (doseq [m (map second (-> PROJECT
                             :publish
@@ -45,5 +47,9 @@
 
   (./import 'hara.io.file PROJ)
   (./import 'hara.io.archive PROJ)
+  (./import 'hara.io.classpath.artifact PROJECT)
+  (./import 'hara.io.classpath PROJECT)
+  (./import 'hara.io.classpath.search PROJECT)
+  (./import 'hara.io.classpath.common PROJECT)
   (publish/publish)
   (./publish  "hara-io" {} PROJ))
