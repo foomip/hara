@@ -1,6 +1,7 @@
 (ns hara.io.archive-test
   (:use hara.test)
-  (:require [hara.io.archive :refer :all]))
+  (:require [hara.io.archive :refer :all])
+  (:refer-clojure :exclude [list remove]))
 
 ^{:refer hara.io.archive/open :added "2.4"}
 (comment "either opens an existing archive or creates one if it doesn't exist"

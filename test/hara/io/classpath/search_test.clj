@@ -24,7 +24,7 @@
   => ("<.m2>/org/eclipse/aether/aether-api/1.1.0/aether-api-1.1.0.jar"))
 
 ^{:refer hara.io.classpath.search/class-seq :added "2.4"}
-(fact "creates a sequence of class names"
+(comment "creates a sequence of class names"
 
   (-> (all-jars '[org.eclipse.aether/aether-api "1.1.0"])
       (class-seq)
