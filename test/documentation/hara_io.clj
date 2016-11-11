@@ -38,9 +38,19 @@
 
     [im.chit/hara.io.classpath \"{{PROJECT.version}}\"]
 
-**hara.io.classpath** provides allows resolution and searching of classes"
+**hara.io.classpath** allows resolution and searching of classes"
 
 [[:api {:namespace "hara.io.classpath" :title ""}]]
+
+[[:chapter {:title "io.encode" :link "hara.io.encode"}]]
+
+"Add to `project.clj` dependencies:
+
+    [im.chit/hara.io.encode \"{{PROJECT.version}}\"]
+
+**hara.io.encode** allows encoding of bytes to hex and base64 formats"
+
+[[:api {:namespace "hara.io.encode" :title ""}]]
 
 [[:chapter {:title "io.environment" :link "hara.io.environment"}]]
 

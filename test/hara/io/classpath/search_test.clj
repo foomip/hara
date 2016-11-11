@@ -1,6 +1,8 @@
 (ns hara.io.classpath.search-test
   (:use hara.test)
-  (:require [hara.io.classpath.search :refer :all]
+  (:require [hara.io.classpath
+             [artifact :as artifact]
+             [search :refer :all]]
             [hara.io.classloader :as cls]
             [hara.io.archive :as archive]))
 
@@ -29,13 +31,23 @@
       (count))
   => 128)
 
+^{:refer hara.io.classpath.search/search-match :added "2.4"}
+(fact "constructs a matching function for filtering"
+
+  ((search-match #"hello") "hello.world")
+  => true
+
+  ((search-match java.util.List) java.util.ArrayList)
+  => true)
+
 ^{:refer hara.io.classpath.search/search :added "2.4"}
 (comment "searches a pattern for class names"
 
   (->> (.getURLs cls/+base+)
-       (map #(.getFile %))
+       (map #(-> % str (subs (count "file:"))))
        (filter #(.endsWith % "jfxrt.jar"))
-       (apply search #"^javafx.*[^\.]Builder$")
+       (class-seq)
+       (search [#"^javafx.*[A-Za-z0-9]Builder$"])
        (take 5))
   => (javafx.animation.AnimationBuilder
       javafx.animation.FadeTransitionBuilder

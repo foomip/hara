@@ -3,7 +3,7 @@
   (:require [hara.io.file :refer :all])
   (:refer-clojure :exclude [list]))
 
-^{:refer hara.io.file/file-type :added "1.2"}
+^{:refer hara.io.file/file-type :added "2.4"}
 (fact "encodes the type of file as a keyword"
 
   (file-type "hello.clj")

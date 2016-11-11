@@ -48,7 +48,7 @@
   (./import 'hara.io.file PROJ)
   (./import 'hara.io.archive PROJ)
   (./import 'hara.io.classpath.artifact PROJECT)
-  (./import 'hara.io.classpath PROJECT)
+  (./import 'hara.io.classpath PROJ)
   (./import 'hara.io.classpath.search PROJECT)
   (./import 'hara.io.classpath.common PROJECT)
   (publish/publish)

@@ -1,4 +1,4 @@
-(defproject im.chit/hara "2.4.7"
+(defproject im.chit/hara "2.4.8"
   :description "patterns and utilities"
   :url "https://github.com/zcaudate/hara"
   :license {:name "The MIT License"
@@ -100,6 +100,10 @@
                     {:input "test/documentation/hara_reflect.clj"
                      :title "reflect"
                      :subtitle "java reflection made easy"}
+                    "hara-security"
+                    {:input "test/documentation/hara_security.clj"
+                     :title "security"
+                     :subtitle "cryptography that makes sense"}
                     "hara-sort"
                     {:input "test/documentation/hara_sort.clj"
                      :title "sort"
@@ -127,4 +131,4 @@
   :repack [{:type :clojure
             :levels 2
             :path "src"
-            :standalone #{"event" "reflect" "time" "object" "test" "zip"}}])
+            :standalone #{"event" "reflect" "time" "object" "security" "test" "zip"}}])

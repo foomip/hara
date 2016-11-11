@@ -17,3 +17,25 @@
 
   (artifact :string '[hello "2.5"])
   => "hello:hello:jar:2.5")
+
+^{:refer hara.io.classpath/resolve-classloader :added "2.4"}
+(comment "resolves a class or namespace to a physical location"
+
+  (resolve-classloader String)
+  => ["<java>/jre/lib/rt.jar" "java/lang/String.class"]
+
+  (resolve-classloader 'hara.test)
+  => [nil "<dev>/hara/src/hara/test.clj"])
+
+^{:refer hara.io.classpath/resolve-path :added "2.4"}
+(comment "resolves a class or namespace within a jar"
+  
+  (resolve-path 'hara.test
+                '[im.chit/hara.test "2.4.8"])
+  => ["<.m2>/im/chit/hara.test/2.4.8/hara.test-2.4.8.jar"
+      "hara/test.clj"]
+
+  (resolve-path 'hara.test
+                "im.chit:hara.test:2.4.8")
+  => ["<.m2>/im/chit/hara.test/2.4.8/hara.test-2.4.8.jar"
+      "hara/test.clj"])
