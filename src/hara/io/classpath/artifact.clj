@@ -41,7 +41,7 @@
                       (str extension ":" version)
                       version)]))
 
-(defrecord Rep [group artifact extension classifier version]
+(defrecord Rep [group artifact extension classifier version properties file]
   Object
   (toString [rep] (rep->string rep)))
 
@@ -61,7 +61,7 @@
   (let [[group artifact] (string/split (str name) #"/")
         artifact (or artifact
                      group)]
-    (Rep. group artifact "jar" nil version)))
+    (Rep. group artifact "jar" nil version {} nil)))
 
 (defn string->rep
   "converts a string to a rep instance
@@ -74,9 +74,9 @@
   [s]
   (let [[group artifact extension? classifer? version :as array] (string/split s #":")]
     (case (count array)
-      3 (Rep. group artifact "jar" nil extension?)
-      4 (Rep. group artifact extension? nil classifer?)
-      5 (Rep. group artifact extension? classifer? version))))
+      3 (Rep. group artifact "jar" nil extension? {} nil)
+      4 (Rep. group artifact extension? nil classifer? {} nil)
+      5 (Rep. group artifact extension? classifer? version {} nil))))
 
 (defn path->rep
   "converts a path to a rep instance
@@ -96,7 +96,7 @@
         version   (last (butlast arr))
         artifact  (last (butlast (butlast arr)))
         group     (string/join "." (butlast (butlast (butlast arr))))]
-    (Rep. group artifact extension nil version)))
+    (Rep. group artifact extension nil version {} x)))
 
 (defmulti rep
   "converts various formats to a rep

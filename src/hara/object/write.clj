@@ -7,6 +7,11 @@
             [hara.reflect :as reflect]
             [hara.reflect.util :as reflect-util]))
 
+(def default-write-template
+  '(fn <method> [obj val]
+     (or (. obj (<method> val))
+         obj)))
+
 (defn meta-write
   "accesses the write-attributes of an object
  
@@ -37,7 +42,8 @@
                {})))
 
 (defn create-write-method
-  "" [ele prefix template]
+  ""
+  [ele prefix template]
   [(-> (:name ele) (subs (count prefix)) case/spear-case keyword)
    {:type (-> ele :params second)
     :fn (eval (walk/postwalk-replace {'<method> (symbol (:name ele))}
@@ -51,11 +57,10 @@
    (keys (write/write-setters DogBuilder))
    => [:name]"
   {:added "2.3"}
-  ([cls] (write-setters cls {:prefix "set"
-                                   :template '(fn <method> [obj val]
-                                                (. obj (<method> val))
-                                                obj)}))
-  ([cls {:keys [prefix template]}]
+  ([cls] (write-setters cls {}))
+  ([cls {:keys [prefix template]
+         :or {prefix "set"
+              template default-write-template}}]
    (->> [:method :instance (re-pattern (str "^" prefix ".+")) 2]
         (reflect/query-class cls)
         (reduce (fn [out ele]
@@ -70,11 +75,10 @@
    (keys (write/write-all-setters DogBuilder))
    => [:name]"
   {:added "2.3"}
-  ([cls] (write-all-setters cls {:prefix "set"
-                             :template '(fn <method> [obj val]
-                                          (. obj (<method> val))
-                                          obj)}))
-  ([cls {:keys [prefix template]}]
+  ([cls] (write-all-setters cls {}))
+  ([cls {:keys [prefix template]
+         :or {prefix "set"
+              template default-write-template}}]
    (->> [:method :instance (re-pattern (str "^" prefix ".+")) 2]
         (reflect/query-hierarchy cls)
         (reduce (fn [out ele]
@@ -104,6 +108,16 @@
                obj
                m)))
 
+(defn from-constructor
+  [m {:keys [params] :as construct} methods]
+  (let [obj (apply (:fn construct) (map m params))]
+    (reduce-kv (fn [obj k v]
+                 (if-let [{:keys [type] func :fn} (get methods k)]
+                   (func obj (from-data v type))
+                   obj))
+               obj
+               (apply dissoc m params))))
+
 (defn from-map
   "creates the object from a map
    (-> {:name \"chris\" :age 30 :pets [{:name \"slurp\" :species \"dog\"}
@@ -117,13 +131,16 @@
   (let [m (if-let [rels (get object/*transform* type)]
             (data/transform-in m rels)
             m)
-        {:keys [empty methods from-map] :as mobj} (meta-write cls)]
+        {:keys [construct empty methods from-map] :as mobj} (meta-write cls)]
     (cond from-map
           (from-map m)
 
-          (and empty methods)
+          empty
           (from-empty m empty methods)
 
+          construct
+          (from-constructor m construct methods)
+          
           :else
           (map/-from-map m cls))))
 

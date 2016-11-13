@@ -54,6 +54,7 @@ List of current libraries:
 - [hara.namespace](hara-namespace.html) - utilities for namespace manipulation
 - [hara.object](hara-object.html) - think data, escape encapsulation
 - [hara.reflect](hara-reflect.html) - java reflection made easy
+- [hara.security](hara-security.html) - cryptography that makes sense
 - [hara.sort](hara-sort.html) - micellaneous sorting functions
 - [hara.string](hara-string.html) - methods for string manipulation
 - [hara.test](hara-test.html) - easy to use test framework

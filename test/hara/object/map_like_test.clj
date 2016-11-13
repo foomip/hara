@@ -3,6 +3,15 @@
   (:require [hara.object.map-like :refer :all]
             [hara.object.write :as write]))
 
+^{:refer hara.object.map-like/key-selection :added "2.3"}
+(fact "selects map based on keys"
+
+  (key-selection {:a 1 :b 2} [:a] nil)
+  => {:a 1}
+
+  (key-selection {:a 1 :b 2} nil [:a])
+  => {:b 2})
+
 ^{:refer hara.object.map-like/extend-map-like :added "2.3"}
 (fact "creates an entry for map-like classes"
 

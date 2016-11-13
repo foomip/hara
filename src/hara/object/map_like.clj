@@ -66,8 +66,9 @@
 
     ~(when (and write (map? write))
        (assert (or (:from-map write)
-                   (:empty write))
-               "The :write entry requires a sub-entry for either :from-map or :empty ")
+                   (:empty write)
+                   (:construct write))
+               "The :write entry requires a sub-entry for either :from-map, :construct or :empty ")
        (let [methods (:methods write)]
          `(defmethod object/-meta-write ~cls
             [~'_]
