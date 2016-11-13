@@ -9,6 +9,8 @@
              [common :as common]
              [search :as search]]
             [clojure.java.io :as io])
+  (:import (clojure.lang IPersistentVector
+                         Symbol))
   (:refer-clojure :exclude [resolve]))
 
 (ns/import hara.io.classpath.common [resource-entry]
@@ -58,25 +60,86 @@
                (clojure.string/split #"\!/"))
 
            (.startsWith path "/")
-           [nil path]
-           
-           :else (throw (Exception. (str "Cannot process: " path)))))))
+           [nil path]))))
 
-(defn resolve-path
+(defn resolve-jar-entry
   "resolves a class or namespace within a jar
    
-   (resolve-path 'hara.test
-                 '[im.chit/hara.test \"2.4.8\"])
+   (resolve-jar-entry 'hara.test
+                      '[im.chit/hara.test \"2.4.8\"])
    => [\"<.m2>/im/chit/hara.test/2.4.8/hara.test-2.4.8.jar\"
        \"hara/test.clj\"]
  
-   (resolve-path 'hara.test
-                 \"im.chit:hara.test:2.4.8\")
+   (resolve-jar-entry 'hara.test
+                      \"im.chit:hara.test:2.4.8\")
    => [\"<.m2>/im/chit/hara.test/2.4.8/hara.test-2.4.8.jar\"
        \"hara/test.clj\"]"
   {:added "2.4"}
-  [x artifact]
-  (let [path  (artifact/artifact :path artifact)
-        entry (common/resource-entry x)]
-    (if (archive/has? path entry)
-      [path entry])))
+  ([x artifact]
+   (resolve-jar-entry x artifact {}))
+  ([x artifact {:keys [tag] :or {tag :path}}]
+   (let [path  (artifact/artifact :path artifact)
+         entry (common/resource-entry x)]
+     (if (archive/has? path entry)
+       [(if (= :path tag)
+          path
+          (artifact/artifact tag path))
+        entry]))))
+
+(defn resolve-entry
+  "resolves a class or namespace within a context
+ 
+   (resolve-entry 'hara.test
+                  \"im.chit:hara.test:2.4.8\")
+   => [\"<.m2>/im/chit/hara.test/2.4.8/hara.test-2.4.8.jar\"
+       \"hara/test.clj\"]
+ 
+   (resolve-entry 'hara.test
+                  [\"im.chit:hara.test:2.4.8\"
+                   \"im.chit:hara.string:2.4.8\"])
+   => [\"<.m2>/im/chit/hara.test/2.4.8/hara.test-2.4.8.jar\"
+       \"hara/test.clj\"]
+   
+   (resolve-entry 'hara.test
+                  '[[im.chit/hara.test \"2.4.8\"]
+                    [im.chit/hara.string \"2.4.8\"]])
+   => [\"<.m2>/im/chit/hara.test/2.4.8/hara.test-2.4.8.jar\"
+       \"hara/test.clj\"]
+ 
+   (resolve-entry 'hara.test
+                  '[im.chit/hara.test \"2.4.8\"])
+   => [\"<.m2>/im/chit/hara.test/2.4.8/hara.test-2.4.8.jar\"
+       \"hara/test.clj\"]
+ 
+   (resolve-entry 'hara.test
+                  '[im.chit/hara.string \"2.4.8\"])
+   => nil"
+  {:added "2.4"}
+  ([x]
+   (resolve-entry x nil))
+  ([x context]
+   (resolve-entry x context {}))
+  ([x context {:keys [tag] :or {tag :path} :as opts}]
+   (cond (nil? context)
+         (resolve-classloader x)
+         
+         (string? context)
+         (resolve-jar-entry x (artifact/artifact tag context) opts)
+
+         (vector? context)
+         (let [i (first context)]
+           (cond (or (string? i)
+                     (instance? IPersistentVector i))
+                 (first (keep (fn [context]
+                                (->> (artifact/artifact tag context)
+                                     (#(resolve-jar-entry x % opts))))
+                              context))
+                 
+                 Symbol (->> (artifact/artifact tag context)
+                             (#(resolve-jar-entry x % opts)))
+
+                 :else
+                 (throw (Exception. (str "Not supported: " x " " context)))))
+
+         :else
+         (throw (Exception. (str "Not supported: " x " " context))))))
