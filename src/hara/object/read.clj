@@ -137,4 +137,6 @@
                                  out))
                              {}
                              methods)
-          :else (throw (Exception. "Cannot process map")))))
+          
+          :else
+          (throw (Exception. (str "Cannot process object: " obj))))))
