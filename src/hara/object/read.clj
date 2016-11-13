@@ -74,25 +74,6 @@
                   (conj out (create-read-method ele prefix template extra)))
                 {}))))
 
-(defn to-map 
-  [obj]
-  (let [cls (type obj)
-        {:keys [to-map methods]} (meta-read cls)]
-    (cond (nil? obj) nil
-
-          (instance? java.util.Map obj)
-          obj
-
-          to-map (to-map obj)
-
-          methods (reduce-kv (fn [out k func]
-                               (if-some [v (func obj)]
-                                 (assoc out k (to-data v))
-                                 out))
-                             {}
-                             methods)
-          :else (throw (Exception. "Cannot process map")))))
-
 (defn to-data
   "creates the object from a string or map
    (read/to-data \"hello\")
@@ -138,3 +119,22 @@
           (to-data (.iterator ^java.util.AbstractCollection obj))
 
           :else obj)))
+
+(defn to-map 
+  [obj]
+  (let [cls (type obj)
+        {:keys [to-map methods]} (meta-read cls)]
+    (cond (nil? obj) nil
+
+          (instance? java.util.Map obj)
+          obj
+
+          to-map (to-map obj)
+
+          methods (reduce-kv (fn [out k func]
+                               (if-some [v (func obj)]
+                                 (assoc out k (to-data v))
+                                 out))
+                             {}
+                             methods)
+          :else (throw (Exception. "Cannot process map")))))
