@@ -238,3 +238,13 @@
 (comment "opens a file as an output-stream"
 
   (output-stream "project.clj"))
+
+^{:refer hara.io.file/read-all-bytes :added "2.4"}
+(comment "opens a file and reads the contents as a byte array"
+
+  (read-all-bytes "project.clj"))
+
+^{:refer hara.io.file/read-all-lines :added "2.4"}
+(comment "opens a file and reads the contents as an array of lines"
+
+  (read-all-lines "project.clj"))

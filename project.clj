@@ -9,8 +9,7 @@
                                   [ring "1.4.0"]
                                   [clj-http "2.1.0"]
                                   [org.eclipse.jgit "4.0.1.201506240215-r"]
-                                  [joda-time "2.9.2"]]
-                   :plugins [[lein-repack "0.2.10"]]}}
+                                  [joda-time "2.9.2"]]}}
   :publish {:theme  "bolton"
   
             :template {:author "Chris Zheng"
@@ -128,7 +127,8 @@
   :global-vars {*warn-on-reflection* true}
   :java-source-paths ["java"]
   :jar-exclusions [#"^test\..+\.class"]
-  :repack [{:type :clojure
-            :levels 2
-            :path "src"
-            :standalone #{"event" "reflect" "time" "object" "security" "test" "zip"}}])
+  :distribute {:jars  :dependencies
+               :files [{:type :clojure
+                        :levels 2
+                        :path "src"
+                        :standalone #{"event" "reflect" "time" "object" "security" "test" "zip"}}]})

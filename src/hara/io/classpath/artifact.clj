@@ -63,21 +63,6 @@
                      group)]
     (Rep. group artifact "jar" nil version {} nil)))
 
-(defn string->rep
-  "converts a string to a rep instance
- 
-   (string->rep \"im.chit:hara:2.4.0\")
-   => (contains {:group \"im.chit\"
-                 :artifact \"hara\"
-                 :version \"2.4.0\"})"
-  {:added "2.4"}
-  [s]
-  (let [[group artifact extension? classifer? version :as array] (string/split s #":")]
-    (case (count array)
-      3 (Rep. group artifact "jar" nil extension? {} nil)
-      4 (Rep. group artifact extension? nil classifer? {} nil)
-      5 (Rep. group artifact extension? classifer? version {} nil))))
-
 (defn path->rep
   "converts a path to a rep instance
  
@@ -97,6 +82,22 @@
         artifact  (last (butlast (butlast arr)))
         group     (string/join "." (butlast (butlast (butlast arr))))]
     (Rep. group artifact extension nil version {} x)))
+
+(defn string->rep
+  "converts a string to a rep instance
+ 
+   (string->rep \"im.chit:hara:2.4.0\")
+   => (contains {:group \"im.chit\"
+                 :artifact \"hara\"
+                 :version \"2.4.0\"})"
+  {:added "2.4"}
+  [s]
+  (let [[group artifact extension? classifer? version :as array] (string/split s #":")]
+    (case (count array)
+      1 (path->rep s)
+      3 (Rep. group artifact "jar" nil extension? {} nil)
+      4 (Rep. group artifact extension? nil classifer? {} nil)
+      5 (Rep. group artifact extension? classifer? version {} nil))))
 
 (defmulti rep
   "converts various formats to a rep

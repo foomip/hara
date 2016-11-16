@@ -476,3 +476,11 @@
                           (->> (:options opts)
                                (mapv option/option)
                                (into-array OpenOption)))))
+
+(defn read-all-bytes
+  [path]
+  (Files/readAllBytes (path/path path)))
+
+(defn read-all-lines
+  [path]
+  (Files/readAllLines (path/path path)))

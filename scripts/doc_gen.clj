@@ -11,6 +11,7 @@
 (comment
   (lucid/scaffold 'hara.zip PROJECT)
   (lucid/import 'hara.zip PROJECT)
+  (lucid/import 'hara.io.classpath PROJECT)
   (lucid/import :all PROJECT)
   
   (publish/copy-assets (publish/load-settings {:refresh true} PROJECT) PROJECT)
