@@ -62,11 +62,12 @@
       :year 1989,
       :month 1, :day 1,
       :hour 6, :minute 30,
-      :second 0, :millisecond 0})
+      :second 0, :millisecond 0}
 
-(fact
+  ^:hidden
   (f/parse "00 00 01 01 01 1989 +0000"
-           "ss mm HH dd MM yyyy Z"))
+           "ss mm HH dd MM yyyy Z")
+  => map?)
 
 (env/init
  {:java {:major 1 :minor 8}}
