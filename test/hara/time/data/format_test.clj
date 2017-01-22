@@ -64,6 +64,10 @@
       :hour 6, :minute 30,
       :second 0, :millisecond 0})
 
+(fact
+  (f/parse "00 00 01 01 01 1989 +0000"
+           "ss mm HH dd MM yyyy Z"))
+
 (env/init
  {:java {:major 1 :minor 8}}
  (:import [java.time Instant Clock ZonedDateTime ZoneId])

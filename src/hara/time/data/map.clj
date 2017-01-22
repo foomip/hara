@@ -26,24 +26,26 @@
            {:timezone \"EST\"}
            common/+default-keys+)"
   {:added "2.2"}
-  [t {:keys [timezone] :as opts} ks]
-  (let [tmeta (time/-time-meta (class t))
-        [p pmeta] (let [{:keys [proxy via]} (-> tmeta :map :to)]
-                    (if (and proxy via)
-                      [(via t opts) (time/-time-meta proxy)]
-                      [t tmeta]))
-        p         (if timezone
-                    (time/-with-timezone p timezone)
-                    p)
-        fns       (select-keys common/+default-fns+ ks)
-        output    (reduce-kv (fn [out k t-fn]
-                               (assoc out k (t-fn p opts)))
-                             {}
-                             fns)]
-    (-> output
-        (assoc :timezone (time/-get-timezone p)
-               :type     (class t)
-               :long     (time/-to-long t)))))
+  ([t opts]
+   (to-map t opts common/+default-keys+))
+  ([t {:keys [timezone] :as opts} ks]
+   (let [tmeta (time/-time-meta (class t))
+         [p pmeta] (let [{:keys [proxy via]} (-> tmeta :map :to)]
+                     (if (and proxy via)
+                       [(via t opts) (time/-time-meta proxy)]
+                       [t tmeta]))
+         p         (if timezone
+                     (time/-with-timezone p timezone)
+                     p)
+         fns       (select-keys common/+default-fns+ ks)
+         output    (reduce-kv (fn [out k t-fn]
+                                (assoc out k (t-fn p opts)))
+                              {}
+                              fns)]
+     (-> output
+         (assoc :timezone (time/-get-timezone p)
+                :type     (class t)
+                :long     (time/-to-long t))))))
 
 (defn from-map
   "converts a map back to an instant type
