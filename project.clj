@@ -1,15 +1,16 @@
-(defproject im.chit/hara "2.4.8"
+(defproject im.chit/hara "2.5.0"
   :description "patterns and utilities"
   :url "https://github.com/zcaudate/hara"
   :license {:name "The MIT License"
             :url "http://opensource.org/licenses/MIT"}
   :dependencies [[org.clojure/clojure "1.8.0"]]
   :aliases {"test" ["run" "-m" "hara.test" "exit"]}
-  :profiles {:dev {:dependencies [[compojure "1.4.0"]
-                                  [ring "1.4.0"]
-                                  [clj-http "2.1.0"]
+  :profiles {:dev {:dependencies [[compojure "1.5.2"]
+                                  [ring "1.5.1"]
+                                  [clj-http "3.4.1"]
+                                  [org.clojure/core.async "0.2.395"]
                                   [org.eclipse.jgit "4.0.1.201506240215-r"]
-                                  [joda-time "2.9.2"]]}}
+                                  [joda-time "2.9.7"]]}}
   :publish {:theme  "bolton"
   
             :template {:author "Chris Zheng"
@@ -71,14 +72,18 @@
                     {:input "test/documentation/hara_group.clj"
                      :title "group"
                      :subtitle "generic typed collections"}
-                    "hara-io-file"
-                    {:input "test/documentation/hara_io_file.clj"
-                     :title "io.file"
-                     :subtitle "tools for the file system"}
                     "hara-io"
                     {:input "test/documentation/hara_io.clj"
                      :title "io"
                      :subtitle "tools for files and io operations"}
+                    "hara-io-benchmark"
+                    {:input "test/documentation/hara_io_benchmark.clj"
+                     :title "io.benchmark"
+                     :subtitle "performance as data"}
+                    "hara-io-file"
+                    {:input "test/documentation/hara_io_file.clj"
+                     :title "io.file"
+                     :subtitle "tools for the file system"}
                     "hara-io-scheduler"
                     {:input "test/documentation/hara_io_scheduler.clj"
                      :title "io.scheduler"
@@ -124,7 +129,7 @@
                      :title "zip"
                      :subtitle "data traversal in style"}}}
   :jvm-opts []
-  :global-vars {*warn-on-reflection* true}
+  ;; :global-vars {*warn-on-reflection* true}
   :java-source-paths ["java"]
   :jar-exclusions [#"^test\..+\.class"]
   :distribute {:jars  :dependencies
