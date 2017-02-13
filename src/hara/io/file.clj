@@ -480,6 +480,16 @@
 (defn read-all-bytes
   [path]
   (Files/readAllBytes (path/path path)))
+  
+(defn write-all-bytes
+  ([path bytes]
+    (write-all-bytes path bytes {}))
+  ([path bytes opts]
+   (Files/write (path/path path) 
+                bytes
+                (->> (:options opts)
+                     (mapv option/option)
+                     (into-array OpenOption)))))
 
 (defn read-all-lines
   [path]
