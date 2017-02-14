@@ -2,7 +2,8 @@
   (:use hara.test)
   (:require [hara.benchmark.core
              [common :as common]
-             [runtime :refer :all]]
+             [runtime :refer :all]
+             [async :as async]]
             [hara.concurrent.procedure :as procedure]))
 
 ^{:refer hara.benchmark.core.runtime/init :added "2.4"}
@@ -96,7 +97,7 @@
 
 (comment
   (./import)
-
+  
   (defn sleep [{:keys [mean variation]
                 :or {mean 1000
                      variation 300}}]
@@ -107,17 +108,32 @@
   
   (def bench
     (common/benchmark {:function sleep
-                       :args {:mean 1000
+                       :args {:mean 10000
                               :variation 50}
-                       :settings {:mode :default
+                       :settings {:mode :core.async
                                   :duration 100000
                                   ;;:count 1000
-                                  :spawn {:interval 10       
-                                          :max 50}}}))
+                                  :spawn {:interval 1      
+                                          :max 10000}}}))
+  (def bench
+    (common/benchmark {:function sleep
+                       :args {:mean 10000
+                              :variation 50}
+                       :settings {:mode :core.async
+                                  :duration 100000
+                                  ;;:count 1000
+                                  :spawn {:interval 1      
+                                          :max 10000}}}))
   
   (start-benchmark bench)
-  @(:main @(:runtime bench))
+  (do (swap! (:runtime bench)
+             #(assoc % :running? false))
+      nil)
+  
+  (:main @(:runtime bench))
   (:average bench)
+  @(:runtime bench)
+  (count (get @(:registry bench) nil))
   (init-benchmark-time bench)
   (update-benchmark-time bench)
   (start-single-async bench)

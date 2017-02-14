@@ -109,7 +109,7 @@
       :duration {:current 100, :total 100}}"
   {:added "2.4"}
   ([benchmark]
-   (update-benchmark-time (time/now {:type Long}) benchmark))
+   (update-benchmark-time benchmark (time/now {:type Long})))
   ([{:keys [runtime] :as benchmark} curr]
    (swap! (:runtime benchmark)
           #(update-time % curr))))
@@ -182,7 +182,8 @@
   (update-benchmark-time benchmark)
   (let [thd (future (loop []
                       (when (and (check-benchmark-time benchmark)
-                                 (check-benchmark-count benchmark))
+                                 (check-benchmark-count benchmark)
+                                 (:running? @runtime))
                         (start-single-sync benchmark)
                         (if-let [interval (-> settings :spawn :interval)]
                           (Thread/sleep interval))
@@ -190,13 +191,14 @@
     (swap! runtime #(assoc % :main thd))
     benchmark))
 
-(defmethod start-benchmark :default
+(defmethod start-benchmark :thread
   [{:keys [settings runtime] :as benchmark}]
   (init-benchmark benchmark)
   (update-benchmark-time benchmark)
   (let [thd (future (loop []
                       (when (and (check-benchmark-time benchmark)
-                                 (check-benchmark-count benchmark))
+                                 (check-benchmark-count benchmark)
+                                 (:running? @runtime))
                         (if (-> benchmark
                                 :registry
                                 deref
