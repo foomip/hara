@@ -1,4 +1,4 @@
-(ns hara.benchmark.core.stat)
+(ns hara.benchmark.stat)
 
 (defmulti stat
   "extensible method for pulling stats out of procedure

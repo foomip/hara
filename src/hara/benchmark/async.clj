@@ -1,5 +1,5 @@
-(ns hara.benchmark.core.async
-  (:require [hara.benchmark.core
+(ns hara.benchmark.async
+  (:require [hara.benchmark
              [common :as common]
              [runtime :as runtime]]
             [clojure.core.async :as async]))

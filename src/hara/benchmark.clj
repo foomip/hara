@@ -1,5 +1,5 @@
-(ns hara.benchmark.core
-  (:require [hara.benchmark.core
+(ns hara.benchmark
+  (:require [hara.benchmark
              [async :as async]
              [common :as common]
              [runtime :as runtime]]))
@@ -27,9 +27,6 @@
   
   (runtime/start-benchmark bench)
   (count (get (:registry bench) nil)))
-
-
-
 
 (defn start-benchmark [])
 

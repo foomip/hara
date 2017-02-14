@@ -136,4 +136,4 @@
                :files [{:type :clojure
                         :levels 2
                         :path "src"
-                        :standalone #{"event" "reflect" "time" "object" "security" "test" "zip"}}]})
+                        :standalone #{"benchmark" "event" "object" "profile" "reflect" "security" "test" "time"  "zip"}}]})

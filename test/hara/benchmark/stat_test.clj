@@ -1,9 +1,9 @@
-(ns hara.benchmark.core.stat-test
+(ns hara.benchmark.stat-test
   (:use hara.test)
-  (:require [hara.benchmark.core.stat :refer :all]
+  (:require [hara.benchmark.stat :refer :all]
             [hara.concurrent.procedure :as procedure]))
 
-^{:refer hara.benchmark.core.stat/stat :added "2.4"}
+^{:refer hara.benchmark.stat/stat :added "2.4"}
 (comment "extensible method for pulling stats out of procedure"
   
   (defn sleep [{:keys [mean variation]

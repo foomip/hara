@@ -1,6 +1,6 @@
-(ns hara.benchmark.core.runtime
+(ns hara.benchmark.runtime
   (:require [hara.time :as time]
-            [hara.benchmark.core
+            [hara.benchmark
              [common :as common]
              [stat :as stat]
              [store :as store]]))

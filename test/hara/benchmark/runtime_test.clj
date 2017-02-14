@@ -1,12 +1,12 @@
-(ns hara.benchmark.core.runtime-test
+(ns hara.benchmark.runtime-test
   (:use hara.test)
-  (:require [hara.benchmark.core
+  (:require [hara.benchmark
              [common :as common]
              [runtime :refer :all]
              [async :as async]]
             [hara.concurrent.procedure :as procedure]))
 
-^{:refer hara.benchmark.core.runtime/init :added "2.4"}
+^{:refer hara.benchmark.runtime/init :added "2.4"}
 (fact "initializes the runtime entry"
 
   (init {} 0)
@@ -15,7 +15,7 @@
       :duration {:current 0}
       :count {:current 0}})
 
-^{:refer hara.benchmark.core.runtime/init-benchmark :added "2.4"}
+^{:refer hara.benchmark.runtime/init-benchmark :added "2.4"}
 (fact "initializes the benchmark"
 
   (-> (common/benchmark {})
@@ -25,7 +25,7 @@
       :count {:current 0, :total 0},
       :duration {:current 0, :total 0}})
 
-^{:refer hara.benchmark.core.runtime/update-time :added "2.4"}
+^{:refer hara.benchmark.runtime/update-time :added "2.4"}
 (fact "updates the runtime duration entry"
   
   (update-time {:since 10
@@ -34,7 +34,7 @@
   => {:since 10,
       :duration {:current 10, :total 20}})
 
-^{:refer hara.benchmark.core.runtime/check-benchmark-time :added "2.4"}
+^{:refer hara.benchmark.runtime/check-benchmark-time :added "2.4"}
 (fact "checks to see if the current duration is within limits"
 
   (-> (common/benchmark {:settings {:duration 100}})
@@ -43,7 +43,7 @@
       (check-benchmark-time))
   => true)
 
-^{:refer hara.benchmark.core.runtime/check-benchmark-count :added "2.4"}
+^{:refer hara.benchmark.runtime/check-benchmark-count :added "2.4"}
 (fact "checks to see if the current count is within limits"
 
   (-> (common/benchmark {:settings {:duration 100}})
@@ -51,13 +51,13 @@
           (init-benchmark))
       (check-benchmark-count)))
 
-^{:refer hara.benchmark.core.runtime/update-count :added "2.4"}
+^{:refer hara.benchmark.runtime/update-count :added "2.4"}
 (fact "updates the runtime count entry"
   
   (update-count {:count {:current 0 :total 10}})
   => {:count {:current 1, :total 11}})
 
-^{:refer hara.benchmark.core.runtime/update-benchmark-count :added "2.4"}
+^{:refer hara.benchmark.runtime/update-benchmark-count :added "2.4"}
 (fact "updates the benchmark runtime count entry"
 
   (-> (common/benchmark {})
@@ -65,7 +65,7 @@
       :count)
   => {:current 1, :total 1})
 
-^{:refer hara.benchmark.core.runtime/update-benchmark-time :added "2.4"}
+^{:refer hara.benchmark.runtime/update-benchmark-time :added "2.4"}
 (fact "updates the benchmark runtime duration entry"
   (-> (common/benchmark {})
       (doto
@@ -76,7 +76,7 @@
       :count {:current 0, :total 0},
       :duration {:current 100, :total 100}})
 
-^{:refer hara.benchmark.core.runtime/update-stats :added "2.4"}
+^{:refer hara.benchmark.runtime/update-stats :added "2.4"}
 (comment "updates the benchmark average and history entries"
 
   (let [bench (common/benchmark {:function (fn [_] (Thread/sleep 100) 1)
@@ -86,13 +86,13 @@
   => [[[1487050261356 1 105]]
       {:count 1, :total [1 105]}])
 
-^{:refer hara.benchmark.core.runtime/start-single-sync :added "2.4"}
+^{:refer hara.benchmark.runtime/start-single-sync :added "2.4"}
 (comment "starts a single sync instance of the benchmarking function")
 
-^{:refer hara.benchmark.core.runtime/start-single-async :added "2.4"}
+^{:refer hara.benchmark.runtime/start-single-async :added "2.4"}
 (comment "starts a single async instance of the benchmarking function")
 
-^{:refer hara.benchmark.core.runtime/start-benchmark :added "2.4"}
+^{:refer hara.benchmark.runtime/start-benchmark :added "2.4"}
 (comment "starts the benchmarking process")
 
 (comment

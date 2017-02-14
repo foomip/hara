@@ -1,4 +1,4 @@
-(ns hara.benchmark.core.store)
+(ns hara.benchmark.store)
 
 (defprotocol IAverageStore
     (-add [store result])

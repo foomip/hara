@@ -1,7 +1,7 @@
-(ns hara.benchmark.core.common
+(ns hara.benchmark.common
   (:require [hara.time :as time]
             [hara.data.nested :as nested]
-            [hara.benchmark.core.store :as store]
+            [hara.benchmark.store :as store]
             [hara.concurrent.procedure :as procedure]
             [hara.concurrent.procedure.data :as data]))
 
@@ -42,14 +42,3 @@
          :history (store/create-history-store settings)}
         (merge (dissoc config :settings :function))
         (map->Benchmark))))
-
-
-(comment
-
-  (def reg (data/registry))
-  (def proc (procedure/procedure {:handler (fn [] (Thread/sleep 5000))
-                                  :registry reg}
-                                 []))
-
-  (proc)
-  reg)
