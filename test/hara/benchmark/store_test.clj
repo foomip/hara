@@ -2,10 +2,10 @@
   (:use hara.test)
   (:require [hara.benchmark.store :refer :all :as store]))
 
-^{:refer hara.benchmark.store/create-average-store :added "2.4"}
-(fact "creates a store to put count averages"
+^{:refer hara.benchmark.store/create-accumulate-store :added "2.4"}
+(fact "creates a store to put count accumulates"
 
-  (def avgs (create-average-store {}))
+  (def avgs (create-accumulate-store {}))
   
   (do (store/-add avgs 4)
       (store/-add avgs 5)

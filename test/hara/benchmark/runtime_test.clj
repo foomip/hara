@@ -77,7 +77,7 @@
       :duration {:current 100, :total 100}})
 
 ^{:refer hara.benchmark.runtime/update-stats :added "2.4"}
-(comment "updates the benchmark average and history entries"
+(comment "updates the benchmark accumulate and history entries"
 
   (let [bench (common/benchmark {:function (fn [_] (Thread/sleep 100) 1)
                                  :args {}})
@@ -131,7 +131,7 @@
       nil)
   
   (:main @(:runtime bench))
-  (:average bench)
+  (:accumulate bench)
   @(:runtime bench)
   (count (get @(:registry bench) nil))
   (init-benchmark-time bench)
@@ -145,7 +145,7 @@
      (stat/stat :result thd)])
   
   (:history bench)
-  (:average bench)
+  (:accumulate bench)
 
   (start-benchmark bench)
   (:main @(:runtime bench))
@@ -166,16 +166,16 @@
   (count (get @(:registry bench) nil))
   (:settings bench)
   
-  {:mode :synchronous, :history {:type :memory, :metrics [:start-time :result :duration]}, :average {:type :memory, :metrics [:result :duration]}, :duration 10000, :count 1000, :spawn {:interval 2, :max 100}}
+  {:mode :synchronous, :history {:type :memory, :metrics [:start-time :result :duration]}, :accumulate {:type :memory, :metrics [:result :duration]}, :duration 10000, :count 1000, :spawn {:interval 2, :max 100}}
   (:id (start-single bench))
-  (:average bench)
+  (:accumulate bench)
   (init-benchmark-time bench)
   (update-benchmark-time bench)
   
   (check-benchmark-time bench)
   (check-benchmark-count bench)
   (start-benchmark bench)
-  (store/-average (:average bench))
+  (store/-average (:accumulate bench))
   (store/-all (:history bench))
   
   )

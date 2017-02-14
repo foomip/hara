@@ -1,14 +1,14 @@
 (ns hara.benchmark.store)
 
-(defprotocol IAverageStore
-    (-add [store result])
-    (-count [store])
-    (-average [store]))
+(defprotocol IAccumulateStore
+  (-add [store result])
+  (-count [store])
+  (-average [store]))
 
-(defmulti create-average-store
-  "creates a store to put count averages
+(defmulti create-accumulate-store
+  "creates a store to put count accumulates
  
-   (def avgs (create-average-store {}))
+   (def avgs (create-accumulate-store {}))
    
    (do (store/-add avgs 4)
        (store/-add avgs 5)
@@ -20,20 +20,20 @@
    (store/-average avgs)
    => [5.0]"
   {:added "2.4"}
-  #(-> % :average :type))
+  #(-> % :accumulate :type))
   
-(defmethod create-average-store :default
+(defmethod create-accumulate-store :default
   [settings]
   (-> settings
-      (assoc-in [:average :type] :memory)
-      (create-average-store)))
+      (assoc-in [:accumulate :type] :memory)
+      (create-accumulate-store)))
 
-(defmethod create-average-store :memory
+(defmethod create-accumulate-store :memory
   [settings]
   (atom {:count 0
          :total nil}))
 
-(extend-protocol IAverageStore
+(extend-protocol IAccumulateStore
   clojure.lang.Atom
   (-add [store result]
     (let [result (if (sequential? result)

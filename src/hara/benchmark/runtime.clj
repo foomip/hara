@@ -143,10 +143,10 @@
          (store/-put (:history benchmark)))
    
    (->> settings
-        :average
+        :accumulate
         :metrics
         (mapv #(stat/stat % proc))
-        (store/-add (:average benchmark)))])
+        (store/-add (:accumulate benchmark)))])
 
 (defn start-single-sync
   "starts a single sync instance of the benchmarking function"
@@ -181,13 +181,15 @@
   (init-benchmark benchmark)
   (update-benchmark-time benchmark)
   (let [thd (future (loop []
-                      (when (and (check-benchmark-time benchmark)
-                                 (check-benchmark-count benchmark)
-                                 (:running? @runtime))
-                        (start-single-sync benchmark)
-                        (if-let [interval (-> settings :spawn :interval)]
-                          (Thread/sleep interval))
-                        (recur))))]
+                      (if (and (check-benchmark-time benchmark)
+                               (check-benchmark-count benchmark)
+                               (:running? @runtime))
+                        (do (start-single-sync benchmark)
+                            (if-let [interval (-> settings :spawn :interval)]
+                              (Thread/sleep interval))
+                            (recur))
+                        (do (swap! runtime #(assoc % :running? false))
+                            nil))))]
     (swap! runtime #(assoc % :main thd))
     benchmark))
 
@@ -196,17 +198,26 @@
   (init-benchmark benchmark)
   (update-benchmark-time benchmark)
   (let [thd (future (loop []
-                      (when (and (check-benchmark-time benchmark)
-                                 (check-benchmark-count benchmark)
-                                 (:running? @runtime))
-                        (if (-> benchmark
-                                :registry
-                                deref
-                                (get nil)
-                                (count)
-                                (< (-> settings :spawn :max))) 
-                          (start-single-async benchmark))
-                        (Thread/sleep (or (-> settings :spawn :interval) 1))
-                        (recur))))]
+                      (if (and (check-benchmark-time benchmark)
+                               (check-benchmark-count benchmark)
+                               (:running? @runtime))
+                        (do (if (-> benchmark
+                                    :registry
+                                    deref
+                                    (get nil)
+                                    (count)
+                                    (< (-> settings :spawn :max))) 
+                              (start-single-async benchmark))
+                            (Thread/sleep (or (-> settings :spawn :interval) 1))
+                            (recur))
+                        (do (swap! runtime #(assoc % :running? false))
+                            nil))))]
     (swap! runtime #(assoc % :main thd))
     benchmark))
+
+(defn count-instances [benchmark]
+  (-> (:registry benchmark)
+      deref
+      (get nil)
+      count)
+)
