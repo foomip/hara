@@ -1,8 +1,8 @@
-(ns hara.io.benchmark.store-test
+(ns hara.benchmark.core.store-test
   (:use hara.test)
-  (:require [hara.io.benchmark.store :refer :all :as store]))
+  (:require [hara.benchmark.core.store :refer :all :as store]))
 
-^{:refer hara.io.benchmark.store/create-average-store :added "2.4"}
+^{:refer hara.benchmark.core.store/create-average-store :added "2.4"}
 (fact "creates a store to put count averages"
 
   (def avgs (create-average-store {}))
@@ -17,7 +17,7 @@
   (store/-average avgs)
   => [5.0])
 
-^{:refer hara.io.benchmark.store/create-history-store :added "2.4"}
+^{:refer hara.benchmark.core.store/create-history-store :added "2.4"}
 (fact "creates a store to put count history"
 
   (def hist (create-history-store {}))

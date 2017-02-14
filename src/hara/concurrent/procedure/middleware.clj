@@ -181,3 +181,11 @@
 
             :else
             (f instance args)))))
+
+(defn wrap-callback
+  [f]
+  (fn [{:keys [callback] :as instance} args]
+    (let [res (f instance args)]
+      (if callback
+        (callback instance))
+      res)))

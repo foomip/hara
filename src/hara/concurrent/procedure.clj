@@ -128,6 +128,7 @@
          middleware/wrap-cached
          middleware/wrap-timing
          middleware/wrap-registry
+         middleware/wrap-callback
          middleware/wrap-mode
          middleware/wrap-timeout
          middleware/wrap-interrupt

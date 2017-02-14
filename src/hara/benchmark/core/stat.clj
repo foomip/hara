@@ -1,4 +1,4 @@
-(ns hara.io.benchmark.stat)
+(ns hara.benchmark.core.stat)
 
 (defmulti stat
   "extensible method for pulling stats out of procedure
@@ -33,8 +33,8 @@
   [_ proc]
   (let [_     @proc
         runtime @(:runtime proc)]
-    (- (-> runtime :ended :long)
-       (-> runtime :started :long))))
+    (- (or (-> runtime :ended :long) 0)
+       (or (-> runtime :started :long) 0))))
 
 (defmethod stat :result
   [_ proc]

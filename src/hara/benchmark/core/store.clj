@@ -1,4 +1,4 @@
-(ns hara.io.benchmark.store)
+(ns hara.benchmark.core.store)
 
 (defprotocol IAverageStore
     (-add [store result])
@@ -36,8 +36,8 @@
 (extend-protocol IAverageStore
   clojure.lang.Atom
   (-add [store result]
-    (let [result (if (vector? result)
-                   result
+    (let [result (if (sequential? result)
+                   (vec result)
                    [result])]
       (swap! store
              (fn [m]
