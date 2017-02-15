@@ -1,17 +1,5 @@
 (ns documentation.hara-class)
-
-"**hara.class** contain functions that give information about class properties. The library provides utility support for other hara libraries, categorised in many sub-namespaces. However, the functions are useful in their own right and are necessary for better understanding of the Java interop."
-
-[[:chapter {:title "class.checks" :link "hara.class.checks"}]]
-
-"Add to `project.clj` dependencies:
-
-    [im.chit/hara.class.checks \"{{PROJECT.version}}\"]
-
-**hara.class.checks** contain basic methods for class checking and predicates."
-
-[[:api {:namespace "hara.class.checks" :title ""}]]
-
+  
 "Add to `project.clj` dependencies:
 
     [im.chit/hara.class.enum \"{{PROJECT.version}}\"]

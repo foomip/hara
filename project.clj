@@ -1,4 +1,4 @@
-(defproject im.chit/hara "2.5.0"
+(defproject im.chit/hara "2.5.1"
   :description "patterns and utilities"
   :url "https://github.com/zcaudate/hara"
   :license {:name "The MIT License"
@@ -24,6 +24,10 @@
                      :input "test/documentation/home_hara.clj"
                      :title "hara"
                      :subtitle "patterns and utilities"}
+                    "hara-benchmark"
+                    {:input "test/documentation/hara_benchmark.clj"
+                     :title "benchmark"
+                     :subtitle "simple load testing"}
                     "hara-class"
                     {:input "test/documentation/hara_class.clj"
                      :title "class"
@@ -76,14 +80,14 @@
                     {:input "test/documentation/hara_io.clj"
                      :title "io"
                      :subtitle "tools for files and io operations"}
-                    "hara-io-benchmark"
-                    {:input "test/documentation/hara_io_benchmark.clj"
-                     :title "io.benchmark"
-                     :subtitle "performance as data"}
                     "hara-io-file"
                     {:input "test/documentation/hara_io_file.clj"
                      :title "io.file"
                      :subtitle "tools for the file system"}
+                    "hara-io-profiler"
+                    {:input "test/documentation/hara_io_profiler.clj"
+                     :title "io.profiler"
+                     :subtitle "simple data collection"}
                     "hara-io-scheduler"
                     {:input "test/documentation/hara_io_scheduler.clj"
                      :title "io.scheduler"
