@@ -3,87 +3,88 @@
 
 (def ^:dynamic *intervals* #{1 2 3 4 5 6 10 12 15 20 30 60})
 
-(defn profiler [controls signals])
+(defrecord Profiler [])
 
-(defn start-profiler [profiler])
+(defn profiler
+  "creates a profiler entry"
+  {:added "2.4"}
+  [control profile]
+  (map->Profiler {:control control
+                  :profile  profile
+                  :state    (atom {})}))
 
-(defn stop-profiler [profiler])
+(defn signals
+  "returns the collected signals form the profiler"
+  {:added "2.4"}
+  [profiles]
+  (-> profiles
+      :state
+      deref
+      :signals))
 
-(defn is-active? [profiler])
+(defn is-active?
+  "checks if the profiler is active"
+  {:added "2.4"}
+  [{:keys [control state profile] :as profiler}]
+  (and (:instance @state)
+       (:scheduler @state)
+       (scheduler/running? (:scheduler @state))
+       (not ((:stopped? control) (:instance @state)))))
 
-(comment
-  (require '[hara.benchmark :as benchmark])
-  
-  (defn sleep [{:keys [mean variation]
-                :or {mean 1000
-                     variation 300}}]
-    (doto (-> mean
-              (- variation)
-              (+ (rand-int variation)))
-      (Thread/sleep)))
-  (profiler
-   {:instance (benchmark/benchmark
-               {:function sleep
-                :args {:mean 1000
-                       :variation 800}
-                :settings {:duration 100000
-                           :spawn {:interval 10     
-                                   :max 100}}})
-    :start    benchmark/start-benchmark
-    :stop     benchmark/stop-benchmark
-    :stopped? benchmark/is-stopped?}
-   
-   {:interval 1
-    :signals [{:name "client-count"
-               :poll (fn [benchmark]
-                       (benchmark/count-instances benchmark))
-               :interval 2}
-              {:name "count"
-               :poll (fn [benchmark]
-                       (benchmark/accumulate benchmark :count))}
-              {:name "moving-10"
-               :poll (fn [benchmark]
-                       (->> (benchmark/history benchmark :last 10)
-                            (reduce (fn [acc [_ duration]]
-                                      (+ acc duration))
-                                    0)
-                            (/ 10)))}
-              {:name "moving-3"
-               :poll (fn [benchmark]
-                       (->> (benchmark/history benchmark :last 3)
-                            (reduce (fn [acc [_ duration]]
-                                      (+ acc duration))
-                                    0)
-                            (/ 3)))}]})
+(defn create-entry
+  "single io.scheduler entry from a profiler entry"
+  {:added "2.4"}
+  [instance state {:keys [name poll interval]}]
+  (let [id (keyword name)
+        entry {:id id
+               :handler (fn [t]
+                          (let [result (poll instance)]
+                            (swap! state #(update-in % [:signals name] conj [t result]))))
+               :schedule (str "/" interval " * * * * * *")}]
+    entry))
 
-  (def acc (atom []))
-  (def bench (benchmark/benchmark
-              {:function sleep
-               :args {:mean 1000
-                      :variation 800}
-               :settings {:duration 10000
-                          :spawn {:interval 10     
-                                  :max 100}}}))
-  (def sch2 (scheduler/scheduler
-             {:client-count
-              {:handler  (fn [t] (swap! acc conj 
-                                        [t (benchmark/count-instances bench)]))
-               :schedule "/2 * * * * * *"}}
-             {}
-             {:clock {:type "java.lang.Long"}}))
-  (future-done? (:main @(:runtime bench)))
-  (keys @(:runtime bench))
-  (:running? @(:runtime bench))
-  (benchmark/start-benchmark bench)
-  (benchmark/is-stopped? bench)
-  (scheduler/start! sch2)
-  (scheduler/stop! sch2)
-  
-  (def sch2 (scheduler/scheduler
-             {:hello {:handler  (fn [t] (println t))
-                      :schedule "/2 * * * * * *"}}
-             {}
-             {:clock {:type "java.lang.Long"}}))
-  
-  (scheduler/start! sch2)
-  (scheduler/stop! sch2))
+(defn create-entries
+  "io.scheduler entries from profiler entries"
+  {:added "2.4"}
+  [instance state {:keys [interval signals] :as profile}]
+  (let [signals (mapv (fn [sig]
+                        (if (:interval sig)
+                          sig
+                          (assoc sig :interval interval)))
+                      signals)
+        entries (map #(create-entry instance state %) signals)]
+    (zipmap (map :id entries) entries)))
+
+(defn start-profiler
+  "starts a profiler to collect information"
+  {:added "2.4"}
+  [{:keys [control state profile] :as profiler}]
+  (if-not (is-active? profiler)
+    (let [{:keys [constructor config start stopped? init]} control
+          instance (cond-> (constructor config)
+                     init  (init)
+                     :then (start))
+          scheduler (scheduler/scheduler (create-entries instance state profile)
+                                         {}
+                                         {:clock {:type "java.lang.Long"}})]
+      (scheduler/add-task scheduler :stop-scheduler
+                          {:handler (fn [t] (when (stopped? instance)
+                                              (scheduler/stop! scheduler)
+                                              (swap! state #(dissoc % :scheduler :instance))))
+                           :schedule "* * * * * * *"})
+      (scheduler/start! scheduler)
+      (swap! state #(assoc %
+                           :scheduler scheduler
+                           :instance instance))))
+  profiler)
+
+(defn stop-profiler
+  "stops a profiler manually"
+  {:added "2.4"}
+  [{:keys [control state profile] :as profiler}]
+  (if (is-active? profiler)
+    (let [{:keys [stop stopped?]} control
+          {:keys [scheduler]} @state]
+      (scheduler/stop! scheduler)
+      (swap! state #(dissoc % :scheduler :instance))))
+  profiler)
