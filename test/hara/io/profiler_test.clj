@@ -5,6 +5,14 @@
 
 ^{:refer hara.io.profiler/profiler :added "2.4"}
 (fact "creates a profiler entry"
+
+  (defn sleep [{:keys [mean variation]
+                :or {mean 1000
+                     variation 300}}]
+    (doto (-> mean
+              (- variation)
+              (+ (rand-int variation)))
+      (Thread/sleep)))
   
   (def p1 (profiler
            {:config   {:function sleep
@@ -67,6 +75,13 @@
 (fact "stops a profiler manually")
 
 (comment
-
   (./import)
+
+  (require '[lucid.package :as package]
+           '[lucid.distribute :as distribute]
+           '[hara.io.project :as project])
+
+  (project/project)
+  (package/install-project)
+  
   )
