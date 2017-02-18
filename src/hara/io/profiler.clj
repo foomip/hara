@@ -9,8 +9,9 @@
   "creates a profiler entry"
   {:added "2.4"}
   [control profile]
-  (map->Profiler {:control control
+  (map->Profiler {:control  control
                   :profile  profile
+                  :result   (promise)
                   :state    (atom {})}))
 
 (defn signals
@@ -58,7 +59,7 @@
 (defn start-profiler
   "starts a profiler to collect information"
   {:added "2.4"}
-  [{:keys [control state profile] :as profiler}]
+  [{:keys [control state profile result] :as profiler}]
   (if-not (is-active? profiler)
     (let [{:keys [constructor config start stopped? init]} control
           instance (cond-> (constructor config)
@@ -70,7 +71,8 @@
       (scheduler/add-task scheduler :stop-scheduler
                           {:handler (fn [t] (when (stopped? instance)
                                               (scheduler/stop! scheduler)
-                                              (swap! state #(dissoc % :scheduler :instance))))
+                                              (swap! state #(dissoc % :scheduler :instance))
+                                              (deliver result  (signals profiler))))
                            :schedule "* * * * * * *"})
       (scheduler/start! scheduler)
       (swap! state #(assoc %
@@ -88,3 +90,13 @@
       (scheduler/stop! scheduler)
       (swap! state #(dissoc % :scheduler :instance))))
   profiler)
+
+(defn collect-profile
+  ([profiler]
+   (start-profiler profiler)
+   @(:result profiler))
+  ([control profile]
+   (collect-profile
+    (profiler control profiler))))
+
+
