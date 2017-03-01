@@ -6,9 +6,14 @@
              [write :as write]
              [map-like :as map-like]
              [string-like :as string-like]
-             [vector-like :as vector-like]]))
+             [vector-like :as vector-like]])
+  (:refer-clojure :exclude [get set]))
 
 (ns/import
+
+ hara.object.access
+ [get
+  set]
  
  hara.object.read   
  [to-data
