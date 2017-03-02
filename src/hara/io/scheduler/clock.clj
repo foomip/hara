@@ -19,7 +19,8 @@
   (if (not (:disabled @clock))
     (let [current-array  (:current-array @clock)
           opts           (:meta clock)
-          next-time      (time/now opts)
+          now-fn         (or (:now-fn opts) time/now)
+          next-time      (now-fn opts)
           next-array     (tab/to-time-array next-time (:timezone opts))]
       (cond
         (or (not= current-array next-array)
