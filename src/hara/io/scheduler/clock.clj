@@ -67,7 +67,7 @@
   [clock]
   (if (clock-stopped? clock)
     (swap! (:state clock) assoc
-           :start-time (time/now (-> clock :meta))
+           :start-time ((-> clock :meta :now-fn) (-> clock :meta))
            :thread     (future (clock-loop clock true)))
     (event/signal [:log {:msg "The clock is already running"}]))
   clock)
