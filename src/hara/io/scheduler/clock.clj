@@ -19,7 +19,8 @@
   (if (not (:disabled @clock))
     (let [current-array  (:current-array @clock)
           opts           (:meta clock)
-          next-time      (time/now opts)
+          now-fn         (or (:now-fn opts) time/now)
+          next-time      (now-fn opts)
           next-array     (tab/to-time-array next-time (:timezone opts))]
       (cond
         (or (not= current-array next-array)
@@ -66,7 +67,7 @@
   [clock]
   (if (clock-stopped? clock)
     (swap! (:state clock) assoc
-           :start-time (time/now (-> clock :meta))
+           :start-time ((-> clock :meta :now-fn) (-> clock :meta))
            :thread     (future (clock-loop clock true)))
     (event/signal [:log {:msg "The clock is already running"}]))
   clock)

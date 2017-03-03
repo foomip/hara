@@ -16,6 +16,7 @@
 
 (defonce ^:dynamic *defaults*
   {:clock    {:type     "java.util.Date"
+              :now-fn   time/now
               :timezone (time/local-timezone)
               :interval 1
               :truncate :second}
