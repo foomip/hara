@@ -1,8 +1,10 @@
 (ns hara.object.map-like
   (:require [hara.protocol.object :as object]
-            [hara.object.write :as write]
-            [hara.object.read :as read]
-            [hara.object.print :as print]))
+            [hara.object
+             [access :as access]
+             [print :as print]
+             [read :as read]
+             [write :as write]]))
 
 (defn key-selection
   ""
@@ -10,6 +12,28 @@
   (cond-> m
     include (select-keys include)
     exclude (#(apply dissoc % exclude))))
+
+(defn read-proxy-functions [proxy]
+  (reduce-kv (fn [out accessor ks]
+               (reduce (fn [out k]
+                         (assoc out k `(fn [~'obj]
+                                         (let [~'proxy (access/get ~'obj ~accessor)]
+                                           (access/get ~'proxy ~k)))))
+                       out
+                       ks))
+             {}
+             proxy))
+
+(defn write-proxy-functions [proxy]
+  (reduce-kv (fn [out accessor ks]
+               (reduce (fn [out k]
+                         (assoc out k `(fn [~'obj ~'v]
+                                         (let [~'proxy (access/get ~'obj ~accessor)]
+                                           (access/set ~'proxy ~k ~'v)))))
+                       out
+                       ks))
+             {}
+             proxy))
 
 (defmacro extend-map-like
   "creates an entry for map-like classes
@@ -43,10 +67,15 @@
     (prn (write/from-data {:name \"hello\" :species \"cat\"} test.Pet)))
    => \"#cat{:name \"hello\"}\""
   {:added "2.3"}
-  [^Class cls {:keys [read write exclude include] :as opts}]
+  [^Class cls {:keys [read write exclude include proxy] :as opts}]
   `[(defmethod object/-meta-read ~cls
       [~'_]
-      ~(let [read (cond (map? read) read
+      ~(let [read (cond (map? read)
+                        (update-in read [:methods]
+                                   #(list 'merge %
+                                          `(-> (merge (read/read-all-getters ~cls read/+read-get-template+)
+                                                      (read/read-all-getters ~cls read/+read-is-template+))
+                                               (key-selection (or ~include []) ~exclude))))
                         
                         (= read :reflect)
                         `{:methods (key-selection (read/read-reflect-fields ~cls) ~include ~exclude)}
@@ -61,7 +90,8 @@
                             (= read :class))
                         `{:methods (-> (merge (read/read-getters ~cls read/+read-get-template+)
                                               (read/read-getters ~cls read/+read-is-template+))
-                                       (key-selection ~include ~exclude))})]
+                                       (key-selection ~include ~exclude))})
+             read (update-in read [:methods] #(list 'merge % (read-proxy-functions proxy)))]
          (print/assoc-print-vars read opts)))
 
     ~(when (and write (map? write))
@@ -81,7 +111,10 @@
 
                (or (= write :class)
                    (nil? methods))
-               (assoc :methods `(write/write-setters ~cls))))))
+               (assoc :methods `(write/write-setters ~cls))
+
+               :then
+               (update-in [:methods] #(list 'merge % (write-proxy-functions proxy)))))))
 
     (print/extend-print ~cls)])
 

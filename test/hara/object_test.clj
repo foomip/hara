@@ -9,12 +9,11 @@
    org.eclipse.jgit.revwalk.RevCommit
    {:tag "commit"
     :include [:commit-time :name :author-ident :full-message]})
-
+  
   (map-like
    org.eclipse.jgit.lib.PersonIdent
    {:tag "person"
     :exclude [:time-zone]})
-
   
   (map-like
    org.eclipse.jgit.api.Status

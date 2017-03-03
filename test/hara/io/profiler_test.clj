@@ -52,10 +52,10 @@
                                    0)
                            (#(long (/ % 3)))))}]})
 
+(def p1 (profiler control input))
+
 ^{:refer hara.io.profiler/profiler :added "2.4"}
 (comment "creates a profiler entry"
-  
-  (def p1 (profiler control input))
   
   (start-profiler p1)
   (pause-profiler p1)
@@ -72,7 +72,7 @@
       "moving-3" [[1487322396000 565] [1487322395000 647] [1487322394000 0] [1487322393000 0]]})
 
 ^{:refer hara.io.profiler/is-active? :added "2.4"}
-(fact "checks if the profiler is active"
+(comment "checks if the profiler is active"
 
   (is-active? p1)
   => true)

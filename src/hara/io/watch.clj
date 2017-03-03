@@ -28,6 +28,10 @@
       (string/replace #"\*" ".+")
       (re-pattern)))
 
+(defn register-entry [service path]
+  (let [entry (Paths/get path (make-array String 0))]
+    (.register entry service (into-array event-kinds))))
+
 (defn register-sub-directory
   ""
   [watcher dir-path]
@@ -37,14 +41,22 @@
                    (some #(re-find % (subs dir-path (-> root count inc))) includes))
                (not (or (get @seen dir-path)
                         (some #(re-find % (last (string/split dir-path #"/"))) excludes))))
-      (let [dir (Paths/get dir-path (make-array String 0))]
-        (.register dir service (into-array event-kinds))
-        (swap! seen conj dir-path))
+      (register-entry service dir-path)
+      (swap! seen conj dir-path)
       (if (:recursive options)
         (doseq [^java.io.File f (.listFiles (io/file dir-path))]
           (when (. f isDirectory)
             (register-sub-directory watcher (.getCanonicalPath f))))))
     watcher))
+
+(defn register-path
+  [{:keys [service] :as watcher} path]
+  (let [f (io/file path)]
+    (cond (.isDirectory f)
+          (register-sub-directory watcher path)
+
+          (.exists f)
+          (register-entry service path))))
 
 (defn process-event
   ""
@@ -101,7 +113,7 @@
                         :excludes excludes
                         :includes includes
                         :kinds kinds))
-        watcher  (reduce register-sub-directory watcher (:paths watcher))]
+        watcher  (reduce register-path watcher (:paths watcher))]
     (assoc watcher :running (future (run-watcher watcher)))))
 
 (defn stop-watcher
