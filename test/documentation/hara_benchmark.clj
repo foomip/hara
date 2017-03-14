@@ -15,5 +15,3 @@ Add to `project.clj` dependencies:
 
     [im.chit/hara.benchmark \"{{PROJECT.version}}\"]
 "
-
-
