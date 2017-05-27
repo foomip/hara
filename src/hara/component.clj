@@ -1,20 +1,35 @@
 (ns hara.component
-  (:require [hara.common.checks :refer [hash-map?]]
+  (:require [hara.common.checks :refer [hash-map?] :as checks]
             [hara.data.map :refer [assoc-if]]
             [hara.data.nested :refer [merge-nested]]
             [hara.data.record :as record]
-            [hara.sort.topological :refer [topological-sort]]))
+            [hara.sort.topological :refer [topological-sort]]
+            [clojure.set :as set]))
 
 (defprotocol IComponent
   (-start [component])
   (-stop  [component])
   (-started? [component])
-  (-stopped? [component]))
+  (-stopped? [component])
+  (-properties [component]))
 
 (extend-protocol IComponent
   Object
   (-start [this] this)
-  (-stop  [this] this))
+  (-stop  [this] this)
+  (-properties [this] {}))
+
+(defn iobj? [x]
+  (instance? clojure.lang.IObj x))
+
+(defn primitive? [x]
+  (or (string? x)
+      (number? x)
+      (checks/boolean? x)
+      (checks/regex? x)
+      (checks/uuid? x)
+      (checks/uri? x)
+      (checks/url? x)))
 
 (defn component?
   "checks if an instance extends IComponent
@@ -40,9 +55,13 @@
   [component]
   (try (-started? component)
        (catch IllegalArgumentException e
-         (-> component meta :started true?))
+         (if (iobj? component)
+           (-> component meta :started true?)
+           (primitive? component)))
        (catch AbstractMethodError e
-         (-> component meta :started true?))))
+         (if (iobj? component)
+           (-> component meta :started true?)
+           (primitive? component)))))
 
 (defn stopped?
   "checks if a component has been stopped
@@ -71,7 +90,7 @@
   {:added "2.1"}
   [component]
   (let [cp (-start component)]
-    (if (instance? clojure.lang.IObj cp)
+    (if (iobj? cp)
       (vary-meta cp assoc :started true)
       cp)))
 
@@ -83,9 +102,17 @@
   {:added "2.1"}
   [component]
   (let [cp (-stop component)]
-    (if (instance? clojure.lang.IObj cp)
+    (if (iobj? cp)
       (vary-meta cp dissoc :started)
       cp)))
+
+(defn properties
+  [component]
+  (try (-properties component)
+       (catch IllegalArgumentException e
+         {})
+       (catch AbstractMethodError e
+         {})))
 
 (declare system? array? start-array stop-array)
 
@@ -101,7 +128,7 @@
 
                       :else
                       (reduce (fn [m [k v]]
-                                (cond (extends? IComponent (type v))
+                                (cond (extends? IComponent (type v)) ;; for displaying internal keys
                                       (update-in m ['*] (fnil #(conj % k) []))
 
                                       :else
@@ -152,6 +179,11 @@
     (ComponentArray. (mapv stop (seq carr)))
     (meta carr)))
 
+(defn constructor [x]
+  (if (map? x)
+    (:constructor x)
+    x))
+
 (defn array
   "creates an array of components
  
@@ -159,11 +191,15 @@
    (count (seq recs)) => 2
    (first recs) => (just {:id 1 :status \"started\"})"
   {:added "2.1"}
-  [ctor config]
+  [{:keys [constructor]} config]
   (if (vector? config)
-    (let [all (meta config)]
-      (ComponentArray. (mapv (fn [cfg]
-                               (ctor (merge-nested all cfg))) config)))))
+    (let [defaults (meta config)]
+      (ComponentArray. (mapv (fn [entry]
+                               (if (map? entry)
+                                 (constructor (merge-nested defaults entry))
+                                 entry))
+                             config)))
+    (throw (Exception. (str "Config " config " has to be a vector.")))))
 
 (defn array?
   "checks if object is a component array
@@ -186,12 +222,12 @@
                               (array? v)
                               (not (component? v)))
                           (assoc m k v)
-
+                          
                           :else
                           (assoc m k (reduce (fn [m [k v]]
                                                (cond (extends? IComponent (type v))
                                                      (update-in m ['*] (fnil #(conj % k) []))
-
+                                                     
                                                      :else
                                                      (assoc m k v)))
                                              (record/empty v)
@@ -213,216 +249,6 @@
   [v ^java.io.Writer w]
   (.write w (str v)))
 
-(defn- system-dependencies [topology]
-  (reduce (fn [m [k v]]
-            (->> (rest v)
-                 (map (fn [dep]
-                        (if (vector? dep)
-                          (first dep)
-                          dep)))
-                 (set)
-                 (assoc m k)))
-   {}
-   topology))
-
-(defn- system-constructors [topology]
-  (reduce (fn [m [k [const & _]]]
-            (assoc m k
-                   (cond (hash-map? const)
-                         (or (:constructor const) identity)
-
-                         :else const)))
-   {}
-   topology))
-
-(defn- system-exposes [topology]
-  (reduce (fn [m [k [const & deps]]]
-            (assoc m k
-                   (if-let [exp (:expose const)]
-                      {:key (first deps)
-                       :fn  (if (vector? exp)
-                               #(get-in % exp)
-                               exp)})))
-   {}
-   topology))
-
-(defn- system-initialisers [topology]
-  (reduce (fn [m [k [const & _]]]
-            (assoc m k
-                   (cond (hash-map? const)
-                         (or (:initialiser const) identity)
-
-                         :else identity)))
-   {}
-   topology))
-
-(defn- system-augmentations [topology]
-  (reduce (fn [m [k v]]
-            (->> (rest v)
-                 (set)
-                 (assoc m k)))
-   {}
-   topology))
-
-(defn- augmentation-fn [csys aug]
-  (fn [i cp]
-    (reduce (fn [cp dk]
-              (cond (vector? dk)
-                    (let [[dk ek] dk
-                          dcp  (get csys dk)]
-                      (assoc cp ek (nth (seq dcp) i)))
-
-                    :else
-                    (assoc cp dk (get csys dk))))
-            cp aug)))
-
-(defn start-system
-  ""
-  [csys]
-  (let [graph (meta csys)
-        cmp-keys    (-> graph :dependencies topological-sort)
-        cmp-ctors   (-> graph :constructors)
-        cmp-exps    (-> graph :exposes)
-        cmp-inits   (-> graph :initialisers)
-        cmp-augs    (-> graph :augmentations)]
-    (-> (reduce (fn [m k]
-                  (let [component  (get csys k)
-                        exp        (get cmp-exps k)
-                        ctor       (get cmp-ctors k)
-                        init       (get cmp-inits k)
-                        aug        (get cmp-augs k)]
-                    (assoc m k (init (cond exp
-                                           ((:fn exp) (get m (:key exp)))
-
-                                           (vector? ctor)
-                                           (->> (seq component)
-                                                (map-indexed (augmentation-fn m aug))
-                                                (ComponentArray.)
-                                                (start))
-
-                                           (instance? clojure.lang.IPersistentCollection component)
-                                           (-> component
-                                               (merge (select-keys m aug))
-                                               start)
-
-                                           :else component)))))
-                (ComponentSystem.)
-                cmp-keys)
-        (with-meta graph))))
-
-(defn- de-augmentation-fn [csys aug]
-  (fn [i cp]
-    (reduce (fn [cp dk]
-              (cond (vector? dk)
-                    (let [[dk ek] dk]
-                      (dissoc cp ek))
-
-                    :else
-                    (dissoc cp dk)))
-            cp aug)))
-
-(defn stop-system
-  ""
-  [csys]
-  (let [graph (meta csys)
-        cmp-keys  (-> graph :dependencies topological-sort)
-        cmp-ctors (-> graph :constructors)
-        cmp-exps  (-> graph :exposes)
-        cmp-augs  (-> graph :augmentations)]
-    (reduce (fn [m k]
-              (let [component  (get csys k)
-                    ctor       (get cmp-ctors k)
-                    aug        (get cmp-augs k)]
-                (assoc-if m k
-                          (cond (get cmp-exps k)
-                                 nil
-
-                                 (vector? ctor)
-                                 (->> (stop component)
-                                      (map-indexed (de-augmentation-fn m aug))
-                                      (vec)
-                                      (ComponentArray.))
-
-                                 :else
-                                 (apply dissoc (stop component) aug)))))
-            {}
-            (reverse cmp-keys))))
-
-(defn system
-  "creates a system of components
-   
-   ;; The topology specifies how the system is linked
-   (def topo {:db        [map->Database]
-              :files     [[map->Filesystem]]
-              :catalogs  [[map->Catalog] [:files :fs] :db]})
- 
-   ;; The configuration customises the system
-   (def cfg  {:db     {:type :basic
-                       :host \"localhost\"
-                       :port 8080}
-              :files [{:path \"/app/local/1\"}
-                      {:path \"/app/local/2\"}]
-              :catalogs [{:id 1}
-                         {:id 2}]})
- 
-   ;; `system` will build it and calling `start` initiates it
-   (def sys (-> (system topo cfg) start))
- 
-   ;; Check that the `:db` entry has started
-   (:db sys)
-   => (just {:status \"started\",
-             :type :basic,
-             :port 8080,
-             :host \"localhost\"})
- 
-   ;; Check the first `:files` entry has started
-   (-> sys :files first)
-   => (just {:status \"started\",
-             :path \"/app/local/1\"})
- 
-   ;; Check that the second `:store` entry has started
-   (->> sys :catalogs second)
-   => (contains {:id 2
-                 :status \"started\"
-                 :db {:status \"started\",
-                         :type :basic,
-                         :port 8080,
-                         :host \"localhost\"}
-                 :fs {:path \"/app/local/2\", :status \"started\"}})"
-  {:added "2.1"}
-  ([topology config] (system topology config nil))
-  ([topology config name]
-   (let [deps  (system-dependencies  topology)
-         ctors (system-constructors  topology)
-         exps  (system-exposes       topology)
-         inits (system-initialisers  topology)
-         augms (system-augmentations topology)]
-     (with-meta
-       (reduce (fn [sys [k ctor]]
-                 (assoc sys k (cond (and (nil? ctor)
-                                         (nil? (get exps k)))
-                                    config
-
-                                    (get exps k) nil
-
-                                    (vector? ctor)
-                                    (let [arr-cfg (get config k)]
-                                      (if (vector? arr-cfg)
-                                        (array (first ctor) arr-cfg)
-                                        (throw (Exception. (str "config for component " k
-                                                                " has to be a vector.")))))
-
-                                    :else
-                                    (ctor (get config k)))))
-               (ComponentSystem.)
-               ctors)
-       {:name name
-        :dependencies deps
-        :constructors ctors
-        :exposes      exps
-        :initialisers inits
-        :augmentations augms}))))
-
 (defn system?
   "checks if object is a component system
  
@@ -431,3 +257,191 @@
   {:added "2.1"}
   [x]
   (instance? ComponentSystem x))
+
+(defn long-form-imports [args]
+    (->> args
+         (map (fn [x]
+                (cond (keyword? x)
+                      [x {:type :single :as x}]
+                      (vector? x)
+                      [(first x) (merge {:type :single} (second x))])))
+         (into {})))
+
+(defn long-form-entry [[desc & args]]
+  (let [dependencies  (map (fn [x] (if (vector? x)
+                                     (first x)
+                                     x))
+                           args)
+        [desc form] (if (vector? desc)
+                      [(first desc) {:compile :array}]
+                      [desc {:compile :single}])
+        desc (cond (fn? desc)
+                   {:type :build :constructor desc}
+
+                   (:type desc) desc
+                   
+                   (:expose desc)
+                   (-> desc
+                       (dissoc :expose)
+                       (assoc :type :expose :in (first dependencies) :function (:expose desc)))
+
+                   :else
+                   (assoc desc :type :build))]
+    (cond-> (merge form desc)
+      (= :build (:type desc))
+      (assoc :import (long-form-imports args))
+
+      :finally
+      (assoc :dependencies dependencies))))
+
+(defn long-form [topology]
+    (reduce-kv (fn [m k v]
+                 (assoc m k (long-form-entry v)))
+               {} topology))
+
+(defn get-dependencies [full-topology]
+  (reduce-kv (fn [m k v]
+               (assoc m k (set (:dependencies v))))
+             {} full-topology))
+
+(defn get-exposed [full-topology]
+  (reduce-kv (fn [arr k v]
+               (if (= :expose (:type v))
+                 (conj arr k)
+                 arr))
+             [] full-topology))
+
+(defn all-dependencies [m]
+  (let [order (topological-sort m)]
+    (reduce (fn [out key]
+              (let [inputs (set (get m key))
+                    result (set (concat inputs (mapcat out inputs)))]
+                (assoc out
+                       key
+                       result)))
+            {}
+            order)))
+
+(defn valid-subcomponents [full-topology keys]
+    (let [expose-keys (get-exposed full-topology)
+          valid-keys (set (concat expose-keys keys))
+          sub-keys (->> full-topology
+                        get-dependencies
+                        all-dependencies
+                        (reduce-kv (fn [m k v]
+                                     (assoc m k (conj v k)))
+                                   {}))]
+      
+      (reduce-kv (fn [arr k v]
+                   (if (set/superset? valid-keys v)
+                     (conj arr k)
+                     arr))
+                 []
+                 sub-keys)))
+
+(defn system
+  ([topology config]
+   (system topology config {:partial false}))
+  ([topology config {:keys [partial name] :as opts}]
+   (let [full   (long-form topology)
+         valid  (valid-subcomponents full (keys config))
+         expose (get-exposed full)
+         diff  (set/difference (set (keys full)) valid)
+         _     (or (empty? diff)
+                   partial
+                   (throw (Exception. (str "Missing Config Keys: " diff))))
+         build    (apply dissoc full diff)
+         dependencies (apply dissoc (get-dependencies full) diff)
+         order (topological-sort dependencies)
+         initial  (apply dissoc build (concat diff (get-exposed full)))]
+     (-> (reduce-kv (fn [sys k {:keys [constructor compile] :as build}]
+                      
+                      (let [cfg (get config k)]
+                        (assoc sys k (cond (= compile :array)
+                                           (array build cfg)
+                                           
+                                           :else
+                                           (constructor cfg)))))
+                    (ComponentSystem.)
+                    initial)
+         (with-meta {:partial (not (empty? diff))
+                     :build   build
+                     :order   order
+                     :dependencies dependencies})))))
+
+(defn system-import [component system import]
+  (reduce-kv (fn [out k v]
+               (let [{:keys [type as]} (get import k)
+                     subsystem (get system k)]
+                 (cond (array? out)
+                       (cond->> (seq out)
+                         (= type :element)
+                         (map #(assoc %2 as %1) subsystem)
+                         
+                         (= type :single)
+                         (map #(assoc % as subsystem))
+                         
+                         :finally
+                         (ComponentArray.))
+                       
+                       :else
+                       (assoc out as subsystem))))
+             component
+             import))
+
+(defn system-expose [_ system {:keys [in function] :as opts}]
+  (let [subsystem (get system in)]
+    (cond (array? subsystem)
+          (->> (sequence subsystem)
+               (map function)
+               (ComponentArray.))
+          
+          :else
+          (function subsystem))))
+
+(defn start-system [system]
+  (let [{:keys [build order] :as meta} (meta system)]
+    (reduce (fn [out k]
+              
+              (let [component (get out k)
+                    {:keys [type import setup] :as opts} (get build k)
+                    setup (or setup identity)
+                    result (cond-> component
+                             (= type :build)
+                             (system-import out import)
+                             
+                             (= type :expose)
+                             (system-expose out opts)
+                             
+                             :finally
+                             (-> -start setup))]
+                (assoc out k result)))
+            system
+            order)))
+
+(defn system-deport [component import]
+  (reduce-kv (fn [out k v]
+               (let [{:keys [type as]} (get import k)]
+                 (cond (array? out)
+                       (->> (seq out)
+                            (map #(dissoc % as))
+                            (ComponentArray.))
+                       
+                       :else
+                       (dissoc out as))))
+             component
+             import))
+
+(defn stop-system [system]
+  (let [{:keys [build order] :as meta} (meta system)]
+    (reduce (fn [out k]
+              (let [{:keys [type import teardown] :as opts} (get build k)
+                    teardown (or teardown identity)
+                    component (-stop (teardown (get out k)))]
+                (cond (= type :build)
+                      (assoc out k (system-deport component import))
+
+                      (= type :expose)
+                      (dissoc out k))))
+            system
+            (reverse order))))

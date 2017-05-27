@@ -40,7 +40,7 @@
   ([handlers config global]
    (component/system
     {:array     [{:constructor (array/seed-fn handlers)
-                  :initialiser array/initialise} :cache :registry :ticker]
+                  :setup array/initialise} :cache :registry :ticker]
      :clock     [clock/clock :ticker]
      :ticker    [(fn [_] (atom {:time nil :array nil}))]
      :registry  [(fn [_] (data/registry))]

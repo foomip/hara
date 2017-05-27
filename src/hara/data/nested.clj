@@ -115,7 +115,7 @@
                  {:a {:b {:c 3}}})
    => {:a {:b {:c 3 :d 2}}}"
   {:added "2.1"}
-  ([] nil)
+  ([] {})
   ([m] m)
   ([m1 m2]
    (reduce-kv (fn [out k v]
@@ -131,7 +131,7 @@
 
                         :else
                         (assoc out k v))))
-              m1
+              (or m1 {})
               m2))
   ([m1 m2 & ms]
      (apply merge-nested (merge-nested m1 m2) ms)))
@@ -158,7 +158,8 @@
 
                         :else
                         out)))
-              m1 m2))
+              (or m1 {})
+              m2))
   ([m1 m2 & more]
      (apply merge-nil-nested (merge-nil-nested m1 m2) more)))
 
