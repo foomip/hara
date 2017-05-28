@@ -157,6 +157,10 @@
       (reflect-util/param-arg-match cls targ)
       arg
 
+      ;; Special case for String/CharArray
+      (and (string? arg) (= cls (Class/forName "[C")))
+      (.toCharArray arg)
+      
       ;; If there is a vector
       (and (vector? arg)
            (.isArray cls))
@@ -184,4 +188,4 @@
           (from-map arg cls)
 
           :else
-          (throw (Exception. (format "Problem converting %s to %s" arg targ))))))))
+          (throw (Exception. (format "Problem converting %s to %s" arg cls))))))))
