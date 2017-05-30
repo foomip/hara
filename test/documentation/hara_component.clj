@@ -41,7 +41,7 @@ Additionally, there are additional features that enable developers to write thei
 "
 
 [[:chapter {:title "API" :link "hara.component"
-            :only ["system" "system?" "start" "stop"]}]]
+            :only ["component?" "system" "system?" "start" "stop" "started?" "stopped?" "properties"]}]]
 
 "Because component is a framework for building systems, we have to start off with concepts of what we wish to build:
 
@@ -77,7 +77,7 @@ The most simple representation is:"
 
 [[:api {:title ""
         :namespace "hara.component"
-        :only ["system" "system?" "start" "stop"]}]]
+        :only ["component?" "system" "system?" "start" "stop" "started?" "stopped?" "properties"]}]]
 
 [[:chapter {:title "Config Driven Design"}]]
 
