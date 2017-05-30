@@ -48,7 +48,7 @@
     (-> global
         (update-in [:array] nested/merge-nested config)
         (nested/merge-nil-nested *defaults*))
-    "scheduler")))
+    {:tag "scheduler"})))
 
 (defn start!
   "starts the scheduler
