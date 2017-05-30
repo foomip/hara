@@ -119,6 +119,13 @@
 
   (thread? (Thread/currentThread)) => true)
 
+^{:refer hara.common.checks/iobj? :added "2.5"}
+(fact "checks if a component is instance of clojure.lang.IObj"
+
+  (iobj? 1) => false
+
+  (iobj? {}) => true)
+
 ^{:refer hara.common.checks/type-checker :added "2.0"}
 (fact "Returns the checking function associated with `k`"
 

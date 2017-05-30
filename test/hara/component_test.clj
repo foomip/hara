@@ -17,7 +17,9 @@
   (-start [sys]
     (assoc sys :status "started"))
   (-stop [sys]
-    (dissoc sys :status)))
+    (dissoc sys :status))
+  (-properties [sys]
+    {:hello "world"}))
 
 (defmethod print-method Filesystem [v w]
   (.write w (str "#fs" (into {} v))))
@@ -32,7 +34,14 @@
 (defmethod print-method Catalog [v w]
   (.write w (str "#cat" (into {} v))))
 
-^{:refer on.system.component/started? :added "2.1"}
+^{:refer hara.component/primitive? :added "2.5"}
+(fact "checks if a component is a primitive type"
+
+  (primitive? 1) => true
+  
+  (primitive? {}) => false)
+
+^{:refer hara.component/started? :added "2.1"}
 (fact "checks if a component has been started"
 
   (started? 1)
@@ -53,7 +62,7 @@
   (started? (stop (start (Database.))))
   => false)
 
-^{:refer on.system.component/stopped? :added "2.1"}
+^{:refer hara.component/stopped? :added "2.1"}
 (fact "checks if a component has been stopped"
 
   (stopped? 1)
@@ -74,33 +83,47 @@
   (stopped? (stop (start (Database.))))
   => true)
 
-^{:refer on.system.component/start :added "2.1"}
+^{:refer hara.component/start :added "2.1"}
 (fact "starts a component/array/system"
 
   (start (Database.))
-  => (just {:status "started"}))
+  => {:status "started"})
 
-^{:refer on.system.component/stop :added "2.1"}
+^{:refer hara.component/stop :added "2.1"}
 (fact "stops a component/array/system"
 
-  (stop (start (Database.)))
-  => (just {}))
+  (stop (start (Database.))) => {})
 
-^{:refer on.system.component/array :added "2.1"}
+^{:refer hara.component/properties :added "2.1"}
+(fact "returns properties of the system"
+
+  (properties (Database.)) => {}
+
+  (properties (Filesystem.)) => {:hello "world"})
+
+^{:refer hara.component/array :added "2.1"}
 (fact "creates an array of components"
 
   (def recs (start (array {:constructor map->Database} [{:id 1} {:id 2}])))
   (count (seq recs)) => 2
   (first recs) => (just {:id 1 :status "started"}))
 
-^{:refer on.system.component/array? :added "2.1"}
+^{:refer hara.component/array? :added "2.1"}
 (fact "checks if object is a component array"
 
   (array? (array map->Database []))
   => true)
 
+^{:refer hara.component/start-array :added "2.1"}
+(fact "starts an array of components")
 
-^{:refer on.system.component/system :added "2.1"}
+^{:refer hara.component/stop-array :added "2.1"}
+(fact "stops an array of components")
+
+^{:refer hara.component/constructor :added "2.5"}
+(fact "returns the constructor from topology")
+
+^{:refer hara.component/system :added "2.1"}
 (fact "creates a system of components"
   
   ;; The topology specifies how the system is linked
@@ -143,13 +166,22 @@
                    :fs {:path "/app/local/2", :status "started"}}))
 
 
-^{:refer on.system.component/system? :added "2.1"}
+^{:refer hara.component/system? :added "2.1"}
 (fact "checks if object is a component system"
 
   (system? (system {} {}))
   => true)
 
-^{:refer on.system.component/long-form-imports :added "2.5"}
+^{:refer hara.component/system-string :added "2.5"}
+(fact "returns the system for display"
+
+  (system-string (system {:a [identity]
+                          :b [identity]}
+                         {:a 1 :b 2}
+                         {:tag "happy"}))
+  => "#happy {:a 1, :b 2}")
+
+^{:refer hara.component/long-form-imports :added "2.5"}
 (fact "converts short form imports to long form"
   
   (long-form-imports [:db [:file {:as :fs}]])
@@ -159,7 +191,7 @@
   (long-form-imports [[:ids {:type :element :as :id}]])
   => {:ids {:type :element, :as :id}})
 
-^{:refer on.system.component/long-form-entry :added "2.5"}
+^{:refer hara.component/long-form-entry :added "2.5"}
 (fact "converts short form entry into long form"
 
   (long-form-entry [{:constructor :identity
@@ -185,7 +217,7 @@
                          :ids {:type :element, :as :id}},
                 :dependencies [:model :ids]}))
 
-^{:refer on.system.component/long-form :added "2.5"}
+^{:refer hara.component/long-form :added "2.5"}
 (fact "converts entire topology to long form"
 
   (long-form {:db [identity]
@@ -201,7 +233,7 @@
                            :function :count,
                            :dependencies [:db]}}))
 
-^{:refer on.system.component/get-dependencies :added "2.5"}
+^{:refer hara.component/get-dependencies :added "2.5"}
 (fact "get dependencies for long form"
   (-> (long-form {:model   [identity]
                   :ids     [[identity]]
@@ -218,7 +250,7 @@
       :nums #{:traps},
       :model-tag #{:model}})
 
-^{:refer on.system.component/get-exposed :added "2.5"}
+^{:refer hara.component/get-exposed :added "2.5"}
 (fact "get exposed keys for long form"
   (-> (long-form {:model   [identity]
                   :ids     [[identity]]
@@ -230,7 +262,7 @@
       get-exposed)
   => [:nums :model-tag])
 
-^{:refer on.system.component/all-dependencies :added "2.5"}
+^{:refer hara.component/all-dependencies :added "2.5"}
 (fact "gets all dependencies for long form"
 
   (all-dependencies
@@ -263,7 +295,7 @@
       :nums #{:ids :traps :model},
       :model-tag #{:model}})
 
-^{:refer on.system.component/valid-subcomponents :added "2.5"}
+^{:refer hara.component/valid-subcomponents :added "2.5"}
 (fact "returns only the components that will work (for partial systems)"
   
   (valid-subcomponents
@@ -273,7 +305,7 @@
    [:model])
   => [:model :tag])
 
-^{:refer on.system.component/start-system :added "2.5"}
+^{:refer hara.component/start-system :added "2.5"}
 (comment "starts a system"
   (->> (system {:models [[identity] [:files {:type :element :as :fs}]]
                 :files  [[identity]]}
@@ -287,7 +319,7 @@
                              :fs {:id 2}}],
                    :files [{:id 1} {:id 2}]}))
 
-^{:refer on.system.component/stop-system :added "2.5"}
+^{:refer hara.component/stop-system :added "2.5"}
 (comment "stops a system"
   (stop-system
    (start-system
@@ -320,13 +352,22 @@
     [v ^java.io.Writer w]
     (.write w (str v)))
 
-^{:refer on.system.component/component? :added "2.2"}
+^{:refer hara.component/component? :added "2.2"}
 (fact "checks if an instance extends IComponent"
 
   (component? (Database.))
   => true)
 
-^{:refer on.system.component/more-tests :added "2.1"}
+^{:refer hara.component/system-import :added "2.5"}
+(fact "imports a component into the system")
+
+^{:refer hara.component/system-expose :added "2.5"}
+(fact "exposes a component into the system")
+
+^{:refer hara.component/system-deport :added "2.5"}
+(fact "deports a component from the system")
+
+^{:refer hara.component/more-tests :added "2.1"}
 (fact "creates a system of components"
 
   (def topology {:database   [{:constructor map->Database}]
@@ -343,7 +384,7 @@
                    :cameras [{:hello "world", :id 1,  :a 1 :status "started"}
                              {:hello "again", :id 2,  :a 1 :status "started"}]}))
 
-^{:refer on.system.component/expose-test :added "2.2"}
+^{:refer hara.component/expose-test :added "2.2"}
 (fact "exposes sub-components within a system"
 
   (def topology {:database [map->Database]
@@ -353,3 +394,16 @@
                  {:database {:status "stopped"}}))
   => (contains {:database {:status "started"}
                 :status   "started"}))
+
+(comment
+  
+  (require '[lucid.unit :as unit])
+  (unit/import *ns*)
+  
+  (start {:functions {:dissoc-setup #(dissoc % :setup)
+                      :print #(doto % prn)}}
+         {:setup #(assoc % :setup true)
+          :hooks {:pre-start [:print :dissoc-setup]
+                  :post-start [:print :dissoc-setup]}})
+
+  )

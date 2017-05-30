@@ -170,6 +170,16 @@
   [obj]
   (instance? java.lang.Thread obj))
 
+(defn iobj?
+  "checks if a component is instance of clojure.lang.IObj
+ 
+   (iobj? 1) => false
+ 
+   (iobj? {}) => true"
+  {:added "2.5"}
+  [x]
+  (instance? clojure.lang.IObj x))
+
 (defn type-checker
   "Returns the checking function associated with `k`
  
