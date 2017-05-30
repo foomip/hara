@@ -10,7 +10,10 @@
                                   [clj-http "3.4.1"]
                                   [org.clojure/core.async "0.2.395"]
                                   [org.eclipse.jgit "4.0.1.201506240215-r"]
-                                  [joda-time "2.9.7"]]}}
+                                  [joda-time "2.9.7"]
+                                  [im.chit/lucid.publish "1.3.10"]
+                                  [im.chit/lucid.distribute "1.3.10"]
+                                  [im.chit/lucid.unit "1.3.10"]]}}
   :publish {:theme  "bolton"
   
             :template {:author "Chris Zheng"
