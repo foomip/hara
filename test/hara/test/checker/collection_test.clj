@@ -101,6 +101,8 @@
   => false
 
   ((just-in [odd? {:a {:b even?}}]) [3 {:a {:b 4}}])
+
+  ((just-in [odd? {:a {:b even?}}]) [3 {:a {:b 4}}])
   => true)
 
 ^{:refer hara.test.checker.collection/throws-info :added "2.4"}

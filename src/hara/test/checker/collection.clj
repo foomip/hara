@@ -148,10 +148,10 @@
                 (and (= (count data)
                         (count ck))
                      (cond (set? data)
-                           (verify-seq ck data modifiers)
+                           (verify-seq ck data (conj modifiers :in-any-order))
 
                            (sequential? data)
-                           (verify-seq ck data (conj modifiers :in-any-order))))))
+                           (verify-seq ck data modifiers)))))
        :expect ck}))))
 
 (defn just-set
@@ -178,7 +178,10 @@
   [x & modifiers]
   (cond (map? x)
         (just-map x)
-
+        
+        (set? x)
+        (just-set x)
+        
         (vector? x)
         (just-vector x (set modifiers))
 
