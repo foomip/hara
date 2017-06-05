@@ -22,4 +22,3 @@
         result   (assoc (checker/verify checker actual) :meta meta)]
     (event/signal {:test :check :result result})
     result))
-

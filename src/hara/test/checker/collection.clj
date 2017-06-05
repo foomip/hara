@@ -73,10 +73,17 @@
        :doc "Checks if the result is a sequential"
        :fn  (fn [res]
               (let [data (common/->data res)]
-                (and (sequential? data)
-                     (verify-seq ck data modifiers))))
+                (cond (set? data)
+                      (verify-seq ck data (conj modifiers :in-any-order))
+
+                      (sequential? data)
+                      (verify-seq ck data modifiers))))
        :expect ck}))))
 
+(defn contains-set
+  "vector check helper function for `contains`"
+  {:added "2.4"}
+  ([x] (contains-vector x #{:in-any-order})))
 
 (defn contains
   "checker for maps and vectors
@@ -99,6 +106,9 @@
   (cond (map? x)
         (contains-map x)
 
+        (set? x)
+        (contains-set x)
+        
         (sequential? x)
         (contains-vector x (set modifiers))
 
@@ -135,11 +145,17 @@
        :doc "Checks if the result is a sequential having strictly the following conditions:"
        :fn  (fn [res]
               (let [data (common/->data res)]
-                (and (sequential? data)
-                     (= (count data)
+                (and (= (count data)
                         (count ck))
-                     (verify-seq ck data modifiers))))
+                     (cond (set? data)
+                           (verify-seq ck data modifiers)
+
+                           (sequential? data)
+                           (verify-seq ck data (conj modifiers :in-any-order))))))
        :expect ck}))))
+
+(defn just-set
+  ([x] (just-vector x #{:in-any-order})))
 
 (defn just
   "exact checker for maps and vectors
@@ -185,6 +201,13 @@
                                  (assoc out k `(contains-in ~v)))
                                {}
                                x))
+        (set? x)
+        `(contains ~(reduce (fn [out v]
+                              (conj out `(contains-in ~v)))
+                            []
+                            x)
+                   :in-any-order)
+        
         (vector? x)
         `(contains ~(reduce (fn [out v]
                               (conj out `(contains-in ~v)))
@@ -208,6 +231,13 @@
                              (assoc out k `(just-in ~v)))
                            {}
                            x))
+        (set? x)
+        `(just ~(reduce (fn [out v]
+                          (conj out `(just-in ~v)))
+                        []
+                        x)
+               :in-any-order)
+        
         (vector? x)
         `(just ~(reduce (fn [out v]
                           (conj out `(just-in ~v)))
