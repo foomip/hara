@@ -1,19 +1,19 @@
-(defproject im.chit/hara "2.5.7"
+(defproject im.chit/hara "2.5.8"
   :description "patterns and utilities"
   :url "https://github.com/zcaudate/hara"
   :license {:name "The MIT License"
             :url "http://opensource.org/licenses/MIT"}
   :dependencies [[org.clojure/clojure "1.8.0"]]
   :aliases {"test" ["run" "-m" "hara.test" "exit"]}
-  :profiles {:dev {:dependencies [[compojure "1.5.2"]
-                                  [ring "1.5.1"]
-                                  [clj-http "3.4.1"]
-                                  [org.clojure/core.async "0.2.395"]
+  :profiles {:dev {:dependencies [[compojure "1.6.0"]
+                                  [ring "1.6.1"]
+                                  [clj-http "3.6.1"]
                                   [org.eclipse.jgit "4.0.1.201506240215-r"]
-                                  [joda-time "2.9.7"]
-                                  [im.chit/lucid.publish "1.3.10"]
-                                  [im.chit/lucid.distribute "1.3.10"]
-                                  [im.chit/lucid.unit "1.3.10"]]}}
+                                  [joda-time "2.9.9"]
+                                  [im.chit/lucid.publish "1.3.11"]
+                                  [im.chit/lucid.distribute "1.3.11"]
+                                  [im.chit/lucid.unit "1.3.11"]]
+                   :plugins [[lein-ancient "0.6.10"]]}}
   :publish {:theme  "bolton"
   
             :template {:author "Chris Zheng"

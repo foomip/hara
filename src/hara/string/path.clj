@@ -3,6 +3,14 @@
             [hara.common.string :as common])
   (:refer-clojure :exclude [split join contains val]))
 
+(def ^:dynamic *default-seperator* "/")
+
+(defn make-pattern [s]
+  (-> s
+      (.replaceAll "\\." "\\\\\\.")
+      (.replaceAll "\\*" "\\\\\\*")
+      (re-pattern)))
+
 (defn join
   "joins a sequence of elements into a path seperated value
  
@@ -12,7 +20,7 @@
    (path/join '[a b c] '-)
    => 'a-b-c"
   {:added "2.1"}
-  ([ks] (join ks "/"))
+  ([ks] (join ks *default-seperator*))
   ([ks sep]
      (if (empty? ks) nil
          (let [meta (common/to-meta (first ks))]
@@ -30,7 +38,7 @@
    (path/split \"a/b/c/d\")
    => '[\"a\" \"b\" \"c\" \"d\"]"
   {:added "2.1"}
-  ([k] (split k #"/"))
+  ([k] (split k (make-pattern *default-seperator*)))
   ([k re]
      (cond (nil? k) []
 
@@ -51,7 +59,7 @@
   [k subk]
   (or (= k subk)
       (.startsWith (common/to-string k)
-                   (str (common/to-string subk) "/"))))
+                   (str (common/to-string subk) *default-seperator*))))
 
 (defn path-vec
   "returns the path vector of the string/keyword/symbol
@@ -86,10 +94,10 @@
    (path/path-ns? \"a/b/c/d\" \"a/b/c\")
    => true"
   {:added "2.1"}
-  ([k] (< 0 (.indexOf (str k) "/")))
+  ([k] (< 0 (.indexOf (str k) *default-seperator*)))
   ([k ns] (if-let [tkns (path-ns k)]
             (= 0 (.indexOf (str k)
-                 (str ns "/")))
+                 (str ns *default-seperator*)))
             (nil? ns))))
 
 (defn path-root
