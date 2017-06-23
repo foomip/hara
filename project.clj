@@ -145,4 +145,7 @@
                :files [{:type :clojure
                         :levels 2
                         :path "src"
-                        :standalone #{"benchmark" "event" "object" "profile" "reflect" "security" "test" "time"  "zip"}}]})
+                        :standalone #{"benchmark" "event" "object" "profile" "reflect" "security" "test" "time"  "zip"}}
+                       {:subpackage "string.mustache"
+                        :include ["hara/string/mustache"]
+                        :path "target/classes"}]})
