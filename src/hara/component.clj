@@ -386,7 +386,8 @@
         [desc form] (if (vector? desc)
                       [(first desc) {:compile :array}]
                       [desc {:compile :single}])
-        desc (cond (fn? desc)
+        desc (cond (or (fn? desc)
+                       (instance? clojure.lang.MultiFn desc))
                    {:type :build :constructor desc}
 
                    (:type desc) desc
@@ -395,7 +396,8 @@
                    (-> desc
                        (dissoc :expose)
                        (assoc :type :expose :in (first dependencies) :function (:expose desc)))
-
+                   
+                   
                    :else
                    (assoc desc :type :build))]
     (cond-> (merge form desc)
