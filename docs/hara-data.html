@@ -924,7 +924,7 @@
 (unnest-keys {:hello {:there {:a 1 :b 2}}
               :again {:c 3 :d 4}} [:hello :there] [:+] )
 => {:a 1 :b 2
-    :+ {:again {:c 3 :d 4}}}</code></pre></div></div></div></div><div><span id="data-transform"></span><h2><b>9 &nbsp;&nbsp; data.transform</b></h2></div><div><p>Add to <code>project.clj</code> dependencies:</p><pre><code>&#91;im.chit/hara.data.map &quot;2.5.8&quot;&#93;</code></pre><p><strong>hara.data.transform</strong> contain functions for transforming maps</p></div><div class="api"><span id="entry__hara_data_transform__"></span><hr /><div><ul><li><a data-scroll="" href="#entry__hara_data_transform__find_templates">find-templates</a></li><li><a data-scroll="" href="#entry__hara_data_transform__template_QMARK_">template?</a></li><li><a data-scroll="" href="#entry__hara_data_transform__transform">transform</a></li><li><a data-scroll="" href="#entry__hara_data_transform__transform_fn">transform-fn</a></li></ul><hr style="margin-bottom: 0" /><div><div class="entry"><span id="entry__hara_data_transform__find_templates"></span><div class="entry-description"><h4><b>find-templates&nbsp<a data-scroll="" href="#entry__hara_data_transform__">^</a></b></h4><p><i></i></p></div><div class="entry-option"><h6><i class="error version">NONE</i></h6><div><input class="source-toggle" id="entry__pre_hara_data_transform__find_templates" type="checkbox" /><label class="source-toggle" for="entry__pre_hara_data_transform__find_templates"></label><pre class="source"><code class="clojure">(defn find-templates
+    :+ {:again {:c 3 :d 4}}}</code></pre></div></div></div></div><div><span id="data-transform"></span><h2><b>9 &nbsp;&nbsp; data.transform</b></h2></div><div><p>Add to <code>project.clj</code> dependencies:</p><pre><code>&#91;im.chit/hara.data.map &quot;2.5.8&quot;&#93;</code></pre><p><strong>hara.data.transform</strong> contain functions for transforming maps</p></div><div class="api"><span id="entry__hara_data_transform__"></span><hr /><div><ul><li><a data-scroll="" href="#entry__hara_data_transform__find_templates">find-templates</a></li><li><a data-scroll="" href="#entry__hara_data_transform__template_QMARK_">template?</a></li><li><a data-scroll="" href="#entry__hara_data_transform__transform">transform</a></li><li><a data-scroll="" href="#entry__hara_data_transform__transform_fn">transform-fn</a></li></ul><hr style="margin-bottom: 0" /><div><div class="entry"><span id="entry__hara_data_transform__find_templates"></span><div class="entry-description"><h4><b>find-templates&nbsp<a data-scroll="" href="#entry__hara_data_transform__">^</a></b></h4><p><i>finds the template with associated path</i></p></div><div class="entry-option"><h6><a href="https://github.com/zcaudate/hara/blob/master/src/hara/data/transform.clj#L17-L44" target="_blank">v&nbsp;2.5</a></h6><div><input class="source-toggle" id="entry__pre_hara_data_transform__find_templates" type="checkbox" /><label class="source-toggle" for="entry__pre_hara_data_transform__find_templates"></label><pre class="source"><code class="clojure">(defn find-templates
   ([m]
    (find-templates m [] {}))
   ([m path saved]
@@ -938,21 +938,42 @@
                       :else
                       out))
               saved
-              m)))</code></pre></div></div><pre class="error"><h6>example not found</h6><code></code></pre></div><div class="entry"><span id="entry__hara_data_transform__template_QMARK_"></span><div class="entry-description"><h4><b>template?&nbsp<a data-scroll="" href="#entry__hara_data_transform__">^</a></b></h4><p><i>checks if an object is a template</i></p></div><div class="entry-option"><h6><a href="https://github.com/zcaudate/hara/blob/master/src/hara/data/transform.clj#L3-L18" target="_blank">v&nbsp;2.5</a></h6><div><input class="source-toggle" id="entry__pre_hara_data_transform__template_QMARK_" type="checkbox" /><label class="source-toggle" for="entry__pre_hara_data_transform__template_QMARK_"></label><pre class="source"><code class="clojure">(defn template?
-  [v]
-  (let [s (if (keyword? v)
-            (name v)
-            v)]
-    (and (string? s)
-         (.startsWith s "<")
-         (.endsWith s ">"))))</code></pre></div></div><pre><h6><i><a href="https://github.com/zcaudate/hara/blob/master/test/hara/data/transform_test.clj#L6-L12" target="_blank">link</a></i></h6><code class="clojure">(template? :<template>)
+              m)))</code></pre></div></div><pre><h6><i><a href="https://github.com/zcaudate/hara/blob/master/test/hara/data/transform_test.clj#L15-L26" target="_blank">link</a></i></h6><code class="clojure">(find-templates {:hash  "{{hash}}"
+                 :salt  "{{salt}}"
+                 :email "{{email}}"
+                 :user {:firstname "{{firstname}}"
+                        :lastname  "{{lastname}}"}})
+=> {"{{hash}}" [:hash]
+    "{{salt}}" [:salt]
+    "{{email}}" [:email]
+    "{{firstname}}" [:user :firstname]
+    "{{lastname}}" [:user :lastname]}</code></pre></div><div class="entry"><span id="entry__hara_data_transform__template_QMARK_"></span><div class="entry-description"><h4><b>template?&nbsp<a data-scroll="" href="#entry__hara_data_transform__">^</a></b></h4><p><i>checks if an object is a template</i></p></div><div class="entry-option"><h6><a href="https://github.com/zcaudate/hara/blob/master/src/hara/data/transform.clj#L3-L15" target="_blank">v&nbsp;2.5</a></h6><div><input class="source-toggle" id="entry__pre_hara_data_transform__template_QMARK_" type="checkbox" /><label class="source-toggle" for="entry__pre_hara_data_transform__template_QMARK_"></label><pre class="source"><code class="clojure">(defn template?
+  [s]
+  (and (string? s)
+       (.startsWith s "{{")
+       (.endsWith s "}}")))</code></pre></div></div><pre><h6><i><a href="https://github.com/zcaudate/hara/blob/master/test/hara/data/transform_test.clj#L6-L12" target="_blank">link</a></i></h6><code class="clojure">(template? "{{template}}")
 => true
 
 (template? :not-one)
-=> false</code></pre></div><div class="entry"><span id="entry__hara_data_transform__transform"></span><div class="entry-description"><h4><b>transform&nbsp<a data-scroll="" href="#entry__hara_data_transform__">^</a></b></h4><p><i></i></p></div><div class="entry-option"><h6><i class="error version">NONE</i></h6><div><input class="source-toggle" id="entry__pre_hara_data_transform__transform" type="checkbox" /><label class="source-toggle" for="entry__pre_hara_data_transform__transform"></label><pre class="source"><code class="clojure">(defn transform
+=> false</code></pre></div><div class="entry"><span id="entry__hara_data_transform__transform"></span><div class="entry-description"><h4><b>transform&nbsp<a data-scroll="" href="#entry__hara_data_transform__">^</a></b></h4><p><i>creates a transformation function</i></p></div><div class="entry-option"><h6><a href="https://github.com/zcaudate/hara/blob/master/src/hara/data/transform.clj#L79-L100" target="_blank">v&nbsp;2.5</a></h6><div><input class="source-toggle" id="entry__pre_hara_data_transform__transform" type="checkbox" /><label class="source-toggle" for="entry__pre_hara_data_transform__transform"></label><pre class="source"><code class="clojure">(defn transform
   [schema [from to] data]
   (let [f (transform-fn* schema [from to])]
-    (f data)))</code></pre></div></div><pre class="error"><h6>example not found</h6><code></code></pre></div><div class="entry"><span id="entry__hara_data_transform__transform_fn"></span><div class="entry-description"><h4><b>transform-fn&nbsp<a data-scroll="" href="#entry__hara_data_transform__">^</a></b></h4><p><i></i></p></div><div class="entry-option"><h6><i class="error version">NONE</i></h6><div><input class="source-toggle" id="entry__pre_hara_data_transform__transform_fn" type="checkbox" /><label class="source-toggle" for="entry__pre_hara_data_transform__transform_fn"></label><pre class="source"><code class="clojure">(defn transform-fn
+    (f data)))</code></pre></div></div><pre><h6><i><a href="https://github.com/zcaudate/hara/blob/master/test/hara/data/transform_test.clj#L48-L64" target="_blank">link</a></i></h6><code class="clojure">(transform {:keystore {:hash  "{{hash}}"
+                         :salt  "{{salt}}"
+                         :email "{{email}}"}
+              
+              :db       {:login {:type :email
+                                 :user {:hash "{{hash}}"
+                                        :salt "{{salt}}"}
+                                 :value "{{email}}"}}}
+           [:keystore :db]
+           {:hash "1234"
+            :salt "ABCD"
+            :email "a@a.com"})
+=> {:login {:type :email,
+            :user {:hash "1234",
+                   :salt "ABCD"},
+            :value "a@a.com"}}</code></pre></div><div class="entry"><span id="entry__hara_data_transform__transform_fn"></span><div class="entry-description"><h4><b>transform-fn&nbsp<a data-scroll="" href="#entry__hara_data_transform__">^</a></b></h4><p><i>creates a transformation function</i></p></div><div class="entry-option"><h6><a href="https://github.com/zcaudate/hara/blob/master/src/hara/data/transform.clj#L46-L75" target="_blank">v&nbsp;2.5</a></h6><div><input class="source-toggle" id="entry__pre_hara_data_transform__transform_fn" type="checkbox" /><label class="source-toggle" for="entry__pre_hara_data_transform__transform_fn"></label><pre class="source"><code class="clojure">(defn transform-fn
   [schema [from to]]
   (let [from-template (find-templates (get schema from))
         to-template   (find-templates (get schema to))]
@@ -963,7 +984,22 @@
                              (->> (get from-template k)
                                   (get-in data))))
                  (get schema to)
-                 (keys to-template)))))</code></pre></div></div><pre class="error"><h6>example not found</h6><code></code></pre></div></div></div></div>
+                 (keys to-template)))))</code></pre></div></div><pre><h6><i><a href="https://github.com/zcaudate/hara/blob/master/test/hara/data/transform_test.clj#L29-L45" target="_blank">link</a></i></h6><code class="clojure">((transform-fn {:keystore {:hash  "{{hash}}"
+                           :salt  "{{salt}}"
+                           :email "{{email}}"}
+                
+                :db       {:login {:type :email
+                                   :user {:hash "{{hash}}"
+                                          :salt "{{salt}}"}
+                                   :value "{{email}}"}}}
+               [:keystore :db])
+ {:hash "1234"
+  :salt "ABCD"
+  :email "a@a.com"})
+=> {:login {:type :email,
+            :user {:hash "1234",
+                   :salt "ABCD"},
+            :value "a@a.com"}}</code></pre></div></div></div></div>
         </div>
       </div>
     </div>

@@ -406,7 +406,7 @@
         first
         (take 2))
    => '(ns hara.io.file)"
-  {:added "2.4}"
+  {:added "2.4"}
   [path]
   (with-open [reader (reader :pushback path)]
     (->> (repeatedly #(try (read reader)
