@@ -18,7 +18,3 @@
 
   (render "{{^ user.name}}hello{{/user.name}}" {:user nil})
   => "hello")
-
-(comment
-  (require 'lucid.unit)
-  (lucid.unit/import))

@@ -1,123 +1,100 @@
-(ns hara.data.transform
-  (:require [hara.data.nested :as nested]
-            [hara.data.map :as map]
-            [clojure.string :as string])
-  (:refer-clojure :exclude [apply]))
+(ns hara.data.transform)
 
-(defn template-rel
-  "creates the id for a relation
+(defn template?
+  "checks if an object is a template
  
-   (template-rel [:authority :username])
-   = :authority/username"
-  {:added "2.4"}
-  [v]
-  (->> (map name v)
-       (string/join "/")
-       keyword))
-
-(defn forward-rel
-  "returns the template for a forward relation
+   (template? \"{{template}}\")
+   => true
  
-   (forward-rel {:authority {:username [:user]
-                             :password [:pass]}})
-   
-   = {:authority {:username :authority/username,
-                  :password :authority/password}}"
-  {:added "2.4"}
-  ([trans] (forward-rel trans [] {}))
-  ([trans kv out]
+   (template? :not-one)
+   => false"
+  {:added "2.5"}
+  [s]
+  (and (string? s)
+       (.startsWith s "{{")
+       (.endsWith s "}}")))
+
+(defn find-templates
+  "finds the template with associated path
+ 
+   (find-templates {:hash  \"{{hash}}\"
+                    :salt  \"{{salt}}\"
+                    :email \"{{email}}\"
+                    :user {:firstname \"{{firstname}}\"
+                           :lastname  \"{{lastname}}\"}})
+   => {\"{{hash}}\" [:hash]
+      \"{{salt}}\" [:salt]
+       \"{{email}}\" [:email]
+       \"{{firstname}}\" [:user :firstname]
+       \"{{lastname}}\" [:user :lastname]}"
+  {:added "2.5"}
+  ([m]
+   (find-templates m [] {}))
+  ([m path saved]
    (reduce-kv (fn [out k v]
-                (let [nkv (conj kv k)]
-                  (cond (map? v)
-                        (forward-rel v nkv out)
+                (cond (template? v)
+                      (assoc out v (conj path k))
 
-                        :else
-                        (assoc-in out nkv (template-rel nkv)))))
-              out
-              trans)))
-
-(defn backward-rel
-  "returns the template for a back relation
-   
-   (backward-rel {:authority {:username [:user]
-                              :password [:pass]}})
-   = {:user :authority/username, :pass :authority/password}"
-  {:added "2.4"}
-  ([trans] (backward-rel trans [] {}))
-  ([trans kv out]
-   (reduce-kv (fn [out k v]
-                (let [nkv (conj kv k)]
-                  (cond (map? v)
-                        (backward-rel v nkv out)
-
-                        :else
-                        (assoc-in out v (template-rel nkv)))))
-              out
-              trans)))
-
-(defn collect
-  "collects nested keys for transform
-   
-   (collect {:authority {:username :authority/username,
-                         :password :authority/password}})
-   = {:authority/username [:authority :username],
-       :authority/password [:authority :password]}"
-  {:added "2.4"}
-  ([m] (collect m [] {}))
-  ([m kv out]
-   (reduce-kv (fn [out k v]
-                (cond (map? v)
-                      (collect  v (conj kv k) out)
-
+                      (map? v)
+                      (find-templates v (conj path k) out)
+                      
                       :else
-                      (assoc out v (conj kv k))))
-              out
+                      out))
+              saved
               m)))
 
-(defn relation
-  "creates template for the transform relationship
- 
-   (relation {:authority {:username [:user]
-                          :password [:pass]}})
-   = {:authority/username [[:authority :username] [:user]],
-       :authority/password [[:authority :password] [:pass]]}"
-  {:added "2.4"}
-  [trans]
-  (let [rel [(forward-rel trans)
-             (backward-rel trans)]]
-    (->> (map collect rel)
-         (clojure.core/apply merge-with vector))))
+(defn transform-fn
+  "creates a transformation function
+   ((transform-fn {:keystore {:hash  \"{{hash}}\"
+                              :salt  \"{{salt}}\"
+                              :email \"{{email}}\"}
+                   
+                   :db       {:login {:type :email
+                                      :user {:hash \"{{hash}}\"
+                                             :salt \"{{salt}}\"}
+                                     :value \"{{email}}\"}}}
+                  [:keystore :db])
+    {:hash \"1234\"
+     :salt \"ABCD\"
+     :email \"a@a.com\"})
+   => {:login {:type :email,
+               :user {:hash \"1234\",
+                      :salt \"ABCD\"},
+               :value \"a@a.com\"}}"
+  {:added "2.5"}
+  [schema [from to]]
+  (let [from-template (find-templates (get schema from))
+        to-template   (find-templates (get schema to))]
+    (fn [data]
+      (reduce (fn [out k]
+                   (assoc-in out
+                             (get to-template k)
+                             (->> (get from-template k)
+                                  (get-in data))))
+                 (get schema to)
+                 (keys to-template)))))
 
-(defn apply
-  "applies the relation to a map
- 
-   (apply {:user \"chris\" :pass \"hello\"}
-          {:authority/username [[:authority :username] [:user]],
-           :authority/password [[:authority :password] [:pass]]})
-   = {:authority {:username \"chris\", :password \"hello\"}}"
-  {:added "2.4"}
-  [m rel]
-  (reduce-kv (fn [out k [to from]]
-               (let [v (get-in m from)]
-                 (-> out
-                     (assoc-in to v)
-                     (map/dissoc-in from))))
-             m
-             rel))
+(def transform-fn* (memoize transform-fn))
 
-(defn retract
-  "retracts the relation from the map
- 
-   (retract {:authority {:username \"chris\", :password \"hello\"}}
-            {:authority/username [[:authority :username] [:user]],
-             :authority/password [[:authority :password] [:pass]]})
-   = {:user \"chris\" :pass \"hello\"}"
-  {:added "2.4"}
-  [m rel]
-  (reduce-kv (fn [out k [to from]]
-               (let [v (get-in m to)]
-                 (-> out
-                     (assoc-in from v)
-                     (map/dissoc-in to))))
-             m
-             rel))
+(defn transform
+  "creates a transformation function
+   (transform {:keystore {:hash  \"{{hash}}\"
+                            :salt  \"{{salt}}\"
+                            :email \"{{email}}\"}
+                 
+                 :db       {:login {:type :email
+                                    :user {:hash \"{{hash}}\"
+                                           :salt \"{{salt}}\"}
+                                   :value \"{{email}}\"}}}
+              [:keystore :db]
+              {:hash \"1234\"
+               :salt \"ABCD\"
+               :email \"a@a.com\"})
+   => {:login {:type :email,
+               :user {:hash \"1234\",
+                      :salt \"ABCD\"},
+               :value \"a@a.com\"}}"
+  {:added "2.5"}
+  [schema [from to] data]
+  (let [f (transform-fn* schema [from to])]
+    (f data)))

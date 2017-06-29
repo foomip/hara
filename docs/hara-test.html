@@ -61,9 +61,9 @@
           <div class="heading">
             <div>
               <h5>Author: Chris Zheng&nbsp;&nbsp;<a href="mailto:z@caudate.me">(z@caudate.me)</a></h5>
-              <h5>Date: 31 May 2017</h5>
+              <h5>Date: 29 June 2017</h5>
               <h5>Repository: <a href="https://github.com/zcaudate/hara">https://github.com/zcaudate/hara</a></h5>
-              <h5>Version: 2.5.6</h5></div></div>
+              <h5>Version: 2.5.8</h5></div></div>
           <hr/>
           <div class="outline">
             <div class="toc">
@@ -83,7 +83,7 @@
                 </ul>
               </nav>
           </div>
-          <div><span id="introduction"></span><h2><b>1 &nbsp;&nbsp; Introduction</b></h2></div><div><p><a href='https://github.com/zcaudate/hara/blob/master/src/hara/test.clj'>hara.test</a> is a test framework based off of the <a href='https://github.com/marick/Midje'>midje</a> syntax, containing macros and helpers for easy testing and verification of functions</p></div><div><span id="installation"></span><h3>1.1 &nbsp;&nbsp; Installation</h3></div><div><p>Add to <code>project.clj</code> dependencies:</p><pre><code>&#91;im.chit/hara.test &quot;2.5.6&quot;&#93;</code></pre></div><div><span id="motivation"></span><h3>1.2 &nbsp;&nbsp; Motivation</h3></div><div><p><a href='https://github.com/zcaudate/hara/blob/master/src/hara/test.clj'>hara.test</a> serves to provide a light-weight test framework based upon a subset of operations defined by <a href='https://github.com/marick/Midje'>midje</a>. The framework allows for rapid in-repl testing of the whole project as well as very easy shell integration. It abides by the following principles:</p><ul><li>test data should be explict for both input and output</li><li>test cases can be read like documentation</li><li>test suites contains information about the functions that are being tested</li></ul></div><div><span id="running"></span><h3>1.3 &nbsp;&nbsp; Running</h3></div><div><p><a href='https://github.com/zcaudate/hara/blob/master/src/hara/test.clj'>hara.test</a> can be run in the repl by:</p></div><div class="code"><pre><code class="clojure">(use 'hara.test)
+          <div><span id="introduction"></span><h2><b>1 &nbsp;&nbsp; Introduction</b></h2></div><div><p><a href='https://github.com/zcaudate/hara/blob/master/src/hara/test.clj'>hara.test</a> is a test framework based off of the <a href='https://github.com/marick/Midje'>midje</a> syntax, containing macros and helpers for easy testing and verification of functions</p></div><div><span id="installation"></span><h3>1.1 &nbsp;&nbsp; Installation</h3></div><div><p>Add to <code>project.clj</code> dependencies:</p><pre><code>&#91;im.chit/hara.test &quot;2.5.8&quot;&#93;</code></pre></div><div><span id="motivation"></span><h3>1.2 &nbsp;&nbsp; Motivation</h3></div><div><p><a href='https://github.com/zcaudate/hara/blob/master/src/hara/test.clj'>hara.test</a> serves to provide a light-weight test framework based upon a subset of operations defined by <a href='https://github.com/marick/Midje'>midje</a>. The framework allows for rapid in-repl testing of the whole project as well as very easy shell integration. It abides by the following principles:</p><ul><li>test data should be explict for both input and output</li><li>test cases can be read like documentation</li><li>test suites contains information about the functions that are being tested</li></ul></div><div><span id="running"></span><h3>1.3 &nbsp;&nbsp; Running</h3></div><div><p><a href='https://github.com/zcaudate/hara/blob/master/src/hara/test.clj'>hara.test</a> can be run in the repl by:</p></div><div class="code"><pre><code class="clojure">(use 'hara.test)
 
 (run)</code></pre></div><div><p>or in the shell:</p></div><div class="code"><pre><code class="clojure">&gt; lein run -m hara.test :exit</code></pre></div><div><span id="index"></span><h2><b>2 &nbsp;&nbsp; Index</b></h2></div><div class="api"><span id="entry__hara_test__"></span><hr /><div><ul><li><a data-scroll="" href="#entry__hara_test__all">all</a></li><li><a data-scroll="" href="#entry__hara_test__any">any</a></li><li><a data-scroll="" href="#entry__hara_test__anything">anything</a></li><li><a data-scroll="" href="#entry__hara_test__contains">contains</a></li><li><a data-scroll="" href="#entry__hara_test__contains_in">contains-in</a></li><li><a data-scroll="" href="#entry__hara_test__exactly">exactly</a></li><li><a data-scroll="" href="#entry__hara_test__is_not">is-not</a></li><li><a data-scroll="" href="#entry__hara_test__just">just</a></li><li><a data-scroll="" href="#entry__hara_test__just_in">just-in</a></li><li><a data-scroll="" href="#entry__hara_test__print_options">print-options</a></li><li><a data-scroll="" href="#entry__hara_test__run">run</a></li><li><a data-scroll="" href="#entry__hara_test__run_namespace">run-namespace</a></li><li><a data-scroll="" href="#entry__hara_test__satisfies">satisfies</a></li><li><a data-scroll="" href="#entry__hara_test__throws">throws</a></li><li><a data-scroll="" href="#entry__hara_test__throws_info">throws-info</a></li></ul></div></div><div><span id="api"></span><h2><b>3 &nbsp;&nbsp; API</b></h2></div><div><span id="basics"></span><h3>3.1 &nbsp;&nbsp; Basics</h3></div><div><p>For those that are familiar with <a href='https://github.com/marick/midje'>midje</a>, it's pretty much the same thing. We define tests in a <code>fact</code> expression:</p></div><div class="code"><pre><code class="clojure">(fact &quot;lets test to see which if numbers are odd&quot;
 
@@ -150,11 +150,14 @@
       [1 2 3 4 5])
 => [true true false true false]</code></pre></div><div class="entry"><span id="entry__hara_test__anything"></span><div class="entry-description"><h4><b>anything&nbsp<a data-scroll="" href="#entry__hara_test__">^</a></b></h4><p><i>a checker that returns true for any value</i></p></div><div class="entry-option"><h6><a href="https://github.com/zcaudate/hara/blob/master/null#Lnull-Lnull" target="_blank">v&nbsp;2.4</a></h6><div><input class="source-toggle" id="entry__pre_hara_test__anything" type="checkbox" /><label class="source-toggle" for="entry__pre_hara_test__anything"></label><pre class="source"><code class="clojure"></code></pre></div></div><pre><h6><i><a href="https://github.com/zcaudate/hara/blob/master/test/hara/test/checker/base_test.clj#L72-L76" target="_blank">link</a></i></h6><code class="clojure">(anything nil) => true
 
-(type anything) => hara.test.common.Checker</code></pre></div><div class="entry"><span id="entry__hara_test__contains"></span><div class="entry-description"><h4><b>contains&nbsp<a data-scroll="" href="#entry__hara_test__">^</a></b></h4><p><i>checker for maps and vectors</i></p></div><div class="entry-option"><h6><a href="https://github.com/zcaudate/hara/blob/master/src/hara/test/checker/collection.clj#L81-L106" target="_blank">v&nbsp;2.4</a></h6><div><input class="source-toggle" id="entry__pre_hara_test__contains" type="checkbox" /><label class="source-toggle" for="entry__pre_hara_test__contains"></label><pre class="source"><code class="clojure">(defn contains
+(type anything) => hara.test.common.Checker</code></pre></div><div class="entry"><span id="entry__hara_test__contains"></span><div class="entry-description"><h4><b>contains&nbsp<a data-scroll="" href="#entry__hara_test__">^</a></b></h4><p><i>checker for maps and vectors</i></p></div><div class="entry-option"><h6><a href="https://github.com/zcaudate/hara/blob/master/src/hara/test/checker/collection.clj#L88-L116" target="_blank">v&nbsp;2.4</a></h6><div><input class="source-toggle" id="entry__pre_hara_test__contains" type="checkbox" /><label class="source-toggle" for="entry__pre_hara_test__contains"></label><pre class="source"><code class="clojure">(defn contains
   [x & modifiers]
   (cond (map? x)
         (contains-map x)
 
+        (set? x)
+        (contains-set x)
+        
         (sequential? x)
         (contains-vector x (set modifiers))
 
@@ -169,7 +172,7 @@
 => true
 
 ((contains [1 3]) [1 2 3 4])
-=> false</code></pre></div><div class="entry"><span id="entry__hara_test__contains_in"></span><div class="entry-description"><h4><b>contains-in&nbsp<a data-scroll="" href="#entry__hara_test__">^</a></b></h4><p><i>shorthand for checking nested maps and vectors</i></p></div><div class="entry-option"><h6><a href="https://github.com/zcaudate/hara/blob/master/src/hara/test/checker/collection.clj#L172-L193" target="_blank">v&nbsp;2.4</a></h6><div><input class="source-toggle" id="entry__pre_hara_test__contains_in" type="checkbox" /><label class="source-toggle" for="entry__pre_hara_test__contains_in"></label><pre class="source"><code class="clojure">(defmacro contains-in
+=> false</code></pre></div><div class="entry"><span id="entry__hara_test__contains_in"></span><div class="entry-description"><h4><b>contains-in&nbsp<a data-scroll="" href="#entry__hara_test__">^</a></b></h4><p><i>shorthand for checking nested maps and vectors</i></p></div><div class="entry-option"><h6><a href="https://github.com/zcaudate/hara/blob/master/src/hara/test/checker/collection.clj#L191-L219" target="_blank">v&nbsp;2.4</a></h6><div><input class="source-toggle" id="entry__pre_hara_test__contains_in" type="checkbox" /><label class="source-toggle" for="entry__pre_hara_test__contains_in"></label><pre class="source"><code class="clojure">(defmacro contains-in
   [x]
   "A macro for nested checking of data in the `contains` form"
   (cond (map? x)
@@ -177,6 +180,13 @@
                                  (assoc out k `(contains-in ~v)))
                                {}
                                x))
+        (set? x)
+        `(contains ~(reduce (fn [out v]
+                              (conj out `(contains-in ~v)))
+                            []
+                            x)
+                   :in-any-order)
+        
         (vector? x)
         `(contains ~(reduce (fn [out v]
                               (conj out `(contains-in ~v)))
@@ -206,11 +216,14 @@
             (not (ck res)))
       :expect ck})))</code></pre></div></div><pre><h6><i><a href="https://github.com/zcaudate/hara/blob/master/test/hara/test/checker/logic_test.clj#L7-L11" target="_blank">link</a></i></h6><code class="clojure">(mapv (is-not even?)
       [1 2 3 4 5])
-=> [true false true false true]</code></pre></div><div class="entry"><span id="entry__hara_test__just"></span><div class="entry-description"><h4><b>just&nbsp<a data-scroll="" href="#entry__hara_test__">^</a></b></h4><p><i>exact checker for maps and vectors</i></p></div><div class="entry-option"><h6><a href="https://github.com/zcaudate/hara/blob/master/src/hara/test/checker/collection.clj#L144-L170" target="_blank">v&nbsp;2.4</a></h6><div><input class="source-toggle" id="entry__pre_hara_test__just" type="checkbox" /><label class="source-toggle" for="entry__pre_hara_test__just"></label><pre class="source"><code class="clojure">(defn just
+=> [true false true false true]</code></pre></div><div class="entry"><span id="entry__hara_test__just"></span><div class="entry-description"><h4><b>just&nbsp<a data-scroll="" href="#entry__hara_test__">^</a></b></h4><p><i>exact checker for maps and vectors</i></p></div><div class="entry-option"><h6><a href="https://github.com/zcaudate/hara/blob/master/src/hara/test/checker/collection.clj#L160-L189" target="_blank">v&nbsp;2.4</a></h6><div><input class="source-toggle" id="entry__pre_hara_test__just" type="checkbox" /><label class="source-toggle" for="entry__pre_hara_test__just"></label><pre class="source"><code class="clojure">(defn just
   [x & modifiers]
   (cond (map? x)
         (just-map x)
-
+        
+        (set? x)
+        (just-set x)
+        
         (vector? x)
         (just-vector x (set modifiers))
 
@@ -228,7 +241,7 @@
 => false
 
 ((just [3 2 4 1] :in-any-order) [1 2 3 4])
-=> true</code></pre></div><div class="entry"><span id="entry__hara_test__just_in"></span><div class="entry-description"><h4><b>just-in&nbsp<a data-scroll="" href="#entry__hara_test__">^</a></b></h4><p><i>shorthand for exactly checking nested maps and vectors</i></p></div><div class="entry-option"><h6><a href="https://github.com/zcaudate/hara/blob/master/src/hara/test/checker/collection.clj#L195-L216" target="_blank">v&nbsp;2.4</a></h6><div><input class="source-toggle" id="entry__pre_hara_test__just_in" type="checkbox" /><label class="source-toggle" for="entry__pre_hara_test__just_in"></label><pre class="source"><code class="clojure">(defmacro just-in
+=> true</code></pre></div><div class="entry"><span id="entry__hara_test__just_in"></span><div class="entry-description"><h4><b>just-in&nbsp<a data-scroll="" href="#entry__hara_test__">^</a></b></h4><p><i>shorthand for exactly checking nested maps and vectors</i></p></div><div class="entry-option"><h6><a href="https://github.com/zcaudate/hara/blob/master/src/hara/test/checker/collection.clj#L221-L249" target="_blank">v&nbsp;2.4</a></h6><div><input class="source-toggle" id="entry__pre_hara_test__just_in" type="checkbox" /><label class="source-toggle" for="entry__pre_hara_test__just_in"></label><pre class="source"><code class="clojure">(defmacro just-in
   [x]
   "A macro for nested checking of data in the `just` form"
   (cond (map? x)
@@ -236,13 +249,22 @@
                              (assoc out k `(just-in ~v)))
                            {}
                            x))
+        (set? x)
+        `(just ~(reduce (fn [out v]
+                          (conj out `(just-in ~v)))
+                        []
+                        x)
+               :in-any-order)
+        
         (vector? x)
         `(just ~(reduce (fn [out v]
                           (conj out `(just-in ~v)))
                         []
                         x))
-        :else x))</code></pre></div></div><pre><h6><i><a href="https://github.com/zcaudate/hara/blob/master/test/hara/test/checker/collection_test.clj#L98-L104" target="_blank">link</a></i></h6><code class="clojure">((just-in {:a {:b {:c odd?}}}) {:a {:b {:c 1 :d 2}}})
+        :else x))</code></pre></div></div><pre><h6><i><a href="https://github.com/zcaudate/hara/blob/master/test/hara/test/checker/collection_test.clj#L98-L106" target="_blank">link</a></i></h6><code class="clojure">((just-in {:a {:b {:c odd?}}}) {:a {:b {:c 1 :d 2}}})
 => false
+
+((just-in [odd? {:a {:b even?}}]) [3 {:a {:b 4}}])
 
 ((just-in [odd? {:a {:b even?}}]) [3 {:a {:b 4}}])
 => true</code></pre></div><div class="entry"><span id="entry__hara_test__satisfies"></span><div class="entry-description"><h4><b>satisfies&nbsp<a data-scroll="" href="#entry__hara_test__">^</a></b></h4><p><i>checker that allows loose verifications</i></p></div><div class="entry-option"><h6><a href="https://github.com/zcaudate/hara/blob/master/src/hara/test/checker/base.clj#L88-L132" target="_blank">v&nbsp;2.4</a></h6><div><input class="source-toggle" id="entry__pre_hara_test__satisfies" type="checkbox" /><label class="source-toggle" for="entry__pre_hara_test__satisfies"></label><pre class="source"><code class="clojure">(defn satisfies
@@ -302,7 +324,7 @@
  (common/map->Result
   {:type :exception
    :data (Exception. "Hello There")}))
-=> true</code></pre></div><div class="entry"><span id="entry__hara_test__throws_info"></span><div class="entry-description"><h4><b>throws-info&nbsp<a data-scroll="" href="#entry__hara_test__">^</a></b></h4><p><i>checker that determines if an `ex-info` has been thrown</i></p></div><div class="entry-option"><h6><a href="https://github.com/zcaudate/hara/blob/master/src/hara/test/checker/collection.clj#L218-L234" target="_blank">v&nbsp;2.4</a></h6><div><input class="source-toggle" id="entry__pre_hara_test__throws_info" type="checkbox" /><label class="source-toggle" for="entry__pre_hara_test__throws_info"></label><pre class="source"><code class="clojure">(defn throws-info
+=> true</code></pre></div><div class="entry"><span id="entry__hara_test__throws_info"></span><div class="entry-description"><h4><b>throws-info&nbsp<a data-scroll="" href="#entry__hara_test__">^</a></b></h4><p><i>checker that determines if an `ex-info` has been thrown</i></p></div><div class="entry-option"><h6><a href="https://github.com/zcaudate/hara/blob/master/src/hara/test/checker/collection.clj#L251-L267" target="_blank">v&nbsp;2.4</a></h6><div><input class="source-toggle" id="entry__pre_hara_test__throws_info" type="checkbox" /><label class="source-toggle" for="entry__pre_hara_test__throws_info"></label><pre class="source"><code class="clojure">(defn throws-info
   ([]  (throws-info {}))
   ([m]
    (common/checker
@@ -312,7 +334,7 @@
            (and (= :exception type)
                 (instance? clojure.lang.ExceptionInfo data)
                 ((contains m) (ex-data data))))
-     :expect {:exception clojure.lang.ExceptionInfo :data m}})))</code></pre></div></div><pre><h6><i><a href="https://github.com/zcaudate/hara/blob/master/test/hara/test/checker/collection_test.clj#L107-L111" target="_blank">link</a></i></h6><code class="clojure">((throws-info {:a "hello" :b "there"})
+     :expect {:exception clojure.lang.ExceptionInfo :data m}})))</code></pre></div></div><pre><h6><i><a href="https://github.com/zcaudate/hara/blob/master/test/hara/test/checker/collection_test.clj#L109-L113" target="_blank">link</a></i></h6><code class="clojure">((throws-info {:a "hello" :b "there"})
  (common/evaluate '(throw (ex-info "hello" {:a "hello" :b "there"}))))
 => true</code></pre></div></div></div></div><div><span id="runner"></span><h3>3.4 &nbsp;&nbsp; Runner</h3></div><div class="api"><span id="entry__hara_test__"></span><hr /><div><ul><li><a data-scroll="" href="#entry__hara_test__print_options">print-options</a></li><li><a data-scroll="" href="#entry__hara_test__run_namespace">run-namespace</a></li><li><a data-scroll="" href="#entry__hara_test__run">run</a></li></ul><hr style="margin-bottom: 0" /><div><div class="entry"><span id="entry__hara_test__print_options"></span><div class="entry-description"><h4><b>print-options&nbsp<a data-scroll="" href="#entry__hara_test__">^</a></b></h4><p><i>output options for test results</i></p></div><div class="entry-option"><h6><a href="https://github.com/zcaudate/hara/blob/master/src/hara/test.clj#L21-L62" target="_blank">v&nbsp;2.4</a></h6><div><input class="source-toggle" id="entry__pre_hara_test__print_options" type="checkbox" /><label class="source-toggle" for="entry__pre_hara_test__print_options"></label><pre class="source"><code class="clojure">(defn print-options
   ([] (print-options :help))

@@ -406,12 +406,13 @@
         first
         (take 2))
    => '(ns hara.io.file)"
-  {:added "2.4"}
+  {:added "2.4}"
   [path]
-  (let [reader (reader :pushback path)]
-    (take-while identity
-                (repeatedly #(try (read reader)
-                                  (catch Throwable e))))))
+  (with-open [reader (reader :pushback path)]
+    (->> (repeatedly #(try (read reader)
+                           (catch Throwable e)))
+         (take-while identity)
+         (doall))))
 
 (defn copy-single
   "copies a single file to a destination
