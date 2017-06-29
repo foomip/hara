@@ -1,4 +1,4 @@
-(defproject im.chit/hara "2.5.9"
+(defproject im.chit/hara "2.5.10"
   :description "patterns and utilities"
   :url "https://github.com/zcaudate/hara"
   :license {:name "The MIT License"
@@ -11,9 +11,10 @@
                                   [org.eclipse.jgit "4.0.1.201506240215-r"]
                                   [joda-time "2.9.9"]
                                   [org.clojure/core.async "0.3.443"]
-                                  [im.chit/lucid.publish "1.3.12"]
-                                  [im.chit/lucid.distribute "1.3.12"]
-                                  [im.chit/lucid.unit "1.3.12"]]
+                                  [im.chit/lucid.distribute "1.3.13"]
+                                  [im.chit/lucid.mind "1.3.13"]
+                                  [im.chit/lucid.publish "1.3.13"]
+                                  [im.chit/lucid.unit "1.3.13"]]
                    :plugins [[lein-ancient "0.6.10"]]}}
   :publish {:theme  "bolton"
   
