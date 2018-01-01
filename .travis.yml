@@ -1,5 +1,4 @@
 language: clojure
-lein: 2.6.1
 script: lein test
 jdk: oraclejdk8
 sudo: false
