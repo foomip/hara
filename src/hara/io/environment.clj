@@ -1,6 +1,7 @@
 (ns hara.io.environment
-  (:require [hara.string.path :as path])
-  (:refer-clojure :exclude [require clojure-version]))
+  (:require [hara.string.path :as path]
+            [clojure.walk :as walk])
+  (:refer-clojure :exclude [require clojure-version load]))
 
 (defrecord Properties [])
 
@@ -122,3 +123,13 @@
                  (assoc-in out (conj k :name) v)
                  (assoc-in out k v)))
              (Properties.))))
+
+(defn load
+  [f]
+  (->> (slurp f)
+       (read-string)
+       (walk/postwalk (fn [x]
+                        (if (and (vector? x)
+                                 (= :property (first x)))
+                          (System/getProperty (second x))
+                          x)))))

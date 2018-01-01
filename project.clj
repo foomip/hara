@@ -1,4 +1,4 @@
-(defproject im.chit/hara "2.5.10"
+(defproject zcaudate/hara "2.8.0"
   :description "patterns and utilities"
   :url "https://github.com/zcaudate/hara"
   :license {:name "The MIT License"
@@ -8,7 +8,7 @@
   :profiles {:dev {:dependencies [[compojure "1.6.0"]
                                   [ring "1.6.1"]
                                   [clj-http "3.6.1"]
-                                  [org.eclipse.jgit "4.0.1.201506240215-r"]
+                                  [org.eclipse.jgit "4.10.0.201712302008-r"]
                                   [joda-time "2.9.9"]
                                   [org.clojure/core.async "0.3.443"]
                                   [im.chit/lucid.distribute "1.3.13"]
@@ -17,13 +17,11 @@
                                   [im.chit/lucid.unit "1.3.13"]]
                    :plugins [[lein-ancient "0.6.10"]]}}
   :publish {:theme  "bolton"
-  
             :template {:author "Chris Zheng"
                        :email  "z@caudate.me"
                        :site   "hara"
                        :tracking-enabled "true"
                        :tracking "UA-31320512-2"}
-            
             :files {"index"
                     {:template "home.html"
                      :input "test/documentation/home_hara.clj"
