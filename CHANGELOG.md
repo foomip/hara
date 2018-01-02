@@ -68,5 +68,5 @@ All notable changes to this project will be documented in this file. This change
 
 #### 2.1.4
 
-- Moved [iroh](http://github.com/zcaudate/iroh) to `im.chit/hara.reflect`
+- Moved [iroh](http://github.com/zcaudate/iroh) to `zcaudate/hara.reflect`
 - Added initialisers for `hara.component`

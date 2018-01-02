@@ -7,7 +7,7 @@
 
 "Add to `project.clj` dependencies:
 
-    [im.chit/hara.namespace.eval \"{{PROJECT.version}}\"]
+    [zcaudate/hara.namespace.eval \"{{PROJECT.version}}\"]
 
 **hara.namespace.eval** allows for evaluation within a given namespace"
 
@@ -18,7 +18,7 @@
 
 "Add to `project.clj` dependencies:
 
-    [im.chit/hara.namespace.eval \"{{PROJECT.version}}\"]
+    [zcaudate/hara.namespace.eval \"{{PROJECT.version}}\"]
 
 **hara.namespace.import** allows for moving function definitions around"
 

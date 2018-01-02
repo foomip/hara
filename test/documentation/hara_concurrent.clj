@@ -4,7 +4,7 @@
 
 "Add to `project.clj` dependencies:
 
-    [im.chit/hara.concurrent.latch \"{{PROJECT.version}}\"]
+    [zcaudate/hara.concurrent.latch \"{{PROJECT.version}}\"]
 
 **hara.concurrent.latch** supplies a simple primary/follower latch mechanism for atoms and ref such that if the primary is updated, then the followers will update as well"
 
@@ -14,7 +14,7 @@
 
 "Add to `project.clj` dependencies:
 
-    [im.chit/hara.concurrent.notification \"{{PROJECT.version}}\"]
+    [zcaudate/hara.concurrent.notification \"{{PROJECT.version}}\"]
 
 **hara.concurrent.notification** introduces a way to be notified of changes, based on this [post](http://stackoverflow.com/questions/13717161/are-there-any-good-libraries-or-strategies-for-testing-multithreaded-application)"
 
@@ -24,7 +24,7 @@
 
 "Add to `project.clj` dependencies:
 
-    [im.chit/hara.concurrent.pipe \"{{PROJECT.version}}\"]
+    [zcaudate/hara.concurrent.pipe \"{{PROJECT.version}}\"]
 
 **hara.concurrent.pipe** provides a simple asynchronous pipe that can be sent tasks that are queued until previous tasks are complete"
 
@@ -36,7 +36,7 @@
 
 "Add to `project.clj` dependencies:
 
-    [im.chit/hara.concurrent.propagate \"{{PROJECT.version}}\"]
+    [zcaudate/hara.concurrent.propagate \"{{PROJECT.version}}\"]
 
 **hara.concurrent.propagate** is an implemention around the concept of [propagators](http://web.mit.edu/~axch/www/art.pdf), introduced by [Sussman](https://vimeo.com/12184930)"
 

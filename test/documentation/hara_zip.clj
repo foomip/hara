@@ -13,7 +13,7 @@
 "
 Add to `project.clj` dependencies:
 
-    [im.chit/hara.zip \"{{PROJECT.version}}\"]
+    [zcaudate/hara.zip \"{{PROJECT.version}}\"]
     
 All functionality is found contained in the `hara.zip` namespace"
 

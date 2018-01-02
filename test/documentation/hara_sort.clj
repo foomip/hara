@@ -7,7 +7,7 @@
 
 "Add to `project.clj` dependencies:
 
-    [im.chit/hara.sort.hierarchical \"{{PROJECT.version}}\"]
+    [zcaudate/hara.sort.hierarchical \"{{PROJECT.version}}\"]
 
 **hara.sort.hierarchical** gives a list of dependents for each key"
 
@@ -17,7 +17,7 @@
 
 "Add to `project.clj` dependencies:
 
-    [im.chit/hara.sort.topological \"{{PROJECT.version}}\"]
+    [zcaudate/hara.sort.topological \"{{PROJECT.version}}\"]
 
 **hara.sort.topological** gives an order of preference for a set of hierarchies"
 

@@ -30,7 +30,7 @@
 (comment "run tests for entire project"
          
   (run)
-  ;;  ---- Project (im.chit/hara:124) ----
+  ;;  ---- Project (zcaudate/hara:124) ----
   ;;  documentation.hara-api
   ;;  documentation.hara-class
   ;;  documentation.hara-common

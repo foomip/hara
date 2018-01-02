@@ -1,11 +1,11 @@
-(defproject zcaudate/hara "2.8.0"
+(defproject zcaudate/hara "2.8.1"
   :description "patterns and utilities"
   :url "https://github.com/zcaudate/hara"
   :license {:name "The MIT License"
             :url "http://opensource.org/licenses/MIT"}
   :dependencies [[org.clojure/clojure "1.8.0"]]
   :aliases {"test" ["run" "-m" "hara.test" "exit"]}
-  :profiles {:dev {:dependenci es [[compojure "1.6.0"]
+  :profiles {:dev {:dependencies [[compojure "1.6.0"]
                                   [ring "1.6.1"]
                                   [clj-http "3.6.1"]
                                   [org.eclipse.jgit "4.10.0.201712302008-r"]

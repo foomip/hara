@@ -10,7 +10,7 @@
 
 "Add to `project.clj` dependencies:
 
-    [im.chit/hara.reflect \"{{PROJECT.version}}\"]"
+    [zcaudate/hara.reflect \"{{PROJECT.version}}\"]"
 
 "All functionality is found contained in the `hara.reflect` namespace"
 

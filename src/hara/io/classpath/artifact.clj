@@ -5,10 +5,10 @@
 (defn rep->coord
   "encodes the rep to a coordinate
  
-   (-> {:group \"im.chit\" :artifact \"hara\" :version \"2.4.0\"}
+   (-> {:group \"zcaudate\" :artifact \"hara\" :version \"2.4.0\"}
        (map->Rep)
        (rep->coord))
-   => '[im.chit/hara \"2.4.0\"]"
+   => '[zcaudate/hara \"2.4.0\"]"
   {:added "2.4"}
   [{:keys [group artifact version]}]
   [(symbol group artifact) version])
@@ -16,7 +16,7 @@
 (defn rep->path
   "encodes the rep to a path
  
-   (-> {:group \"im.chit\" :artifact \"hara\" :version \"2.4.0\"}
+   (-> {:group \"zcaudate\" :artifact \"hara\" :version \"2.4.0\"}
        (map->Rep)
        (rep->path))
    => \"<.m2>/im/chit/hara/2.4.0/hara-2.4.0.jar\""
@@ -29,10 +29,10 @@
 (defn rep->string
   "encodes the rep to a string
  
-   (-> {:group \"im.chit\" :artifact \"hara\" :version \"2.4.0\"}
+   (-> {:group \"zcaudate\" :artifact \"hara\" :version \"2.4.0\"}
        (map->Rep)
        (rep->string))
-   => \"im.chit:hara:2.4.0\""
+   => \"zcaudate:hara:2.4.0\""
   {:added "2.4"}
   [{:keys [group artifact extension version]}]
   (string/join ":" [group
@@ -52,8 +52,8 @@
 (defn coord->rep
   "converts a coord to a rep instance
  
-   (coord->rep '[im.chit/hara \"2.4.0\"])
-   => (contains {:group \"im.chit\"
+   (coord->rep '[zcaudate/hara \"2.4.0\"])
+   => (contains {:group \"zcaudate\"
                  :artifact \"hara\"
                  :version \"2.4.0\"})"
   {:added "2.4"}
@@ -67,7 +67,7 @@
   "converts a path to a rep instance
  
    (path->rep (str common/*local-repo* \"/im/chit/hara/2.4.0/hara-2.4.0.jar\"))
-   => (contains {:group \"im.chit\"
+   => (contains {:group \"zcaudate\"
                  :artifact \"hara\"
                  :version \"2.4.0\"})"
   {:added "2.4"}
@@ -86,8 +86,8 @@
 (defn string->rep
   "converts a string to a rep instance
  
-   (string->rep \"im.chit:hara:2.4.0\")
-   => (contains {:group \"im.chit\"
+   (string->rep \"zcaudate:hara:2.4.0\")
+   => (contains {:group \"zcaudate\"
                  :artifact \"hara\"
                  :version \"2.4.0\"})"
   {:added "2.4"}
@@ -102,11 +102,11 @@
 (defmulti rep
   "converts various formats to a rep
  
-   (rep '[im.chit/hara \"2.4.0\"])
-   => 'im.chit:hara:jar:2.4.0
+   (rep '[zcaudate/hara \"2.4.0\"])
+   => 'zcaudate:hara:jar:2.4.0
  
-   (rep \"im.chit:hara:2.4.0\")
-   => 'im.chit:hara:jar:2.4.0"
+   (rep \"zcaudate:hara:2.4.0\")
+   => 'zcaudate:hara:jar:2.4.0"
   {:added "2.4"}
   type)
 
@@ -129,10 +129,10 @@
 (defmulti artifact
   "converts various artifact formats
  
-   (artifact :string '[im.chit/hara \"2.4.0\"])
-   => \"im.chit:hara:jar:2.4.0\"
+   (artifact :string '[zcaudate/hara \"2.4.0\"])
+   => \"zcaudate:hara:jar:2.4.0\"
  
-   (artifact :path \"im.chit:hara:2.4.0\")
+   (artifact :path \"zcaudate:hara:2.4.0\")
    => (str common/*local-repo*
            \"/im/chit/hara/2.4.0/hara-2.4.0.jar\")"
   {:added "2.4"}

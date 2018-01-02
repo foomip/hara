@@ -47,7 +47,7 @@
    (-> (reader :pushback \"project.clj\")
        (read)
        second)
-   => 'im.chit/hara"
+   => 'zcaudate/hara"
   {:added "2.4"}
   ([input]
    (reader :buffered input {}))

@@ -10,7 +10,7 @@
 
 "Add to `project.clj` dependencies:
 
-    [im.chit/hara.io.scheduler \"{{PROJECT.version}}\"]"
+    [zcaudate/hara.io.scheduler \"{{PROJECT.version}}\"]"
 
 "All functions are in the `hara.io.scheduler` namespace."
 
@@ -335,7 +335,7 @@ Where `A`, `B` and `N` are numbers; `E1` and `E2` are expressions. All seven ele
 
 "To upgrade to `cronj` to `hara.io.scheduler`, all that needs to be done is to add to `project.clj` dependencies:
 
-    [im.chit/hara.io.scheduler \"{{PROJECT.version}}\"]
+    [zcaudate/hara.io.scheduler \"{{PROJECT.version}}\"]
     [joda    \"2.9.2\"]
 
 Apart from the initial call to include the scheduler, require the `hara.time.joda` namespace to load in all the protocol and multimethod hooks."

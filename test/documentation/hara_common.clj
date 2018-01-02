@@ -7,7 +7,7 @@
 
 "Add to `project.clj` dependencies:
 
-    [im.chit/hara.common.checks \"{{PROJECT.version}}\"]
+    [zcaudate/hara.common.checks \"{{PROJECT.version}}\"]
 
  **hara.common.checks** contain basic type predicates that are not included in the *clojure.core* namespace."
 
@@ -17,7 +17,7 @@
 
 "Add to `project.clj` dependencies:
 
-    [im.chit/hara.common.error \"{{PROJECT.version}}\"]
+    [zcaudate/hara.common.error \"{{PROJECT.version}}\"]
 
 **hara.common.error** contain simple macros for throwing and processing errors."
 
@@ -27,7 +27,7 @@
 
 "Add to `project.clj` dependencies:
 
-    [im.chit/hara.common.error \"{{PROJECT.version}}\"]
+    [zcaudate/hara.common.error \"{{PROJECT.version}}\"]
 
 **hara.common.hash** contain methods for working with object hashes."
 
@@ -37,7 +37,7 @@
 
 "Add to `project.clj` dependencies:
 
-    [im.chit/hara.common.primitives \"{{PROJECT.version}}\"]
+    [zcaudate/hara.common.primitives \"{{PROJECT.version}}\"]
 
 **hara.common.primitives** contain constructs that are not included in the *clojure.core* namespace."
 
@@ -47,7 +47,7 @@
 
 "Add to `project.clj` dependencies:
 
-    [im.chit/hara.common.state \"{{PROJECT.version}}\"]
+    [zcaudate/hara.common.state \"{{PROJECT.version}}\"]
 
 **hara.common.state** contain extensible methods for manipulating stateful datastructures:"
 
@@ -57,7 +57,7 @@
 
 "Add to `project.clj` dependencies:
 
-    [im.chit/hara.common.string \"{{PROJECT.version}}\"]
+    [zcaudate/hara.common.string \"{{PROJECT.version}}\"]
 
 **hara.common.string** contain extensible methods for string manipulation:"
 
@@ -68,7 +68,7 @@
 
 "Add to `project.clj` dependencies:
 
-    [im.chit/hara.common.watch \"{{PROJECT.version}}\"]
+    [zcaudate/hara.common.watch \"{{PROJECT.version}}\"]
 
 **hara.common.watch** contain extensible methods for observation of state:"
 

@@ -25,7 +25,7 @@
   (-> (reader :pushback "project.clj" {})
       (read)
       second)
-  => 'im.chit/hara)
+  => 'zcaudate/hara)
 
 ^{:refer hara.io.file.reader/reader-types :added "2.4"}
 (fact "returns the types of readers"

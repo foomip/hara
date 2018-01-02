@@ -40,7 +40,7 @@
    (-> (reader :pushback \"project.clj\" {})
        (read)
        second)
-   => 'im.chit/hara"
+   => 'zcaudate/hara"
   {:added "2.4"}
   (fn [type path opts] type))
 

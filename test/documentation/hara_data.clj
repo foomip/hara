@@ -7,7 +7,7 @@
 
 "Add to `project.clj` dependencies:
 
-    [im.chit/hara.data.map \"{{PROJECT.version}}\"]
+    [zcaudate/hara.data.map \"{{PROJECT.version}}\"]
 
 **hara.data.map** contain functions for clojure maps"
 
@@ -19,7 +19,7 @@
 
 "Add to `project.clj` dependencies:
 
-    [im.chit/hara.data.seq \"{{PROJECT.version}}\"]
+    [zcaudate/hara.data.seq \"{{PROJECT.version}}\"]
 
 **hara.data.seq** contain functions for sequences and arrays"
 
@@ -32,7 +32,7 @@
 
 "Add to `project.clj` dependencies:
 
-    [im.chit/hara.data.nested \"{{PROJECT.version}}\"]
+    [zcaudate/hara.data.nested \"{{PROJECT.version}}\"]
 
 **hara.data.nested** contain functions for updating nested hashmaps."
 
@@ -46,7 +46,7 @@
 
 "Add to `project.clj` dependencies:
 
-    [im.chit/hara.data.diff \"{{PROJECT.version}}\"]
+    [zcaudate/hara.data.diff \"{{PROJECT.version}}\"]
 
 **hara.data.diff** contain functions for comparing maps, as well as functions to patch changes."
 
@@ -61,7 +61,7 @@
 
 "Add to `project.clj` dependencies:
 
-    [im.chit/hara.data.combine \"{{PROJECT.version}}\"]
+    [zcaudate/hara.data.combine \"{{PROJECT.version}}\"]
 
 **hara.data.combine** contains functions for working with sets of data."
 
@@ -76,7 +76,7 @@
 
 "Add to `project.clj` dependencies:
 
-    [im.chit/hara.data.complex \"{{PROJECT.version}}\"]
+    [zcaudate/hara.data.complex \"{{PROJECT.version}}\"]
 
 **hara.data.complex** contain functions for working with relational data such as that coming out from datomic."
 
@@ -90,7 +90,7 @@
 
 "Add to `project.clj` dependencies:
 
-    [im.chit/hara.data.record \"{{PROJECT.version}}\"]
+    [zcaudate/hara.data.record \"{{PROJECT.version}}\"]
 
 **hara.data.record** contain functions for working with clojure records"
 
@@ -101,7 +101,7 @@
 
 "Add to `project.clj` dependencies:
 
-    [im.chit/hara.data.path \"{{PROJECT.version}}\"]
+    [zcaudate/hara.data.path \"{{PROJECT.version}}\"]
 
 **hara.data.path**concerns itself with the translation between data contained in a nested versus data contained in a single map with paths as keys."
 
@@ -112,7 +112,7 @@
 
 "Add to `project.clj` dependencies:
 
-    [im.chit/hara.data.map \"{{PROJECT.version}}\"]
+    [zcaudate/hara.data.map \"{{PROJECT.version}}\"]
 
 **hara.data.transform** contain functions for transforming maps"
 

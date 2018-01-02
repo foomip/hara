@@ -7,7 +7,7 @@
 
 "Add to `project.clj` dependencies:
 
-    [im.chit/hara.expression.compile \"{{PROJECT.version}}\"]
+    [zcaudate/hara.expression.compile \"{{PROJECT.version}}\"]
 
 **hara.expression.compile** looks at compiler time expressions"
 
@@ -21,7 +21,7 @@
 
 "Add to `project.clj` dependencies:
 
-     [im.chit/hara.expression.form \"{{PROJECT.version}}\"]
+     [zcaudate/hara.expression.form \"{{PROJECT.version}}\"]
 
 **hara.expression.form** provides methods that transform forms into anonymous functions"
 
@@ -37,7 +37,7 @@
 
 "Add to `project.clj` dependencies:
 
-     [im.chit/hara.expression.load \"{{PROJECT.version}}\"]
+     [zcaudate/hara.expression.load \"{{PROJECT.version}}\"]
 
 **hara.expression.load** provides a simple mechanism for loading code that can be in a form"
 
@@ -51,7 +51,7 @@
 
 "Add to `project.clj` dependencies:
 
-     [im.chit/hara.expression.shorthand \"{{PROJECT.version}}\"]
+     [zcaudate/hara.expression.shorthand \"{{PROJECT.version}}\"]
 
 **hara.expression.shorthand** provides methods that work with code as data"
 

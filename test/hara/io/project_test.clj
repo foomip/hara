@@ -9,7 +9,7 @@
 (fact "returns the name, read from project.clj"
 
   (project-name)
-  => 'im.chit/hara)
+  => 'zcaudate/hara)
 
 ^{:refer hara.io.project/file-namespace :added "2.4"}
 (fact "reads the namespace of the given path"

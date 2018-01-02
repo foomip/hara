@@ -11,7 +11,7 @@
 "
 Add to `project.clj` dependencies:
 
-    [im.chit/hara.io.profiler \"{{PROJECT.version}}\"]
+    [zcaudate/hara.io.profiler \"{{PROJECT.version}}\"]
 
 
 "

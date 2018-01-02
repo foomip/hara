@@ -9,7 +9,7 @@
 
 "Add to `project.clj` dependencies:
 
-    [im.chit/hara.extend.abstract \"{{PROJECT.version}}\"]
+    [zcaudate/hara.extend.abstract \"{{PROJECT.version}}\"]
 
 **hara.extend.abstract** provides the implementation for the [abstract container pattern](http://z.caudate.me/the-abstract-container-pattern/)"
 
@@ -24,7 +24,7 @@
 "
 Add to `project.clj` dependencies:
 
-    [im.chit/hara.extend.all \"{{PROJECT.version}}\"]
+    [zcaudate/hara.extend.all \"{{PROJECT.version}}\"]
 
 **hara.extend.all** promotes code reuse by providing a template for `extend-type`"
 

@@ -16,7 +16,7 @@ The two paradigms have been combined into a single library because they share a 
 "
 Add to `project.clj` dependencies:
 
-    [im.chit/hara.event \"{{PROJECT.version}}\"]
+    [zcaudate/hara.event \"{{PROJECT.version}}\"]
 "
 
 [[:section {:title "Other Libraries"}]]

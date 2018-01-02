@@ -29,7 +29,7 @@
   "returns the name, read from project.clj
  
    (project-name)
-   => 'im.chit/hara"
+   => 'zcaudate/hara"
   {:added "2.4"}
   ([] (project-name "project.clj"))
   ([path]

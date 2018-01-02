@@ -16,7 +16,7 @@
 
 "Add to `project.clj` dependencies:
 
-    [im.chit/hara.component \"{{PROJECT.version}}\"]"
+    [zcaudate/hara.component \"{{PROJECT.version}}\"]"
 
 "All functions are in the `hara.component` namespace."
 

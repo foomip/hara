@@ -6,7 +6,7 @@
 
 "Add to `project.clj` dependencies:
 
-    [im.chit/hara.io.ansii \"{{PROJECT.version}}\"]
+    [zcaudate/hara.io.ansii \"{{PROJECT.version}}\"]
 
 **hara.io.ansii** provides an easier interface for working with display colors"
 
@@ -16,7 +16,7 @@
 
 "Add to `project.clj` dependencies:
 
-    [im.chit/hara.io.archive \"{{PROJECT.version}}\"]
+    [zcaudate/hara.io.archive \"{{PROJECT.version}}\"]
 
 **hara.io.archive** allows an easy interface for working with zip files"
 
@@ -26,7 +26,7 @@
 
 "Add to `project.clj` dependencies:
 
-    [im.chit/hara.io.classloader \"{{PROJECT.version}}\"]
+    [zcaudate/hara.io.classloader \"{{PROJECT.version}}\"]
 
 **hara.io.classloader** provides an easier interface for working with jvm classloaders"
 
@@ -36,7 +36,7 @@
 
 "Add to `project.clj` dependencies:
 
-    [im.chit/hara.io.classpath \"{{PROJECT.version}}\"]
+    [zcaudate/hara.io.classpath \"{{PROJECT.version}}\"]
 
 **hara.io.classpath** allows resolution and searching of classes"
 
@@ -46,7 +46,7 @@
 
 "Add to `project.clj` dependencies:
 
-    [im.chit/hara.io.encode \"{{PROJECT.version}}\"]
+    [zcaudate/hara.io.encode \"{{PROJECT.version}}\"]
 
 **hara.io.encode** allows encoding of bytes to hex and base64 formats"
 
@@ -56,7 +56,7 @@
 
 "Add to `project.clj` dependencies:
 
-    [im.chit/hara.io.environment \"{{PROJECT.version}}\"]
+    [zcaudate/hara.io.environment \"{{PROJECT.version}}\"]
 
 **hara.io.environment** provides an easier interface for working with jvm properties and versioning."
 
@@ -67,7 +67,7 @@
 
 "Add to `project.clj` dependencies:
 
-    [im.chit/hara.io.project \"{{PROJECT.version}}\"]
+    [zcaudate/hara.io.project \"{{PROJECT.version}}\"]
 
 **hara.io.project** provides an easier interface for working with clojure `project.clj` files"
 

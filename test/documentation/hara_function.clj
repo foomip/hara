@@ -6,7 +6,7 @@
 
 "Add to `project.clj` dependencies:
 
-    [im.chit/hara.function.args \"{{PROJECT.version}}\"]
+    [zcaudate/hara.function.args \"{{PROJECT.version}}\"]
 
 **hara.function.args** allow reasoning on the arguments of clojure methods"
 
@@ -16,7 +16,7 @@
 
 "Add to `project.clj` dependencies:
 
-    [im.chit/hara.function.dispatch \"{{PROJECT.version}}\"]
+    [zcaudate/hara.function.dispatch \"{{PROJECT.version}}\"]
 
 **hara.function.dispatch** allows alternative ways of calling a function"
 

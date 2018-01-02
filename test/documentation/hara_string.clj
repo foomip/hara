@@ -6,7 +6,7 @@
 
 "Add to `project.clj` dependencies:
 
-    [im.chit/hara.string.case \"{{PROJECT.version}}\"]
+    [zcaudate/hara.string.case \"{{PROJECT.version}}\"]
 
 **hara.string.case** provides methods for changing case representation"
 
@@ -16,7 +16,7 @@
 
 "Add to `project.clj` dependencies:
 
-    [im.chit/hara.string.path \"{{PROJECT.version}}\"]
+    [zcaudate/hara.string.path \"{{PROJECT.version}}\"]
 
 **hara.string.path** provides methods for manipulating paths in string like objects"
 
@@ -26,7 +26,7 @@
 
 "Add to `project.clj` dependencies:
 
-    [im.chit/hara.string.path \"{{PROJECT.version}}\"]
+    [zcaudate/hara.string.path \"{{PROJECT.version}}\"]
 
 **hara.string.prose** provides methods for general manipulation of text"
 

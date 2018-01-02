@@ -15,7 +15,7 @@
 
 "Add to `project.clj` dependencies:
 
-    [im.chit/hara.concurrent.ova \"{{PROJECT.version}}\"]"
+    [zcaudate/hara.concurrent.ova \"{{PROJECT.version}}\"]"
 
 "All functions are in the `hara.concurrent.ova` namespace."
 

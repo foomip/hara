@@ -2,7 +2,7 @@
   
 "Add to `project.clj` dependencies:
 
-    [im.chit/hara.class.enum \"{{PROJECT.version}}\"]
+    [zcaudate/hara.class.enum \"{{PROJECT.version}}\"]
 
 **hara.class.enum** contain functions that work with enums, turning them into more accessible data."
 
@@ -12,7 +12,7 @@
 
 "Add to `project.clj` dependencies:
 
-    [im.chit/hara.class.inheritance \"{{PROJECT.version}}\"]
+    [zcaudate/hara.class.inheritance \"{{PROJECT.version}}\"]
 
 **hara.class.inheritance** contain functions that output inheritance properties of objects. It is used by many libraries including [hara.reflect](hara-reflect.html) and [hara.object](hara-object.html)."
 
@@ -22,7 +22,7 @@
 
 "Add to `project.clj` dependencies:
 
-    [im.chit/hara.class.multi \"{{PROJECT.version}}\"]
+    [zcaudate/hara.class.multi \"{{PROJECT.version}}\"]
 
 **hara.class.multi** contain functions that operate on multimethods"
 

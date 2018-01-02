@@ -11,7 +11,7 @@
 "
 Add to `project.clj` dependencies:
 
-    [im.chit/hara.test \"{{PROJECT.version}}\"]
+    [zcaudate/hara.test \"{{PROJECT.version}}\"]
 "
 
 [[:section {:title "Motivation"}]]

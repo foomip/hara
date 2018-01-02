@@ -14,7 +14,7 @@
 
 "Add to `project.clj` dependencies:
 
-    [im.chit/hara.time \"{{PROJECT.version}}\"]
+    [zcaudate/hara.time \"{{PROJECT.version}}\"]
 
 All functionality is contained in the `hara.time` namespace."
 

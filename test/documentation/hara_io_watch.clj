@@ -10,7 +10,7 @@
 
 "Add to `project.clj` dependencies:
 
-    [im.chit/hara.io.watch \"{{PROJECT.version}}\"]"
+    [zcaudate/hara.io.watch \"{{PROJECT.version}}\"]"
 
 "All functions are in the `hara.common.watch` namespace, with `hara.io.watch` providing filewatch extensions:"
 

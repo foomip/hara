@@ -11,7 +11,7 @@
 
 "Add to `project.clj` dependencies:
 
-    [im.chit/hara.concurrent.procedure \"{{PROJECT.version}}\"]"
+    [zcaudate/hara.concurrent.procedure \"{{PROJECT.version}}\"]"
 
 "All functions are in the `hara.concurrent.procedure` namespace."
 

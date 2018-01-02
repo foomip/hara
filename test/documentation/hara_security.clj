@@ -10,7 +10,7 @@
 "
 Add to `project.clj` dependencies:
 
-    [im.chit/hara.security \"{{PROJECT.version}}\"]
+    [zcaudate/hara.security \"{{PROJECT.version}}\"]
     
 All functionality is found contained in the `hara.security` namespace"
 

@@ -18,7 +18,7 @@
   (-> (reader :pushback "project.clj")
       (read)
       second)
-  => 'im.chit/hara)
+  => 'zcaudate/hara)
 
 ^{:refer hara.io.file/select :added "2.4"}
 (fact "selects all the files in a directory"

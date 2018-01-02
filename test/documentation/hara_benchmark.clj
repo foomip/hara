@@ -13,5 +13,5 @@
 "
 Add to `project.clj` dependencies:
 
-    [im.chit/hara.benchmark \"{{PROJECT.version}}\"]
+    [zcaudate/hara.benchmark \"{{PROJECT.version}}\"]
 "

@@ -10,7 +10,7 @@
 "
 Add to `project.clj` dependencies:
 
-    [im.chit/hara.group \"{{PROJECT.version}}\"]
+    [zcaudate/hara.group \"{{PROJECT.version}}\"]
 
 All functionality is in the `hara.group` namespace:"
 
