@@ -6,16 +6,16 @@
   :dependencies [[org.clojure/clojure "1.8.0"]]
   :aliases {"test" ["run" "-m" "hara.test" "exit"]}
   :profiles {:dev {:dependencies [[compojure "1.6.0"]
-                                  [ring "1.6.1"]
-                                  [clj-http "3.6.1"]
+                                  [ring "1.6.3"]
+                                  [clj-http "3.7.0"]
                                   [org.eclipse.jgit "4.10.0.201712302008-r"]
                                   [joda-time "2.9.9"]
                                   [org.clojure/core.async "0.3.443"]
-                                  [im.chit/lucid.distribute "1.3.13"]
-                                  [im.chit/lucid.mind "1.3.13"]
-                                  [im.chit/lucid.publish "1.3.13"]
-                                  [im.chit/lucid.unit "1.3.13"]]
-                   :plugins [[lein-ancient "0.6.10"]]}}
+                                  [zcaudate/lucid.distribute "1.4.0"]
+                                  [zcaudate/lucid.mind "1.4.0"]
+                                  [zcaudate/lucid.publish "1.4.0"]
+                                  [zcaudate/lucid.unit "1.4.0"]]
+                   :plugins [[lein-ancient "0.6.15"]]}}
   :publish {:theme  "bolton"
             :template {:author "Chris Zheng"
                        :email  "z@caudate.me"
