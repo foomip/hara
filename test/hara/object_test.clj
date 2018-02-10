@@ -1,6 +1,7 @@
 (ns hara.object-test
   (:use hara.test)
-  (:require [hara.object :refer :all]))
+  (:require [hara.object :refer :all])
+  (:refer-clojure :exclude [get set]))
 
 ^{:refer hara.object/map-like :added "2.3"}
 (fact "creates an accessibility layer for map-like objects"
