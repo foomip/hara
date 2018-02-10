@@ -10,9 +10,11 @@
 (def +base+ (.getParent ^ClassLoader +rt+))
 
 (def +clojure-jar+
-  (->> (.getURLs ^ClassLoader +rt+)
-       seq
-       (map #(.getFile ^java.net.URL %))
+  (->> (or (try (->> (.getURLs ^ClassLoader +rt+)
+                seq
+                (map #(.getFile ^java.net.URL %)))
+           (catch java.lang.IllegalArgumentException e))
+           (string/split (System/getProperty "java.class.path") #":"))
        (filter #(.contains ^String % "/org/clojure/clojure/"))
        first))
 

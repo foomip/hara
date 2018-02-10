@@ -5,5 +5,6 @@
 ^{:refer hara.reflect.core.apply/apply-element :added "2.1"}
 (fact "apply the class element to arguments"
 
-  (seq (apply-element "123" "value" []))
+  (->> (apply-element "123" "value" [])
+       (map char))
   => [\1 \2 \3])

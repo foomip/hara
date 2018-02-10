@@ -14,13 +14,13 @@
 
 (env/init
  {:java   {:major 1 :minor 8}}
-          (:require [hara.time.data.zone
-                     java-time-zoneid]
-
-                    [hara.time.data.instant
-                     java-time-instant
-                     java-time-clock
-                     java-time-zoneddatetime]
-                    [hara.time.data.format
-                     java-time-format-datetimeformatter]))
+ (:require [hara.time.data.zone
+            java-time-zoneid]
+           
+           [hara.time.data.instant
+            java-time-instant
+            java-time-clock
+            java-time-zoneddatetime]
+           [hara.time.data.format
+            java-time-format-datetimeformatter]))
 

@@ -1,4 +1,8 @@
 language: clojure
 script: lein test
-jdk: oraclejdk8
+jdk: 
+  - oraclejdk9
+  - oraclejdk8
+  - oraclejdk7
+
 sudo: false

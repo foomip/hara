@@ -28,12 +28,48 @@
   (env/version :java)
   => (env/java-version))
 
-^{:refer hara.io.environment/satisfied :added "2.2"}
-(fact "only attempts to load the files when the minimum versions have been met"
-  (env/satisfied {:java    {:major 1 :minor 7}
-                  :clojure {:major 1 :minor 6}})
+^{:refer hara.io.environment/satisfied-elem :added "2.8"}
+(fact "compares the :major, :minor and :incremental values of a version map"
+
+  (env/satisfied-elem {:major 1 :minor 8 :incremental 1}
+                      {:major 1 :minor 7 :incremental 6}
+                      >=)
+  => true
+  
+  (env/satisfied-elem {:major 1 :minor 7 :incremental 1}
+                      {:major 1 :minor 7 :incremental 6}
+                      >=)
+  => false
+
+  ^:hidden
+  (env/satisfied-elem {:major 1 :minor 8 :incremental 1 :qualifier 0}
+                      {:major 1 :minor 8 :incremental 1 :qualifier 0}
+                      >=)
   => true)
 
+^{:refer hara.io.environment/satisfied-compare :added "2.8"}
+(fact "checks multiple values of version maps are all suitable"
+
+  (env/satisfied-compare {:clojure {:major 1 :minor 6}
+                          :java {:major 1 :minor 6}}
+                         {:clojure {:major 1 :minor 7}
+                          :java {:major 1 :minor 6}}
+                         <=)
+  => true)
+
+^{:refer hara.io.environment/satisfied :added "2.2"}
+(fact "checks to see if the current version satisfies the given constraints"
+  (env/satisfied {:java    {:major 1 :minor 7}
+                  :clojure {:major 1 :minor 6}})
+  => true
+
+  (env/satisfied [{:java    {:major 1 :minor 5}}
+                  {}])
+  => true
+
+  (env/satisfied [{}
+                  {:java    {:major 11 :minor 0}}])
+  => true)
 
 ^{:refer hara.io.environment/init :added "2.2"}
 (fact "only attempts to load the files when the minimum versions have been met"
@@ -60,3 +96,7 @@
   => (contains {:arch anything
                 :name anything
                 :version anything}))
+
+(comment
+  (use 'lucid.unit)
+  (lucid.unit/import))

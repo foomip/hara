@@ -15,7 +15,8 @@
                                   [zcaudate/lucid.mind "1.4.0"]
                                   [zcaudate/lucid.publish "1.4.0"]
                                   [zcaudate/lucid.unit "1.4.0"]]
-                   :plugins [[lein-ancient "0.6.15"]]}}
+                   :plugins [[lein-ancient "0.6.15"]
+                             [cider/cider-nrepl "0.15.1"]]}}
   :publish {:theme  "bolton"
             :template {:author "Chris Zheng"
                        :email  "z@caudate.me"

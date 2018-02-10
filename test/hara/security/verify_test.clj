@@ -9,8 +9,8 @@
 (fact "creates a digest out of a byte array"
 
   (digest)
-  => ["MD2" "MD5" "SHA" "SHA-224"
-      "SHA-256" "SHA-384" "SHA-512"]
+  => (contains ["MD2" "MD5" "SHA" "SHA-224"
+                "SHA-256" "SHA-384" "SHA-512"])
 
   (-> (digest (.getBytes "hello world")
               "SHA")
@@ -35,12 +35,12 @@
 (fact "creates a signature using a private key"
 
   (sign)
-  => ["MD2withRSA" "MD5andSHA1withRSA" "MD5withRSA"
-      "NONEwithDSA" "NONEwithECDSA" "SHA1withDSA"
-      "SHA1withECDSA" "SHA1withRSA" "SHA224withDSA"
-      "SHA224withECDSA" "SHA224withRSA" "SHA256withDSA"
-      "SHA256withECDSA" "SHA256withRSA" "SHA384withECDSA"
-      "SHA384withRSA" "SHA512withECDSA" "SHA512withRSA"]
+  => (contains ["MD2withRSA" "MD5andSHA1withRSA" "MD5withRSA"
+                "NONEwithDSA" "NONEwithECDSA" "SHA1withDSA"
+                "SHA1withECDSA" "SHA1withRSA" "SHA224withDSA"
+                "SHA224withECDSA" "SHA224withRSA" "SHA256withDSA"
+                "SHA256withECDSA" "SHA256withRSA" "SHA384withECDSA"
+                "SHA384withRSA" "SHA512withECDSA" "SHA512withRSA"])
   
   (-> (sign
        (.getBytes "hello world")

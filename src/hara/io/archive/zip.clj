@@ -1,11 +1,18 @@
 (ns hara.io.archive.zip
   (:require [hara.protocol.archive :as archive]
+            [hara.io.environment :as env]
             [hara.io.file :as fs])
-  (:import com.sun.nio.zipfs.ZipFileSystem
-           (java.nio.file Files
+  (:import (java.nio.file Files
                           FileSystem
                           FileSystems
                           Paths)))
+
+(env/init [{:java {:major 9 :minor 0}}]
+          (:import [jdk.nio.zipfs ZipFileSystem]))
+
+(env/init [{}
+           {:java {:major 8}}]
+          (:import [com.sun.nio.zipfs ZipFileSystem]))
 
 (extend-protocol archive/IArchive
   ZipFileSystem
