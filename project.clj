@@ -10,11 +10,7 @@
                                   [clj-http "3.7.0"]
                                   [org.eclipse.jgit "4.10.0.201712302008-r"]
                                   [joda-time "2.9.9"]
-                                  [org.clojure/core.async "0.3.443"]
-                                  [zcaudate/lucid.distribute "1.4.0"]
-                                  [zcaudate/lucid.mind "1.4.0"]
-                                  [zcaudate/lucid.publish "1.4.0"]
-                                  [zcaudate/lucid.unit "1.4.0"]]
+                                  [org.clojure/core.async "0.3.443"]]
                    :plugins [[lein-ancient "0.6.15"]
                              [cider/cider-nrepl "0.15.1"]]}}
   :publish {:theme  "bolton"
