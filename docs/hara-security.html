@@ -61,9 +61,9 @@
           <div class="heading">
             <div>
               <h5>Author: Chris Zheng&nbsp;&nbsp;<a href="mailto:z@caudate.me">(z@caudate.me)</a></h5>
-              <h5>Date: 03 January 2018</h5>
+              <h5>Date: 11 February 2018</h5>
               <h5>Repository: <a href="https://github.com/zcaudate/hara">https://github.com/zcaudate/hara</a></h5>
-              <h5>Version: 2.8.1</h5></div></div>
+              <h5>Version: 2.8.2</h5></div></div>
           <hr/>
           <div class="outline">
             <div class="toc">
@@ -83,7 +83,7 @@
                 </ul>
               </nav>
           </div>
-          <div><span id="introduction"></span><h2><b>1 &nbsp;&nbsp; Introduction</b></h2></div><div><p><a href='https://github.com/zcaudate/hara/blob/master/src/hara/security.clj'>hara.security</a> provides an intuitive interface around the JCA suite of tools for securing your applications</p></div><div><span id="installation"></span><h3>1.1 &nbsp;&nbsp; Installation</h3></div><div><p>Add to <code>project.clj</code> dependencies:</p><pre><code>&#91;zcaudate/hara.security &quot;2.8.1&quot;&#93;
+          <div><span id="introduction"></span><h2><b>1 &nbsp;&nbsp; Introduction</b></h2></div><div><p><a href='https://github.com/zcaudate/hara/blob/master/src/hara/security.clj'>hara.security</a> provides an intuitive interface around the JCA suite of tools for securing your applications</p></div><div><span id="installation"></span><h3>1.1 &nbsp;&nbsp; Installation</h3></div><div><p>Add to <code>project.clj</code> dependencies:</p><pre><code>&#91;zcaudate/hara.security &quot;2.8.2&quot;&#93;
 </code></pre>All functionality is found contained in the <code>hara.security</code> namespace</div><div class="code"><pre><code class="clojure">(require '[hara.security :as security])</code></pre></div><div><span id="motivation"></span><h3>1.2 &nbsp;&nbsp; Motivation</h3></div><div><p><code>hara.security</code> aims to integrate easily with the JSE/JCA framework. As many other libraries such as Bouncy Castle also extend this framework, the methods allow better exploration and usage of the options. Furthermore, deliberate effort was made to allow keys to be expressed as data so that encryption could be handled more explictly and with more understanding.</p></div><div><span id="index"></span><h2><b>2 &nbsp;&nbsp; Index</b></h2></div><div class="api"><span id="entry__hara_security__"></span><hr /><div><ul><li><a data-scroll="" href="#entry__hara_security____GT_key">->key</a></li><li><a data-scroll="" href="#entry__hara_security__cipher">cipher</a></li><li><a data-scroll="" href="#entry__hara_security__decrypt">decrypt</a></li><li><a data-scroll="" href="#entry__hara_security__digest">digest</a></li><li><a data-scroll="" href="#entry__hara_security__encrypt">encrypt</a></li><li><a data-scroll="" href="#entry__hara_security__generate_key">generate-key</a></li><li><a data-scroll="" href="#entry__hara_security__generate_key_pair">generate-key-pair</a></li><li><a data-scroll="" href="#entry__hara_security__hmac">hmac</a></li><li><a data-scroll="" href="#entry__hara_security__key__GT_map">key->map</a></li><li><a data-scroll="" href="#entry__hara_security__key_generator">key-generator</a></li><li><a data-scroll="" href="#entry__hara_security__key_pair_generator">key-pair-generator</a></li><li><a data-scroll="" href="#entry__hara_security__key_store">key-store</a></li><li><a data-scroll="" href="#entry__hara_security__list_providers">list-providers</a></li><li><a data-scroll="" href="#entry__hara_security__list_services">list-services</a></li><li><a data-scroll="" href="#entry__hara_security__mac">mac</a></li><li><a data-scroll="" href="#entry__hara_security__message_digest">message-digest</a></li><li><a data-scroll="" href="#entry__hara_security__sign">sign</a></li><li><a data-scroll="" href="#entry__hara_security__signature">signature</a></li><li><a data-scroll="" href="#entry__hara_security__verify">verify</a></li></ul></div></div><div><span id="api"></span><h2><b>3 &nbsp;&nbsp; API</b></h2></div><div><span id="providers"></span><h3>3.1 &nbsp;&nbsp; Providers</h3></div><div class="api"><span id="entry__hara_security__"></span><hr /><div><ul><li><a data-scroll="" href="#entry__hara_security__list_providers">list-providers</a></li><li><a data-scroll="" href="#entry__hara_security__list_services">list-services</a></li><li><a data-scroll="" href="#entry__hara_security__cipher">cipher</a></li><li><a data-scroll="" href="#entry__hara_security__key_generator">key-generator</a></li><li><a data-scroll="" href="#entry__hara_security__key_pair_generator">key-pair-generator</a></li><li><a data-scroll="" href="#entry__hara_security__key_store">key-store</a></li><li><a data-scroll="" href="#entry__hara_security__mac">mac</a></li><li><a data-scroll="" href="#entry__hara_security__message_digest">message-digest</a></li><li><a data-scroll="" href="#entry__hara_security__signature">signature</a></li></ul><hr style="margin-bottom: 0" /><div><div class="entry"><span id="entry__hara_security__list_providers"></span><div class="entry-description"><h4><b>list-providers&nbsp<a data-scroll="" href="#entry__hara_security__">^</a></b></h4><p><i>list all security providers</i></p></div><div class="entry-option"><h6><a href="https://github.com/zcaudate/hara/blob/master/src/hara/security/provider.clj#L16-L27" target="_blank">v&nbsp;2.4</a></h6><div><input class="source-toggle" id="entry__pre_hara_security__list_providers" type="checkbox" /><label class="source-toggle" for="entry__pre_hara_security__list_providers"></label><pre class="source"><code class="clojure">(defn list-providers
   []
   (->> (Security/getProviders)
@@ -292,8 +292,8 @@
        (provider/message-digest algo provider)
        (doto (.update bytes))
        (.digest))))</code></pre></div></div><pre><h6><i><a href="https://github.com/zcaudate/hara/blob/master/test/hara/security/verify_test.clj#L9-L18" target="_blank">link</a></i></h6><code class="clojure">(digest)
-=> ["MD2" "MD5" "SHA" "SHA-224"
-    "SHA-256" "SHA-384" "SHA-512"]
+=> (contains ["MD2" "MD5" "SHA" "SHA-224"
+              "SHA-256" "SHA-384" "SHA-512"])
 
 (-> (digest (.getBytes "hello world")
             "SHA")
@@ -320,13 +320,14 @@
   ([bytes key {:keys [algorithm provider] :as opts}]
    (-> (provider/signature algorithm provider)
        (doto (.initSign (key/->key key)) (.update bytes))
-       (.sign))))</code></pre></div></div><pre><h6><i><a href="https://github.com/zcaudate/hara/blob/master/test/hara/security/verify_test.clj#L35-L65" target="_blank">link</a></i></h6><code class="clojure">(sign)
-=> ["MD2withRSA" "MD5andSHA1withRSA" "MD5withRSA"
-    "NONEwithDSA" "NONEwithECDSA" "SHA1withDSA"
-    "SHA1withECDSA" "SHA1withRSA" "SHA224withDSA"
-    "SHA224withECDSA" "SHA224withRSA" "SHA256withDSA"
-    "SHA256withECDSA" "SHA256withRSA" "SHA384withECDSA"
-    "SHA384withRSA" "SHA512withECDSA" "SHA512withRSA"]
+       (.sign))))</code></pre></div></div><pre><h6><i><a href="https://github.com/zcaudate/hara/blob/master/test/hara/security/verify_test.clj#L35-L66" target="_blank">link</a></i></h6><code class="clojure">(sign)
+;; => (contains ["MD2withRSA" "MD5andSHA1withRSA" "MD5withRSA"
+;;               "NONEwithDSA" "NONEwithECDSA" "SHA1withDSA"
+;;               "SHA1withECDSA" "SHA1withRSA" "SHA224withDSA"
+;;               "SHA224withECDSA" "SHA224withRSA" "SHA256withDSA"
+;;               "SHA256withECDSA" "SHA256withRSA" "SHA384withECDSA"
+;;               "SHA384withRSA" "SHA512withECDSA" "SHA512withRSA"]
+;;              :in-any-order)
   
 (-> (sign
      (.getBytes "hello world")
@@ -354,7 +355,7 @@
   ([bytes signature key {:keys [algorithm provider] :as opts}]
    (-> (provider/signature algorithm provider)
        (doto (.initVerify (key/->key key)) (.update bytes))
-       (.verify signature))))</code></pre></div></div><pre><h6><i><a href="https://github.com/zcaudate/hara/blob/master/test/hara/security/verify_test.clj#L68-L88" target="_blank">link</a></i></h6><code class="clojure">(verify (.getBytes "hello world")
+       (.verify signature))))</code></pre></div></div><pre><h6><i><a href="https://github.com/zcaudate/hara/blob/master/test/hara/security/verify_test.clj#L69-L89" target="_blank">link</a></i></h6><code class="clojure">(verify (.getBytes "hello world")
         (->> ["5ba863c3e24c73f09d50749698ae82406490c"
               "edc4566810461480e37da661754b7bf33cc6b"
               "bf0f48646304c8994202d2fd7094e7420049f"

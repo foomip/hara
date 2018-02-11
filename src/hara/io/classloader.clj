@@ -10,13 +10,14 @@
 (def +base+ (.getParent ^ClassLoader +rt+))
 
 (def +clojure-jar+
-  (->> (or (try (->> (.getURLs ^ClassLoader +rt+)
-                seq
-                (map #(.getFile ^java.net.URL %)))
-           (catch java.lang.IllegalArgumentException e))
-           (string/split (System/getProperty "java.class.path") #":"))
-       (filter #(.contains ^String % "/org/clojure/clojure/"))
-       first))
+  (let [paths (if (instance? URLClassLoader +rt+)
+                (->> (.getURLs ^ClassLoader +rt+)
+                     (map #(.getFile ^java.net.URL %)))
+                
+                (string/split (System/getProperty "java.class.path") #":"))]
+    (->> paths
+         (filter #(.contains ^String % "/org/clojure/clojure/"))
+         (first))))
 
 (defn delegation
   "returns a list of classloaders in order of top to bottom
