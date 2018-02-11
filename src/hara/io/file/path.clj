@@ -22,16 +22,25 @@
    => \"/usr/home\""
   {:added "2.4"}
   [s]
-  (cond (= s "~")
-        common/*home*
+  (cond (= common/*os* :windows)
+        (cond (not (.startsWith ^String s common/*sep*))
+              (if (= 1 (.indexOf s ":\\"))
+                s
+                (str common/*cwd* common/*sep* s))
+              
+              :else s)
+        
+        :else
+        (cond (= s "~")
+              common/*home*
 
-        (.startsWith ^String s (str "~" common/*sep*))
-        (.replace ^String s "~" ^String common/*home*)
-        
-        (not (.startsWith ^String s common/*sep*))
-        (str common/*cwd* common/*sep* s)
-        
-        :else s))
+              (.startsWith ^String s (str "~" common/*sep*))
+              (.replace ^String s "~" ^String common/*home*)
+              
+              (not (.startsWith ^String s common/*sep*))
+              (str common/*cwd* common/*sep* s)
+              
+              :else s)))
 
 (defn path
   "creates a `java.nio.file.Path object

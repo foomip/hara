@@ -61,7 +61,7 @@ List of current libraries:
 
 ## License
 
-Copyright © 2016 Chris Zheng
+Copyright © 2016-2018 Chris Zheng
 
 Distributed under the MIT License
 
